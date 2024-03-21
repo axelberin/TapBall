@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
 
         float clampY;
 
-        if (dir.y >= 0) clampY = Mathf.Clamp(dir.y, 0.2f, 1);
-        else clampY = Mathf.Clamp(dir.y, -1, -0.2f);
+        if (dir.y >= 0) clampY = Mathf.Clamp(dir.y, 0.2f, 0.3f);
+        else clampY = Mathf.Clamp(dir.y, -0.3f, -0.2f);
 
         dir = new Vector3(dir.x, clampY, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);
