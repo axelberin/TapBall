@@ -966,6 +966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 363918d0a2cf56641a06a8a1faa2092d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deleteDataOnStart: 1
   _dunkLevelsButtons: []
   _dunkLevelsRecords: []
   _dunkWithoutDeath: []

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MenuManager : ACanvas
 {
+    [SerializeField] bool _deleteDataOnStart = false;
     [SerializeField] Button[] _dunkLevelsButtons;
     [SerializeField] TextMeshProUGUI[] _dunkLevelsRecords;
     [SerializeField] Image[] _dunkWithoutDeath;
@@ -16,6 +17,10 @@ public class MenuManager : ACanvas
     {
         Application.targetFrameRate = 60;
         _maxDunkLevels = _dunkLevelsRecords.Length;
+#if UNITY_EDITOR
+        if (_deleteDataOnStart)
+            ResetPlayerPrefs();
+#endif
 
         #region DUNK
         #region BEST
@@ -62,7 +67,7 @@ public class MenuManager : ACanvas
         #endregion
     }
 
-    public void ResetPlayerPrefs()
+    private void ResetPlayerPrefs()
     {
         SaveAndLoadManager.DeleteData();
     }
