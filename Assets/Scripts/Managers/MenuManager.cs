@@ -22,35 +22,12 @@ public class MenuManager : ACanvas
             ResetPlayerPrefs();
 #endif
 
-        FindAndValidateButtonComponent(transform, "DunkBTN").onClick.AddListener(OnDunkLevelsClicked);
+        OnDunkLevelsClicked();
     }
 
     #region DUNK
     private void OnDunkLevelsClicked()
     {
-        #region BEST
-        var dunkBestTexts = new List<TextMeshProUGUI>();
-        for (int i = 1; i <= 100; i++)
-        {
-            var text = FindAndValidateTextComponent(transform, $"DunkLevel{i}");
-
-            if (text == null)
-                break;
-
-            dunkBestTexts.Add(text);
-        }
-
-        if (dunkBestTexts.Count > 0)
-            _dunkLevelsRecords = dunkBestTexts.ToArray();
-
-        for (int i = 0; i < _dunkLevelsRecords.Length; i++)
-        {
-            if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
-                SaveAndLoadManager.DunkLevelName + i))
-                _dunkLevelsRecords[i].text = SaveAndLoadManager.GetIntValue(
-                    SaveAndLoadManager.DunkBestName + i).ToString();
-        }
-        #endregion
         #region UNLOCK LEVELS
         var dunkLevelsButtons = new List<Button>();
         for (int i = 1; i <= 100; i++)
@@ -75,11 +52,34 @@ public class MenuManager : ACanvas
                     SaveAndLoadManager.DunkLevelName + i);
         }
         #endregion
+        #region BEST
+        var dunkBestTexts = new List<TextMeshProUGUI>();
+        for (int i = 1; i <= 100; i++)
+        {
+            var text = FindAndValidateTextComponent(transform, $"DunkRecord{i}");
+
+            if (text == null)
+                break;
+
+            dunkBestTexts.Add(text);
+        }
+
+        if (dunkBestTexts.Count > 0)
+            _dunkLevelsRecords = dunkBestTexts.ToArray();
+
+        for (int i = 0; i < _dunkLevelsRecords.Length; i++)
+        {
+            if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
+                SaveAndLoadManager.DunkLevelName + i))
+                _dunkLevelsRecords[i].text = SaveAndLoadManager.GetIntValue(
+                    SaveAndLoadManager.DunkBestName + i).ToString();
+        }
+        #endregion
         #region WITHOUT DEATH
         var dunkWithoutDeathImage = new List<Image>();
         for (int i = 1; i <= 100; i++)
         {
-            var image = FindAndValidateImageComponent(transform, $"DunkLevel{i}");
+            var image = FindAndValidateImageComponent(transform, $"DunkWithoutDeath{i}");
 
             if (image == null)
                 break;
