@@ -1,14 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 
 public class AdsManager : MonoBehaviour
 {
+    public static AdsManager Instance;
+
     private string _InterstitialAdId = "ca-app-pub-6535800943757134/8262245155";
     private string _RewardedAdId = "ca-app-pub-6535800943757134/3063850216";
     private InterstitialAd _interstitialAd;
     private RewardedAd _rewardedAd;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
+    }
 
     void Start()
     {

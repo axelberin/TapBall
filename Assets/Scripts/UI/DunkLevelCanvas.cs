@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
+using UnityEngine.UI;
 
 public class DunkLevelCanvas : ACanvas
 {
@@ -11,6 +8,8 @@ public class DunkLevelCanvas : ACanvas
     private TextMeshProUGUI _tapCountText;
     private TextMeshProUGUI _winTime;
     private TextMeshProUGUI _winText;
+    private Button _menuButton;
+    private Button _nextLevelButton;
 
     private void Awake()
     {
@@ -25,6 +24,17 @@ public class DunkLevelCanvas : ACanvas
         _tapCountText = FindAndValidateTextComponent(transform, "PointsText");
         _winTime = FindAndValidateTextComponent(transform, "WinTime");
         _winText = FindAndValidateTextComponent(transform, "WinUI");
+
+        _menuButton = FindAndValidateButtonComponent(transform, "MenuBTN");
+        _menuButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
+
+        _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
+        //TODO: Hacer que el boton sea o no interactuable si existe un siguiente nivel.
+        _nextLevelButton.onClick.AddListener(() =>
+        {
+            ScenesManager.Instance.LoadNextLevel();
+            AdsManager.Instance.LoadInterstitialAd();
+        });
     }
 
     public void OnWin()
