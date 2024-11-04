@@ -30,7 +30,7 @@ public static class LoadAndSaveManager
 
     public static int GetIntValue(string parameterName)
     {
-        if (!PlayerPrefs.HasKey(parameterName))
+        if (!ContainsKey(parameterName))
         {
             Debug.LogWarning($"Does´t exist '{parameterName}'");
             return default;
@@ -41,7 +41,7 @@ public static class LoadAndSaveManager
 
     public static float GetFloatValue(string parameterName)
     {
-        if (!PlayerPrefs.HasKey(parameterName))
+        if (!ContainsKey(parameterName))
         {
             Debug.LogWarning($"Does´t exist '{parameterName}'");
             return default;
@@ -52,13 +52,18 @@ public static class LoadAndSaveManager
 
     public static string GetStringValue(string parameterName)
     {
-        if (!PlayerPrefs.HasKey(parameterName))
+        if (!ContainsKey(parameterName))
         {
             Debug.LogWarning($"Does´t exist '{parameterName}'");
             return default;
         }
 
         return PlayerPrefs.GetString(parameterName);
+    }
+
+    public static bool ContainsKey(string parameterName)
+    {
+        return PlayerPrefs.HasKey(parameterName);
     }
 
     public static void Save()

@@ -33,12 +33,12 @@ public class LevelManager : MonoBehaviour
                     int level = GameManager.Instance.SetGetWorldState.GetLevel;
                     int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
 
-                    if (LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkBestName + level) == default ||
+                    if (!LoadAndSaveManager.ContainsKey(LoadAndSaveManager.DunkBestName + level) ||
                         LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkBestName + level) > tapCount)
                         LoadAndSaveManager.SaveIntValue(tapCount, LoadAndSaveManager.DunkBestName + level);
 
-                    if (LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkLevelName + level) == default)
-                        LoadAndSaveManager.SaveIntValue(level, LoadAndSaveManager.DunkBestName + level);
+                    if (!LoadAndSaveManager.ContainsKey(LoadAndSaveManager.DunkLevelName + level))
+                        LoadAndSaveManager.SaveIntValue(level, LoadAndSaveManager.DunkLevelName + level);
 
                     LoadAndSaveManager.SaveIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
                         LoadAndSaveManager.DunkWithoutDeathName + level, true);

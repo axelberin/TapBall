@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3208022160245464938}
   - component: {fileID: 2008930129043412940}
-  - component: {fileID: 7065014258856188595}
   - component: {fileID: 4527666365696898293}
   - component: {fileID: 3812433358005341168}
+  - component: {fileID: 8644073165336461060}
+  - component: {fileID: 8484636588537288847}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -47,18 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624eb80ffdb2aa442b4fe4e37e72a108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7065014258856188595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917831010871328576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c3bb6beb74fe444890b2eaf39221d10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4527666365696898293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +65,7 @@ MonoBehaviour:
   _apkPath: 
   _playerData:
     fileName: PlayerInfo
+    coins: 0
   _dunkData:
     fileName: DunkInfo
     S_DunkBest: 
@@ -91,5 +81,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12820eea563375f408901549cc21fba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8644073165336461060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917831010871328576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a7827e5c3d64042a496b3d19874d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8484636588537288847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917831010871328576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e781780bb56535428725ee8c102ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

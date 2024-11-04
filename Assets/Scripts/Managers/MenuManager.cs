@@ -19,58 +19,33 @@ public class MenuManager : MonoBehaviour
 
         #region DUNK
         #region BEST
-        if (JSON.Instance.GetDunkData.S_DunkBest.Count <= 0)
+        for (int i = 0; i < _dunkLevelsRecords.Length; i++)
         {
-            for (int i = 0; i < _maxDunkLevels; i++) JSON.Instance.GetDunkData.S_DunkBest.Add(0);
-        }
-        else
-        {
-            for (int i = 0; i < _dunkLevelsRecords.Length; i++)
-            {
-                if (_dunkLevelsRecords[i] != null)
-                    _dunkLevelsRecords[i].text = JSON.Instance.GetDunkData.S_DunkBest[i].ToString();
-            }
+            if (_dunkLevelsRecords[i] != null && LoadAndSaveManager.ContainsKey(
+                LoadAndSaveManager.DunkLevelName + i))
+                _dunkLevelsRecords[i].text = LoadAndSaveManager.GetIntValue(
+                    LoadAndSaveManager.DunkBestName + i).ToString();
         }
         #endregion
         #region UNLOCK LEVELS
-        if (JSON.Instance.GetDunkData.S_DunkLevels.Count <= 0)
+        for (int i = 0; i < _dunkLevelsButtons.Length; i++)
         {
-            JSON.Instance.GetDunkData.S_DunkLevels.Add(0);
-            for (int i = 0; i < _dunkLevelsButtons.Length; i++)
-            {
-                if (i == 0) _dunkLevelsButtons[i].interactable = true;
-                else _dunkLevelsButtons[i].interactable = false;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < _dunkLevelsButtons.Length; i++)
-            {
-                if (JSON.Instance.GetDunkData.S_DunkLevels.Contains(i)) _dunkLevelsButtons[i].interactable = true;
-                else _dunkLevelsButtons[i].interactable = false;
-            }
+            if (i == 0)
+                _dunkLevelsButtons[i].interactable = true;
+            else
+                _dunkLevelsButtons[i].interactable = LoadAndSaveManager.ContainsKey(
+                    LoadAndSaveManager.DunkLevelName + i);
         }
         #endregion
         #region WITHOUT DEATH
 
-        if (JSON.Instance.GetDunkData.S_DunkWithoutDeath.Count <= 0)
+        for (int i = 0; i < _dunkWithoutDeath.Length; i++)
         {
-            for (int i = 0; i < _dunkWithoutDeath.Length; i++)
-            {
-                JSON.Instance.GetDunkData.S_DunkWithoutDeath.Add(false);
-                if (_dunkWithoutDeath[i]) _dunkWithoutDeath[i].gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < _dunkWithoutDeath.Length; i++)
-            {
-                if (_dunkWithoutDeath[i]) _dunkWithoutDeath[i].gameObject.SetActive(JSON.Instance.GetDunkData.S_DunkWithoutDeath[i]);
-            }
+            _dunkWithoutDeath[i].gameObject.SetActive(_dunkWithoutDeath[i]
+                && LoadAndSaveManager.ContainsKey(LoadAndSaveManager.DunkLevelName + i) &&
+                LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkWithoutDeathName + i) == 1);
         }
         #endregion
-
-        JSON.Instance.SaveDunkData();
         #endregion
     }
 }
