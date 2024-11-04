@@ -9,8 +9,10 @@ public class ScenesManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance) Instance = this;
-        else Destroy(this);
+        if (!Instance) 
+            Instance = this;
+        else 
+            Destroy(this);
     }
 
     public void LoadScene(string name)
@@ -22,6 +24,11 @@ public class ScenesManager : MonoBehaviour
     public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
+    }
+
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
     }
 
     public void LoadNextLevel()

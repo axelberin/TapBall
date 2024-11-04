@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 7755444356113076831}
   - component: {fileID: 3971065166153228343}
   - component: {fileID: 5569931305113539486}
-  - component: {fileID: 3972307815511431714}
+  - component: {fileID: 2797094078954582799}
   m_Layer: 5
   m_Name: DunkCanvas
   m_TagString: Untagged
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3972307815511431714
+--- !u!114 &2797094078954582799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -394,12 +394,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1362921546160516865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed6cc09e35ee2541a3e18b9d0aa99a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7985d32d7a20b1b48bc448454a55d8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsCount: {fileID: 3243300211634999999}
-  winTime: {fileID: 6846092297189339393}
-  winText: {fileID: 8598256014455442663}
 --- !u!1 &1640404627300477584
 GameObject:
   m_ObjectHideFlags: 0

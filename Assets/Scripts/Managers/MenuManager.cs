@@ -7,16 +7,15 @@ using UnityEngine.UI;
 public class MenuManager : ACanvas
 {
     [SerializeField] bool _deleteDataOnStart = false;
-    [SerializeField] Button[] _dunkLevelsButtons;
-    [SerializeField] TextMeshProUGUI[] _dunkLevelsRecords;
-    [SerializeField] Image[] _dunkWithoutDeath;
+    private Button[] _dunkLevelsButtons;
+    private TextMeshProUGUI[] _dunkLevelsRecords;
+    private Image[] _dunkWithoutDeath;
 
-    int _maxDunkLevels;
+    private int _maxDunkLevels;
 
     void Start()
     {
         Application.targetFrameRate = 60;
-        _maxDunkLevels = _dunkLevelsRecords.Length;
 #if UNITY_EDITOR
         if (_deleteDataOnStart)
             ResetPlayerPrefs();
@@ -51,10 +50,12 @@ public class MenuManager : ACanvas
                 _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
                     SaveAndLoadManager.DunkLevelName + i);
         }
+
+        _maxDunkLevels = _dunkLevelsButtons.Length;
         #endregion
         #region BEST
         var dunkBestTexts = new List<TextMeshProUGUI>();
-        for (int i = 1; i <= 100; i++)
+        for (int i = 1; i <= _maxDunkLevels; i++)
         {
             var text = FindAndValidateTextComponent(transform, $"DunkRecord{i}");
 
@@ -77,7 +78,7 @@ public class MenuManager : ACanvas
         #endregion
         #region WITHOUT DEATH
         var dunkWithoutDeathImage = new List<Image>();
-        for (int i = 1; i <= 100; i++)
+        for (int i = 1; i <= _maxDunkLevels; i++)
         {
             var image = FindAndValidateImageComponent(transform, $"DunkWithoutDeath{i}");
 

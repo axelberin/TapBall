@@ -20,9 +20,6 @@ public class LevelManager : MonoBehaviour
     {
         GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
 
-        UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
-        UIManager.Instance.ActivateUI(UIManager.Instance.winText.gameObject, true);
-
         int currentCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + _gameCoins;
         SaveAndLoadManager.SaveIntValue(currentCoins, SaveAndLoadManager.CoinsName);
 
@@ -30,6 +27,7 @@ public class LevelManager : MonoBehaviour
         {
             case GameModes.Dunk:
                 {
+                    DunkLevelCanvas.Instance.OnWin();
                     int level = GameManager.Instance.SetGetWorldState.GetLevel - 1;
                     int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
 
@@ -64,7 +62,7 @@ public class LevelManager : MonoBehaviour
             case GameModes.Dunk:
                 {
                     GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
-                    UIManager.Instance.SetText(UIManager.Instance.pointsCount, 0);
+                    DunkLevelCanvas.Instance.OnLose();
                     GameManager.Instance.SetGetWorldState.SetOnUpdate(GameManager.Instance.SetGetWorldState.StartCount);
                 }
                 break;

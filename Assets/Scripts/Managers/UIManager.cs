@@ -9,10 +9,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public TextMeshProUGUI pointsCount;
-    public TextMeshProUGUI winTime;
-    public TextMeshProUGUI winText;
-
     private void Awake()
     {
         if (!Instance)
@@ -28,16 +24,20 @@ public class UIManager : MonoBehaviour
 
     public void SetText(TextMeshProUGUI text, int count)
     {
-        if (!text) return;
-        if (!text.isActiveAndEnabled) ActivateUI(text.gameObject, true);
+        if (!text) 
+            return;
+        if (!text.isActiveAndEnabled) 
+            ActivateUI(text.gameObject, true);
 
         text.text = count.ToString();
     }
 
     public void SetText(TextMeshProUGUI text, float count)
     {
-        if (!text) return;
-        if (!text.isActiveAndEnabled) ActivateUI(text.gameObject, true);
+        if (!text) 
+            return;
+        if (!text.isActiveAndEnabled) 
+            ActivateUI(text.gameObject, true);
 
         text.text = count.ToString();
     }

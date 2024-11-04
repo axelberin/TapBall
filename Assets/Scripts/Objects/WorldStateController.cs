@@ -5,20 +5,22 @@ using UnityEngine;
 
 public class WorldStateController : MonoBehaviour
 {
-    public Action OnUpdate = delegate { };
+    private Action OnUpdate = delegate { };
 
-    [SerializeField] int _level;
-    [SerializeField] PlayerController _playerController;
-    [SerializeField] Vector3 _playerInitialPos;
+    private int _level;
+    private float _timeToWin = 3;
+    private float _timeToStart = 0;
+    private Vector3 _playerInitialPos;
 
-    float _timeToWin = 3;
-    float _timeToStart = 0;
-
-    BaseController _baseController;
+    private PlayerController _playerController;
+    private BaseController _baseController;
 
     private void Start()
     {
         GameManager.Instance.SetGetWorldState = this;
+
+        int.TryParse(ScenesManager.Instance.GetCurrentSceneName(), out int level);
+        _level = level;
 
         if (!_baseController)
             _baseController = GetComponentInParent<BaseController>();
@@ -48,7 +50,8 @@ public class WorldStateController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>()) OnUpdate = WinCount;
+        if (collision.GetComponent<PlayerController>())
+            OnUpdate = WinCount;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -57,8 +60,8 @@ public class WorldStateController : MonoBehaviour
         {
             OnUpdate -= WinCount;
             _timeToWin = 3;
-            if (UIManager.Instance)
-                UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
+            if (DunkLevelCanvas.Instance)
+                DunkLevelCanvas.Instance.OnExitWinBase();
         }
     }
 
@@ -67,8 +70,8 @@ public class WorldStateController : MonoBehaviour
         if (_timeToWin > 0)
         {
             _timeToWin -= Time.deltaTime;
-            if (UIManager.Instance)
-                UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToWin + 1));
+            if (DunkLevelCanvas.Instance)
+                DunkLevelCanvas.Instance.OnCountTime(MathF.Min(_timeToWin, 0f));
         }
         else
         {
@@ -86,16 +89,16 @@ public class WorldStateController : MonoBehaviour
             _timeToStart += Time.deltaTime;
             if (_timeToStart > 3)
                 _timeToStart = 3;
-            if (UIManager.Instance)
-                UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToStart + 1));
+            if (DunkLevelCanvas.Instance)
+                DunkLevelCanvas.Instance.OnCountTime(MathF.Max(_timeToStart, 3));
         }
         else
         {
             _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
             if (_baseController)
                 _baseController.PlayMovement();
-            if (UIManager.Instance)
-                UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
+            if (DunkLevelCanvas.Instance)
+                DunkLevelCanvas.Instance.OnExitWinBase();
 
             _timeToStart = 0;
             OnUpdate = null;
