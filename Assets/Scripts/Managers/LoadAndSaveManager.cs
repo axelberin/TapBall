@@ -2,6 +2,8 @@ using UnityEngine;
 
 public static class LoadAndSaveManager
 {
+    public static string CoinsName = "Coins";
+
     public static void SaveIntValue(int value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetInt(parameterName, value);
@@ -23,7 +25,7 @@ public static class LoadAndSaveManager
             PlayerPrefs.Save();
     }
 
-    public static int GetIntValue(int value, string parameterName)
+    public static int GetIntValue(string parameterName)
     {
         if (!PlayerPrefs.HasKey(parameterName))
         {
@@ -34,7 +36,7 @@ public static class LoadAndSaveManager
         return PlayerPrefs.GetInt(parameterName);
     }
 
-    public static float GetFloatValue(float value, string parameterName)
+    public static float GetFloatValue(string parameterName)
     {
         if (!PlayerPrefs.HasKey(parameterName))
         {
@@ -45,7 +47,7 @@ public static class LoadAndSaveManager
         return PlayerPrefs.GetFloat(parameterName);
     }
 
-    public static string GetStringValue(string value, string parameterName)
+    public static string GetStringValue(string parameterName)
     {
         if (!PlayerPrefs.HasKey(parameterName))
         {

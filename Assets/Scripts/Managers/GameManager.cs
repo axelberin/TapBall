@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     /// <param name="gameModes"></param>
     public void SelectGameMode(int gameModes)
     {
-        if (gameModes == 0) 
+        if (gameModes == 0)
             _currentGameMode = GameModes.Dunk;
     }
 
@@ -49,8 +49,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
         UIManager.Instance.ActivateUI(UIManager.Instance.winText.gameObject, true);
 
-        JSON.Instance.GetPlayerData.coins += _gameCoins;
-        LoadAndSaveManager.SaveIntValue();
+        int currentCoins = LoadAndSaveManager.GetIntValue(LoadAndSaveManager.CoinsName) + _gameCoins;
+        LoadAndSaveManager.SaveIntValue(currentCoins, LoadAndSaveManager.CoinsName);
 
         switch (_currentGameMode)
         {
