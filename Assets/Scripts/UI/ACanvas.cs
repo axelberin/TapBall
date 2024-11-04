@@ -8,7 +8,7 @@ public class ACanvas : MonoBehaviour
 {
     #region FindAndValidate
 
-    protected TMP_Text FindAndValidateTextComponent(Transform parent, string childName, bool alert = false)
+    protected TextMeshProUGUI FindAndValidateTextComponent(Transform parent, string childName, bool alert = false)
     {
         var childTransform = parent.FindDeepChild(childName);
         if (childTransform == null)
@@ -17,7 +17,7 @@ public class ACanvas : MonoBehaviour
             return null;
         }
 
-        var textComponent = childTransform.GetComponent<TMP_Text>();
+        var textComponent = childTransform.GetComponent<TextMeshProUGUI>();
         if (textComponent == null) Debug.LogError("No se encontró un componente TMP_Text en " + childName);
 
         return textComponent;

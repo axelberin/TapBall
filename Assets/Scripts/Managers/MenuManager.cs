@@ -22,8 +22,36 @@ public class MenuManager : ACanvas
             ResetPlayerPrefs();
 #endif
 
-        #region DUNK
+        FindAndValidateButtonComponent(transform, "DunkBTN").onClick.AddListener(OnDunkLevelsClicked);
+    }
+
+    #region DUNK
+    private void OnDunkLevelsClicked()
+    {
         #region BEST
+        var dunkBestTexts = new List<TextMeshProUGUI>();
+        for (int i = 1; i <= 100; i++)
+        {
+            var text = FindAndValidateTextComponent(transform, $"DunkLevel{i}");
+
+            if (text == null)
+                break;
+
+            dunkBestTexts.Add(text);
+        }
+
+        if (dunkBestTexts.Count > 0)
+            _dunkLevelsRecords = dunkBestTexts.ToArray();
+
+        for (int i = 0; i < _dunkLevelsRecords.Length; i++)
+        {
+            if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
+                SaveAndLoadManager.DunkLevelName + i))
+                _dunkLevelsRecords[i].text = SaveAndLoadManager.GetIntValue(
+                    SaveAndLoadManager.DunkBestName + i).ToString();
+        }
+        #endregion
+        #region UNLOCK LEVELS
         var dunkLevelsButtons = new List<Button>();
         for (int i = 1; i <= 100; i++)
         {
@@ -38,15 +66,6 @@ public class MenuManager : ACanvas
         if (dunkLevelsButtons.Count > 0)
             _dunkLevelsButtons = dunkLevelsButtons.ToArray();
 
-        for (int i = 0; i < _dunkLevelsRecords.Length; i++)
-        {
-            if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
-                SaveAndLoadManager.DunkLevelName + i))
-                _dunkLevelsRecords[i].text = SaveAndLoadManager.GetIntValue(
-                    SaveAndLoadManager.DunkBestName + i).ToString();
-        }
-        #endregion
-        #region UNLOCK LEVELS
         for (int i = 0; i < _dunkLevelsButtons.Length; i++)
         {
             if (i == 0)
@@ -57,6 +76,20 @@ public class MenuManager : ACanvas
         }
         #endregion
         #region WITHOUT DEATH
+        var dunkWithoutDeathImage = new List<Image>();
+        for (int i = 1; i <= 100; i++)
+        {
+            var image = FindAndValidateImageComponent(transform, $"DunkLevel{i}");
+
+            if (image == null)
+                break;
+
+            dunkWithoutDeathImage.Add(image);
+        }
+
+        if (dunkWithoutDeathImage.Count > 0)
+            _dunkWithoutDeath = dunkWithoutDeathImage.ToArray();
+
         for (int i = 0; i < _dunkWithoutDeath.Length; i++)
         {
             _dunkWithoutDeath[i].gameObject.SetActive(_dunkWithoutDeath[i]
