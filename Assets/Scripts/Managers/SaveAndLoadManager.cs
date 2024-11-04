@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class LoadAndSaveManager
+public static class SaveAndLoadManager
 {
     public static string CoinsName = "Coins";
     public static string DunkBestName = "DunkBest_";
@@ -69,5 +69,10 @@ public static class LoadAndSaveManager
     public static void Save()
     {
         PlayerPrefs.Save();
+    }
+
+    public static void DeleteData()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

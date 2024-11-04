@@ -23,25 +23,25 @@ public class LevelManager : MonoBehaviour
         UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
         UIManager.Instance.ActivateUI(UIManager.Instance.winText.gameObject, true);
 
-        int currentCoins = LoadAndSaveManager.GetIntValue(LoadAndSaveManager.CoinsName) + _gameCoins;
-        LoadAndSaveManager.SaveIntValue(currentCoins, LoadAndSaveManager.CoinsName);
+        int currentCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + _gameCoins;
+        SaveAndLoadManager.SaveIntValue(currentCoins, SaveAndLoadManager.CoinsName);
 
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
                 {
-                    int level = GameManager.Instance.SetGetWorldState.GetLevel;
+                    int level = GameManager.Instance.SetGetWorldState.GetLevel - 1;
                     int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
 
-                    if (!LoadAndSaveManager.ContainsKey(LoadAndSaveManager.DunkBestName + level) ||
-                        LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkBestName + level) > tapCount)
-                        LoadAndSaveManager.SaveIntValue(tapCount, LoadAndSaveManager.DunkBestName + level);
+                    if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkBestName + level) ||
+                        SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkBestName + level) > tapCount)
+                        SaveAndLoadManager.SaveIntValue(tapCount, SaveAndLoadManager.DunkBestName + level);
 
-                    if (!LoadAndSaveManager.ContainsKey(LoadAndSaveManager.DunkLevelName + level))
-                        LoadAndSaveManager.SaveIntValue(level, LoadAndSaveManager.DunkLevelName + level);
+                    if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
+                        SaveAndLoadManager.SaveIntValue(level, SaveAndLoadManager.DunkLevelName + level);
 
-                    LoadAndSaveManager.SaveIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
-                        LoadAndSaveManager.DunkWithoutDeathName + level, true);
+                    SaveAndLoadManager.SaveIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
+                        SaveAndLoadManager.DunkWithoutDeathName + level, true);
                 }
                 break;
             default:

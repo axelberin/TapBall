@@ -4530,6 +4530,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377580354}
   m_CullTransparentMesh: 1
+--- !u!114 &1393553484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8484636588537288847, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
+  m_PrefabInstance: {fileID: 704639960}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e781780bb56535428725ee8c102ec94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1422635561
 GameObject:
   m_ObjectHideFlags: 0
@@ -6832,8 +6843,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+      - m_Target: {fileID: 1393553484}
+        m_TargetAssemblyTypeName: ScenesManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:

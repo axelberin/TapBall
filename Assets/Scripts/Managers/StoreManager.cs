@@ -10,7 +10,7 @@ public class StoreManager : MonoBehaviour
     {
         if (LevelManager.Instance)
         {
-            _coins = LoadAndSaveManager.GetIntValue(LoadAndSaveManager.CoinsName);
+            _coins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
             LevelManager.Instance.SetCoins = 0;
         }
     }

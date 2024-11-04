@@ -21,10 +21,10 @@ public class MenuManager : MonoBehaviour
         #region BEST
         for (int i = 0; i < _dunkLevelsRecords.Length; i++)
         {
-            if (_dunkLevelsRecords[i] != null && LoadAndSaveManager.ContainsKey(
-                LoadAndSaveManager.DunkLevelName + i))
-                _dunkLevelsRecords[i].text = LoadAndSaveManager.GetIntValue(
-                    LoadAndSaveManager.DunkBestName + i).ToString();
+            if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
+                SaveAndLoadManager.DunkLevelName + i))
+                _dunkLevelsRecords[i].text = SaveAndLoadManager.GetIntValue(
+                    SaveAndLoadManager.DunkBestName + i).ToString();
         }
         #endregion
         #region UNLOCK LEVELS
@@ -33,19 +33,23 @@ public class MenuManager : MonoBehaviour
             if (i == 0)
                 _dunkLevelsButtons[i].interactable = true;
             else
-                _dunkLevelsButtons[i].interactable = LoadAndSaveManager.ContainsKey(
-                    LoadAndSaveManager.DunkLevelName + i);
+                _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
+                    SaveAndLoadManager.DunkLevelName + i);
         }
         #endregion
         #region WITHOUT DEATH
-
         for (int i = 0; i < _dunkWithoutDeath.Length; i++)
         {
             _dunkWithoutDeath[i].gameObject.SetActive(_dunkWithoutDeath[i]
-                && LoadAndSaveManager.ContainsKey(LoadAndSaveManager.DunkLevelName + i) &&
-                LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkWithoutDeathName + i) == 1);
+                && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
+                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + i) == 1);
         }
         #endregion
         #endregion
+    }
+
+    public void ResetPlayerPrefs()
+    {
+        SaveAndLoadManager.DeleteData();
     }
 }
