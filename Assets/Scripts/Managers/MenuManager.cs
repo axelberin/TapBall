@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : ACanvas
 {
     [SerializeField] Button[] _dunkLevelsButtons;
     [SerializeField] TextMeshProUGUI[] _dunkLevelsRecords;
@@ -19,6 +19,20 @@ public class MenuManager : MonoBehaviour
 
         #region DUNK
         #region BEST
+        var dunkLevelsButtons = new List<Button>();
+        for (int i = 1; i <= 100; i++)
+        {
+            var button = FindAndValidateButtonComponent(transform, $"DunkLevel{i}");
+
+            if (button == null)
+                break;
+
+            dunkLevelsButtons.Add(button);
+        }
+
+        if (dunkLevelsButtons.Count > 0)
+            _dunkLevelsButtons = dunkLevelsButtons.ToArray();
+
         for (int i = 0; i < _dunkLevelsRecords.Length; i++)
         {
             if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
