@@ -16,11 +16,15 @@ public class JSON : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance) Instance = this;
-        else Destroy(this);
+        if (!Instance) 
+            Instance = this;
+        else
+            Destroy(this);
 
-        if (Application.platform == RuntimePlatform.Android) _path = _apkPath;
-        else if (Application.platform == RuntimePlatform.WindowsPlayer) _path = _buildPath;
+        if (Application.platform == RuntimePlatform.Android) 
+            _path = _apkPath;
+        else if (Application.platform == RuntimePlatform.WindowsPlayer)
+            _path = _buildPath;
 
         LoadAllData();
     }

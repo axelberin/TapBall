@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance) Instance = this;
-        else Destroy(gameObject);
+        if (!Instance)
+            Instance = this;
+        else
+            Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
     }
@@ -36,7 +38,8 @@ public class GameManager : MonoBehaviour
     /// <param name="gameModes"></param>
     public void SelectGameMode(int gameModes)
     {
-        if (gameModes == 0) _currentGameMode = GameModes.Dunk;
+        if (gameModes == 0) 
+            _currentGameMode = GameModes.Dunk;
     }
 
     public void OnWin()
@@ -52,18 +55,22 @@ public class GameManager : MonoBehaviour
         {
             case GameModes.Dunk:
                 {
-                    if (JSON.Instance.GetDunkData.S_DunkBest[_worldStateController.GetLevel - 1] == default) JSON.Instance.GetDunkData.S_DunkBest[_worldStateController.GetLevel - 1] = _tapController.SetGetTapCount;
+                    if (JSON.Instance.GetDunkData.S_DunkBest[_worldStateController.GetLevel - 1] == default)
+                        JSON.Instance.GetDunkData.S_DunkBest[_worldStateController.GetLevel - 1] = _tapController.SetGetTapCount;
                     else if (JSON.Instance.GetDunkData.S_DunkBest[_worldStateController.GetLevel - 1] > _tapController.SetGetTapCount)
                         JSON.Instance.GetDunkData.S_DunkBest[_worldStateController.GetLevel - 1] = _tapController.SetGetTapCount;
 
-                    if (!JSON.Instance.GetDunkData.S_DunkLevels.Contains(_worldStateController.GetLevel)) JSON.Instance.GetDunkData.S_DunkLevels.Add(_worldStateController.GetLevel);
+                    if (!JSON.Instance.GetDunkData.S_DunkLevels.Contains(_worldStateController.GetLevel))
+                        JSON.Instance.GetDunkData.S_DunkLevels.Add(_worldStateController.GetLevel);
 
-                    if (!JSON.Instance.GetDunkData.S_DunkWithoutDeath[_worldStateController.GetLevel - 1]) JSON.Instance.GetDunkData.S_DunkWithoutDeath[_worldStateController.GetLevel - 1] = !_playerController.GetDeath;
+                    if (!JSON.Instance.GetDunkData.S_DunkWithoutDeath[_worldStateController.GetLevel - 1])
+                        JSON.Instance.GetDunkData.S_DunkWithoutDeath[_worldStateController.GetLevel - 1] = !_playerController.GetDeath;
 
                     JSON.Instance.SaveDunkData();
                 }
                 break;
-            default: break;
+            default:
+                break;
         }
 
         _gameCoins = 0;
@@ -71,7 +78,8 @@ public class GameManager : MonoBehaviour
 
     public void OnLose()
     {
-        if (!_worldStateController) return;
+        if (!_worldStateController)
+            return;
 
         _playerController.GetRigidbody.bodyType = RigidbodyType2D.Static;
         _playerController.transform.position = _worldStateController.GetInitalPos;
@@ -85,7 +93,8 @@ public class GameManager : MonoBehaviour
                     _worldStateController.OnUpdate = _worldStateController.StartCount;
                 }
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 
