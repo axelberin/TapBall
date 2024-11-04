@@ -9,7 +9,7 @@ public class Coins : ObstaclesManager
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player)
         {
-            GameManager.Instance.GetCoin();
+            GameManager.Instance.OnGetCoin();
             gameObject.SetActive(false);
         }
     }

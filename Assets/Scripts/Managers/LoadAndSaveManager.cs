@@ -3,6 +3,9 @@ using UnityEngine;
 public static class LoadAndSaveManager
 {
     public static string CoinsName = "Coins";
+    public static string DunkBestName = "DunkBest_";
+    public static string DunkLevelName = "DunkLevel_";
+    public static string DunkWithoutDeathName = "DunkWithoutDeath_";
 
     public static void SaveIntValue(int value, string parameterName, bool withSave = false)
     {
@@ -30,7 +33,7 @@ public static class LoadAndSaveManager
         if (!PlayerPrefs.HasKey(parameterName))
         {
             Debug.LogWarning($"Does´t exist '{parameterName}'");
-            return 0;
+            return default;
         }
 
         return PlayerPrefs.GetInt(parameterName);
@@ -41,7 +44,7 @@ public static class LoadAndSaveManager
         if (!PlayerPrefs.HasKey(parameterName))
         {
             Debug.LogWarning($"Does´t exist '{parameterName}'");
-            return 0;
+            return default;
         }
 
         return PlayerPrefs.GetFloat(parameterName);
@@ -56,5 +59,10 @@ public static class LoadAndSaveManager
         }
 
         return PlayerPrefs.GetString(parameterName);
+    }
+
+    public static void Save()
+    {
+        PlayerPrefs.Save();
     }
 }

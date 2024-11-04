@@ -20,16 +20,22 @@ public class WorldStateController : MonoBehaviour
     {
         GameManager.Instance.SetGetWorldState = this;
 
-        if (!_baseController) _baseController = GetComponentInParent<BaseController>();
-        if (_baseController) _baseController.StopMovement();
+        if (!_baseController)
+            _baseController = GetComponentInParent<BaseController>();
+        if (_baseController)
+            _baseController.StopMovement();
 
         if (!_playerController)
         {
-            if (GameManager.Instance.SetGetPlayer) _playerController = GameManager.Instance.SetGetPlayer;
-            else _playerController = FindObjectOfType<PlayerController>();
+            if (GameManager.Instance.SetGetPlayer)
+                _playerController = GameManager.Instance.SetGetPlayer;
+            else
+                _playerController = FindObjectOfType<PlayerController>();
         }
 
-        if (_playerInitialPos == Vector3.zero) _playerInitialPos = _playerController.transform.position;
+        if (_playerInitialPos == Vector3.zero)
+            _playerInitialPos = _playerController.transform.position;
+
         _playerController.GetRigidbody.bodyType = RigidbodyType2D.Static;
 
         OnUpdate = StartCount;
@@ -51,7 +57,8 @@ public class WorldStateController : MonoBehaviour
         {
             OnUpdate -= WinCount;
             _timeToWin = 3;
-            if (UIManager.Instance) UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
+            if (UIManager.Instance) 
+                UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
         }
     }
 
@@ -60,12 +67,14 @@ public class WorldStateController : MonoBehaviour
         if (_timeToWin > 0)
         {
             _timeToWin -= Time.deltaTime;
-            if (UIManager.Instance) UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToWin + 1));
+            if (UIManager.Instance) 
+                UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToWin + 1));
         }
         else
         {
-            if (_baseController) _baseController.StopMovement();
-            GameManager.Instance.OnWin();
+            if (_baseController) 
+                _baseController.StopMovement();
+            LevelManager.Instance.OnWin();
             OnUpdate -= WinCount;
         }
     }
@@ -75,14 +84,19 @@ public class WorldStateController : MonoBehaviour
         if (_timeToStart < 3)
         {
             _timeToStart += Time.deltaTime;
-            if (_timeToStart > 3) _timeToStart = 3;
-            if (UIManager.Instance) UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToStart + 1));
+            if (_timeToStart > 3) 
+                _timeToStart = 3;
+            if (UIManager.Instance) 
+                UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToStart + 1));
         }
         else
         {
             _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
-            if (_baseController) _baseController.PlayMovement();
-            if (UIManager.Instance) UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
+            if (_baseController) 
+                _baseController.PlayMovement();
+            if (UIManager.Instance) 
+                UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
+
             _timeToStart = 0;
             OnUpdate = null;
         }

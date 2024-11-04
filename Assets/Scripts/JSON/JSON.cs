@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JSON : MonoBehaviour
 {
-    public static JSON Instance;
+    //public static JSON Instance;
 
     [SerializeField] string _path = "Assets/Scripts/Json/data/";
     [SerializeField] string _buildPath = "";

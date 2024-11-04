@@ -8,21 +8,23 @@ public class StoreManager : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance)
+        if (LevelManager.Instance)
         {
-            _coins = JSON.Instance.GetPlayerData.coins;
-            GameManager.Instance.SetCoins = 0;
+            _coins = LoadAndSaveManager.GetIntValue(LoadAndSaveManager.CoinsName);
+            LevelManager.Instance.SetCoins = 0;
         }
     }
 
     public void Buy(int cost)
     {
-        if (CanBuy(cost)) _coins -= cost;
+        if (CanBuy(cost))
+            _coins -= cost;
     }
 
     bool CanBuy(int cost)
     {
-        if (_coins - cost < 0) return false;
+        if (_coins - cost < 0)
+            return false;
 
         return true;
     }

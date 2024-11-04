@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+    private int _gameCoins;
 
     private void Awake()
     {
@@ -12,5 +14,73 @@ public class LevelManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+    }
+
+    public void OnWin()
+    {
+        GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
+
+        UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
+        UIManager.Instance.ActivateUI(UIManager.Instance.winText.gameObject, true);
+
+        int currentCoins = LoadAndSaveManager.GetIntValue(LoadAndSaveManager.CoinsName) + _gameCoins;
+        LoadAndSaveManager.SaveIntValue(currentCoins, LoadAndSaveManager.CoinsName);
+
+        switch (GameManager.Instance.GetCurrentGameMode)
+        {
+            case GameModes.Dunk:
+                {
+                    int level = GameManager.Instance.SetGetWorldState.GetLevel;
+                    int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
+
+                    if (LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkBestName + level) == default ||
+                        LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkBestName + level) > tapCount)
+                        LoadAndSaveManager.SaveIntValue(tapCount, LoadAndSaveManager.DunkBestName + level);
+
+                    if (LoadAndSaveManager.GetIntValue(LoadAndSaveManager.DunkLevelName + level) == default)
+                        LoadAndSaveManager.SaveIntValue(level, LoadAndSaveManager.DunkBestName + level);
+
+                    LoadAndSaveManager.SaveIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
+                        LoadAndSaveManager.DunkWithoutDeathName + level, true);
+                }
+                break;
+            default:
+                break;
+        }
+
+        _gameCoins = 0;
+    }
+
+    public void OnLose()
+    {
+        if (!_worldStateController)
+            return;
+
+        _playerController.GetRigidbody.bodyType = RigidbodyType2D.Static;
+        _playerController.transform.position = _worldStateController.GetInitalPos;
+        _worldStateController.GetBaseController.ResetMovement();
+        switch (_currentGameMode)
+        {
+            case GameModes.Dunk:
+                {
+                    _tapController.SetGetTapCount = 0;
+                    UIManager.Instance.SetText(UIManager.Instance.pointsCount, 0);
+                    _worldStateController.OnUpdate = _worldStateController.StartCount;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnGetCoin()
+    {
+        _gameCoins++;
+        // ui coins
+    }
+
+    public int SetCoins
+    {
+        set => _gameCoins = value;
     }
 }

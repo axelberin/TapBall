@@ -40,9 +40,9 @@ public class PlayerController : MonoBehaviour
         deathShadow.transform.position = transform.position;
         deathShadow.transform.localScale = transform.localScale;
 
-        GameManager.Instance.OnLose();
+        LevelManager.Instance.OnLose();
     }
 
-    public bool GetDeath => _death;
+    public bool HasDeath => _death;
     public Rigidbody2D GetRigidbody => _rb;
 }
