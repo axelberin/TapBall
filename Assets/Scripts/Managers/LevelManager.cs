@@ -53,19 +53,19 @@ public class LevelManager : MonoBehaviour
 
     public void OnLose()
     {
-        if (!_worldStateController)
+        if (!GameManager.Instance.SetGetWorldState)
             return;
 
-        _playerController.GetRigidbody.bodyType = RigidbodyType2D.Static;
-        _playerController.transform.position = _worldStateController.GetInitalPos;
-        _worldStateController.GetBaseController.ResetMovement();
-        switch (_currentGameMode)
+        GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
+        GameManager.Instance.SetGetPlayer.transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
+        GameManager.Instance.SetGetWorldState.GetBaseController.ResetMovement();
+        switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
                 {
-                    _tapController.SetGetTapCount = 0;
+                    GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
                     UIManager.Instance.SetText(UIManager.Instance.pointsCount, 0);
-                    _worldStateController.OnUpdate = _worldStateController.StartCount;
+                    GameManager.Instance.SetGetWorldState.SetOnUpdate(GameManager.Instance.SetGetWorldState.StartCount);
                 }
                 break;
             default:

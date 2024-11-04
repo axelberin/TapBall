@@ -57,7 +57,7 @@ public class WorldStateController : MonoBehaviour
         {
             OnUpdate -= WinCount;
             _timeToWin = 3;
-            if (UIManager.Instance) 
+            if (UIManager.Instance)
                 UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
         }
     }
@@ -67,12 +67,12 @@ public class WorldStateController : MonoBehaviour
         if (_timeToWin > 0)
         {
             _timeToWin -= Time.deltaTime;
-            if (UIManager.Instance) 
+            if (UIManager.Instance)
                 UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToWin + 1));
         }
         else
         {
-            if (_baseController) 
+            if (_baseController)
                 _baseController.StopMovement();
             LevelManager.Instance.OnWin();
             OnUpdate -= WinCount;
@@ -84,22 +84,27 @@ public class WorldStateController : MonoBehaviour
         if (_timeToStart < 3)
         {
             _timeToStart += Time.deltaTime;
-            if (_timeToStart > 3) 
+            if (_timeToStart > 3)
                 _timeToStart = 3;
-            if (UIManager.Instance) 
+            if (UIManager.Instance)
                 UIManager.Instance.SetText(UIManager.Instance.winTime, (int)(_timeToStart + 1));
         }
         else
         {
             _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
-            if (_baseController) 
+            if (_baseController)
                 _baseController.PlayMovement();
-            if (UIManager.Instance) 
+            if (UIManager.Instance)
                 UIManager.Instance.ActivateUI(UIManager.Instance.winTime.gameObject, false);
 
             _timeToStart = 0;
             OnUpdate = null;
         }
+    }
+
+    public void SetOnUpdate(Action action)
+    {
+        OnUpdate = action;
     }
 
     public int GetLevel => _level;

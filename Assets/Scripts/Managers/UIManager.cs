@@ -148,23 +148,19 @@ public class UIManager : MonoBehaviour
         return toggleComponent;
     }
 
-    protected GameObject FindObjectInOtherScene(string objectName, string sceneName)
+    protected GameObject FindAndValidateGameManagerComponent(Transform parent, string childName)
     {
-        var scene = ScenesManager.GetSceneByName(sceneName);
-        if (!scene.isLoaded)
+        var childTransform = parent.Find(childName);
+        if (childTransform == null)
         {
-            //Debug.LogError($"The scene {sceneName} is not loaded.");
+            Debug.LogError("No hemos encontrado " + childName);
             return null;
         }
 
-        var rootObjects = scene.GetRootGameObjects();
-        foreach (var rootObject in rootObjects)
-        {
-            GameObject found = null;
-            if (rootObject.name == objectName) return rootObject.gameObject;
-        }
+        var gameObjectComponent = childTransform.GetComponent<GameObject>();
+        if (gameObjectComponent == null) Debug.LogError("No se encontró un componente GameObject en " + childName);
 
-        return null;
+        return gameObjectComponent;
     }
 
     protected Button FindAndValidateButtonComponent(Transform parent, string childName, bool alert = true)
