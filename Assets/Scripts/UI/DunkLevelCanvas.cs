@@ -23,7 +23,7 @@ public class DunkLevelCanvas : ACanvas
     private void Start()
     {
         _tapCountText = FindAndValidateTextComponent(transform, "PointsText");
-        _winText = FindAndValidateTextComponent(transform, "WinTime");
+        _winTime = FindAndValidateTextComponent(transform, "WinTime");
         _winText = FindAndValidateTextComponent(transform, "WinUI");
     }
 
@@ -50,6 +50,6 @@ public class DunkLevelCanvas : ACanvas
 
     public void OnCountTime(float time)
     {
-        UIManager.Instance.SetText(_winTime, (int)(time + 1));
+        UIManager.Instance.SetText(_winTime, (int)(time));
     }
 }

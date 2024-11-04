@@ -27,7 +27,7 @@ public class TapController : MonoBehaviour
 
     void OnTap(Vector3 pos)
     {
-        if (!GameManager.Instance.SetGetPlayer || DunkLevelCanvas.Instance ||
+        if (!GameManager.Instance.SetGetPlayer || !DunkLevelCanvas.Instance ||
             GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
             return;
 

@@ -71,7 +71,7 @@ public class WorldStateController : MonoBehaviour
         {
             _timeToWin -= Time.deltaTime;
             if (DunkLevelCanvas.Instance)
-                DunkLevelCanvas.Instance.OnCountTime(MathF.Min(_timeToWin, 0f));
+                DunkLevelCanvas.Instance.OnCountTime(MathF.Max(_timeToWin + 1, 0f));
         }
         else
         {
@@ -87,10 +87,9 @@ public class WorldStateController : MonoBehaviour
         if (_timeToStart < 3)
         {
             _timeToStart += Time.deltaTime;
-            if (_timeToStart > 3)
-                _timeToStart = 3;
+
             if (DunkLevelCanvas.Instance)
-                DunkLevelCanvas.Instance.OnCountTime(MathF.Max(_timeToStart, 3));
+                DunkLevelCanvas.Instance.OnCountTime(MathF.Min(_timeToStart + 1, 3));
         }
         else
         {
