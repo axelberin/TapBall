@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class LoadAndSaveMnager
+public static class LoadAndSaveManager
 {
     public static void SaveIntValue(int value, string parameterName, bool withSave = false)
     {

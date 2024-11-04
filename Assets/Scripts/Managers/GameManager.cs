@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ActivateUI(UIManager.Instance.winText.gameObject, true);
 
         JSON.Instance.GetPlayerData.coins += _gameCoins;
+        LoadAndSaveManager.SaveIntValue();
 
         switch (_currentGameMode)
         {

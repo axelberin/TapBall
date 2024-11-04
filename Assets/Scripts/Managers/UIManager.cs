@@ -150,7 +150,7 @@ public class UIManager : MonoBehaviour
 
     protected GameObject FindObjectInOtherScene(string objectName, string sceneName)
     {
-        var scene = SceneManager.GetSceneByName(sceneName);
+        var scene = ScenesManager.GetSceneByName(sceneName);
         if (!scene.isLoaded)
         {
             //Debug.LogError($"The scene {sceneName} is not loaded.");
