@@ -70,6 +70,7 @@ public class AdsManager : MonoBehaviour
         {
             Debug.Log("Showing interstitial ad.");
             _interstitialAd.Show();
+            Time.timeScale = 1.0f;
         }
         else
         {

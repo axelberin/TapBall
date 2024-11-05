@@ -46,9 +46,9 @@ public class MenuManager : ACanvas
         {
             if (i == 0)
                 _dunkLevelsButtons[i].interactable = true;
-            else
-                _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
-                    SaveAndLoadManager.DunkLevelName + i);
+            else if (i + 1 < _dunkLevelsButtons.Length)
+                _dunkLevelsButtons[i + 1].interactable = SaveAndLoadManager.ContainsKey(
+                    SaveAndLoadManager.DunkLevelName + (i + 1));
         }
 
         _maxDunkLevels = _dunkLevelsButtons.Length;
@@ -98,8 +98,8 @@ public class MenuManager : ACanvas
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + i) == 1);
         }
         #endregion
-        #endregion
     }
+    #endregion
 
     private void ResetPlayerPrefs()
     {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Linq;
 
 public class WorldStateController : MonoBehaviour
 {
@@ -17,7 +18,9 @@ public class WorldStateController : MonoBehaviour
     {
         GameManager.Instance.SetGetWorldState = this;
 
-        int.TryParse(ScenesManager.Instance.GetCurrentSceneName(), out int level);
+        string numbers = new string(ScenesManager.Instance.GetCurrentSceneName().Where(
+            char.IsDigit).ToArray());
+        int.TryParse(numbers, out int level);
         _level = level;
 
         if (!_baseController)

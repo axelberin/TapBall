@@ -32,7 +32,7 @@ public class DunkLevelCanvas : ACanvas
         //TODO: Hacer que el boton sea o no interactuable si existe un siguiente nivel.
         _nextLevelButton.onClick.AddListener(() =>
         {
-            ScenesManager.Instance.LoadNextLevel();
+            ScenesManager.Instance.LoadNextLevel(GameManager.Instance.SetGetWorldState.GetLevel);
             AdsManager.Instance.LoadInterstitialAd();
         });
     }

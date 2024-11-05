@@ -31,12 +31,12 @@ public class ScenesManager : MonoBehaviour
         return SceneManager.GetActiveScene().name;
     }
 
-    public void LoadNextLevel()
+    public void LoadNextLevel(int level)
     {
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameManager.GameModes.Dunk:
-                LoadScene("DunkLevel" + (GameManager.Instance.SetGetWorldState.GetLevel + 1));
+                LoadScene("DunkLevel" + (level + 1));
                 break;
             case GameManager.GameModes.Endless:
                 break;
