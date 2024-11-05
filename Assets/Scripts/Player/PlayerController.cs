@@ -3,9 +3,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _jumpForce = 3;
-    private Rigidbody2D _rb;
 
-    bool _death;
+    private  bool _death;
+
+    private Rigidbody2D _rb;
 
     void Awake()
     {

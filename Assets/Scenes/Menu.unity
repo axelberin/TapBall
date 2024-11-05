@@ -798,19 +798,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 210480237}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel15
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &210480237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,19 +1427,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 532740984}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel8
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &532740984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1889,19 +1865,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 704150977}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel13
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &704150977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2214,19 +2178,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 740134861}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel11
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &740134861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2482,19 +2434,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 851105515}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel4
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &851105515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3266,19 +3206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1165165443}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel5
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1165165443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3400,19 +3328,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1189216893}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel10
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1189216893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3534,19 +3450,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1194192565}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel2
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1194192565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3877,19 +3781,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1231538984}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel7
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1231538984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4452,17 +4344,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377580354}
   m_CullTransparentMesh: 1
---- !u!114 &1393553484 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8484636588537288847, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-  m_PrefabInstance: {fileID: 704639960}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e781780bb56535428725ee8c102ec94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1422635561
 GameObject:
   m_ObjectHideFlags: 0
@@ -4546,19 +4427,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1422635564}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel12
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1422635564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5069,19 +4938,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1576030235}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel6
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1576030235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5337,19 +5194,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1608735903}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel9
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1608735903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6153,19 +5998,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1881215478}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel14
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1881215478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6555,19 +6388,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1982247794}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7065014258856188595, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel3
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1982247794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6764,19 +6585,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2019265624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1393553484}
-        m_TargetAssemblyTypeName: ScenesManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DunkLevel1
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2019265624
 MonoBehaviour:
   m_ObjectHideFlags: 0
