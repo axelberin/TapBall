@@ -3,18 +3,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _jumpForce = 3;
-    [SerializeField] Rigidbody2D _rb;
+    private Rigidbody2D _rb;
 
     bool _death;
 
     void Awake()
     {
-        if (!_rb) _rb = GetComponent<Rigidbody2D>();
+        if (!_rb) 
+            _rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        if (GameManager.Instance) GameManager.Instance.SetGetPlayer = this;
+        if (GameManager.Instance) 
+            GameManager.Instance.SetGetPlayer = this;
     }
 
     public void AddForce(Vector3 touchPos)
@@ -25,8 +27,10 @@ public class PlayerController : MonoBehaviour
 
         float clampY;
 
-        if (dir.y >= 0) clampY = Mathf.Clamp(dir.y, 0.2f, 0.3f);
-        else clampY = Mathf.Clamp(dir.y, -0.3f, -0.2f);
+        if (dir.y >= 0) 
+            clampY = Mathf.Clamp(dir.y, 0.2f, 0.3f);
+        else 
+            clampY = Mathf.Clamp(dir.y, -0.3f, -0.2f);
 
         dir = new Vector3(dir.x, clampY, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);

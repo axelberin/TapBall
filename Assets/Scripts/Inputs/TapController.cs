@@ -6,7 +6,8 @@ public class TapController : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance) GameManager.Instance.SetGetTapController = this;
+        if (GameManager.Instance) 
+            GameManager.Instance.SetGetTapController = this;
     }
 
     void Update()
