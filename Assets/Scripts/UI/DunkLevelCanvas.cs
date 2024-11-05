@@ -29,16 +29,20 @@ public class DunkLevelCanvas : ACanvas
         _menuButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
 
         _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
-        //TODO: Hacer que el boton sea o no interactuable si existe un siguiente nivel.
-        _nextLevelButton.onClick.AddListener(() =>
-        {
-            ScenesManager.Instance.LoadNextLevel(GameManager.Instance.SetGetWorldState.GetLevel);
-            AdsManager.Instance.LoadInterstitialAd();
-        });
+
+        if (_nextLevelButton.interactable)
+            _nextLevelButton.onClick.AddListener(() =>
+            {
+                ScenesManager.Instance.LoadNextLevel(GameManager.Instance.SetGetWorldState.GetLevel);
+                AdsManager.Instance.LoadInterstitialAd();
+            });
     }
 
     public void OnWin()
     {
+        _nextLevelButton.interactable = ScenesManager.Instance.IsSceneExisting(
+            $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
+
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winText.gameObject, transform);
     }

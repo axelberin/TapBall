@@ -31,6 +31,15 @@ public class ScenesManager : MonoBehaviour
         return SceneManager.GetActiveScene().name;
     }
 
+    public bool IsSceneExisting(string sceneName)
+    {
+        // Busca la escena por su nombre
+        int sceneIndex = SceneUtility.GetBuildIndexByScenePath(sceneName);
+
+        // Si el índice es -1, la escena no está en las Build Settings
+        return sceneIndex != -1;
+    }
+
     public void LoadNextLevel(int level)
     {
         switch (GameManager.Instance.GetCurrentGameMode)

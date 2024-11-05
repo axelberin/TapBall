@@ -44,11 +44,15 @@ public class MenuManager : ACanvas
 
         for (int i = 0; i < _dunkLevelsButtons.Length; i++)
         {
+            int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
+            _dunkLevelsButtons[i].onClick.AddListener(() =>
+                ScenesManager.Instance.LoadScene($"DunkLevel{levelIndex + 1}"));
+
             if (i == 0)
                 _dunkLevelsButtons[i].interactable = true;
             else if (i + 1 < _dunkLevelsButtons.Length)
-                _dunkLevelsButtons[i + 1].interactable = SaveAndLoadManager.ContainsKey(
-                    SaveAndLoadManager.DunkLevelName + (i + 1));
+                _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
+                    SaveAndLoadManager.DunkLevelName + (i - 1));
         }
 
         _maxDunkLevels = _dunkLevelsButtons.Length;
