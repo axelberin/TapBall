@@ -3,29 +3,33 @@ using UnityEngine;
 public static class SaveAndLoadManager
 {
     public static string CoinsName = "Coins";
+    /// <summary>
+    /// The name + the game mode + level.
+    /// </summary>
+    public static string CoinNameByLevel = "Coin_";
     public static string DunkBestName = "DunkBest_";
     public static string DunkLevelName = "DunkLevel_";
     public static string DunkWithoutDeathName = "DunkWithoutDeath_";
 
-    public static void SaveIntValue(int value, string parameterName, bool withSave = false)
+    public static void SetIntValue(int value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetInt(parameterName, value);
         if (withSave)
-            PlayerPrefs.Save();
+            Save();
     }
 
-    public static void SaveFloatValue(float value, string parameterName, bool withSave = false)
+    public static void SetFloatValue(float value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetFloat(parameterName, value);
         if (withSave)
-            PlayerPrefs.Save();
+            Save();
     }
 
-    public static void SaveIntValue(string value, string parameterName, bool withSave = false)
+    public static void SetIntValue(string value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetString(parameterName, value);
         if (withSave)
-            PlayerPrefs.Save();
+            Save();
     }
 
     public static int GetIntValue(string parameterName)

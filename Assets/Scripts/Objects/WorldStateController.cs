@@ -18,10 +18,7 @@ public class WorldStateController : MonoBehaviour
     {
         GameManager.Instance.SetGetWorldState = this;
 
-        string numbers = new string(ScenesManager.Instance.GetCurrentSceneName().Where(
-            char.IsDigit).ToArray());
-        int.TryParse(numbers, out int level);
-        _level = level;
+        _level = ScenesManager.Instance.GetLevelByCurrentScene();
 
         if (!_baseController)
             _baseController = GetComponentInParent<BaseController>();

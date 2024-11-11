@@ -18,8 +18,12 @@ public class MenuManager : ACanvas
         Application.targetFrameRate = 60;
 #if UNITY_EDITOR
         if (_deleteDataOnStart)
-            ResetPlayerPrefs();
+            SaveAndLoadManager.DeleteData();
 #endif
+
+        var coinsText = FindAndValidateTextComponent(transform, "CoinsText");
+        if (coinsText != null)
+            coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
 
         OnDunkLevelsClicked();
     }
@@ -104,9 +108,4 @@ public class MenuManager : ACanvas
         #endregion
     }
     #endregion
-
-    private void ResetPlayerPrefs()
-    {
-        SaveAndLoadManager.DeleteData();
-    }
 }

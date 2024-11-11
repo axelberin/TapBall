@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
 
         int currentCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + _gameCoins;
-        SaveAndLoadManager.SaveIntValue(currentCoins, SaveAndLoadManager.CoinsName);
+        SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName);
 
         switch (GameManager.Instance.GetCurrentGameMode)
         {
@@ -31,12 +31,12 @@ public class LevelManager : MonoBehaviour
 
                     if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkBestName + level) ||
                         SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkBestName + level) > tapCount)
-                        SaveAndLoadManager.SaveIntValue(tapCount, SaveAndLoadManager.DunkBestName + level);
+                        SaveAndLoadManager.SetIntValue(tapCount, SaveAndLoadManager.DunkBestName + level);
 
                     if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
-                        SaveAndLoadManager.SaveIntValue(level, SaveAndLoadManager.DunkLevelName + level);
+                        SaveAndLoadManager.SetIntValue(level, SaveAndLoadManager.DunkLevelName + level);
 
-                    SaveAndLoadManager.SaveIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
+                    SaveAndLoadManager.SetIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
                         SaveAndLoadManager.DunkWithoutDeathName + level, true);
                 }
                 break;
@@ -72,7 +72,8 @@ public class LevelManager : MonoBehaviour
     public void OnGetCoin()
     {
         _gameCoins++;
-        // ui coins
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CoinNameByLevel +
+             GameManager.Instance.GetCurrentGameMode + ScenesManager.Instance.GetCurrentSceneName());
     }
 
     public int SetCoins

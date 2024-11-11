@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,9 +10,9 @@ public class ScenesManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance) 
+        if (!Instance)
             Instance = this;
-        else 
+        else
             Destroy(this);
     }
 
@@ -38,6 +39,14 @@ public class ScenesManager : MonoBehaviour
 
         // Si el índice es -1, la escena no está en las Build Settings
         return sceneIndex != -1;
+    }
+
+    public int GetLevelByCurrentScene()
+    {
+        string numbers = new string(GetCurrentSceneName().Where(
+            char.IsDigit).ToArray());
+        int.TryParse(numbers, out int level);
+        return level;
     }
 
     public void LoadNextLevel(int level)
