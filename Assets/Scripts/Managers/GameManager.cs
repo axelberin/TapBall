@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     PlayerController _playerController;
     TapController _tapController;
     WorldStateController _worldStateController;
-    PauseAndResumeManager _pauseAndResumeController;
 
     public enum GameModes
     {
@@ -39,16 +38,6 @@ public class GameManager : MonoBehaviour
             _currentGameMode = GameModes.Dunk;
     }
 
-    public void OnResumeGame()
-    {
-        _pauseAndResumeController.InvokeResume();
-    }
-
-    public void OnPauseGame()
-    {
-        _pauseAndResumeController.InvokePause();
-    }
-
     public PlayerController SetGetPlayer
     {
         set => _playerController = value;
@@ -65,11 +54,6 @@ public class GameManager : MonoBehaviour
     {
         set => _worldStateController = value;
         get => _worldStateController;
-    }
-
-    public PauseAndResumeManager SetPauseAndResumeController
-    {
-        set => _pauseAndResumeController = value;
     }
 
     public GameModes GetCurrentGameMode => _currentGameMode;
