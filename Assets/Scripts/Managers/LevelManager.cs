@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
 
@@ -5,6 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
     private int _gameCoins;
+    private List<string> _coinsNames = new List<string>();
 
     private void Awake()
     {
@@ -36,6 +38,9 @@ public class LevelManager : MonoBehaviour
                     if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
                         SaveAndLoadManager.SetIntValue(level, SaveAndLoadManager.DunkLevelName + level);
 
+                    foreach (var coinName in _coinsNames)
+                        SaveAndLoadManager.SetIntValue(1, coinName);
+
                     SaveAndLoadManager.SetIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
                         SaveAndLoadManager.DunkWithoutDeathName + level, true);
                 }
@@ -55,6 +60,7 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
         GameManager.Instance.SetGetPlayer.transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
         GameManager.Instance.SetGetWorldState.GetBaseController.ResetMovement();
+        _coinsNames.Clear();
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
@@ -69,11 +75,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void OnGetCoin()
+    public void OnGetCoin(string coinName)
     {
         _gameCoins++;
-        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CoinNameByLevel +
-             GameManager.Instance.GetCurrentGameMode + ScenesManager.Instance.GetCurrentSceneName());
+        _coinsNames.Add(coinName);
     }
 
     public int SetCoins

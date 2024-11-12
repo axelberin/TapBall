@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Coins : ObstaclesManager
 {
+    private string _coinName;
+
     private void Start()
     {
-        int hasCoin = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinNameByLevel +
-             GameManager.Instance.GetCurrentGameMode + ScenesManager.Instance.GetCurrentSceneName());
+        _coinName = SaveAndLoadManager.CoinNameByLevel +
+             GameManager.Instance.GetCurrentGameMode + ScenesManager.Instance.GetCurrentSceneName();
+        int hasCoin = SaveAndLoadManager.GetIntValue(_coinName);
 
         gameObject.SetActive(hasCoin == default || hasCoin == 0);
     }
@@ -17,7 +20,7 @@ public class Coins : ObstaclesManager
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player)
         {
-            LevelManager.Instance.OnGetCoin();
+            LevelManager.Instance.OnGetCoin(_coinName);
             gameObject.SetActive(false);
         }
     }
