@@ -41,7 +41,7 @@ public class MenuManager : ACanvas
             GameManager.Instance.SelectGameMode(0);
         });
 
-        _dunkCloseButton = FindAndValidateButtonComponent(transform, "CloseButton");
+        _dunkCloseButton = FindAndValidateButtonComponent(transform, "DunkCloseButton");
         _dunkCloseButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(false);
