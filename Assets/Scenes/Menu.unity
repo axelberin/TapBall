@@ -228,6 +228,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91403793}
   m_CullTransparentMesh: 1
+--- !u!1 &126412019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 126412020}
+  m_Layer: 5
+  m_Name: MenuPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &126412020
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126412019}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 180943854}
+  - {fileID: 135087287}
+  m_Father: {fileID: 254842553}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.27668756}
+  m_AnchorMax: {x: 1, y: 0.75156254}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &135087286
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,18 +291,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135087286}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1377580355}
-  m_Father: {fileID: 254842553}
+  m_Father: {fileID: 126412020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.358, y: 0.4484375}
+  m_AnchorMin: {x: 0.358, y: 0.42780644}
   m_AnchorMax: {x: 0.64000005, y: 0.5}
-  m_AnchoredPosition: {x: 0.5, y: 0}
-  m_SizeDelta: {x: -3, y: -1}
+  m_AnchoredPosition: {x: 0, y: -0.6264038}
+  m_SizeDelta: {x: -0.0001, y: 0.2528}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &135087288
 MonoBehaviour:
@@ -375,18 +412,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180943853}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2040052822}
-  m_Father: {fileID: 254842553}
+  m_Father: {fileID: 126412020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.358, y: 0.55300003}
-  m_AnchorMax: {x: 0.64000005, y: 0.6025625}
-  m_AnchoredPosition: {x: 0.5, y: -3}
-  m_SizeDelta: {x: -1, y: 3}
+  m_AnchorMax: {x: 0.64000005, y: 0.6231936}
+  m_AnchoredPosition: {x: -0.000015258789, y: -0.3289032}
+  m_SizeDelta: {x: 0, y: -0.65800095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180943855
 MonoBehaviour:
@@ -431,43 +468,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 180943856}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 602573508}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 180943853}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2008930129043412940, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SelectGameMode
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &180943856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,6 +851,7 @@ GameObject:
   - component: {fileID: 254842551}
   - component: {fileID: 254842550}
   - component: {fileID: 254842554}
+  - component: {fileID: 254842555}
   m_Layer: 5
   m_Name: MenuManagerCanvas
   m_TagString: Untagged
@@ -932,8 +934,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 180943854}
-  - {fileID: 135087287}
+  - {fileID: 126412020}
   - {fileID: 602573509}
   - {fileID: 1209991287}
   m_Father: {fileID: 0}
@@ -956,6 +957,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deleteDataOnStart: 0
+--- !u!114 &254842555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254842549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a042c4bb967f84c815d339975c8195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &405989438
 GameObject:
   m_ObjectHideFlags: 0
@@ -4171,31 +4184,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1301774700}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 602573508}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 180943853}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1301774700
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,11 @@ public class MenuManager : ACanvas
     private TextMeshProUGUI[] _dunkLevelsRecords;
     private Image[] _dunkWithoutDeath;
 
+    private GameObject _menuPanel;
+    private GameObject _dunkLevelsPanel;
+    private Button _dunkLevelsButton;
+    private Button _dunkCloseButton;
+
     private int _maxDunkLevels;
 
     void Start()
@@ -24,6 +29,27 @@ public class MenuManager : ACanvas
         var coinsText = FindAndValidateTextComponent(transform, "CoinsText");
         if (coinsText != null)
             coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
+
+        _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
+        _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
+
+        _dunkLevelsButton = FindAndValidateButtonComponent(transform, "DunkBTN");
+        _dunkLevelsButton.onClick.AddListener(() =>
+        {
+            _dunkLevelsPanel.SetActive(true);
+            _menuPanel.SetActive(false);
+            GameManager.Instance.SelectGameMode(0);
+        });
+
+        _dunkCloseButton = FindAndValidateButtonComponent(transform, "CloseButton");
+        _dunkCloseButton.onClick.AddListener(() =>
+        {
+            _dunkLevelsPanel.SetActive(false);
+            _menuPanel.SetActive(true);
+        });
+
+        PauseAndResumeManager.Instance.RestartResumeAction();
+        PauseAndResumeManager.Instance.RestartPauseAction();
 
         OnDunkLevelsClicked();
     }

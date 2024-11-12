@@ -40,7 +40,7 @@ public class Platforms : MonoBehaviour
                 _waypointsIndex = 0;
             }
         }
-        transform.position += dir.normalized * _movementSpeed * Time.deltaTime;
+        transform.position += dir.normalized * (_movementSpeed * Time.deltaTime);
     }
 
     protected virtual void Rotate()

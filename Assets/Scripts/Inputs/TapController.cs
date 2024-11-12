@@ -6,14 +6,15 @@ public class TapController : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance) 
+        if (GameManager.Instance)
             GameManager.Instance.SetGetTapController = this;
     }
 
     void Update()
     {
 #if UNITY_EDITOR || UNITY_EDITOR_WIN
-        if (Input.GetKeyDown(KeyCode.Mouse0)) OnTap(Input.mousePosition);
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+            OnTap(Input.mousePosition);
 #elif UNITY_ANDROID
         if (Input.touchCount > 0)
         {

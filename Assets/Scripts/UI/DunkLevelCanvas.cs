@@ -62,13 +62,13 @@ public class DunkLevelCanvas : ACanvas
     private void OnResumeClicked()
     {
         _pauseUI.SetActive(false);
-        LevelManager.Instance.OnResumeGame();
+        PauseAndResumeManager.Instance.InvokeResume();
     }
 
     private void OnPauseClicked()
     {
         _pauseUI.SetActive(true);
-        LevelManager.Instance.OnPauseGame();
+        PauseAndResumeManager.Instance.InvokePause();
     }
 
     public void OnWin()
