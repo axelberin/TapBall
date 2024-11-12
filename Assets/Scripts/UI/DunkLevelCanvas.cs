@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DunkLevelCanvas : ACanvas
@@ -10,6 +11,11 @@ public class DunkLevelCanvas : ACanvas
     private TextMeshProUGUI _winText;
     private Button _menuButton;
     private Button _nextLevelButton;
+    private Button _pauseButton;
+    private Button _menuPauseButton;
+    private Button _restartButton;
+    private Button _resumeButton;
+    private GameObject _pauseUI;
 
     private void Awake()
     {
@@ -27,6 +33,8 @@ public class DunkLevelCanvas : ACanvas
 
         _menuButton = FindAndValidateButtonComponent(transform, "MenuBTN");
         _menuButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
+        _menuPauseButton = FindAndValidateButtonComponent(transform, "PauseMenuBTN");
+        _menuPauseButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
 
         _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
 
@@ -36,6 +44,31 @@ public class DunkLevelCanvas : ACanvas
                 ScenesManager.Instance.LoadNextLevel(GameManager.Instance.SetGetWorldState.GetLevel);
                 AdsManager.Instance.LoadInterstitialAd();
             });
+
+        _pauseButton = FindAndValidateButtonComponent(transform, "PauseButton");
+        _pauseButton.onClick.AddListener(OnPauseClicked);
+
+        _pauseUI = FindAndValidateGameObjectComponent(transform, "PauseUI");
+        _pauseUI.SetActive(false);
+
+        _restartButton = FindAndValidateButtonComponent(transform, "RestartBTN");
+        _restartButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene(
+                                                    ScenesManager.Instance.GetCurrentSceneName()));
+
+        _resumeButton = FindAndValidateButtonComponent(transform, "RresumeBTN");
+        _resumeButton.onClick.AddListener(OnResumeClicked);
+    }
+
+    private void OnResumeClicked()
+    {
+        _pauseUI.SetActive(false);
+        LevelManager.Instance.OnResumeGame();
+    }
+
+    private void OnPauseClicked()
+    {
+        _pauseUI.SetActive(true);
+        LevelManager.Instance.OnPauseGame();
     }
 
     public void OnWin()

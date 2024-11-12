@@ -4,19 +4,23 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _jumpForce = 3;
 
-    private  bool _death;
+    private bool _death;
 
     private Rigidbody2D _rb;
+    private Collider2D _collider;
 
     void Awake()
     {
-        if (!_rb) 
+        if (!_rb)
             _rb = GetComponent<Rigidbody2D>();
+
+        if (_collider == null)
+            _collider = GetComponent<Collider2D>();
     }
 
     private void Start()
     {
-        if (GameManager.Instance) 
+        if (GameManager.Instance)
             GameManager.Instance.SetGetPlayer = this;
     }
 
@@ -28,9 +32,9 @@ public class PlayerController : MonoBehaviour
 
         float clampY;
 
-        if (dir.y >= 0) 
+        if (dir.y >= 0)
             clampY = Mathf.Clamp(dir.y, 0.2f, 0.3f);
-        else 
+        else
             clampY = Mathf.Clamp(dir.y, -0.3f, -0.2f);
 
         dir = new Vector3(dir.x, clampY, dir.z);
@@ -41,9 +45,11 @@ public class PlayerController : MonoBehaviour
     {
         _death = true;
 
+        _collider.enabled = false;
         DeathShadow deathShadow = Factory.Instance.deathShadowPool.GetSingleObject();
         deathShadow.transform.position = transform.position;
         deathShadow.transform.localScale = transform.localScale;
+        _collider.enabled = true;
 
         LevelManager.Instance.OnLose();
     }

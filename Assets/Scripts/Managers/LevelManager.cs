@@ -81,6 +81,16 @@ public class LevelManager : MonoBehaviour
         _coinsNames.Add(coinName);
     }
 
+    public void OnResumeGame()
+    {
+
+    }
+
+    public void OnPauseGame()
+    {
+
+    }
+
     public int SetCoins
     {
         set => _gameCoins = value;

@@ -112,21 +112,6 @@ public class ACanvas : MonoBehaviour
         return toggleComponent;
     }
 
-    protected GameObject FindAndValidateGameManagerComponent(Transform parent, string childName)
-    {
-        var childTransform = parent.FindDeepChild(childName);
-        if (childTransform == null)
-        {
-            Debug.LogError("No hemos encontrado " + childName);
-            return null;
-        }
-
-        var gameObjectComponent = childTransform.GetComponent<GameObject>();
-        if (gameObjectComponent == null) Debug.LogError("No se encontró un componente GameObject en " + childName);
-
-        return gameObjectComponent;
-    }
-
     protected Button FindAndValidateButtonComponent(Transform parent, string childName, bool alert = true)
     {
         var childTransform = parent.FindDeepChild(childName);
