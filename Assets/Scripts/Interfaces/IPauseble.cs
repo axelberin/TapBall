@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IPauseble
 {
-
+    public void OnResume();
+    public void OnPause();
 }

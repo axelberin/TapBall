@@ -22,11 +22,6 @@ public class ScenesManager : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
-    public void LoadScene(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
-
     public string GetCurrentSceneName()
     {
         return SceneManager.GetActiveScene().name;
@@ -55,6 +50,8 @@ public class ScenesManager : MonoBehaviour
         {
             case GameManager.GameModes.Dunk:
                 LoadScene("DunkLevel" + (level + 1));
+                PauseAndResumeManager.Instance.RestartResumeAction();
+                PauseAndResumeManager.Instance.RestartPauseAction();
                 break;
             case GameManager.GameModes.Endless:
                 break;

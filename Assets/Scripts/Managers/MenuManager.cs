@@ -83,6 +83,9 @@ public class MenuManager : ACanvas
             else if (i + 1 < _dunkLevelsButtons.Length)
                 _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
                     SaveAndLoadManager.DunkLevelName + (i - 1));
+            else
+                _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
+                    SaveAndLoadManager.DunkLevelName + i);
         }
 
         _maxDunkLevels = _dunkLevelsButtons.Length;
