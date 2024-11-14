@@ -5,8 +5,8 @@ public class PauseAndResumeManager : MonoBehaviour
 {
     public static PauseAndResumeManager Instance;
 
-    private Action OnPauseGame;
-    private Action OnResumeGame;
+    private Action OnPauseGame = delegate { };
+    private Action OnResumeGame = delegate { };
 
     private void Awake()
     {

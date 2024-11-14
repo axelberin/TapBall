@@ -55,7 +55,7 @@ public class DunkLevelCanvas : ACanvas
         _restartButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene(
                                                     ScenesManager.Instance.GetCurrentSceneName()));
 
-        _resumeButton = FindAndValidateButtonComponent(transform, "RresumeBTN");
+        _resumeButton = FindAndValidateButtonComponent(transform, "ResumeBTN");
         _resumeButton.onClick.AddListener(OnResumeClicked);
     }
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8644073165336461060}
   - component: {fileID: 8484636588537288847}
   - component: {fileID: 953917328679408398}
+  - component: {fileID: 8364356355462979198}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -120,6 +121,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed6cc09e35ee2541a3e18b9d0aa99a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsCount: {fileID: 0}
-  winTime: {fileID: 0}
-  winText: {fileID: 0}
+--- !u!114 &8364356355462979198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917831010871328576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a042c4bb967f84c815d339975c8195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

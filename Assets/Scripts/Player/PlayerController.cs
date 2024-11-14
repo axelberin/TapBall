@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPauseble
 {
     [SerializeField] float _jumpForce = 3;
 
     private bool _death;
+    private Vector2 _velocityOnPause;
 
     private Rigidbody2D _rb;
     private Collider2D _collider;
@@ -22,6 +23,12 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance)
             GameManager.Instance.SetGetPlayer = this;
+
+        if (PauseAndResumeManager.Instance)
+        {
+            PauseAndResumeManager.Instance.AddResumeAction(OnResume);
+            PauseAndResumeManager.Instance.AddPauseAction(OnPause);
+        }
     }
 
     public void AddForce(Vector3 touchPos)
@@ -52,6 +59,19 @@ public class PlayerController : MonoBehaviour
         _collider.enabled = true;
 
         LevelManager.Instance.OnLose();
+    }
+
+    public void OnResume()
+    {
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+        _rb.velocity = _velocityOnPause;
+        _velocityOnPause = Vector2.zero;
+    }
+
+    public void OnPause()
+    {
+        _velocityOnPause = _rb.velocity;
+        _rb.bodyType = RigidbodyType2D.Static;
     }
 
     public bool HasDeath => _death;
