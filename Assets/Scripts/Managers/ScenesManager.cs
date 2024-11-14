@@ -49,9 +49,9 @@ public class ScenesManager : MonoBehaviour
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameManager.GameModes.Dunk:
-                LoadScene("DunkLevel" + (level + 1));
                 PauseAndResumeManager.Instance.RestartResumeAction();
                 PauseAndResumeManager.Instance.RestartPauseAction();
+                LoadScene("DunkLevel" + (level + 1));
                 break;
             case GameManager.GameModes.Endless:
                 break;
