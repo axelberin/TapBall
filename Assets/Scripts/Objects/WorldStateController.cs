@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class WorldStateController : MonoBehaviour, IPauseble
 {
@@ -13,7 +14,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private Vector3 _playerInitialPos;
 
     private PlayerController _playerController;
-    private BaseController _baseController;
+    private List<MovableObjects> _movableObjectsInLevel = new List<MovableObjects>();
 
     private void Start()
     {
@@ -27,11 +28,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
         _level = ScenesManager.Instance.GetLevelByCurrentScene();
 
-        if (!_baseController)
-            _baseController = GetComponentInParent<BaseController>();
-        if (_baseController)
-            _baseController.StopMovement();
-
         if (!_playerController)
         {
             if (GameManager.Instance.SetGetPlayer)
@@ -44,6 +40,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _playerInitialPos = _playerController.transform.position;
 
         _playerController.GetRigidbody.bodyType = RigidbodyType2D.Static;
+
+        _movableObjectsInLevel = FindObjectsByType<MovableObjects>(FindObjectsSortMode.None).ToList();
+        _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
         OnUpdate = StartCount;
     }
@@ -83,8 +82,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
         else
         {
-            if (_baseController)
-                _baseController.StopMovement();
+            _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
             LevelManager.Instance.OnWin();
             OnUpdate -= WinCount;
@@ -106,8 +104,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
         else
         {
             _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
-            if (_baseController)
-                _baseController.PlayMovement();
+            _movableObjectsInLevel.ForEach(obj => obj.PlayMovement());
+
             if (DunkLevelCanvas.Instance)
                 DunkLevelCanvas.Instance.OnExitWinBase();
 
@@ -134,5 +132,4 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public int GetLevel => _level;
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
-    public BaseController GetBaseController => _baseController;
 }

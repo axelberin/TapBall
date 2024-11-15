@@ -59,7 +59,6 @@ public class LevelManager : MonoBehaviour
 
         GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
         GameManager.Instance.SetGetPlayer.transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
-        GameManager.Instance.SetGetWorldState.GetBaseController.ResetMovement();
         _coinsNames.Clear();
         switch (GameManager.Instance.GetCurrentGameMode)
         {

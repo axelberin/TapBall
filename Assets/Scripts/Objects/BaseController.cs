@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseController : Platforms
+public class BaseController : MovableObjects
 {
     float _auxRotateSpeed = 1;
 
