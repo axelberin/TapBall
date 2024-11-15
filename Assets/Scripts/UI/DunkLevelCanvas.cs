@@ -14,6 +14,7 @@ public class DunkLevelCanvas : ACanvas
     private Button _pauseButton;
     private Button _menuPauseButton;
     private Button _restartButton;
+    private Button _restartPauseButton;
     private Button _resumeButton;
     private GameObject _pauseUI;
 
@@ -54,6 +55,11 @@ public class DunkLevelCanvas : ACanvas
 
         _restartButton = FindAndValidateButtonComponent(transform, "RestartBTN");
         _restartButton.onClick.AddListener(() => ScenesManager.Instance.LoadLevelByType(
+                                                    GameManager.Instance.SetGetWorldState.GetLevel,
+                                                    GameManager.Instance.GetCurrentGameMode));
+
+        _restartPauseButton = FindAndValidateButtonComponent(transform, "PauseRestartBTN");
+        _restartPauseButton.onClick.AddListener(() => ScenesManager.Instance.LoadLevelByType(
                                                     GameManager.Instance.SetGetWorldState.GetLevel,
                                                     GameManager.Instance.GetCurrentGameMode));
 
