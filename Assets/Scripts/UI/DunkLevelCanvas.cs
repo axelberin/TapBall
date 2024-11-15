@@ -80,6 +80,7 @@ public class DunkLevelCanvas : ACanvas
 
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winText.gameObject, transform);
+        _pauseButton.interactable = false;
     }
 
     public void OnLose()

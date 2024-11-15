@@ -63,6 +63,9 @@ public class PlayerController : MonoBehaviour, IPauseble
 
     public void OnResume()
     {
+        if (GameManager.Instance.SetGetWorldState.GetOnInitialPause)
+            return;
+
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.velocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;
