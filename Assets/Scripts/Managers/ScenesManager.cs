@@ -44,14 +44,14 @@ public class ScenesManager : MonoBehaviour
         return level;
     }
 
-    public void LoadNextLevel(int level)
+    public void LoadLevelByType(int level, GameManager.GameModes gameMode)
     {
-        switch (GameManager.Instance.GetCurrentGameMode)
+        switch (gameMode)
         {
             case GameManager.GameModes.Dunk:
                 PauseAndResumeManager.Instance.RestartResumeAction();
                 PauseAndResumeManager.Instance.RestartPauseAction();
-                LoadScene("DunkLevel" + (level + 1));
+                LoadScene("DunkLevel" + level);
                 break;
             case GameManager.GameModes.Endless:
                 break;

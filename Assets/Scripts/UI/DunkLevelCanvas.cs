@@ -41,7 +41,8 @@ public class DunkLevelCanvas : ACanvas
         if (_nextLevelButton.interactable)
             _nextLevelButton.onClick.AddListener(() =>
             {
-                ScenesManager.Instance.LoadNextLevel(GameManager.Instance.SetGetWorldState.GetLevel);
+                ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel + 1,
+                    GameManager.Instance.GetCurrentGameMode);
                 AdsManager.Instance.LoadInterstitialAd();
             });
 
@@ -52,8 +53,9 @@ public class DunkLevelCanvas : ACanvas
         _pauseUI.SetActive(false);
 
         _restartButton = FindAndValidateButtonComponent(transform, "RestartBTN");
-        _restartButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene(
-                                                    ScenesManager.Instance.GetCurrentSceneName()));
+        _restartButton.onClick.AddListener(() => ScenesManager.Instance.LoadLevelByType(
+                                                    GameManager.Instance.SetGetWorldState.GetLevel,
+                                                    GameManager.Instance.GetCurrentGameMode));
 
         _resumeButton = FindAndValidateButtonComponent(transform, "ResumeBTN");
         _resumeButton.onClick.AddListener(OnResumeClicked);
