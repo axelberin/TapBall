@@ -5,8 +5,9 @@ using static GameManager;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+
     private int _gameCoins;
-    private List<string> _coinsNames = new List<string>();
+    private List<Coins> _coinsObtained = new List<Coins>();
 
     private void Awake()
     {
@@ -38,8 +39,8 @@ public class LevelManager : MonoBehaviour
                     if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
                         SaveAndLoadManager.SetIntValue(level, SaveAndLoadManager.DunkLevelName + level);
 
-                    foreach (var coinName in _coinsNames)
-                        SaveAndLoadManager.SetIntValue(1, coinName);
+                    foreach (var coinName in _coinsObtained)
+                        SaveAndLoadManager.SetIntValue(1, coinName.GetCoinName);
 
                     SaveAndLoadManager.SetIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
                         SaveAndLoadManager.DunkWithoutDeathName + level, true);
@@ -50,6 +51,7 @@ public class LevelManager : MonoBehaviour
         }
 
         _gameCoins = 0;
+        _coinsObtained.Clear();
     }
 
     public void OnLose()
@@ -59,11 +61,13 @@ public class LevelManager : MonoBehaviour
 
         GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
         GameManager.Instance.SetGetPlayer.transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
-        _coinsNames.Clear();
+        _coinsObtained.ForEach(coin => coin.gameObject.SetActive(true));
+        _coinsObtained.Clear();
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
                 {
+                    _gameCoins = 0;
                     GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
                     DunkLevelCanvas.Instance.OnLose();
                     GameManager.Instance.SetGetWorldState.SetOnUpdate(GameManager.Instance.SetGetWorldState.StartCount);
@@ -74,10 +78,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void OnGetCoin(string coinName)
+    public void OnGetCoin(Coins coinName)
     {
         _gameCoins++;
-        _coinsNames.Add(coinName);
+        _coinsObtained.Add(coinName);
     }
 
     public int SetCoins

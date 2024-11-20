@@ -20,8 +20,10 @@ public class Coins : ObstaclesManager
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player)
         {
-            LevelManager.Instance.OnGetCoin(_coinName);
+            LevelManager.Instance.OnGetCoin(this);
             gameObject.SetActive(false);
         }
     }
+
+    public string GetCoinName => _coinName;
 }
