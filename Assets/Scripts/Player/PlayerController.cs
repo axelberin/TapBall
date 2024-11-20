@@ -29,6 +29,21 @@ public class PlayerController : MonoBehaviour, IPauseble
             PauseAndResumeManager.Instance.AddResumeAction(OnResume);
             PauseAndResumeManager.Instance.AddPauseAction(OnPause);
         }
+
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnWinLevel += OnWin;
+            LevelManager.Instance.OnLoseLevel += OnLose;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnWinLevel -= OnWin;
+            LevelManager.Instance.OnLoseLevel -= OnLose;
+        }
     }
 
     public void AddForce(Vector3 touchPos)
@@ -75,6 +90,17 @@ public class PlayerController : MonoBehaviour, IPauseble
     {
         _velocityOnPause = _rb.velocity;
         _rb.bodyType = RigidbodyType2D.Static;
+    }
+
+    public void OnWin()
+    {
+        _rb.bodyType = RigidbodyType2D.Static;
+    }
+
+    public void OnLose()
+    {
+        _rb.bodyType = RigidbodyType2D.Static;
+        transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
     }
 
     public bool HasDeath => _death;

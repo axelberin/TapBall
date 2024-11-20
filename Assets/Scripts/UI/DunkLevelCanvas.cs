@@ -65,6 +65,21 @@ public class DunkLevelCanvas : ACanvas
 
         _resumeButton = FindAndValidateButtonComponent(transform, "ResumeBTN");
         _resumeButton.onClick.AddListener(OnResumeClicked);
+
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnWinLevel += OnWin;
+            LevelManager.Instance.OnLoseLevel += OnLose;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnWinLevel -= OnWin;
+            LevelManager.Instance.OnLoseLevel -= OnLose;
+        }
     }
 
     private void OnResumeClicked()

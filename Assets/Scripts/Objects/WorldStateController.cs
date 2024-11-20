@@ -26,6 +26,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
             PauseAndResumeManager.Instance.AddPauseAction(OnPause);
         }
 
+        if (LevelManager.Instance)
+            LevelManager.Instance.OnLoseLevel += OnLose;
+
         _level = ScenesManager.Instance.GetLevelByCurrentScene();
 
         if (!_playerController)
@@ -44,7 +47,18 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _movableObjectsInLevel = FindObjectsByType<MovableObjects>(FindObjectsSortMode.None).ToList();
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
-        OnUpdate = StartCount;
+        SetOnUpdate(StartCount);
+    }
+
+    private void OnDestroy()
+    {
+        if (LevelManager.Instance)
+            LevelManager.Instance.OnLoseLevel -= OnLose;
+    }
+
+    private void OnLose()
+    {
+        SetOnUpdate(StartCount);
     }
 
     private void Update()
@@ -55,7 +69,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerController>() && !_onPause)
-            OnUpdate = WinCount;
+            SetOnUpdate(WinCount);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -85,7 +99,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
             LevelManager.Instance.OnWin();
-            OnUpdate -= WinCount;
+            SetOnUpdate();
         }
     }
 
@@ -110,11 +124,11 @@ public class WorldStateController : MonoBehaviour, IPauseble
                 DunkLevelCanvas.Instance.OnExitWinBase();
 
             _timeToStart = 0;
-            OnUpdate = null;
+            SetOnUpdate();
         }
     }
 
-    public void SetOnUpdate(Action action)
+    public void SetOnUpdate(Action action = null)
     {
         OnUpdate = action;
     }

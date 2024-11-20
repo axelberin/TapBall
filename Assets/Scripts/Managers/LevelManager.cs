@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
@@ -5,6 +6,9 @@ using static GameManager;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+
+    public Action OnWinLevel = delegate { };
+    public Action OnLoseLevel = delegate { };
 
     private int _gameCoins;
     private List<Coins> _coinsObtained = new List<Coins>();
@@ -19,7 +23,7 @@ public class LevelManager : MonoBehaviour
 
     public void OnWin()
     {
-        GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
+        OnWinLevel?.Invoke();
 
         int currentCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + _gameCoins;
         SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName);
@@ -28,7 +32,6 @@ public class LevelManager : MonoBehaviour
         {
             case GameModes.Dunk:
                 {
-                    DunkLevelCanvas.Instance.OnWin();
                     int level = GameManager.Instance.SetGetWorldState.GetLevel - 1;
                     int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
 
@@ -56,21 +59,17 @@ public class LevelManager : MonoBehaviour
 
     public void OnLose()
     {
-        if (!GameManager.Instance.SetGetWorldState)
-            return;
+        OnLoseLevel?.Invoke();
 
-        GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType = RigidbodyType2D.Static;
-        GameManager.Instance.SetGetPlayer.transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
         _coinsObtained.ForEach(coin => coin.gameObject.SetActive(true));
         _coinsObtained.Clear();
+
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
                 {
                     _gameCoins = 0;
                     GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
-                    DunkLevelCanvas.Instance.OnLose();
-                    GameManager.Instance.SetGetWorldState.SetOnUpdate(GameManager.Instance.SetGetWorldState.StartCount);
                 }
                 break;
             default:
