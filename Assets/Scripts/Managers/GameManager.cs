@@ -4,9 +4,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    PlayerController _playerController;
-    TapController _tapController;
-    WorldStateController _worldStateController;
+    private PlayerController _playerController;
+    private TapController _tapController;
+    private WorldStateController _worldStateController;
 
     public enum GameModes
     {
