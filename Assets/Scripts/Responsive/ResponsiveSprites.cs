@@ -1,25 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResponsiveSprites : MonoBehaviour
 {
-    void Start()
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private bool maintainAspectRatio = true;
+    [SerializeField] private float percentageOfScreenHeight = 0.2f; // 20% de la altura de la pantalla
+    [SerializeField] private Vector2 padding = Vector2.zero; // Padding en unidades de mundo
+
+    private void Awake()
     {
-        ResizeToAspectRatio();
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void ResizeToAspectRatio()
+    private void Start()
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr == null) return;
+        AdjustSprite();
+    }
 
-        float targetWidth = Camera.main.orthographicSize * Screen.width / Screen.height;
-        float targetHeight = Camera.main.orthographicSize * 2.0f;
+    private void AdjustSprite()
+    {
+        // Obtener la cámara principal
+        Camera camera = Camera.main;
+        if (camera == null) 
+            return;
 
-        Vector2 spriteSize = sr.sprite.bounds.size;
+        // Calcular altura deseada en unidades de mundo
+        float targetWorldHeight = camera.orthographicSize * 2f * percentageOfScreenHeight;
 
-        float scaleFactor = Mathf.Min(targetWidth / spriteSize.x, targetHeight / spriteSize.y);
-        transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+        // Obtener dimensiones originales del sprite
+        Vector2 spriteSize = spriteRenderer.sprite.bounds.size;
+
+        // Calcular escala necesaria
+        float scale;
+        if (maintainAspectRatio)
+        {
+            scale = (targetWorldHeight - padding.y) / spriteSize.y;
+            transform.localScale = new Vector3(scale, scale, 1f);
+        }
+        else
+        {
+            // Calcular ancho en unidades de mundo basado en el aspect ratio de la pantalla
+            float targetWorldWidth = targetWorldHeight * (Screen.width / (float)Screen.height);
+            transform.localScale = new Vector3(
+                (targetWorldWidth - padding.x) / spriteSize.x,
+                (targetWorldHeight - padding.y) / spriteSize.y,
+                1f
+            );
+        }
+    }
+
+    // Opcional: Ajustar cuando la orientación cambie
+    private void OnRectTransformDimensionsChange()
+    {
+        AdjustSprite();
     }
 }
