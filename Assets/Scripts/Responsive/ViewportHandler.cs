@@ -30,85 +30,18 @@ public class ViewportHandler : MonoBehaviour
     #endregion
 
     #region PROPERTIES
-    public float Width
-    {
-        get
-        {
-            return _width;
-        }
-    }
-    public float Height
-    {
-        get
-        {
-            return _height;
-        }
-    }
-
+    public float Width => _width;
+    public float Height => _height;
     // helper points:
-    public Vector3 BottomLeft
-    {
-        get
-        {
-            return _bl;
-        }
-    }
-    public Vector3 BottomCenter
-    {
-        get
-        {
-            return _bc;
-        }
-    }
-    public Vector3 BottomRight
-    {
-        get
-        {
-            return _br;
-        }
-    }
-    public Vector3 MiddleLeft
-    {
-        get
-        {
-            return _ml;
-        }
-    }
-    public Vector3 MiddleCenter
-    {
-        get
-        {
-            return _mc;
-        }
-    }
-    public Vector3 MiddleRight
-    {
-        get
-        {
-            return _mr;
-        }
-    }
-    public Vector3 TopLeft
-    {
-        get
-        {
-            return _tl;
-        }
-    }
-    public Vector3 TopCenter
-    {
-        get
-        {
-            return _tc;
-        }
-    }
-    public Vector3 TopRight
-    {
-        get
-        {
-            return _tr;
-        }
-    }
+    public Vector3 BottomLeft => _bl;
+    public Vector3 BottomCenter => _bc;
+    public Vector3 BottomRight => _br;
+    public Vector3 MiddleLeft => _ml;
+    public Vector3 MiddleCenter => _mc;
+    public Vector3 MiddleRight => _mr;
+    public Vector3 TopLeft => _tl;
+    public Vector3 TopCenter => _tc;
+    public Vector3 TopRight => _tr;
     #endregion
 
     #region METHODS
@@ -124,13 +57,9 @@ public class ViewportHandler : MonoBehaviour
         float leftX, rightX, topY, bottomY;
 
         if (constraint == Constraint.Landscape)
-        {
             camera.orthographicSize = 1f / camera.aspect * UnitsSize / 2f;
-        }
         else
-        {
             camera.orthographicSize = UnitsSize / 2f;
-        }
 
         _height = 2f * camera.orthographicSize;
         _width = _height * camera.aspect;
@@ -175,12 +104,13 @@ public class ViewportHandler : MonoBehaviour
         {
             float spread = camera.farClipPlane - camera.nearClipPlane;
             float center = (camera.farClipPlane + camera.nearClipPlane) * 0.5f;
-            Gizmos.DrawWireCube(new Vector3(0, 0, center), new Vector3(camera.orthographicSize * 2 * camera.aspect, camera.orthographicSize * 2, spread));
+            Gizmos.DrawWireCube(new Vector3(0, 0, center), new Vector3(camera.orthographicSize
+                * 2 * camera.aspect, camera.orthographicSize * 2, spread));
         }
         else
-        {
-            Gizmos.DrawFrustum(Vector3.zero, camera.fieldOfView, camera.farClipPlane, camera.nearClipPlane, camera.aspect);
-        }
+            Gizmos.DrawFrustum(Vector3.zero, camera.fieldOfView,
+                camera.farClipPlane, camera.nearClipPlane, camera.aspect);
+
         Gizmos.matrix = temp;
     }
     #endregion

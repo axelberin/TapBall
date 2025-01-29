@@ -40,9 +40,9 @@ public class CameraAnchor : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         if (cameraWaitCycles > 0)
-        {
-            print(string.Format("CameraAnchor found ViewportHandler instance after waiting {0} frame(s). You might want to check that ViewportHandler has an earlie execution order.", cameraWaitCycles));
-        }
+            print(string.Format("CameraAnchor found ViewportHandler instance after waiting {0} frame(s). " +
+                "You might want to check that ViewportHandler has an earlie execution order.", cameraWaitCycles));
+
         UpdateAnchor();
         updateAnchorRoutine = null;
     }
@@ -85,9 +85,7 @@ public class CameraAnchor : MonoBehaviour
     {
         Vector3 newPos = anchor + anchorOffset;
         if (!transform.position.Equals(newPos))
-        {
             transform.position = newPos;
-        }
     }
 
 #if UNITY_EDITOR
