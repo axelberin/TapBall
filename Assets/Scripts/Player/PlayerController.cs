@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class PlayerController : MonoBehaviour, IPauseble
 {
     [SerializeField] float _jumpForce = 3;
+    [SerializeField] string _deathPrefabName = "Death";
 
     private bool _death;
     private Vector2 _velocityOnPause;
@@ -68,9 +70,10 @@ public class PlayerController : MonoBehaviour, IPauseble
         _death = true;
 
         _collider.enabled = false;
-        DeathShadow deathShadow = Factory.Instance.deathShadowPool.GetSingleObject();
-        deathShadow.transform.position = transform.position;
-        deathShadow.transform.localScale = transform.localScale;
+        //DeathShadow deathShadow = Factory.Instance.deathShadowPool.GetSingleObject();
+        //deathShadow.transform.position = transform.position;
+        //deathShadow.transform.localScale = transform.localScale;
+        Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
         _collider.enabled = true;
 
         LevelManager.Instance.OnLose();
