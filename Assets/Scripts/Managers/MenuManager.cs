@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuManager : ACanvas
+public class MenuManager : CanvasElementLocator
 {
     [SerializeField] bool _deleteDataOnStart = false;
     private Button[] _dunkLevelsButtons;
