@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ResponsiveSprites : MonoBehaviour
 {
+    [SerializeField] private bool adjustInUpdate = false;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private bool maintainAspectRatio = true;
     [SerializeField] private float percentageOfScreenHeight = 0.2f; // 20% de la altura de la pantalla
@@ -18,11 +19,19 @@ public class ResponsiveSprites : MonoBehaviour
         AdjustSprite();
     }
 
+#if UNITY_EDITOR
+    void Update()
+    {
+        if (adjustInUpdate)
+            AdjustSprite();
+    }
+#endif
+
     private void AdjustSprite()
     {
         // Obtener la cámara principal
         Camera camera = Camera.main;
-        if (camera == null) 
+        if (camera == null)
             return;
 
         // Calcular altura deseada en unidades de mundo
