@@ -70,9 +70,6 @@ public class PlayerController : MonoBehaviour, IPauseble
         _death = true;
 
         _collider.enabled = false;
-        //DeathShadow deathShadow = Factory.Instance.deathShadowPool.GetSingleObject();
-        //deathShadow.transform.position = transform.position;
-        //deathShadow.transform.localScale = transform.localScale;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
         _collider.enabled = true;
 
