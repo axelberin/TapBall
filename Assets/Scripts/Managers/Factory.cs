@@ -26,7 +26,7 @@ public class Factory : MonoBehaviour
     public void AddDeathShadow(DeathShadow deathShadow)
     {
         _deathShadowList.Add(deathShadow);
-        if (_deathShadowList.Count > 50) _deathShadowList.FirstOrDefault().ReturnObject();
+        if (_deathShadowList.Count > 50) _deathShadowList.FirstOrDefault()?.ReturnObject();
     }
 
     DeathShadow DeathShadowCreator()
