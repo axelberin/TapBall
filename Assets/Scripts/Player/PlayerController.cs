@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IPauseble
 
     private Rigidbody2D _rb;
     private Collider2D _collider;
+    private Sprite _sprite;
 
     void Awake()
     {
@@ -19,6 +20,9 @@ public class PlayerController : MonoBehaviour, IPauseble
 
         if (_collider == null)
             _collider = GetComponent<Collider2D>();
+
+        if (_sprite == null)
+            _sprite = GetComponent<Sprite>();
     }
 
     private void Start()
@@ -105,4 +109,5 @@ public class PlayerController : MonoBehaviour, IPauseble
 
     public bool HasDeath => _death;
     public Rigidbody2D GetRigidbody => _rb;
+    public Sprite GetSprite => _sprite;
 }
