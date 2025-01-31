@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5657834287147116334}
   - component: {fileID: 7737575069619694930}
   - component: {fileID: 8848840613683886129}
+  - component: {fileID: 3409428727126258902}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorType: 6
-  anchorOffset: {x: 1.5, y: -2.75, z: 0}
+  anchorOffset: {x: 1.5, y: -3.15, z: 0}
 --- !u!61 &8848840613683886129
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -136,7 +137,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.9231377, y: 1.1800001}
+    oldSize: {x: 5.91, y: 1.18}
     newSize: {x: 5.9231377, y: 1.1800001}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -145,3 +146,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.6389055, y: 0.71456623}
   m_EdgeRadius: 0
+--- !u!114 &3409428727126258902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841190326679416832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f42f9d2c412f14aa83d8663fd90aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adjustInUpdate: 1
+  spriteRenderer: {fileID: 0}
+  maintainAspectRatio: 1
+  percentageOfScreenHeight: 0.059
+  padding: {x: 0, y: 0}
