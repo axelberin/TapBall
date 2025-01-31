@@ -15,18 +15,21 @@ public class Factory : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance) Instance = this;
+        if (!Instance) 
+            Instance = this;
     }
 
     void Start()
     {
-        if (_deathShadowPrefab) deathShadowPool = new ObjectPool<DeathShadow>(DeathShadowCreator, _deathShadowPrefab.TurnOn, _deathShadowPrefab.TurnOff, _deathShadowAmmount);
+        //if (_deathShadowPrefab) 
+        //    deathShadowPool = new ObjectPool<DeathShadow>(DeathShadowCreator, _deathShadowPrefab.TurnOn, _deathShadowPrefab.TurnOff, _deathShadowAmmount);
     }
 
     public void AddDeathShadow(DeathShadow deathShadow)
     {
-        _deathShadowList.Add(deathShadow);
-        if (_deathShadowList.Count > 50) _deathShadowList.FirstOrDefault().ReturnObject();
+        //_deathShadowList.Add(deathShadow);
+        //if (_deathShadowList.Count > 50) 
+        //    _deathShadowList.FirstOrDefault()?.ReturnObject();
     }
 
     DeathShadow DeathShadowCreator()

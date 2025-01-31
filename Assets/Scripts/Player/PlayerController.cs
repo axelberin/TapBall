@@ -1,14 +1,17 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class PlayerController : MonoBehaviour, IPauseble
 {
     [SerializeField] float _jumpForce = 3;
+    [SerializeField] string _deathPrefabName = "Death";
 
     private bool _death;
     private Vector2 _velocityOnPause;
 
     private Rigidbody2D _rb;
     private Collider2D _collider;
+    private Sprite _sprite;
 
     void Awake()
     {
@@ -17,6 +20,9 @@ public class PlayerController : MonoBehaviour, IPauseble
 
         if (_collider == null)
             _collider = GetComponent<Collider2D>();
+
+        if (_sprite == null)
+            _sprite = GetComponent<Sprite>();
     }
 
     private void Start()
@@ -68,9 +74,7 @@ public class PlayerController : MonoBehaviour, IPauseble
         _death = true;
 
         _collider.enabled = false;
-        DeathShadow deathShadow = Factory.Instance.deathShadowPool.GetSingleObject();
-        deathShadow.transform.position = transform.position;
-        deathShadow.transform.localScale = transform.localScale;
+        Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
         _collider.enabled = true;
 
         LevelManager.Instance.OnLose();
@@ -105,4 +109,5 @@ public class PlayerController : MonoBehaviour, IPauseble
 
     public bool HasDeath => _death;
     public Rigidbody2D GetRigidbody => _rb;
+    public Sprite GetSprite => _sprite;
 }

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DunkLevelCanvas : ACanvas
+public class DunkLevelCanvas : CanvasElementLocator
 {
     public static DunkLevelCanvas Instance;
 

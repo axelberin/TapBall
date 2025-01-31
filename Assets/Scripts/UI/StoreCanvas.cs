@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoreCanvas : ACanvas
+public class StoreCanvas : CanvasElementLocator
 {
     public static StoreCanvas Instance { get; private set; }
 

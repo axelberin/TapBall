@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AddressablesSkins
+  m_EditorClassIdentifier: 
+  m_GroupName: AddressablesSkins
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4aa76824fc694314997a5297127ccc87
+  m_SerializeEntries:
+  - m_GUID: 29140719ce4515f46a00d773896ed141
+    m_Address: Death
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 50966938486398a42b43087b314f2f7a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a531a4d6460fbe742b321a9e3cfe9fca, type: 2}
+    - {fileID: 11400000, guid: c5db4e9535b99224888c971c570e5c0d, type: 2}

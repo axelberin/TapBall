@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.UI;
 
-public class StoreObject : MonoBehaviour
+public class StoreObject : CanvasElementLocator
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Image _image;
+    private Button _buyButton;
+    private Button _equipButton;
+    private Button _unequipButton;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _image = FindAndValidateImageComponent(transform, "Image");
+        _buyButton = FindAndValidateButtonComponent(transform, "BuyButton");
+        _equipButton = FindAndValidateButtonComponent(transform, "EquipButton");
+        _unequipButton = FindAndValidateButtonComponent(transform, "UnequipButton");
     }
 }
