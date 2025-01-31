@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2476203140272675046}
   - component: {fileID: 3389506878939828791}
   - component: {fileID: 74316981730705865}
+  - component: {fileID: 1176519154674328617}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -29,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.28, y: -0.78, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1.25}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.54, y: 3.54}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -133,3 +134,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951f6166e1576d14694e917abf9511f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1176519154674328617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328939612470944094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f42f9d2c412f14aa83d8663fd90aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adjustInUpdate: 1
+  spriteRenderer: {fileID: 0}
+  maintainAspectRatio: 1
+  percentageOfScreenHeight: 0.089
+  padding: {x: 0, y: 0}

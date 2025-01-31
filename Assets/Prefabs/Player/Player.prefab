@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1692408352899045913}
   - component: {fileID: 8316206587470457002}
   - component: {fileID: 8565058752578051102}
+  - component: {fileID: 4988139994694362274}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -30,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.96, y: 2.16, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.54, y: 3.54}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -146,9 +147,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.047842637, y: 0.011349171}
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.64771426
 --- !u!114 &8565058752578051102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,3 +164,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpForce: 10
   _deathPrefabName: Death
+--- !u!114 &4988139994694362274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097105863353506434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f42f9d2c412f14aa83d8663fd90aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adjustInUpdate: 1
+  spriteRenderer: {fileID: 8914083454596206930}
+  maintainAspectRatio: 1
+  percentageOfScreenHeight: 0.11
+  padding: {x: 0, y: 0}

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2313622578201309103}
   - component: {fileID: 8613699844370877666}
   - component: {fileID: 2349363725683394702}
+  - component: {fileID: 3187598754534142887}
   m_Layer: 0
   m_Name: WinBase
   m_TagString: Untagged
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.199999, y: 10.799999}
+  m_Size: {x: 3.54, y: 3.54}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -123,8 +124,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.18, y: 1.18}
-    newSize: {x: 19.199999, y: 10.799999}
+    oldSize: {x: 3.54, y: 3.54}
+    newSize: {x: 3.54, y: 3.54}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -170,6 +171,23 @@ MonoBehaviour:
   _rotate: 0
   _rotateSpeed: 10
   _waypoints: []
+--- !u!114 &3187598754534142887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2933221586683428456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f42f9d2c412f14aa83d8663fd90aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adjustInUpdate: 1
+  spriteRenderer: {fileID: 0}
+  maintainAspectRatio: 1
+  percentageOfScreenHeight: 0.18
+  padding: {x: 0, y: 0}
 --- !u!1 &8965892638347889068
 GameObject:
   m_ObjectHideFlags: 0
