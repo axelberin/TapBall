@@ -3576,14 +3576,6 @@ PrefabInstance:
       value: Player (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6886894096327245069, guid: 0d38d5938518a9847a91f66dda322c38, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6886894096327245069, guid: 0d38d5938518a9847a91f66dda322c38, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6886894096327245069, guid: 0d38d5938518a9847a91f66dda322c38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.48
       objectReference: {fileID: 0}
@@ -4498,14 +4490,6 @@ PrefabInstance:
     - target: {fileID: 2933221586683428456, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: m_Name
       value: WinBase (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958972286708432112, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958972286708432112, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.10993
       objectReference: {fileID: 0}
     - target: {fileID: 6958972286708432112, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: m_LocalPosition.x
