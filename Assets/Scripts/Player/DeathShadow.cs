@@ -1,14 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class DeathShadow : MonoBehaviour
 {
+    private SpriteRenderer _spriteRenderer;
+
     private void Start()
     {
-        var sprite = GetComponent<Sprite>();
-        //if (sprite != null)
-        //    sprite = GameManager.Instance.SetGetPlayer.GetSprite;     //TODO igualar a la skin actual desde el addresable.
+        transform.localScale = GameManager.Instance.SetGetPlayer.transform.localScale;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteRenderer != null)
+        {
+            if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkin) == default)
+                SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
+
+            Addressables.LoadAssetAsync<Sprite>(SaveAndLoadManager.GetStringValue(
+                SaveAndLoadManager.CurrentBallSkin)).Completed += OnSpriteLoaded;
+        }
+    }
+
+    private void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            _spriteRenderer.sprite = handle.Result;
+        }
     }
     //public void ReturnObject()
     //{

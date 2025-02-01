@@ -11,6 +11,8 @@ public static class SaveAndLoadManager
     public static string DunkLevelName = "DunkLevel_";
     public static string DunkWithoutDeathName = "DunkWithoutDeath_";
 
+    public static string CurrentBallSkin = "BallBasicSkin";
+
     public static void SetIntValue(int value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetInt(parameterName, value);
@@ -25,7 +27,7 @@ public static class SaveAndLoadManager
             Save();
     }
 
-    public static void SetIntValue(string value, string parameterName, bool withSave = false)
+    public static void SetStringValue(string value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetString(parameterName, value);
         if (withSave)

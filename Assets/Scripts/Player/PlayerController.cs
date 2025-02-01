@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PlayerController : MonoBehaviour, IPauseble
 {
@@ -41,6 +42,12 @@ public class PlayerController : MonoBehaviour, IPauseble
             LevelManager.Instance.OnWinLevel += OnWin;
             LevelManager.Instance.OnLoseLevel += OnLose;
         }
+
+        if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkin) == default)
+            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
+
+        Addressables.LoadAssetAsync<Sprite>(SaveAndLoadManager.GetStringValue(
+            SaveAndLoadManager.CurrentBallSkin)).Completed += OnSpriteLoaded;
     }
 
     private void OnDestroy()
@@ -49,6 +56,14 @@ public class PlayerController : MonoBehaviour, IPauseble
         {
             LevelManager.Instance.OnWinLevel -= OnWin;
             LevelManager.Instance.OnLoseLevel -= OnLose;
+        }
+    }
+
+    private void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            _sprite = handle.Result;
         }
     }
 
