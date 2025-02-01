@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, IPauseble
 
     private Rigidbody2D _rb;
     private Collider2D _collider;
-    private Sprite _sprite;
+    private SpriteRenderer _spriteRenderer;
 
     void Awake()
     {
@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour, IPauseble
         if (_collider == null)
             _collider = GetComponent<Collider2D>();
 
-        if (_sprite == null)
-            _sprite = GetComponent<Sprite>();
+        if (_spriteRenderer == null)
+            _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour, IPauseble
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            _sprite = handle.Result;
+            _spriteRenderer.sprite = handle.Result;
         }
     }
 
@@ -90,9 +90,9 @@ public class PlayerController : MonoBehaviour, IPauseble
 
         _collider.enabled = false;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
-        _collider.enabled = true;
 
         LevelManager.Instance.OnLose();
+        _collider.enabled = true;
     }
 
     public void OnResume()
@@ -124,5 +124,4 @@ public class PlayerController : MonoBehaviour, IPauseble
 
     public bool HasDeath => _death;
     public Rigidbody2D GetRigidbody => _rb;
-    public Sprite GetSprite => _sprite;
 }
