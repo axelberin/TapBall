@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class DeathShadow : MonoBehaviour
+public class DeathShadow : MonoBehaviour, ISkinLoader
 {
     private SpriteRenderer _spriteRenderer;
 
@@ -21,7 +21,7 @@ public class DeathShadow : MonoBehaviour
         }
     }
 
-    private void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
+    public void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {

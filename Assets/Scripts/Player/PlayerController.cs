@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PlayerController : MonoBehaviour, IPauseble
+public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
     [SerializeField] float _jumpForce = 3;
     [SerializeField] string _deathPrefabName = "Death";
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour, IPauseble
         }
     }
 
-    private void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
+    public void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
