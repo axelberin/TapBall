@@ -1078,6 +1078,10 @@ PrefabInstance:
       value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 7737575069619694930, guid: 499c6e238a6551c408be4396de754ca8, type: 3}
+      propertyPath: anchorType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7737575069619694930, guid: 499c6e238a6551c408be4396de754ca8, type: 3}
       propertyPath: anchorOffset.y
       value: -2.77
       objectReference: {fileID: 0}
@@ -1218,7 +1222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8290271058673414124, guid: 14169a6c9d5fb414dbfd015ad55c355c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 8290271058673414124, guid: 14169a6c9d5fb414dbfd015ad55c355c, type: 3}
       propertyPath: m_LocalPosition.z
