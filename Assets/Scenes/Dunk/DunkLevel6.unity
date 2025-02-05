@@ -788,6 +788,10 @@ PrefabInstance:
       value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 7737575069619694930, guid: 499c6e238a6551c408be4396de754ca8, type: 3}
+      propertyPath: anchorType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7737575069619694930, guid: 499c6e238a6551c408be4396de754ca8, type: 3}
       propertyPath: anchorOffset.y
       value: -2.25
       objectReference: {fileID: 0}
