@@ -73,7 +73,15 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         Vector3 dir = (transform.position - touchPos).normalized;
 
-        dir = new Vector3(dir.x, dir.y < 0 ? -0.2f : 0.2f, dir.z);
+        float dirX;
+
+        if (dir.x < 0f)
+            dirX = Mathf.Max(dir.x, -0.2f);
+        else
+            dirX = Mathf.Min(dir.x, 0.2f);
+
+        Debug.Log(dirX);
+        dir = new Vector3(dirX, dir.y < 0 ? -0.2f : 0.2f, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);
     }
 
