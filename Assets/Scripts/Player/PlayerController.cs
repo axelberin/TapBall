@@ -73,14 +73,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         Vector3 dir = (transform.position - touchPos).normalized;
 
-        float clampY;
-
-        if (dir.y >= 0)
-            clampY = Mathf.Clamp(dir.y, 0.2f, 0.3f);
-        else
-            clampY = Mathf.Clamp(dir.y, -0.3f, -0.2f);
-
-        dir = new Vector3(dir.x, clampY, dir.z);
+        dir = new Vector3(dir.x, dir.y < 0 ? -0.2f : 0.2f, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);
     }
 
