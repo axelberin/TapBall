@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         else
             dirX = Mathf.Min(dir.x, 0.2f);
 
-        Debug.Log(dirX);
         dir = new Vector3(dirX, dir.y < 0 ? -0.2f : 0.2f, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);
     }
