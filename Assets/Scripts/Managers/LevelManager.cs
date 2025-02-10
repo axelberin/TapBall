@@ -25,7 +25,11 @@ public class LevelManager : MonoBehaviour
     {
         OnWinLevel?.Invoke();
 
-        int currentCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + _gameCoins;
+        int savedCoins = 0;
+        if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
+            savedCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
+
+        int currentCoins = savedCoins + _gameCoins;
         SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName);
 
         switch (GameManager.Instance.GetCurrentGameMode)

@@ -27,7 +27,7 @@ public class MenuManager : CanvasElementLocator
 #endif
 
         var coinsText = FindAndValidateTextComponent(transform, "CoinsText");
-        if (coinsText != null)
+        if (coinsText != null && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
             coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
