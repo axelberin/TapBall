@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class StoreCanvas : CanvasElementLocator
 {
     public static StoreCanvas Instance { get; private set; }
+
+    [SerializeField] private string _storeObjectPrefabName;
 
     private void Awake()
     {
@@ -12,5 +13,10 @@ public class StoreCanvas : CanvasElementLocator
             Instance = this;
         else
             Destroy(this);
+    }
+
+    private void Start()
+    {
+        Addressables.InstantiateAsync(_storeObjectPrefabName, transform);
     }
 }

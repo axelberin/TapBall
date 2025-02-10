@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AddressablesUI
+  m_EditorClassIdentifier: 
+  m_GroupName: AddressablesUI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: fbcd39efc9f9d274887b5ffd77b96361
+  m_SerializeEntries:
+  - m_GUID: 3f9a711eeba3a3743b0954bc860ab327
+    m_Address: StoreObject
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 50966938486398a42b43087b314f2f7a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6b1bbc51831bb414eb85bcccc7ae32fe, type: 2}
+    - {fileID: 11400000, guid: e2d390d9c1698114aba0d438a78d7b24, type: 2}

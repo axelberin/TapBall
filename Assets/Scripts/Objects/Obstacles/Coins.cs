@@ -17,8 +17,7 @@ public class Coins : ObstaclesManager
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController player = collision.GetComponent<PlayerController>();
-        if (player)
+        if (collision.TryGetComponent(out PlayerController player))
         {
             LevelManager.Instance.OnGetCoin(this);
             gameObject.SetActive(false);

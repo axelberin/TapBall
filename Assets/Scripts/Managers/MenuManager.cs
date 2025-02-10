@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,8 +12,10 @@ public class MenuManager : CanvasElementLocator
 
     private GameObject _menuPanel;
     private GameObject _dunkLevelsPanel;
+    private GameObject _storePanel;
     private Button _dunkLevelsButton;
     private Button _dunkCloseButton;
+    private Button _storeButton;
 
     private int _maxDunkLevels;
 
@@ -32,6 +33,7 @@ public class MenuManager : CanvasElementLocator
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
+        _storePanel = FindAndValidateGameObjectComponent(transform, "StoreCanvas");
 
         _dunkLevelsButton = FindAndValidateButtonComponent(transform, "DunkBTN");
         _dunkLevelsButton.onClick.AddListener(() =>
@@ -47,6 +49,15 @@ public class MenuManager : CanvasElementLocator
             _dunkLevelsPanel.SetActive(false);
             _menuPanel.SetActive(true);
         });
+
+        _storeButton = FindAndValidateButtonComponent(transform, "StoreBTN");
+        _storeButton.onClick.AddListener(() =>
+        {
+            _menuPanel.SetActive(false);
+            _storePanel.SetActive(true);
+        });
+
+        _storePanel.SetActive(false);
 
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();

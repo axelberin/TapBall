@@ -28,19 +28,4 @@ public class DeathShadow : MonoBehaviour, ISkinLoader
             _spriteRenderer.sprite = handle.Result;
         }
     }
-    //public void ReturnObject()
-    //{
-    //    Factory.Instance.ReturnDeathShadow(this);
-    //}
-
-    //public void TurnOff(DeathShadow obj)
-    //{
-    //    obj.gameObject.SetActive(false);
-    //}
-
-    //public void TurnOn(DeathShadow obj)
-    //{
-    //    Factory.Instance.AddDeathShadow(obj);
-    //    obj.gameObject.SetActive(true);
-    //}
 }
