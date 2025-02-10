@@ -87,8 +87,9 @@ public class LevelManager : MonoBehaviour
         _coinsObtained.Add(coinName);
     }
 
-    public int SetCoins
+    public void ResetCoins()
     {
-        set => _gameCoins = value;
+        _gameCoins = 0;
+        _coinsObtained.Clear();
     }
 }

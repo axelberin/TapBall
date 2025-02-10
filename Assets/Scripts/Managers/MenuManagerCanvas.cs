@@ -58,6 +58,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();
         UIManager.Instance.AddCanvas(gameObject, true);
+        LevelManager.Instance.ResetCoins();
 
         OnDunkLevelsClicked();
     }
