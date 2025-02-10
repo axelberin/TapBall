@@ -1212,6 +1212,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 131197562}
     m_Modifications:
+    - target: {fileID: 380386249568987468, guid: 14169a6c9d5fb414dbfd015ad55c355c, type: 3}
+      propertyPath: anchorOffset.y
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 1618674275002660626, guid: 14169a6c9d5fb414dbfd015ad55c355c, type: 3}
       propertyPath: m_Name
       value: FlipedPlatform
@@ -1222,7 +1226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8290271058673414124, guid: 14169a6c9d5fb414dbfd015ad55c355c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.18
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 8290271058673414124, guid: 14169a6c9d5fb414dbfd015ad55c355c, type: 3}
       propertyPath: m_LocalPosition.z
