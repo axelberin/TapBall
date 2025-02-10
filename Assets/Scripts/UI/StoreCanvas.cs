@@ -7,6 +7,8 @@ public class StoreCanvas : CanvasElementLocator
 
     [SerializeField] private string _storeObjectPrefabName;
 
+    private Transform _ballSkinsViewportContent;
+
     private void Awake()
     {
         if (Instance == null)
@@ -17,6 +19,10 @@ public class StoreCanvas : CanvasElementLocator
 
     private void Start()
     {
-        Addressables.InstantiateAsync(_storeObjectPrefabName, transform);
+        _ballSkinsViewportContent = FindAndValidateTransformComponent(transform, "BallSkinsContent");
+
+        Addressables.InstantiateAsync(_storeObjectPrefabName, _ballSkinsViewportContent);
+
+        UIManager.Instance.AddCanvas(gameObject, false);
     }
 }
