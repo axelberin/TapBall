@@ -324,6 +324,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 5319
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de0be3640ae72364cb3251095928a5c6
+      internalID: 1891647488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 5910
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed2a95d51daec4e4d80c5ca17b6d79b9
+      internalID: -1517482535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 6501
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4417e6d2d21ef1e4eba3a8922c9108c6
+      internalID: -1384534723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -337,6 +400,8 @@ TextureImporter:
     nameFileIdTable:
       spritesheet_0: -68722871
       spritesheet_1: 1265003008
+      spritesheet_10: -1517482535
+      spritesheet_11: -1384534723
       spritesheet_2: -2065644337
       spritesheet_3: -1574302817
       spritesheet_4: -546526750
@@ -344,6 +409,7 @@ TextureImporter:
       spritesheet_6: 649568174
       spritesheet_7: 154517837
       spritesheet_8: 1400965272
+      spritesheet_9: 1891647488
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
