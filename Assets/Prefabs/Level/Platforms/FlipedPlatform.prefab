@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorType: 5
-  anchorOffset: {x: -1.5, y: -0.18, z: 0}
+  anchorOffset: {x: -1.45, y: 0.79, z: 0}
 --- !u!114 &2278243739907951028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +162,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.4989836, y: 0.3387886}
-      - {x: 2.492989, y: -0.3205619}
-      - {x: -1.659809, y: -0.32005867}
-      - {x: -2.1445215, y: 0.3387886}
+    - - {x: 2.36, y: 0.34225}
+      - {x: 2.36, y: -0.3205619}
+      - {x: -1.7870828, y: -0.32005867}
+      - {x: -2.2973235, y: 0.34224996}
   m_UseDelaunayMesh: 0
