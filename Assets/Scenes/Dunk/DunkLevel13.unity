@@ -233,85 +233,10 @@ Transform:
   - {fileID: 537711951}
   - {fileID: 2067260696}
   - {fileID: 1077018435}
-  - {fileID: 276235307}
   - {fileID: 612337607}
   - {fileID: 1825486865}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &276235306
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 131197562}
-    m_Modifications:
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.195
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.747
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5770465256931827984, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: m_Name
-      value: MoviblePlatform (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7616242475292608026, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: _waypoints.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7616242475292608026, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: _waypoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 1519040687}
-    - target: {fileID: 7616242475292608026, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-      propertyPath: _waypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 946474722}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
---- !u!4 &276235307 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4682981771112175092, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
-  m_PrefabInstance: {fileID: 276235306}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &537711950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1927,6 +1852,10 @@ PrefabInstance:
     - target: {fileID: 5770465256931827984, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
       propertyPath: m_Name
       value: MoviblePlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616242475292608026, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
+      propertyPath: _movementSpeed
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7616242475292608026, guid: 33b3fa59b82d5d94dbca6a1249cfab6b, type: 3}
       propertyPath: _waypoints.Array.size
