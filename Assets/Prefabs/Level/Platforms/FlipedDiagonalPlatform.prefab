@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7852908933701673016}
   - component: {fileID: 5894266103812056769}
   - component: {fileID: 7206239142234824329}
+  - component: {fileID: 8790732028928682554}
   m_Layer: 0
   m_Name: FlipedDiagonalPlatform
   m_TagString: Untagged
@@ -162,9 +163,30 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.7587875, y: 1.6591271}
-      - {x: 2.2820263, y: -0.6301431}
-      - {x: 2.274116, y: -1.571276}
-      - {x: -1.7088187, y: 0.7157831}
-      - {x: -1.8521432, y: 1.6523722}
+    - - {x: -2.1418216, y: 1.6906711}
+      - {x: 1.9203637, y: -0.6514403}
+      - {x: 1.9004564, y: -1.5451458}
+      - {x: -2.0497375, y: 0.744337}
+      - {x: -2.1856084, y: 1.6118157}
   m_UseDelaunayMesh: 0
+--- !u!95 &8790732028928682554
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583720472124769875}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2f8e2be161c14ef4189bfb8a920d4859, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
