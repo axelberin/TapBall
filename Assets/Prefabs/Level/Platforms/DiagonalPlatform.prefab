@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4075844138265298741}
   - component: {fileID: 969500331914655310}
   - component: {fileID: 8627458974356411671}
+  - component: {fileID: 6321304044635750605}
   m_Layer: 0
   m_Name: DiagonalPlatform
   m_TagString: Untagged
@@ -162,9 +163,30 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.7646488, y: 1.6665006}
-      - {x: 1.8551027, y: 1.6528891}
-      - {x: 1.7134706, y: 0.7132647}
-      - {x: -2.22, y: -1.5446897}
-      - {x: -2.2148967, y: -0.58531034}
+    - - {x: 2.142881, y: 1.6998739}
+      - {x: 2.1832747, y: 1.6306399}
+      - {x: 2.075016, y: 0.7577627}
+      - {x: -1.957905, y: -1.5213923}
+      - {x: -1.9469774, y: -0.65520227}
   m_UseDelaunayMesh: 0
+--- !u!95 &6321304044635750605
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7833889932223314880}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2f8e2be161c14ef4189bfb8a920d4859, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
