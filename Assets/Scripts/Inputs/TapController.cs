@@ -35,7 +35,7 @@ public class TapController : MonoBehaviour
         if (DunkLevelCanvas.Instance)
             DunkLevelCanvas.Instance.OnTap(_tapCount);
         if (GameManager.Instance)
-            GameManager.Instance.SetGetPlayer.AddForce(Camera.main.ScreenToWorldPoint(pos));
+            GameManager.Instance.SetGetPlayer.OnTap(Camera.main.ScreenToWorldPoint(pos));
     }
 
     public int SetGetTapCount
