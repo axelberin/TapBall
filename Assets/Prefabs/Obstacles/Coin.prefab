@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3389506878939828791}
   - component: {fileID: 74316981730705865}
   - component: {fileID: 1176519154674328617}
+  - component: {fileID: 6522358184806343717}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -151,3 +152,24 @@ MonoBehaviour:
   maintainAspectRatio: 1
   percentageOfScreenHeight: 0.089
   padding: {x: 0, y: 0}
+--- !u!95 &6522358184806343717
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328939612470944094}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 05b15b7a49c6a9b47885f87ddbcc0dec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
