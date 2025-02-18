@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8316206587470457002}
   - component: {fileID: 8565058752578051102}
   - component: {fileID: 4988139994694362274}
+  - component: {fileID: 87932531947285044}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,3 +182,24 @@ MonoBehaviour:
   maintainAspectRatio: 1
   percentageOfScreenHeight: 0.11
   padding: {x: 0, y: 0}
+--- !u!95 &87932531947285044
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097105863353506434}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c5c0bc1862a0e15438b4b59c3ff71f2f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

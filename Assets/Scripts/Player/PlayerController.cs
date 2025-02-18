@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private Rigidbody2D _rb;
     private Collider2D _collider;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
     void Awake()
     {
@@ -24,6 +25,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         if (_spriteRenderer == null)
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -67,7 +71,15 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         }
     }
 
-    public void AddForce(Vector3 touchPos)
+    public void OnTap(Vector3 touchPos)
+    {
+        AddForce(touchPos);
+
+        if (Random.Range(0, 5) > 2)
+            _animator.SetTrigger("Flick");
+    }
+
+    private void AddForce(Vector3 touchPos)
     {
         _rb.velocity = Vector3.zero;
 
