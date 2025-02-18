@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     {
         AddForce(touchPos);
 
-        if (Random.Range(0, 5) > 2)
+        if (Random.Range(0, 10) < 3)
             _animator.SetTrigger("Flick");
     }
 
