@@ -50,10 +50,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         _storeButton = FindAndValidateButtonComponent(transform, "StoreBTN");
         _storeButton.onClick.AddListener(() =>
-        {
-            _menuPanel.SetActive(false);
-            UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "StoreCanvas");
-        });
+            UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "StoreCanvas"));
 
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();
