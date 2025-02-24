@@ -23,6 +23,10 @@ public class StoreObject : CanvasElementLocator
 
         _image.sprite = _skinSC.sprite;
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
+
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
+            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
+
         _buyButton.onClick.AddListener(() =>
         {
             if (StoreManager.Instance.CanBuy(_skinSC.price, false)) //TODO Poner precio en base a prefab de skin o valor guardado.
@@ -30,6 +34,12 @@ public class StoreObject : CanvasElementLocator
             else
                 return; //TODO Crear cartel de que no se puede comprar.
         });
+
+        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.name)
+        {
+            _buyButton.gameObject.SetActive(false);
+            _equipButton.gameObject.SetActive(false);
+        }
 
         //_equipButton.onClick.AddListener();
     }
