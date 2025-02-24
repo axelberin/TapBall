@@ -6,4 +6,5 @@ public class UISkins : ScriptableObject
     public string skinName;
     public Sprite sprite;
     public int price;
+    public Vector2 spriteSize;
 }

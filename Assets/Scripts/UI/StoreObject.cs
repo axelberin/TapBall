@@ -22,6 +22,7 @@ public class StoreObject : CanvasElementLocator
         _equipButton = FindAndValidateButtonComponent(transform, "EquipButton");
 
         _image.sprite = _skinSC.sprite;
+        _image.rectTransform.sizeDelta = _skinSC.spriteSize;
         _buyButton.onClick.AddListener(() =>
         {
             if (StoreManager.Instance.CanBuy(_skinSC.price, false)) //TODO Poner precio en base a prefab de skin o valor guardado.
