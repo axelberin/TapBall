@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public class StoreCanvas : CanvasElementLocator
 {
@@ -21,7 +20,7 @@ public class StoreCanvas : CanvasElementLocator
     {
         _ballSkinsViewportContent = FindAndValidateTransformComponent(transform, "BallSkinsContent");
 
-        Addressables.InstantiateAsync(_storeObjectPrefabName, _ballSkinsViewportContent);
+        //Addressables.InstantiateAsync(_storeObjectPrefabName, _ballSkinsViewportContent);
 
         UIManager.Instance.AddCanvas(gameObject, false);
     }
