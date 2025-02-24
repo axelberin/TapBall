@@ -35,7 +35,7 @@ public class StoreObject : CanvasElementLocator
                 return; //TODO Crear cartel de que no se puede comprar.
         });
 
-        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.name)
+        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.skinName)
         {
             _buyButton.gameObject.SetActive(false);
             _equipButton.gameObject.SetActive(false);
