@@ -38,7 +38,8 @@ public class StoreObject : CanvasElementLocator
         if (SaveAndLoadManager.CurrentBallSkin == _skinSC.skinName)
         {
             _buyButton.gameObject.SetActive(false);
-            _equipButton.gameObject.SetActive(false);
+            _equipButton.gameObject.SetActive(true);
+            _equipButton.interactable = false;
         }
 
         //_equipButton.onClick.AddListener();
