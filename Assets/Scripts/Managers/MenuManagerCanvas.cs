@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MenuManagerCanvas : CanvasElementLocator
 {
-    [SerializeField] bool _deleteDataOnStart = false;
     private Button[] _dunkLevelsButtons;
     private TextMeshProUGUI[] _dunkLevelsRecords;
     private Image[] _dunkWithoutDeath;
@@ -22,8 +21,8 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         Application.targetFrameRate = 60;
 
-        if (_deleteDataOnStart)
-            SaveAndLoadManager.DeleteData();
+        var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
+        resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
 
         UIManager.Instance.RemoveNullsCnavases();
 
