@@ -11,9 +11,10 @@ public class GameManager : MonoBehaviour
     public enum GameModes
     {
         Dunk,               // Obstacle mode. Less touches. A lot of levels.
-        Endless,            // Endless. More time. Procedural.
+        Endless,            // Endless. More time. One procedural level.
         Time,               // Time mode. Less Time. A lot of levels.
-        OneTouch            // Limit touches. Less touches than limit. A lot of levels.
+        OneTouch,            // Limit touches. Less touches than limit. A lot of levels.
+        Fall,               // Fall mode. More time. One procedural level.
     }
 
     GameModes _currentGameMode = GameModes.Dunk;
