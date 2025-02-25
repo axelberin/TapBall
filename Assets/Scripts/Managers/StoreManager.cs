@@ -23,6 +23,7 @@ public class StoreManager : MonoBehaviour
     public void Buy(int cost)
     {
         _coins -= cost;
+        SaveAndLoadManager.SetIntValue(_coins, SaveAndLoadManager.CoinsName);
     }
 
     public bool CanBuy(int cost, bool buy)

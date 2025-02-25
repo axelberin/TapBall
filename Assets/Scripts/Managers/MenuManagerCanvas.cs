@@ -21,14 +21,11 @@ public class MenuManagerCanvas : CanvasElementLocator
     void Start()
     {
         Application.targetFrameRate = 60;
-#if UNITY_EDITOR
+
         if (_deleteDataOnStart)
             SaveAndLoadManager.DeleteData();
-#endif
 
-        var coinsText = FindAndValidateTextComponent(transform, "CoinsText");
-        if (coinsText != null && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
-            coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
+        UIManager.Instance.RemoveNullsCnavases();
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");

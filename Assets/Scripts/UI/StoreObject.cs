@@ -30,18 +30,29 @@ public class StoreObject : CanvasElementLocator
         _buyButton.onClick.AddListener(() =>
         {
             if (StoreManager.Instance.CanBuy(_skinSC.price, false)) //TODO Poner precio en base a prefab de skin o valor guardado.
+            {
                 StoreManager.Instance.Buy(_skinSC.price);
+                OnSkinIsSelected();
+                StoreCanvas.Instance.UpdateCoinsText();
+            }
             else
                 return; //TODO Crear cartel de que no se puede comprar.
         });
 
-        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.skinName)
+        _equipButton.onClick.AddListener(() =>
         {
-            _buyButton.gameObject.SetActive(false);
-            _equipButton.gameObject.SetActive(true);
-            _equipButton.interactable = false;
-        }
+            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, _skinSC.skinName);
+            OnSkinIsSelected();
+        });
 
-        //_equipButton.onClick.AddListener();
+        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.skinName)
+            OnSkinIsSelected();
+    }
+
+    private void OnSkinIsSelected()
+    {
+        _buyButton.gameObject.SetActive(false);
+        _equipButton.gameObject.SetActive(true);
+        _equipButton.interactable = false;
     }
 }
