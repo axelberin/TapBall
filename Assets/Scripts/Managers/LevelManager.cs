@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour
     {
         OnLoseLevel?.Invoke();
 
-        _coinsObtained.ForEach(coin => coin.gameObject.SetActive(true));
+        _coinsObtained.ForEach(coin => coin.OnLose());
         _coinsObtained.Clear();
 
         switch (GameManager.Instance.GetCurrentGameMode)

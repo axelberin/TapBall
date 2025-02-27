@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 28a81ace8c7e33647bf311922ae7663e
+guid: 4bb5e44251449f2428c67f3369b8331f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet trampolin_0
+      name: diamante agarrado spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 472
-        width: 1080
-        height: 472
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c31eb75e06ebfc044a4a35536614e25c
-      internalID: -657198946
+      spriteID: ce05e906835924a43a0cb68e87ab0272
+      internalID: 1690004371
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_1
+      name: diamante agarrado spritesheet_1
       rect:
         serializedVersion: 2
-        x: 1080
-        y: 472
-        width: 1080
-        height: 472
+        x: 354
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +171,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecbf01c51a93f134ba921d7229ffbc38
-      internalID: 1159530834
+      spriteID: 148c7ea6e5675504b9e51f0bae10d23c
+      internalID: 1316845462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_2
+      name: diamante agarrado spritesheet_2
       rect:
         serializedVersion: 2
-        x: 2160
-        y: 472
-        width: 1080
-        height: 472
+        x: 708
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +192,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d323dcf64cdce2e46a97113665319196
-      internalID: -307573307
+      spriteID: a09ba6718c632e64ea6e730b61b2ddc4
+      internalID: -1207606678
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_3
+      name: diamante agarrado spritesheet_3
       rect:
         serializedVersion: 2
-        x: 3240
-        y: 472
-        width: 1080
-        height: 472
+        x: 1062
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,20 +213,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70b137095956bb8488f630d71b458e76
-      internalID: 1917671127
+      spriteID: 3956b02b9144a344fbf0913e4d03c08e
+      internalID: -33743679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_4
+      name: diamante agarrado spritesheet_4
       rect:
         serializedVersion: 2
-        x: 4320
-        y: 472
-        width: 1080
-        height: 472
+        x: 1416
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,20 +234,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34a98a574e8b53f43964389ba25fdf09
-      internalID: -70660466
+      spriteID: 5c9b3bb57a2670f4695ff6ebedcbe789
+      internalID: 222467526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_5
+      name: diamante agarrado spritesheet_5
       rect:
         serializedVersion: 2
-        x: 5400
-        y: 472
-        width: 1080
-        height: 472
+        x: 1770
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,20 +255,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d77302f157efe434380bd12b20b501a5
-      internalID: -732254543
+      spriteID: fde58ac895b341340bca0dd0e55353ef
+      internalID: -1962125484
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_6
+      name: diamante agarrado spritesheet_6
       rect:
         serializedVersion: 2
-        x: 6480
-        y: 472
-        width: 1080
-        height: 472
+        x: 2124
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,83 +276,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f63ab724a325ca74594ddfc779a88c27
-      internalID: 595549575
+      spriteID: 4e912698424890c43a90cecc0c0c5d86
+      internalID: -229202057
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_7
-      rect:
-        serializedVersion: 2
-        x: 7560
-        y: 472
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3422d19500f3a92488ff8ba7ab6eb229
-      internalID: 396782125
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_8
-      rect:
-        serializedVersion: 2
-        x: 8640
-        y: 472
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2695ae4db9ac601428e708808a9feae1
-      internalID: 876383499
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_9
-      rect:
-        serializedVersion: 2
-        x: 9720
-        y: 472
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: df44b68af2caa164dbcb17ac6a812173
-      internalID: 2041938241
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_10
+      name: diamante agarrado spritesheet_7
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,20 +297,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5313724ede929ec439bbc3548a3ae0a9
-      internalID: -1409047653
+      spriteID: 64e5e650a751e2e4b973608202062c52
+      internalID: 1863648595
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_11
+      name: diamante agarrado spritesheet_8
       rect:
         serializedVersion: 2
-        x: 1080
+        x: 354
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -381,20 +318,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0a03934dad84c44fb837d1c2f81402f
-      internalID: 1850046439
+      spriteID: c91ebcab5a7605149b01f45d585f363f
+      internalID: 1176670873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_12
+      name: diamante agarrado spritesheet_9
       rect:
         serializedVersion: 2
-        x: 2160
+        x: 708
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,20 +339,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc11f7151f0c0b74aa0a3f86553821bb
-      internalID: 922705490
+      spriteID: 388722d851bf8564b88cbdd3865035ca
+      internalID: -1044746267
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_13
+      name: diamante agarrado spritesheet_10
       rect:
         serializedVersion: 2
-        x: 3240
+        x: 1062
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,20 +360,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5152e3e546d2e6440ae3d132fd70fb8c
-      internalID: -72518334
+      spriteID: 216595219142d3d41bdb1430c22af1fd
+      internalID: 403937282
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_14
+      name: diamante agarrado spritesheet_11
       rect:
         serializedVersion: 2
-        x: 4320
+        x: 1416
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -444,20 +381,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efa9cf6e239be474b93720f575bcce3a
-      internalID: -1599153404
+      spriteID: 4659e9b1a9038384cbc1ff357ca4e344
+      internalID: 2095829189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_15
+      name: diamante agarrado spritesheet_12
       rect:
         serializedVersion: 2
-        x: 5400
+        x: 1770
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -465,20 +402,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca19bbb485ac8044db2c01510f0b99e2
-      internalID: 1675802469
+      spriteID: 6fb88a9f22a4d1f4488f40e6d388b1e8
+      internalID: -413050315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet trampolin_16
+      name: diamante agarrado spritesheet_13
       rect:
         serializedVersion: 2
-        x: 6480
+        x: 2124
         y: 0
-        width: 1080
-        height: 472
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,71 +423,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5bdbbbaa8aa06c4ab861c26db849160
-      internalID: 1343162638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_17
-      rect:
-        serializedVersion: 2
-        x: 7560
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c6da7de3cd09d1541be9dd54e7d0d234
-      internalID: -1767742557
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_18
-      rect:
-        serializedVersion: 2
-        x: 8640
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf1d85914f8684d4787f4c47d083c41a
-      internalID: 574015141
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_19
-      rect:
-        serializedVersion: 2
-        x: 9720
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aeb97720feffc3448a932c7b5e31cd1d
-      internalID: 903226600
+      spriteID: b862d0e45fc06bb4d8c1f9118cf767f3
+      internalID: -470629893
       vertices: []
       indices: 
       edges: []
@@ -566,26 +440,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spritesheet trampolin_0: -657198946
-      spritesheet trampolin_1: 1159530834
-      spritesheet trampolin_10: -1409047653
-      spritesheet trampolin_11: 1850046439
-      spritesheet trampolin_12: 922705490
-      spritesheet trampolin_13: -72518334
-      spritesheet trampolin_14: -1599153404
-      spritesheet trampolin_15: 1675802469
-      spritesheet trampolin_16: 1343162638
-      spritesheet trampolin_17: -1767742557
-      spritesheet trampolin_18: 574015141
-      spritesheet trampolin_19: 903226600
-      spritesheet trampolin_2: -307573307
-      spritesheet trampolin_3: 1917671127
-      spritesheet trampolin_4: -70660466
-      spritesheet trampolin_5: -732254543
-      spritesheet trampolin_6: 595549575
-      spritesheet trampolin_7: 396782125
-      spritesheet trampolin_8: 876383499
-      spritesheet trampolin_9: 2041938241
+      diamante agarrado spritesheet_0: 1690004371
+      diamante agarrado spritesheet_1: 1316845462
+      diamante agarrado spritesheet_10: 403937282
+      diamante agarrado spritesheet_11: 2095829189
+      diamante agarrado spritesheet_12: -413050315
+      diamante agarrado spritesheet_13: -470629893
+      diamante agarrado spritesheet_2: -1207606678
+      diamante agarrado spritesheet_3: -33743679
+      diamante agarrado spritesheet_4: 222467526
+      diamante agarrado spritesheet_5: -1962125484
+      diamante agarrado spritesheet_6: -229202057
+      diamante agarrado spritesheet_7: 1863648595
+      diamante agarrado spritesheet_8: 1176670873
+      diamante agarrado spritesheet_9: -1044746267
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

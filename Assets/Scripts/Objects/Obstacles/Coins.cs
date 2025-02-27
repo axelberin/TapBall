@@ -1,10 +1,18 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coins : ObstaclesManager
 {
     private string _coinName;
+
+    private Animator _animator;
+
+    private void Awake()
+    {
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -20,8 +28,21 @@ public class Coins : ObstaclesManager
         if (collision.TryGetComponent(out PlayerController player))
         {
             LevelManager.Instance.OnGetCoin(this);
-            gameObject.SetActive(false);
+            StartCoroutine(WaitForAnimation());
         }
+    }
+
+    private IEnumerator WaitForAnimation()
+    {
+        _animator.SetTrigger("Geted");
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
+    }
+
+    public void OnLose()
+    {
+        gameObject.SetActive(true);
+        _animator.SetTrigger("Lose");
     }
 
     public string GetCoinName => _coinName;
