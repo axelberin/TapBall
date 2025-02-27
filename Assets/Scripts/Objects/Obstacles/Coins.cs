@@ -41,6 +41,7 @@ public class Coins : ObstaclesManager
 
     public void OnLose()
     {
+        StopAllCoroutines();
         gameObject.SetActive(true);
         _animator.SetTrigger("Lose");
     }
