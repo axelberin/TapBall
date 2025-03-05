@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class MovableObjects : MonoBehaviour, IPauseble
@@ -36,6 +34,18 @@ public abstract class MovableObjects : MonoBehaviour, IPauseble
     {
         if (_move) WaypointsPatrol();
         if (_rotate) Rotate();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController))
+            playerController.transform.parent = transform;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController))
+            playerController.transform.parent = null;
     }
 
     void WaypointsPatrol()
