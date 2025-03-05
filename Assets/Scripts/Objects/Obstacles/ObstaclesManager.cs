@@ -6,8 +6,7 @@ public abstract class ObstaclesManager : MonoBehaviour
 {
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController player = collision.GetComponent<PlayerController>();
-        if (player)
-            player.Death();
+        if (collision.TryGetComponent(out PlayerController player))
+            player?.Death();
     }
 }
