@@ -36,13 +36,13 @@ public abstract class MovableObjects : MonoBehaviour, IPauseble
         if (_rotate) Rotate();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out PlayerController playerController))
             playerController.transform.parent = transform;
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out PlayerController playerController))
             playerController.transform.parent = null;
