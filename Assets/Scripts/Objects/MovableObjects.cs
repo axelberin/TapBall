@@ -30,7 +30,7 @@ public abstract class MovableObjects : MonoBehaviour, IPauseble
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_move) WaypointsPatrol();
         if (_rotate) Rotate();

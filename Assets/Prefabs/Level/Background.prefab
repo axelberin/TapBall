@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12f42f9d2c412f14aa83d8663fd90aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjustInUpdate: 1
+  adjustInUpdate: 0
   spriteRenderer: {fileID: 0}
   maintainAspectRatio: 0
   percentageOfScreenHeight: 1
