@@ -16,7 +16,7 @@ public class DeathShadow : MonoBehaviour, ISkinLoader
             if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
                 SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
 
-            Addressables.LoadAssetAsync<Sprite>(SaveAndLoadManager.GetStringValue(
+            Addressables.LoadAssetAsync<Sprite>("Death" + SaveAndLoadManager.GetStringValue(
                 SaveAndLoadManager.CurrentBallSkin)).Completed += OnSpriteLoaded;
         }
     }
