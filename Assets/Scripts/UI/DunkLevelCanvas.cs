@@ -8,7 +8,7 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     private TextMeshProUGUI _tapCountText;
     private TextMeshProUGUI _winTime;
-    private TextMeshProUGUI _winText;
+    private GameObject _winUI;
     private Button _menuButton;
     private Button _nextLevelButton;
     private Button _pauseButton;
@@ -30,7 +30,7 @@ public class DunkLevelCanvas : CanvasElementLocator
     {
         _tapCountText = FindAndValidateTextComponent(transform, "PointsText");
         _winTime = FindAndValidateTextComponent(transform, "WinTime");
-        _winText = FindAndValidateTextComponent(transform, "WinUI");
+        _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
 
         _menuButton = FindAndValidateButtonComponent(transform, "MenuBTN");
         _menuButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
@@ -100,7 +100,7 @@ public class DunkLevelCanvas : CanvasElementLocator
             $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
 
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
-        UIManager.Instance.ActivateUI(_winText.gameObject, transform);
+        UIManager.Instance.ActivateUI(_winUI, true);
         _pauseButton.interactable = false;
     }
 
