@@ -16,6 +16,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private Button _dunkCloseButton;
     private Button _storeButton;
     private Button _configsButton;
+    private Button _configsBackButton;
 
     private int _maxDunkLevels;
 
@@ -56,6 +57,13 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             _configsPanel.SetActive(true);
             _menuPanel.SetActive(false);
+        });
+
+        _configsBackButton = FindAndValidateButtonComponent(transform, "ConfigsBackButton");
+        _configsBackButton.onClick.AddListener(() =>
+        {
+            _configsPanel.SetActive(false);
+            _menuPanel.SetActive(true);
         });
 
         PauseAndResumeManager.Instance.RestartResumeAction();
