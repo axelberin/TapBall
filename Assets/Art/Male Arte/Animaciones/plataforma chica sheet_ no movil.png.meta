@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -134,7 +134,175 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 118
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad47863feea82cf488cbf448c2871545
+      internalID: -731363496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_1
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 118
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eaadd7d73e677349ad81c158eeb9092
+      internalID: 1087737695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_2
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 118
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c49307e30870114d9e9993910ee12c2
+      internalID: 1471585971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_3
+      rect:
+        serializedVersion: 2
+        x: 1773
+        y: 118
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a7de94465a38484b875d3cb39cb4d1c
+      internalID: -2068058039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 043619132ad385c4c996ceaea3431da0
+      internalID: -495931244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_5
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b8e1e2aafd572148a43c02491e3b0ba
+      internalID: -990653771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_6
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21681089c2cbc9f4cb91484ca0589c4b
+      internalID: 1253214208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plataforma chica sheet_ no movil_7
+      rect:
+        serializedVersion: 2
+        x: 1773
+        y: 0
+        width: 591
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cce90075b3ee41459fa1fc579a01043
+      internalID: -728974914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +313,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      plataforma chica sheet_ no movil_0: -731363496
+      plataforma chica sheet_ no movil_1: 1087737695
+      plataforma chica sheet_ no movil_2: 1471585971
+      plataforma chica sheet_ no movil_3: -2068058039
+      plataforma chica sheet_ no movil_4: -495931244
+      plataforma chica sheet_ no movil_5: -990653771
+      plataforma chica sheet_ no movil_6: 1253214208
+      plataforma chica sheet_ no movil_7: -728974914
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
