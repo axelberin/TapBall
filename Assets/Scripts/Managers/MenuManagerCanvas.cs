@@ -11,9 +11,11 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private GameObject _menuPanel;
     private GameObject _dunkLevelsPanel;
+    private GameObject _configsPanel;
     private Button _dunkLevelsButton;
     private Button _dunkCloseButton;
     private Button _storeButton;
+    private Button _configsButton;
 
     private int _maxDunkLevels;
 
@@ -47,6 +49,14 @@ public class MenuManagerCanvas : CanvasElementLocator
         _storeButton = FindAndValidateButtonComponent(transform, "StoreBTN");
         _storeButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "StoreCanvas"));
+
+        _configsPanel = FindAndValidateGameObjectComponent(transform, "ConfigsPanel");
+        _configsButton = FindAndValidateButtonComponent(transform, "ConfigsButton");
+        _configsButton.onClick.AddListener(() =>
+        {
+            _configsPanel.SetActive(true);
+            _menuPanel.SetActive(false);
+        });
 
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();
