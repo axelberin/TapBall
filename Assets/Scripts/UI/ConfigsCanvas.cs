@@ -33,7 +33,7 @@ public class ConfigsCanvas : CanvasElementLocator
             case GameManager.GameModes.Null:
                 return "MenuManagerCanvas";
             case GameManager.GameModes.Dunk:
-                return "DunkLevelCanvas";
+                return "DunkCanvas";
             default:
                 return "MenuManagerCanvas";
         }

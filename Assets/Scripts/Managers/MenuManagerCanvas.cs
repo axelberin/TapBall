@@ -83,7 +83,10 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
             _dunkLevelsButtons[i].onClick.AddListener(() =>
-                ScenesManager.Instance.LoadScene($"DunkLevel{levelIndex + 1}"));
+            {
+                UIManager.Instance.ClearCnavasesList();
+                ScenesManager.Instance.LoadScene($"DunkLevel{levelIndex + 1}");
+            });
 
             if (i == 0)
                 _dunkLevelsButtons[i].interactable = true;

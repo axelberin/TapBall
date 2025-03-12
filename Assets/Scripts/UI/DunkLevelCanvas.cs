@@ -47,14 +47,14 @@ public class DunkLevelCanvas : CanvasElementLocator
         });
 
         _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
+        _nextLevelButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ClearCnavasesList();
 
-        if (_nextLevelButton.interactable)
-            _nextLevelButton.onClick.AddListener(() =>
-            {
-                ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel + 1,
-                    GameManager.Instance.GetCurrentGameMode);
-                AdsManager.Instance.LoadInterstitialAd();
-            });
+            ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel + 1,
+                GameManager.Instance.GetCurrentGameMode);
+            AdsManager.Instance.LoadInterstitialAd();
+        });
 
         _pauseButton = FindAndValidateButtonComponent(transform, "PauseButton");
         _pauseButton.onClick.AddListener(OnPauseClicked);
@@ -63,17 +63,29 @@ public class DunkLevelCanvas : CanvasElementLocator
         _pauseUI.SetActive(false);
 
         _restartButton = FindAndValidateButtonComponent(transform, "RestartBTN");
-        _restartButton.onClick.AddListener(() => ScenesManager.Instance.LoadLevelByType(
-                                                    GameManager.Instance.SetGetWorldState.GetLevel,
-                                                    GameManager.Instance.GetCurrentGameMode));
+        _restartButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ClearCnavasesList();
+            ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
+                                                        GameManager.Instance.GetCurrentGameMode);
+        });
 
         _restartPauseButton = FindAndValidateButtonComponent(transform, "PauseRestartBTN");
-        _restartPauseButton.onClick.AddListener(() => ScenesManager.Instance.LoadLevelByType(
-                                                    GameManager.Instance.SetGetWorldState.GetLevel,
-                                                    GameManager.Instance.GetCurrentGameMode));
+        _restartPauseButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ClearCnavasesList();
+            ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
+                                                        GameManager.Instance.GetCurrentGameMode);
+        });
 
         _resumeButton = FindAndValidateButtonComponent(transform, "ResumeBTN");
         _resumeButton.onClick.AddListener(OnResumeClicked);
+
+        var configsButton = FindAndValidateButtonComponent(transform, "ConfigsButton");
+        configsButton.onClick.AddListener(() =>
+            UIManager.Instance.ChangeCanvas("DunkCanvas", "ConfigsCanvas"));
+
+        UIManager.Instance.AddCanvas(gameObject, true);
 
         if (LevelManager.Instance)
         {
