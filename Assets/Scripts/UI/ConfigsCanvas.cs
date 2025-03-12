@@ -1,11 +1,7 @@
-using System;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class ConfigsCanvas : CanvasElementLocator
 {
     public static ConfigsCanvas Instance { get; private set; }
-
 
     private void Awake()
     {
