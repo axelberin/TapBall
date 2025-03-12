@@ -33,9 +33,18 @@ public class DunkLevelCanvas : CanvasElementLocator
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
 
         _menuButton = FindAndValidateButtonComponent(transform, "MenuBTN");
-        _menuButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
+        _menuButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ClearCnavasesList();
+            ScenesManager.Instance.LoadScene("Menu");
+        });
+
         _menuPauseButton = FindAndValidateButtonComponent(transform, "PauseMenuBTN");
-        _menuPauseButton.onClick.AddListener(() => ScenesManager.Instance.LoadScene("Menu"));
+        _menuPauseButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ClearCnavasesList();
+            ScenesManager.Instance.LoadScene("Menu");
+        });
 
         _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
 

@@ -11,12 +11,10 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private GameObject _menuPanel;
     private GameObject _dunkLevelsPanel;
-    private GameObject _configsPanel;
     private Button _dunkLevelsButton;
     private Button _dunkCloseButton;
     private Button _storeButton;
     private Button _configsButton;
-    private Button _configsBackButton;
 
     private int _maxDunkLevels;
 
@@ -27,7 +25,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
         resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
 
-        UIManager.Instance.RemoveNullsCnavases();
+        GameManager.Instance.SelectGameMode(0);
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
@@ -37,7 +35,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             _dunkLevelsPanel.SetActive(true);
             _menuPanel.SetActive(false);
-            GameManager.Instance.SelectGameMode(0);
+            GameManager.Instance.SelectGameMode(1);
         });
 
         _dunkCloseButton = FindAndValidateButtonComponent(transform, "DunkCloseButton");
@@ -51,20 +49,9 @@ public class MenuManagerCanvas : CanvasElementLocator
         _storeButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "StoreCanvas"));
 
-        _configsPanel = FindAndValidateGameObjectComponent(transform, "ConfigsPanel");
         _configsButton = FindAndValidateButtonComponent(transform, "ConfigsButton");
         _configsButton.onClick.AddListener(() =>
-        {
-            _configsPanel.SetActive(true);
-            _menuPanel.SetActive(false);
-        });
-
-        _configsBackButton = FindAndValidateButtonComponent(transform, "ConfigsBackButton");
-        _configsBackButton.onClick.AddListener(() =>
-        {
-            _configsPanel.SetActive(false);
-            _menuPanel.SetActive(true);
-        });
+            UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();

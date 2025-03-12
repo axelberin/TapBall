@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public enum GameModes
     {
+        Null,
         Dunk,               // Obstacle mode. Less touches. A lot of levels.
         Endless,            // Endless. More time. One procedural level.
         Time,               // Time mode. Less Time. A lot of levels.
@@ -32,11 +33,22 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Its called from buttons.
     /// </summary>
-    /// <param name="gameModes"></param>
-    public void SelectGameMode(int gameModes)
+    /// <param name="gameModeIndex"></param>
+    public void SelectGameMode(int gameModeIndex)
     {
-        if (gameModes == 0)
-            _currentGameMode = GameModes.Dunk;
+        switch (gameModeIndex)
+        {
+            case 0:
+                _currentGameMode = GameModes.Null;
+                break;
+            case 1:
+                _currentGameMode = GameModes.Dunk;
+                break;
+            default:
+                _currentGameMode = GameModes.Null;
+                Debug.LogWarning($"Game mode not found: " + gameModeIndex);
+                break;
+        }
     }
 
     public PlayerController SetGetPlayer

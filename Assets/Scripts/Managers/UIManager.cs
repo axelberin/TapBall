@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
         canvas.SetActive(active);
     }
 
-    public void RemoveNullsCnavases()
+    public void ClearCnavasesList()
     {
         _canvasesNmaes.Clear();
     }
