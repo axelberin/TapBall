@@ -22,9 +22,6 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         Application.targetFrameRate = 60;
 
-        var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
-        resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
-
         GameManager.Instance.SelectGameMode(0);
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");

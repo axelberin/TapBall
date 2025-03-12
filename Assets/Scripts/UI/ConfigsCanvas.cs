@@ -6,7 +6,6 @@ public class ConfigsCanvas : CanvasElementLocator
 {
     public static ConfigsCanvas Instance { get; private set; }
 
-    private Button _configsBackButton;
 
     private void Awake()
     {
@@ -19,23 +18,23 @@ public class ConfigsCanvas : CanvasElementLocator
     // Start is called before the first frame update
     void Start()
     {
-        _configsBackButton = FindAndValidateButtonComponent(transform, "ConfigsBackButton");
-        _configsBackButton.onClick.AddListener(() =>
+        var configsBackButton = FindAndValidateButtonComponent(transform, "ConfigsBackButton");
+        configsBackButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("ConfigsCanvas", GetCanvasFromGameMode(GameManager.Instance.GetCurrentGameMode)));
+
+        var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
+        resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
 
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 
     private string GetCanvasFromGameMode(GameManager.GameModes gameMode)
     {
-        switch (gameMode)
+        return gameMode switch
         {
-            case GameManager.GameModes.Null:
-                return "MenuManagerCanvas";
-            case GameManager.GameModes.Dunk:
-                return "DunkCanvas";
-            default:
-                return "MenuManagerCanvas";
-        }
+            GameManager.GameModes.Null => "MenuManagerCanvas",
+            GameManager.GameModes.Dunk => "DunkCanvas",
+            _ => "MenuManagerCanvas",
+        };
     }
 }
