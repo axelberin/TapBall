@@ -22,11 +22,11 @@ public class ConfigsCanvas : CanvasElementLocator
         if (resetDataButton != null)
             resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
 
-        var soundsSlide = FindAndValidateScrollbarComponent(transform, "SoundsSlider");
+        var soundsSlide = FindAndValidateSliderComponent(transform, "SoundsSlider");
         soundsSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetSoundVolume(soundsSlide.value));
         soundsSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName);
 
-        var musicSlide = FindAndValidateScrollbarComponent(transform, "MusicSlider");
+        var musicSlide = FindAndValidateSliderComponent(transform, "MusicSlider");
         musicSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetMusicVolume(musicSlide.value));
         musicSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName);
 

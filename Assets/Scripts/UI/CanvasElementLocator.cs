@@ -188,7 +188,7 @@ public class CanvasElementLocator : MonoBehaviour
         return rectTransform;
     }
 
-    protected Scrollbar FindAndValidateScrollbarComponent(Transform parent, string childName)
+    protected Slider FindAndValidateSliderComponent(Transform parent, string childName)
     {
         var childTransform = parent.FindDeepChild(childName);
         if (childTransform == null)
@@ -197,8 +197,8 @@ public class CanvasElementLocator : MonoBehaviour
             return null;
         }
 
-        var slider = childTransform.GetComponent<Scrollbar>();
-        if (slider == null) Debug.LogError("No se encontró un componente Scrollbar en " + childName);
+        var slider = childTransform.GetComponent<Slider>();
+        if (slider == null) Debug.LogError("No se encontró un componente Slider en " + childName);
 
         return slider;
     }
