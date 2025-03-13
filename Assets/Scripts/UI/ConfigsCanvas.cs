@@ -19,7 +19,8 @@ public class ConfigsCanvas : CanvasElementLocator
             UIManager.Instance.ChangeCanvas("ConfigsCanvas", GetCanvasFromGameMode(GameManager.Instance.GetCurrentGameMode)));
 
         var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
-        resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
+        if (resetDataButton != null)
+            resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
 
         UIManager.Instance.AddCanvas(gameObject, false);
     }
