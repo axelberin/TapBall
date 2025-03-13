@@ -22,6 +22,14 @@ public class ConfigsCanvas : CanvasElementLocator
         if (resetDataButton != null)
             resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
 
+        var soundsSlide = FindAndValidateScrollbarComponent(transform, "SoundsSlider");
+        soundsSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetSoundVolume(soundsSlide.value));
+        soundsSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName);
+
+        var musicSlide = FindAndValidateScrollbarComponent(transform, "MusicSlider");
+        musicSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetMusicVolume(musicSlide.value));
+        musicSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName);
+
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 

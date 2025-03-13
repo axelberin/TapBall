@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 1782123166654460620}
   - component: {fileID: 6965079772073692519}
   m_Layer: 5
-  m_Name: MusicScrollbar
+  m_Name: MusicSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 7257189441755798184}
   - component: {fileID: 8706683582899103435}
   m_Layer: 5
-  m_Name: SoundsScrollbar
+  m_Name: SoundsSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

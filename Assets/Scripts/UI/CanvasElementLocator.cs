@@ -6,6 +6,22 @@ public class CanvasElementLocator : MonoBehaviour
 {
     #region FindAndValidate
 
+    //TODO: Probar
+    //protected T FindAndValidateTextComponent<T>(Transform parent, string childName, bool alert = false)
+    //{
+    //    var childTransform = parent.FindDeepChild(childName);
+    //    if (childTransform == null)
+    //    {
+    //        Debug.LogError("No hemos encontrado " + childName);
+    //        return default;
+    //    }
+
+    //    var textComponent = childTransform.GetComponent<T>();
+    //    if (textComponent == null) Debug.LogError("No se encontró un componente TMP_Text en " + childName);
+
+    //    return textComponent;
+    //}
+
     protected TextMeshProUGUI FindAndValidateTextComponent(Transform parent, string childName, bool alert = false)
     {
         var childTransform = parent.FindDeepChild(childName);
@@ -170,6 +186,21 @@ public class CanvasElementLocator : MonoBehaviour
         if (rectTransform == null) Debug.LogError("No se encontró un componente RectTransform en " + childName);
 
         return rectTransform;
+    }
+
+    protected Scrollbar FindAndValidateScrollbarComponent(Transform parent, string childName)
+    {
+        var childTransform = parent.FindDeepChild(childName);
+        if (childTransform == null)
+        {
+            Debug.LogError("No hemos encontrado " + childName);
+            return null;
+        }
+
+        var slider = childTransform.GetComponent<Scrollbar>();
+        if (slider == null) Debug.LogError("No se encontró un componente Scrollbar en " + childName);
+
+        return slider;
     }
 
     #endregion
