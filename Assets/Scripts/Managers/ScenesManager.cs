@@ -32,6 +32,8 @@ public class ScenesManager : MonoBehaviour
         if (fadeAnimator != null)
             fadeAnimator.SetTrigger("Fade");
 
+        yield return new WaitForSeconds(0.5f);
+
         var loadingScene = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
 
         loadingScene.allowSceneActivation = false;
@@ -46,7 +48,7 @@ public class ScenesManager : MonoBehaviour
 
         UnloadScene(lastSceneName);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
 
         var sceneToLoad = SceneManager.LoadSceneAsync(sceneToLoadName, LoadSceneMode.Additive);
         sceneToLoad.allowSceneActivation = false;
@@ -59,7 +61,6 @@ public class ScenesManager : MonoBehaviour
         while (!sceneToLoad.isDone)
             yield return new WaitForEndOfFrame();
 
-        yield return new WaitForSeconds(0.3f);
         UnloadScene(SceneManager.GetSceneByName("LoadingScene").name);
         Application.targetFrameRate = 60;
     }
