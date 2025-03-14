@@ -143,7 +143,16 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _onPause = true;
     }
 
-    public int GetLevel => _level;
+    public int GetLevel
+    {
+        get
+        {
+            if (_level == 0)
+                _level = ScenesManager.Instance.GetLevelByCurrentScene();
+            return _level;
+        }
+    }
+
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
 }
