@@ -17,6 +17,7 @@ public class DunkLevelCanvas : CanvasElementLocator
     private Button _restartPauseButton;
     private Button _resumeButton;
     private GameObject _pauseUI;
+    private TextMeshProUGUI _touchesInLevelText;
 
     private void Awake()
     {
@@ -87,6 +88,10 @@ public class DunkLevelCanvas : CanvasElementLocator
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("DunkCanvas", "ConfigsCanvas"));
 
+        _touchesInLevelText = FindAndValidateTextComponent(transform, "TouchesText");
+        var limitTouchesText = FindAndValidateTextComponent(transform, "LimitTouchesText");
+        limitTouchesText.text = "/ " + GameManager.Instance.SetGetWorldState.GetLimitTouches.ToString();
+
         UIManager.Instance.AddCanvas(gameObject, true);
 
         if (LevelManager.Instance)
@@ -145,5 +150,14 @@ public class DunkLevelCanvas : CanvasElementLocator
     public void OnCountTime(float time)
     {
         UIManager.Instance.SetText(_winTime, (int)(time));
+    }
+
+    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit)
+    {
+        UIManager.Instance.SetText(_touchesInLevelText, touchesInLevel);
+        if (isOverLimit)
+            _touchesInLevelText.color = Color.red;
+        else
+            _touchesInLevelText.color = Color.green;
     }
 }
