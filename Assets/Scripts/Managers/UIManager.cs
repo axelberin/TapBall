@@ -41,6 +41,16 @@ public class UIManager : MonoBehaviour
         text.text = count.ToString();
     }
 
+    public void SetText(TextMeshProUGUI text, string content)
+    {
+        if (!text)
+            return;
+        if (!text.isActiveAndEnabled)
+            ActivateUI(text.gameObject, true);
+
+        text.text = content;
+    }
+
     public void AddCanvas(GameObject canvas, bool active)
     {
         if (!_canvasesNmaes.Contains(canvas))
