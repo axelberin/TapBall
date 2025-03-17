@@ -10,8 +10,9 @@ public class MenuManagerCanvas : CanvasElementLocator
     private Image[] _dunkWithoutDeath;
 
     private GameObject _menuPanel;
+    private GameObject _selectModePanel;
     private GameObject _dunkLevelsPanel;
-    private Button _dunkLevelsButton;
+    private Button _dunkModeButton;
     private Button _dunkCloseButton;
     private Button _storeButton;
     private Button _configsButton;
@@ -26,20 +27,36 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
+        _selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
 
-        _dunkLevelsButton = FindAndValidateButtonComponent(transform, "PlayBTN");
-        _dunkLevelsButton.onClick.AddListener(() =>
+        var playButton = FindAndValidateButtonComponent(transform, "PlayBTN");
+        playButton.onClick.AddListener(() =>
+        {
+            _selectModePanel.SetActive(true);
+            _menuPanel.SetActive(false);
+        });
+
+        _dunkModeButton = FindAndValidateButtonComponent(transform, "DunkModeButton");
+        _dunkModeButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(true);
-            _menuPanel.SetActive(false);
+            _selectModePanel.SetActive(false);
             GameManager.Instance.SelectGameMode(1);
+        });
+
+        var backModePanelButton = FindAndValidateButtonComponent(transform, "ModePanelBackButton");
+        backModePanelButton.onClick.AddListener(() =>
+        {
+            _selectModePanel.SetActive(false);
+            _menuPanel.SetActive(true);
         });
 
         _dunkCloseButton = FindAndValidateButtonComponent(transform, "DunkCloseButton");
         _dunkCloseButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(false);
-            _menuPanel.SetActive(true);
+            _selectModePanel.SetActive(true);
+            GameManager.Instance.SelectGameMode(0);
         });
 
         _storeButton = FindAndValidateButtonComponent(transform, "StoreBTN");
