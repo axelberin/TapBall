@@ -7,6 +7,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 {
     private Action OnUpdate = delegate { };
 
+    [SerializeField] private int _limitTouches = 1;
     private int _level;
     private float _timeToWin = 3;
     private float _timeToStart = 0;
@@ -143,7 +144,18 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _onPause = true;
     }
 
-    public int GetLevel => _level;
+    public int GetLevel
+    {
+        get
+        {
+            if (_level == 0)
+                _level = ScenesManager.Instance.GetLevelByCurrentScene();
+            return _level;
+        }
+    }
+
+    public int GetLimitTouches => _limitTouches;
+
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
 }

@@ -76,13 +76,15 @@ public class MenuManagerCanvas : CanvasElementLocator
         if (dunkLevelsButtons.Count > 0)
             _dunkLevelsButtons = dunkLevelsButtons.ToArray();
 
+        var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
+
         for (int i = 0; i < _dunkLevelsButtons.Length; i++)
         {
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
             _dunkLevelsButtons[i].onClick.AddListener(() =>
             {
                 UIManager.Instance.ClearCnavasesList();
-                ScenesManager.Instance.LoadScene($"DunkLevel{levelIndex + 1}");
+                ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex + 1}", fadeAnimator);
             });
 
             if (i == 0)

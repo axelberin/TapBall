@@ -17,6 +17,7 @@ public class DunkLevelCanvas : CanvasElementLocator
     private Button _restartPauseButton;
     private Button _resumeButton;
     private GameObject _pauseUI;
+    private TextMeshProUGUI _touchesInLevelText;
 
     private void Awake()
     {
@@ -32,18 +33,20 @@ public class DunkLevelCanvas : CanvasElementLocator
         _winTime = FindAndValidateTextComponent(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
 
+        var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
+
         _menuButton = FindAndValidateButtonComponent(transform, "MenuBTN");
         _menuButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
-            ScenesManager.Instance.LoadScene("Menu");
+            ScenesManager.Instance.LoadSceneAsync("Menu", fadeAnimator);
         });
 
         _menuPauseButton = FindAndValidateButtonComponent(transform, "PauseMenuBTN");
         _menuPauseButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
-            ScenesManager.Instance.LoadScene("Menu");
+            ScenesManager.Instance.LoadSceneAsync("Menu", fadeAnimator);
         });
 
         _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
@@ -52,7 +55,7 @@ public class DunkLevelCanvas : CanvasElementLocator
             UIManager.Instance.ClearCnavasesList();
 
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel + 1,
-                GameManager.Instance.GetCurrentGameMode);
+                GameManager.Instance.GetCurrentGameMode, fadeAnimator);
             AdsManager.Instance.LoadInterstitialAd();
         });
 
@@ -67,7 +70,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         {
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
-                                                        GameManager.Instance.GetCurrentGameMode);
+                                                        GameManager.Instance.GetCurrentGameMode, fadeAnimator);
         });
 
         _restartPauseButton = FindAndValidateButtonComponent(transform, "PauseRestartBTN");
@@ -75,7 +78,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         {
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
-                                                        GameManager.Instance.GetCurrentGameMode);
+                                                        GameManager.Instance.GetCurrentGameMode, fadeAnimator);
         });
 
         _resumeButton = FindAndValidateButtonComponent(transform, "ResumeBTN");
@@ -84,6 +87,10 @@ public class DunkLevelCanvas : CanvasElementLocator
         var configsButton = FindAndValidateButtonComponent(transform, "ConfigsButton");
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("DunkCanvas", "ConfigsCanvas"));
+
+        _touchesInLevelText = FindAndValidateTextComponent(transform, "TouchesText");
+        var limitTouchesText = FindAndValidateTextComponent(transform, "LimitTouchesText");
+        limitTouchesText.text = "/ " + GameManager.Instance.SetGetWorldState.GetLimitTouches.ToString();
 
         UIManager.Instance.AddCanvas(gameObject, true);
 
@@ -143,5 +150,14 @@ public class DunkLevelCanvas : CanvasElementLocator
     public void OnCountTime(float time)
     {
         UIManager.Instance.SetText(_winTime, (int)(time));
+    }
+
+    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit)
+    {
+        UIManager.Instance.SetText(_touchesInLevelText, touchesInLevel);
+        if (isOverLimit)
+            _touchesInLevelText.color = Color.red;
+        else
+            _touchesInLevelText.color = Color.green;
     }
 }
