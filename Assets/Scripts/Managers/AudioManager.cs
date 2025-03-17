@@ -33,14 +33,12 @@ public class AudioManager : MonoBehaviour
 
     public void SetSoundVolume(float value)
     {
-        Debug.Log(value);
         _audioMixer.SetFloat(_mixerSFX, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.SoundsVolumeName, true);
     }
 
     public void SetMusicVolume(float value)
     {
-        Debug.Log(value);
         _audioMixer.SetFloat(_mixerMusic, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
     }
