@@ -490,6 +490,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ConfigsCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5281491332670631439, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5696032172923359169, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -880,38 +884,6 @@ PrefabInstance:
     - target: {fileID: 2043872662946045488, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311910181304639581, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.8239746
-      objectReference: {fileID: 0}
-    - target: {fileID: 2853357604099460558, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 2.3564453
-      objectReference: {fileID: 0}
-    - target: {fileID: 3713579304273346189, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.598999
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292207547267401074, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -42.70752
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292207547267401074, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 14.069092
-      objectReference: {fileID: 0}
-    - target: {fileID: 6540827172855232084, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7989716061941400846, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_Name
-      value: LimitTouchesText
-      objectReference: {fileID: 0}
-    - target: {fileID: 8480862931006804367, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_Name
-      value: TouchesText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
