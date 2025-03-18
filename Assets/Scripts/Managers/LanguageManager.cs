@@ -11,8 +11,8 @@ public class LanguageManager : MonoBehaviour
 
     public Action OnUpdateLanguage = delegate { };
 
-    private Dictionary<string, string> _localizedTexts = new();
-    private string _language = "en"; // Idioma por defecto
+    private Dictionary<string, Dictionary<string, string>> _localizedTexts = new();
+    private string _currentLanguage = "en"; // Idioma por defecto
     private string _sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZpoJwa5CcFffrM8gBTesuOZY3UaizH6oVSAgHGDuKslJ45fE9ITGNiL_AP_qqdhtjZXm_LndbY5OV/pub?output=csv";
     private int _currentLanguageIndex = 0;
     private int _minLanguageIndex = 1;
@@ -47,43 +47,49 @@ public class LanguageManager : MonoBehaviour
     private void ParseCSV(string csvText)
     {
         StringReader reader = new StringReader(csvText);
-        string headerLine = reader.ReadLine(); // Ignorar la primera línea (cabeceras)
 
+        // Leer la primera línea para obtener los idiomas disponibles
+        string headerLine = reader.ReadLine();
         string[] headers = headerLine.Split(',');
 
-        int langIndex = 1; // Por defecto inglés
-
-        for (int i = 1; i < headers.Length; i++)
+        // Inicializar diccionarios por idioma
+        for (int i = 1; i < headers.Length; i++) // Comenzamos en 1 porque la primera columna es la clave del texto
         {
-            Debug.Log(headers[i].Trim('"'));
-            if (headers[i].Trim('"') == _language)
-            {
-                langIndex = i;
-                break;
-            }
+            string language = headers[i].Trim('"');
+            if (!_localizedTexts.ContainsKey(language))
+                _localizedTexts.Add(language, new Dictionary<string, string>()); // Agregamos un diccionario vacio
         }
 
+        // Iterar sobre cada línea del CSV
         while (reader.Peek() != -1)
         {
             string line = reader.ReadLine();
             string[] values = line.Split(',');
 
-            if (values.Length > langIndex)
+            string key = values[0].Trim('"'); // Primera columna es la clave del texto
+
+            for (int i = 1; i < headers.Length; i++)
             {
-                string key = values[0].Trim('"');
-                string value = values[langIndex].Trim('"');
-                _localizedTexts[key] = value;
+                string language = headers[i].Trim('"'); // Idioma en la cabecera
+                string translation = (i < values.Length) ? values[i].Trim('"') : "";
+
+                if (!_localizedTexts[language].ContainsKey(key))
+                    _localizedTexts[language].Add(key, translation);
+                else
+                    _localizedTexts[language][key] = translation;
             }
         }
 
         Debug.Log("Traducciones cargadas correctamente.");
+
         OnUpdateLanguage?.Invoke();
     }
 
+
     public string GetLocalizedText(string key)
     {
-        if (_localizedTexts.ContainsKey(key))
-            return _localizedTexts[key];
+        if (_localizedTexts[_currentLanguage].ContainsKey(key))
+            return _localizedTexts[_currentLanguage][key];
 
         return "MISSING: " + key;
     }
@@ -91,13 +97,13 @@ public class LanguageManager : MonoBehaviour
     public void ChangeLanguage(int languageIndex)
     {
         SetCurrentLanguageIndex(languageIndex);
-        _language = GetLanguageKeyFromIndex(_currentLanguageIndex);
+        _currentLanguage = GetLanguageKeyFromIndex(_currentLanguageIndex);
         OnUpdateLanguage?.Invoke();
     }
 
     private void SetCurrentLanguageIndex(int index)
     {
-        if (_currentLanguageIndex == 0 && index < 0)
+        if (_currentLanguageIndex == _minLanguageIndex && index < 0)
             _currentLanguageIndex = _maxLanguageIndex;
         else if (_currentLanguageIndex == _maxLanguageIndex && index > 0)
             _currentLanguageIndex = _minLanguageIndex;
