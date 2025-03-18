@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -16,10 +15,19 @@ public class Coins : ObstaclesManager
 
     private void Start()
     {
-        _coinName = SaveAndLoadManager.CoinNameByLevel +
-             GameManager.Instance.GetCurrentGameMode + ScenesManager.Instance.GetCurrentSceneName();
-        int hasCoin = SaveAndLoadManager.GetIntValue(_coinName);
+        StartCoroutine(DelayToSet());
+    }
 
+    private IEnumerator DelayToSet()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        _coinName = SaveAndLoadManager.CoinNameByLevel +
+             GameManager.Instance.GetCurrentGameMode +
+             GameManager.Instance.SetGetWorldState.GetLevel;
+        Debug.Log("CoinName: " + _coinName);
+        int hasCoin = SaveAndLoadManager.GetIntValue(_coinName);
+        Debug.Log("Coins: " + hasCoin);
         gameObject.SetActive(hasCoin == default || hasCoin == 0);
     }
 
