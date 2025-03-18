@@ -15,6 +15,7 @@ public static class SaveAndLoadManager
 
     public static string SoundsVolumeName = "SoundsVolume";
     public static string MusicVolumeName = "MusicVolume";
+    public static string LanguageName = "Language";
 
     public static void SetIntValue(int value, string parameterName, bool withSave = false)
     {
@@ -41,7 +42,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Does´t exist '{parameterName}'");
+            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
 
@@ -52,7 +53,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Does´t exist '{parameterName}'");
+            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
 
@@ -63,7 +64,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Does´t exist '{parameterName}'");
+            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
 

@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.11846517, y: 0.2524178}
   m_AnchorMax: {x: 0.23, y: 0.7518356}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0.5101929}
+  m_AnchoredPosition: {x: 0, y: 0.5101929}
   m_SizeDelta: {x: 186, y: 186}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6662466889583023862
@@ -461,7 +461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.075696096, y: 0.55}
   m_AnchorMax: {x: 0.92430395, y: 0.9153639}
-  m_AnchoredPosition: {x: 0.598938, y: 0}
+  m_AnchoredPosition: {x: 0.598999, y: 0}
   m_SizeDelta: {x: 1, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3520605843352745615
@@ -748,7 +748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -42.70746, y: 14.06897}
+  m_AnchoredPosition: {x: -42.70752, y: 14.069092}
   m_SizeDelta: {x: 557, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &845429401753577165
@@ -1783,6 +1783,7 @@ GameObject:
   - component: {fileID: 2311910181304639581}
   - component: {fileID: 9217204927453643904}
   - component: {fileID: 9129721281167251937}
+  - component: {fileID: 6817889801030082184}
   m_Layer: 5
   m_Name: WinText
   m_TagString: Untagged
@@ -1806,7 +1807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.023696095, y: 0.61300004}
   m_AnchorMax: {x: 0.9775746, y: 0.85245466}
-  m_AnchoredPosition: {x: -0.5, y: -0.82403564}
+  m_AnchoredPosition: {x: -0.5, y: -0.8239746}
   m_SizeDelta: {x: 3, y: -0.3093872}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9217204927453643904
@@ -1867,9 +1868,9 @@ MonoBehaviour:
   m_fontSize: 300
   m_fontSizeBase: 300
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 300
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1906,6 +1907,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6817889801030082184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368329475839347079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90c1997a4fc75d4bb1b218ef11f5d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: win
 --- !u!1 &7989716061941400846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,7 +1932,7 @@ GameObject:
   - component: {fileID: 7412526360920757459}
   - component: {fileID: 4336521900899788642}
   m_Layer: 5
-  m_Name: LimitTouches
+  m_Name: LimitTouchesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1940,7 +1954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.13684206}
   m_AnchorMax: {x: 0.71960986, y: 0.33014035}
-  m_AnchoredPosition: {x: -4.800003, y: 0.1000061}
+  m_AnchoredPosition: {x: -19.4, y: 0.1000061}
   m_SizeDelta: {x: -10.5425, y: -0.041900635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7412526360920757459
@@ -2204,7 +2218,7 @@ GameObject:
   - component: {fileID: 1235764652272486117}
   - component: {fileID: 4234782248863637978}
   m_Layer: 5
-  m_Name: LimitTouches (1)
+  m_Name: TouchesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2226,7 +2240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.13684206}
   m_AnchorMax: {x: 0.5, y: 0.33014035}
-  m_AnchoredPosition: {x: 0.7090149, y: 0.1000061}
+  m_AnchoredPosition: {x: -13.890915, y: 0.1000061}
   m_SizeDelta: {x: -0.3600006, y: -0.041900635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1235764652272486117
@@ -2461,15 +2475,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 925767519840175729, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_fontSize
-      value: 55
+      value: 51.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 925767519840175729, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 925767519840175729, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_fontSizeBase
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 925767519840175729, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1659485997005106862, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_Name
       value: NextLevelBTN
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360218567627597901, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -183.5811
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360218567627597901, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.5368042
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: nextLevel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2597,6 +2631,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuBTN
       objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: backMenu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2723,6 +2761,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseRestartBTN
       objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: restart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2837,6 +2879,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResumeBTN
       objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: resume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2855,6 +2901,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8540548283357153117}
     m_Modifications:
+    - target: {fileID: 482486382003248026, guid: 58354c95160891a46826fd1a25a41867, type: 3}
+      propertyPath: key
+      value: pause
+      objectReference: {fileID: 0}
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_text
       value: Pause
@@ -2937,7 +2987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8946352028578256920, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.3565063
+      value: 2.3564453
       objectReference: {fileID: 0}
     - target: {fileID: 8946352028578256920, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3077,6 +3127,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RestartBTN
       objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: restart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3202,6 +3256,10 @@ PrefabInstance:
     - target: {fileID: 1659485997005106862, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_Name
       value: MenuBTN
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: backMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
