@@ -32,7 +32,7 @@ public class StoreObject : CanvasElementLocator
 
         _buyButton.onClick.AddListener(() =>
         {
-            if (StoreManager.Instance.CanBuy(_skinSC.price, false)) //TODO Poner precio en base a prefab de skin o valor guardado.
+            if (StoreManager.Instance.CanBuy(_skinSC.price, false))
             {
                 StoreManager.Instance.Buy(_skinSC.price);
                 OnSkinIsSelected();
