@@ -30,6 +30,12 @@ public class ConfigsCanvas : CanvasElementLocator
         musicSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetMusicVolume(musicSlide.value));
         musicSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName);
 
+        var leftArrowButton = FindAndValidateButtonComponent(transform, "LeftArrowButton");
+        leftArrowButton.onClick.AddListener(() => LanguageManager.Instance.ChangeLanguage(-1));
+
+        var rightArrowButton = FindAndValidateButtonComponent(transform, "RightArrowButton");
+        rightArrowButton.onClick.AddListener(() => LanguageManager.Instance.ChangeLanguage(1));
+
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 
