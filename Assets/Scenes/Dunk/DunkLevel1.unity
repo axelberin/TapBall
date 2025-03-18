@@ -801,6 +801,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 579194868607952094, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: restart
+      objectReference: {fileID: 0}
+    - target: {fileID: 718471694627300048, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: resume
+      objectReference: {fileID: 0}
     - target: {fileID: 1362921546160516865, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
       propertyPath: m_Name
       value: DunkCanvas
@@ -884,6 +892,26 @@ PrefabInstance:
     - target: {fileID: 2043872662946045488, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355451531031613086, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: backMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3142016189574569136, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: restart
+      objectReference: {fileID: 0}
+    - target: {fileID: 5638024104688442369, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: nextLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704972076534910540, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432195793019793739, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: key
+      value: backMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

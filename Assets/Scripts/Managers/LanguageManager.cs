@@ -88,6 +88,12 @@ public class LanguageManager : MonoBehaviour
 
     public string GetLocalizedText(string key)
     {
+        if (_localizedTexts.Count == 0 ||
+            _localizedTexts[_currentLanguage] == null ||
+            _localizedTexts[_currentLanguage].Count == 0 ||
+            _localizedTexts[_currentLanguage][key] == null)
+            return key;
+
         if (_localizedTexts[_currentLanguage].ContainsKey(key))
             return _localizedTexts[_currentLanguage][key];
 
