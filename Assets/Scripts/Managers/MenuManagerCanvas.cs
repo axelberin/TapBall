@@ -34,6 +34,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             _selectModePanel.SetActive(true);
             _menuPanel.SetActive(false);
+            LanguageManager.Instance.OnUpdateLanguage?.Invoke();
         });
 
         _dunkModeButton = FindAndValidateButtonComponent(transform, "DunkModeButton");

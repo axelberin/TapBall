@@ -91,7 +91,7 @@ public class LanguageManager : MonoBehaviour
         if (_localizedTexts[_currentLanguage].ContainsKey(key))
             return _localizedTexts[_currentLanguage][key];
 
-        return "MISSING: " + key;
+        return key;
     }
 
     public void ChangeLanguage(int languageIndex)

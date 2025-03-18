@@ -15,6 +15,9 @@ public class LocalizedText : MonoBehaviour
 
     public void UpdateText()
     {
+        if (!LanguageManager.Instance)
+            return;
+
         _text.text = LanguageManager.Instance.GetLocalizedText(key);
     }
 }

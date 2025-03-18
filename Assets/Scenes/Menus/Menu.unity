@@ -917,7 +917,8 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3351,6 +3352,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1496426366}
     m_Modifications:
+    - target: {fileID: 3752196085100807866, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
+      propertyPath: key
+      value: comingSoon
+      objectReference: {fileID: 0}
     - target: {fileID: 4282019054721162462, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
       propertyPath: m_Name
       value: ComingSoonPanel (3)
@@ -4897,6 +4902,10 @@ PrefabInstance:
     - target: {fileID: 1659485997005106862, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_Name
       value: StoreBTN
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: key
+      value: store
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7235,7 +7244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.19944781}
   m_AnchorMax: {x: 1, y: 0.39944768}
-  m_AnchoredPosition: {x: 0.49926758, y: 1.6199951}
+  m_AnchoredPosition: {x: 0.49926758, y: 1.619873}
   m_SizeDelta: {x: -0.5999756, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1429213037
@@ -7284,6 +7293,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1496426366}
     m_Modifications:
+    - target: {fileID: 3752196085100807866, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
+      propertyPath: key
+      value: comingSoon
+      objectReference: {fileID: 0}
     - target: {fileID: 4282019054721162462, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
       propertyPath: m_Name
       value: ComingSoonPanel (2)
@@ -7875,7 +7888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.17553711, y: 0.59399414}
+  m_AnchoredPosition: {x: -0.17553711, y: 0.5942383}
   m_SizeDelta: {x: 0.35101, y: -1.1882}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1507987165
@@ -8465,7 +8478,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 482486382003248026, guid: 58354c95160891a46826fd1a25a41867, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10916,6 +10930,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1496426366}
     m_Modifications:
+    - target: {fileID: 3752196085100807866, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
+      propertyPath: key
+      value: comingSoon
+      objectReference: {fileID: 0}
     - target: {fileID: 4282019054721162462, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
       propertyPath: m_Name
       value: ComingSoonPanel (1)
@@ -11873,6 +11891,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1496426366}
     m_Modifications:
+    - target: {fileID: 3752196085100807866, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
+      propertyPath: key
+      value: comingSoon
+      objectReference: {fileID: 0}
     - target: {fileID: 4282019054721162462, guid: 38fc24b9e8e477c4ba3763c137c1c320, type: 3}
       propertyPath: m_Name
       value: ComingSoonPanel
@@ -12063,21 +12085,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 962733385122135465, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.24377441
-      objectReference: {fileID: 0}
     - target: {fileID: 2124277492746949684, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3485692563761379771, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 13.940643
-      objectReference: {fileID: 0}
-    - target: {fileID: 4205290834866690588, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.099975586
       objectReference: {fileID: 0}
     - target: {fileID: 5281491332670631439, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
       propertyPath: m_Name
@@ -12114,18 +12124,6 @@ PrefabInstance:
     - target: {fileID: 8286679599370773733, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8325096303520282356, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -11.991943
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497501969795747284, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.24377441
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824158188084501692, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1.1911621
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
