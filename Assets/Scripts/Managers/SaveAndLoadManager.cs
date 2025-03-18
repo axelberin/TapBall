@@ -15,6 +15,7 @@ public static class SaveAndLoadManager
 
     public static string SoundsVolumeName = "SoundsVolume";
     public static string MusicVolumeName = "MusicVolume";
+    public static string LanguageName = "Language";
 
     public static void SetIntValue(int value, string parameterName, bool withSave = false)
     {

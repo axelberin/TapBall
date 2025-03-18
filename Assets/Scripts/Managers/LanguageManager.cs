@@ -82,6 +82,11 @@ public class LanguageManager : MonoBehaviour
 
         Debug.Log("Traducciones cargadas correctamente.");
 
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.LanguageName))
+            SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName);
+        else
+            _currentLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
+
         OnUpdateLanguage?.Invoke();
     }
 
@@ -105,6 +110,7 @@ public class LanguageManager : MonoBehaviour
         SetCurrentLanguageIndex(languageIndex);
         _currentLanguage = GetLanguageKeyFromIndex(_currentLanguageIndex);
         OnUpdateLanguage?.Invoke();
+        SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName);
     }
 
     private void SetCurrentLanguageIndex(int index)
