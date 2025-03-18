@@ -27,6 +27,9 @@ public class StoreObject : CanvasElementLocator
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
             SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
 
+        var priceText = FindAndValidateTextComponent(transform, "PriceText");
+        priceText.text = _skinSC.price.ToString();
+
         _buyButton.onClick.AddListener(() =>
         {
             if (StoreManager.Instance.CanBuy(_skinSC.price, false)) //TODO Poner precio en base a prefab de skin o valor guardado.
@@ -54,5 +57,10 @@ public class StoreObject : CanvasElementLocator
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = false;
+    }
+
+    private void OnSkinUnselected()
+    {
+        _equipButton.interactable = true;
     }
 }
