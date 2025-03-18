@@ -25,9 +25,9 @@ public class Coins : ObstaclesManager
         _coinName = SaveAndLoadManager.CoinNameByLevel +
              GameManager.Instance.GetCurrentGameMode +
              GameManager.Instance.SetGetWorldState.GetLevel;
-        Debug.Log("CoinName: " + _coinName);
+
         int hasCoin = SaveAndLoadManager.GetIntValue(_coinName);
-        Debug.Log("Coins: " + hasCoin);
+
         gameObject.SetActive(hasCoin == default || hasCoin == 0);
     }
 
