@@ -18,10 +18,14 @@ public class ConfigsCanvas : CanvasElementLocator
         configsBackButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("ConfigsCanvas", GetCanvasFromGameMode(GameManager.Instance.GetCurrentGameMode)));
 
+#if UNITY_EDITOR
         var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
         if (resetDataButton != null)
             resetDataButton.onClick.AddListener(() => SaveAndLoadManager.DeleteData());
-
+#else
+        var resetDataButton = FindAndValidateButtonComponent(transform, "ResetDataBTN");
+        resetDataButton.gameObject.SetActive(false);
+#endif
         var soundsSlide = FindAndValidateSliderComponent(transform, "SoundsSlider");
         soundsSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetSoundVolume(soundsSlide.value));
         soundsSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName);

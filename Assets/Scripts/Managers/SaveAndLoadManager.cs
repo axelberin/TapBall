@@ -7,9 +7,9 @@ public static class SaveAndLoadManager
     /// The name + the game mode + level.
     /// </summary>
     public static string CoinNameByLevel = "Coin_";
-    public static string DunkBestName = "DunkBest_";
     public static string DunkLevelName = "DunkLevel_";
     public static string DunkWithoutDeathName = "DunkWithoutDeath_";
+    public static string DunkTouchesCompleteName = "DunkTouchesComplete_";
 
     public static string CurrentBallSkin = "BallBasicSkin";
 

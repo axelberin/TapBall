@@ -48,21 +48,25 @@ public class LevelManager : MonoBehaviour
         int level = GameManager.Instance.SetGetWorldState.GetLevel - 1;
         int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkBestName + level) ||
-            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkBestName + level) > tapCount)
-            SaveAndLoadManager.SetIntValue(tapCount, SaveAndLoadManager.DunkBestName + level);
-
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
             SaveAndLoadManager.SetIntValue(level, SaveAndLoadManager.DunkLevelName + level);
 
         foreach (var coinName in _coinsObtained)
             SaveAndLoadManager.SetIntValue(1, coinName.GetCoinName);
 
-        SaveAndLoadManager.SetIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
-            SaveAndLoadManager.DunkWithoutDeathName + level, true);
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkWithoutDeathName + level) ||
+            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + level) == 0)
+            SaveAndLoadManager.SetIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
+                SaveAndLoadManager.DunkWithoutDeathName + level, true);
 
-        DunkLevelCanvas.Instance.SetTouchesInLevel(tapCount,
-           tapCount > GameManager.Instance.SetGetWorldState.GetLimitTouches);
+        bool isOverTouchesLimit = tapCount > GameManager.Instance.SetGetWorldState.GetLimitTouches;
+
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkTouchesCompleteName + level) ||
+            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkTouchesCompleteName + level) == 0)
+            SaveAndLoadManager.SetIntValue(!isOverTouchesLimit ? 1 : 0,
+                SaveAndLoadManager.DunkTouchesCompleteName + level, true);
+
+        DunkLevelCanvas.Instance.SetTouchesInLevel(tapCount, isOverTouchesLimit);
     }
 
     public void OnLose()
