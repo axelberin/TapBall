@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4902cbb59f026aa4db3854555cc086b9
+guid: 9da14178570d81f48b0db0417d51ee5e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_0"
+      name: "Fondo men\xFA spritesheet2_0"
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb84eadfddaa9494e9650889339e3dca
-      internalID: -346412325
+      spriteID: 5437c2cb30e856d438dd24c294cb6643
+      internalID: 1911864076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_1"
+      name: "Fondo men\xFA spritesheet2_1"
       rect:
         serializedVersion: 2
         x: 1080
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c0eb5e7d244d924cb7a24830365c316
-      internalID: 93972053
+      spriteID: 1808cb5f4266ba647b3957248b16ef76
+      internalID: 525722370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_2"
+      name: "Fondo men\xFA spritesheet2_2"
       rect:
         serializedVersion: 2
         x: 2160
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 212c2e851d3d95c43aa9cd759e73e428
-      internalID: 1230814149
+      spriteID: 6579e59877064f846928e798b76d80ed
+      internalID: -1801995300
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_3"
+      name: "Fondo men\xFA spritesheet2_3"
       rect:
         serializedVersion: 2
         x: 3240
@@ -213,14 +213,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f35a77962018b4b44b3e9642f7140581
-      internalID: -1947318070
+      spriteID: 6768d09c1531ffe408a9abc9bfb28b8e
+      internalID: 429435900
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_4"
+      name: "Fondo men\xFA spritesheet2_4"
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 2400
+        width: 1080
+        height: 2400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 598251eaf6f98264a8d1b5bdca228a83
+      internalID: -2061622960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Fondo men\xFA spritesheet2_5"
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 2400
+        width: 1080
+        height: 2400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feae7f951774d4d4c8aa1f560208b809
+      internalID: 142923982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Fondo men\xFA spritesheet2_6"
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 2400
+        width: 1080
+        height: 2400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc3a8cb2ef748fa4a9710ee9c194ea7b
+      internalID: -916104900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Fondo men\xFA spritesheet2_7"
       rect:
         serializedVersion: 2
         x: 0
@@ -234,14 +297,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7466cb73b697b974fbd9a4eea45fcd86
-      internalID: -1845609719
+      spriteID: 839709fa6eb5c7e4a8cae15b963e0ab6
+      internalID: -1256282667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_5"
+      name: "Fondo men\xFA spritesheet2_8"
       rect:
         serializedVersion: 2
         x: 1080
@@ -255,14 +318,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bee56eeb228cd484fac99a843390b385
-      internalID: 884337981
+      spriteID: 0dfaec5172aa9ff4b8d8f0b54df4df0c
+      internalID: -1752771180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_6"
+      name: "Fondo men\xFA spritesheet2_9"
       rect:
         serializedVersion: 2
         x: 2160
@@ -276,14 +339,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e81b3f7cca9dd049bc2b694af290e25
-      internalID: -946383818
+      spriteID: cd1ed8c53a765c548ad3f574a212b34a
+      internalID: -1250988603
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Fondo men\xFA spritesheet_7"
+      name: "Fondo men\xFA spritesheet2_10"
       rect:
         serializedVersion: 2
         x: 3240
@@ -297,8 +360,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3700112fe1e064949ae1e8e189f977f2
-      internalID: -1827969164
+      spriteID: 19d28e90ae4f40148a359c01d9f16137
+      internalID: -1545533798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Fondo men\xFA spritesheet2_11"
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 0
+        width: 1080
+        height: 2400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb3c03416cb0116498ca30ddb02332a2
+      internalID: 260282692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Fondo men\xFA spritesheet2_12"
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0
+        width: 1080
+        height: 2400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17af1aadad2fcac4cba57dfcabf56d44
+      internalID: -833162271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Fondo men\xFA spritesheet2_13"
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 0
+        width: 1080
+        height: 2400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c73b5095ff44f4bbbc16b48e6bf739
+      internalID: 2047393563
       vertices: []
       indices: 
       edges: []
@@ -314,14 +440,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "Fondo men\xFA spritesheet_0": -346412325
-      "Fondo men\xFA spritesheet_1": 93972053
-      "Fondo men\xFA spritesheet_2": 1230814149
-      "Fondo men\xFA spritesheet_3": -1947318070
-      "Fondo men\xFA spritesheet_4": -1845609719
-      "Fondo men\xFA spritesheet_5": 884337981
-      "Fondo men\xFA spritesheet_6": -946383818
-      "Fondo men\xFA spritesheet_7": -1827969164
+      "Fondo men\xFA spritesheet2_0": 1911864076
+      "Fondo men\xFA spritesheet2_1": 525722370
+      "Fondo men\xFA spritesheet2_10": -1545533798
+      "Fondo men\xFA spritesheet2_11": 260282692
+      "Fondo men\xFA spritesheet2_12": -833162271
+      "Fondo men\xFA spritesheet2_13": 2047393563
+      "Fondo men\xFA spritesheet2_2": -1801995300
+      "Fondo men\xFA spritesheet2_3": 429435900
+      "Fondo men\xFA spritesheet2_4": -2061622960
+      "Fondo men\xFA spritesheet2_5": 142923982
+      "Fondo men\xFA spritesheet2_6": -916104900
+      "Fondo men\xFA spritesheet2_7": -1256282667
+      "Fondo men\xFA spritesheet2_8": -1752771180
+      "Fondo men\xFA spritesheet2_9": -1250988603
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
