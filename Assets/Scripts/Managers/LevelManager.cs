@@ -10,7 +10,6 @@ public class LevelManager : MonoBehaviour
     public Action OnWinLevel = delegate { };
     public Action OnLoseLevel = delegate { };
 
-    private int _gameCoins;
     private List<Coins> _coinsObtained = new List<Coins>();
 
     private void Awake()
@@ -29,7 +28,7 @@ public class LevelManager : MonoBehaviour
         if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
             savedCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
 
-        int currentCoins = savedCoins + _gameCoins;
+        int currentCoins = savedCoins + _coinsObtained.Count;
         SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName);
 
         switch (GameManager.Instance.GetCurrentGameMode)
@@ -41,7 +40,6 @@ public class LevelManager : MonoBehaviour
                 break;
         }
 
-        _gameCoins = 0;
         _coinsObtained.Clear();
     }
 
@@ -77,10 +75,7 @@ public class LevelManager : MonoBehaviour
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
-                {
-                    _gameCoins = 0;
-                    GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
-                }
+                GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
                 break;
             default:
                 break;
@@ -89,13 +84,16 @@ public class LevelManager : MonoBehaviour
 
     public void OnGetCoin(Coins coinName)
     {
-        _gameCoins++;
         _coinsObtained.Add(coinName);
     }
 
     public void ResetCoins()
     {
-        _gameCoins = 0;
         _coinsObtained.Clear();
     }
+
+    public bool HasGetedCoins => _coinsObtained.Count > 0 ||
+        SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinNameByLevel +
+             GameManager.Instance.GetCurrentGameMode +
+             GameManager.Instance.SetGetWorldState.GetLevel);
 }

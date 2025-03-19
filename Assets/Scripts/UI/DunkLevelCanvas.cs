@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,12 @@ public class DunkLevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _tapCountText;
     private TextMeshProUGUI _winTime;
     private GameObject _winUI;
+    private GameObject _hasCoinGoal;
+    private GameObject _emptyhasCoinGoal;
+    private GameObject _deathGoal;
+    private GameObject _emptydeathGoal;
+    private GameObject _touchesGoal;
+    private GameObject _emptytouchesGoal;
     private Button _menuButton;
     private Button _nextLevelButton;
     private Button _pauseButton;
@@ -89,6 +96,13 @@ public class DunkLevelCanvas : CanvasElementLocator
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("DunkCanvas", "ConfigsCanvas"));
 
+        _hasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinGoalFull");
+        _emptyhasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinEmpty");
+        _deathGoal = FindAndValidateGameObjectComponent(transform, "DeathGoalFull");
+        _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
+        _touchesGoal = FindAndValidateGameObjectComponent(transform, "ToachesGoalFull");
+        _emptytouchesGoal = FindAndValidateGameObjectComponent(transform, "TouchEmpty");
+
         _touchesInLevelText = FindAndValidateTextComponent(transform, "TouchesText");
         _limitTouchesText = FindAndValidateTextComponent(transform, "LimitTouchesText");
 
@@ -130,6 +144,12 @@ public class DunkLevelCanvas : CanvasElementLocator
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winUI, true);
         _pauseButton.interactable = false;
+
+        if (LevelManager.Instance.HasGetedCoins)
+            StartCoroutine(ShowGoal(0.6f, _hasCoinGoal, _emptyhasCoinGoal));
+
+        if (!GameManager.Instance.SetGetPlayer.HasDeath)
+            StartCoroutine(ShowGoal(1.7f, _deathGoal, _emptydeathGoal));
     }
 
     public void OnLose()
@@ -155,11 +175,22 @@ public class DunkLevelCanvas : CanvasElementLocator
     public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit)
     {
         UIManager.Instance.SetText(_touchesInLevelText, touchesInLevel);
-        UIManager.Instance.SetText(_limitTouchesText, "/ " + 
+        UIManager.Instance.SetText(_limitTouchesText, "/ " +
             GameManager.Instance.SetGetWorldState.GetLimitTouches);
         if (isOverLimit)
             _touchesInLevelText.color = Color.red;
         else
+        {
+            StartCoroutine(ShowGoal(2.8f, _touchesGoal, _emptytouchesGoal));
             _touchesInLevelText.color = Color.green;
+        }
+    }
+
+    private IEnumerator ShowGoal(float time, GameObject goalObject, GameObject emptyGoal)
+    {
+        yield return new WaitForSeconds(time);
+        UIManager.Instance.ActivateUI(goalObject, true);
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.ActivateUI(emptyGoal, false);
     }
 }
