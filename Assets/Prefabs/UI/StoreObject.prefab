@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2ff4ecc04e4714f81f61cdd7b2b7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skinSC: {fileID: 11400000, guid: 5dff3c177bc72204a84bbc99bdbf332e, type: 2}
+  _skinSC: {fileID: 0}
 --- !u!1 &6569000101619968568
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +550,10 @@ PrefabInstance:
       value: 12.413273
       objectReference: {fileID: 0}
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
+    - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_fontSizeMax
       value: 25
       objectReference: {fileID: 0}
@@ -561,6 +565,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6863499743366239352, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
