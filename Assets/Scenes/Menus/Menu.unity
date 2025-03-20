@@ -2208,6 +2208,18 @@ PrefabInstance:
       propertyPath: m_margin.z
       value: 39.220352
       objectReference: {fileID: 0}
+    - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
+    - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6863499743366239352, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
+    - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7617525062417260918, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_Name
       value: CoinsText
