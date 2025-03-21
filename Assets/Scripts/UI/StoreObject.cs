@@ -41,6 +41,7 @@ public class StoreObject : CanvasElementLocator
                 OnSkinIsSelected();
                 StoreCanvas.Instance.UpdateCoinsText();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
+                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkin, true);
             }
             else
                 return; //TODO Crear cartel de que no se puede comprar.
@@ -60,7 +61,6 @@ public class StoreObject : CanvasElementLocator
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = false;
         _equipText.text = LanguageManager.Instance.GetLocalizedText("equiped");
-        SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkin, true);
     }
 
     private void OnSkinUnselected()
