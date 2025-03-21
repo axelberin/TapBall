@@ -47,9 +47,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             LevelManager.Instance.OnLoseLevel += OnLose;
         }
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
-            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
-
         Addressables.LoadAssetAsync<Sprite>(SaveAndLoadManager.GetStringValue(
             SaveAndLoadManager.CurrentBallSkin)).Completed += OnSpriteLoaded;
     }
