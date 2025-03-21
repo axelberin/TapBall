@@ -59,13 +59,13 @@ public class StoreObject : CanvasElementLocator
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = false;
-        _equipText.text = LanguageManager.Instance.GetLocalizedText("equip");
+        _equipText.text = LanguageManager.Instance.GetLocalizedText("equiped");
         SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkin, true);
     }
 
     private void OnSkinUnselected()
     {
         _equipButton.interactable = true;
-        _equipText.text = LanguageManager.Instance.GetLocalizedText("equiped");
+        _equipText.text = LanguageManager.Instance.GetLocalizedText("equip");
     }
 }
