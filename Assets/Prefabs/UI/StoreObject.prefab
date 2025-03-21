@@ -702,7 +702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7617525062417260918, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_Name
-      value: Text
+      value: EquipText
       objectReference: {fileID: 0}
     - target: {fileID: 8946352028578256920, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_Pivot.x
