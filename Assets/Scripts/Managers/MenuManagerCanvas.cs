@@ -30,10 +30,9 @@ public class MenuManagerCanvas : CanvasElementLocator
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
         _selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
 
-        if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkin) == "")
-            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkin);
-        Debug.Log("Current Ball Skin: " + SaveAndLoadManager.CurrentBallSkin);
-        Debug.Log("Current Ball Skin: " + SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkin));
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
+            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName, true);
+
         var playButton = FindAndValidateButtonComponent(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
         {

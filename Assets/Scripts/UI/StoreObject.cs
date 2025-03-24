@@ -27,9 +27,6 @@ public class StoreObject : CanvasElementLocator
         _image.sprite = _skinSC.sprite;
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
-            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
-
         var priceText = FindAndValidateTextComponent(transform, "PriceText");
         priceText.text = _skinSC.price.ToString();
 
@@ -41,7 +38,7 @@ public class StoreObject : CanvasElementLocator
                 OnSkinIsSelected();
                 StoreCanvas.Instance.UpdateCoinsText();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
-                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkin, true);
+                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
             }
             else
                 return; //TODO Crear cartel de que no se puede comprar.
@@ -49,7 +46,7 @@ public class StoreObject : CanvasElementLocator
 
         _equipButton.onClick.AddListener(() => OnSkinIsSelected());
 
-        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.skinName)
+        if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
             OnSkinIsSelected();
         else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
             OnSkinUnselected();

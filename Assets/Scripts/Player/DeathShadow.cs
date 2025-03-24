@@ -12,20 +12,18 @@ public class DeathShadow : MonoBehaviour, ISkinLoader
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if (_spriteRenderer != null)
-        {
-            if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
-                SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
-
-            Addressables.LoadAssetAsync<Sprite>("Death" + SaveAndLoadManager.GetStringValue(
-                SaveAndLoadManager.CurrentBallSkin)).Completed += OnSpriteLoaded;
-        }
+            Addressables.LoadAssetAsync<Texture2D>("Death" + SaveAndLoadManager.GetStringValue(
+                SaveAndLoadManager.CurrentBallSkinName)).Completed += OnSpriteLoaded;
     }
 
-    public void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
+    public void OnSpriteLoaded(AsyncOperationHandle<Texture2D> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            _spriteRenderer.sprite = handle.Result;
+            Texture2D texture = handle.Result;
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+            _spriteRenderer.sprite = sprite;
         }
     }
 }
