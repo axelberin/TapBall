@@ -52,6 +52,36 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5112d0fec357ddc43a2ff35693a32cd9
+    m_Address: BallBasicBlueSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a683a39eb057a5479d92a4e6d797c86
+    m_Address: DeathBallBasicBlueSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 794d8f6cefbb8a247b5780a96327509f
+    m_Address: DeathBallBasicBlueSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0db3441dfb3081442b0fe3bea34a8649
+    m_Address: BallBasicGreenSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc00da2f3d5064742a8b5c2ace7a695b
+    m_Address: DeathBallBasicGreenSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc3a604874a33c1469c2b3cf1f1533f3
+    m_Address: DeathBallBasicGreenSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 50966938486398a42b43087b314f2f7a, type: 2}
   m_SchemaSet:
