@@ -47,30 +47,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             LevelManager.Instance.OnLoseLevel += OnLose;
         }
 
-        string skinName = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName);
-        Debug.Log($"Intentando cargar Texture2D con clave: {skinName}");
-        Addressables.LoadAssetAsync<Texture2D>(SaveAndLoadManager.GetStringValue(
-            SaveAndLoadManager.CurrentBallSkinName)).Completed += (operation) =>
-            {
-                Debug.Log("Evento 'Completed' ejecutado"); // Este log debe aparecer
-
-                if (operation.Status == AsyncOperationStatus.Succeeded)
-                {
-                    Debug.Log($"Texture2D '{skinName}' cargado correctamente.");
-
-                    Texture2D texture = operation.Result;
-                    Debug.Log($"Texture2D cargada: {texture.name}");
-                    Debug.Log($"Texture2D dimensiones: {texture.width}x{texture.height}");
-                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                    Debug.Log($"Sprite creado correctamente: {sprite}");
-                    _spriteRenderer.sprite = sprite;
-                    Debug.Log("Sprite asignado correctamente.");
-                }
-                else
-                {
-                    Debug.LogError($"Error al cargar la textura '{skinName}' con Addressables.");
-                }
-            };
+        Addressables.LoadAssetAsync<GameObject>(SaveAndLoadManager.GetStringValue(
+            SaveAndLoadManager.CurrentBallSkinName)).Completed += OnPrefabLoaded;
     }
 
     private void OnDestroy()
@@ -82,30 +60,15 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         }
     }
 
-    public void OnSpriteLoaded(AsyncOperationHandle<Texture2D> handle)
+    public void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Debug.Log($"Sprite cargado correctamente: {handle.Result.name}");
-            Texture2D texture = handle.Result;
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-
-            _spriteRenderer.sprite = sprite;
-
-            // Verificamos si el SpriteRenderer tiene el sprite asignado
-            if (_spriteRenderer.sprite == null)
-            {
-                Debug.LogError("Error: El sprite cargado es nulo.");
-            }
-            else
-            {
-                Debug.Log($"Sprite asignado a {_spriteRenderer.gameObject.name}");
-            }
+            _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
+            _animator.runtimeAnimatorController= handle.Result.GetComponent<Animator>().runtimeAnimatorController;
         }
         else
-        {
-            Debug.LogError("Error al cargar el sprite con Addressables.");
-        }
+            Debug.LogError("Failed to load prefab.");
     }
 
 

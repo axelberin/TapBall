@@ -5,25 +5,30 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class DeathShadow : MonoBehaviour, ISkinLoader
 {
     private SpriteRenderer _spriteRenderer;
+    private ParticleSystem _particleSystem;
 
     private void Start()
     {
         transform.localScale = GameManager.Instance.SetGetPlayer.transform.localScale;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _particleSystem = GetComponent<ParticleSystem>();
+
         if (_spriteRenderer != null)
-            Addressables.LoadAssetAsync<Texture2D>("Death" + SaveAndLoadManager.GetStringValue(
-                SaveAndLoadManager.CurrentBallSkinName)).Completed += OnSpriteLoaded;
+            Addressables.LoadAssetAsync<GameObject>("Death" + SaveAndLoadManager.GetStringValue(
+                SaveAndLoadManager.CurrentBallSkinName)).Completed += OnPrefabLoaded;
     }
 
-    public void OnSpriteLoaded(AsyncOperationHandle<Texture2D> handle)
+    public void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Texture2D texture = handle.Result;
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-
-            _spriteRenderer.sprite = sprite;
+            _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
+            //Debug.Log(handle.Result.GetComponent<ParticleSystem>().name);
+            //UtilityFuntions.CopyCompleteParticleSystem(handle.Result.GetComponent<ParticleSystem>(), ref _particleSystem);
+            //_particleSystem.Play();
         }
+        else
+            Debug.LogError("Failed to load prefab.");
     }
 }
