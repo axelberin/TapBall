@@ -60,9 +60,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
                     Texture2D texture = operation.Result;
                     Debug.Log($"Texture2D cargada: {texture.name}");
+                    Debug.Log($"Texture2D dimensiones: {texture.width}x{texture.height}");
                     Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
                     Debug.Log($"Sprite creado correctamente: {sprite}");
-                    Debug.Log($"Sprite Renderer: {_spriteRenderer}");
                     _spriteRenderer.sprite = sprite;
                     Debug.Log("Sprite asignado correctamente.");
                 }
