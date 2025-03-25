@@ -11,14 +11,15 @@ public class StoreObject : CanvasElementLocator
     private Button _equipButton;
     private TextMeshProUGUI _equipText;
 
+
     private void Awake()
     {
         if (_skinSC == null)
+        {
             gameObject.SetActive(false);
-    }
+            return;
+        }
 
-    private void Start()
-    {
         _image = FindAndValidateImageComponent(transform, "ObjectImage");
         _buyButton = FindAndValidateButtonComponent(transform, "BuyButton");
         _equipButton = FindAndValidateButtonComponent(transform, "EquipButton");
@@ -45,7 +46,15 @@ public class StoreObject : CanvasElementLocator
         });
 
         _equipButton.onClick.AddListener(() => OnSkinIsSelected());
+    }
 
+    private void OnEnable()
+    {
+        UpdateSkinState();
+    }
+
+    public void UpdateSkinState()
+    {
         if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
             OnSkinIsSelected();
         else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
@@ -58,6 +67,7 @@ public class StoreObject : CanvasElementLocator
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = false;
         _equipText.text = LanguageManager.Instance.GetLocalizedText("equiped");
+        SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
     }
 
     private void OnSkinUnselected()

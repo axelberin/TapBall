@@ -31,7 +31,10 @@ public class MenuManagerCanvas : CanvasElementLocator
         _selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
-            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName, true);
+        {
+            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
+        }
 
         var playButton = FindAndValidateButtonComponent(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
