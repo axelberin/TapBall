@@ -24,9 +24,7 @@ public class DeathShadow : MonoBehaviour, ISkinLoader
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
-            //Debug.Log(handle.Result.GetComponent<ParticleSystem>().name);
-            //UtilityFuntions.CopyCompleteParticleSystem(handle.Result.GetComponent<ParticleSystem>(), ref _particleSystem);
-            //_particleSystem.Play();
+            // TODO: Add particle system
         }
         else
             Debug.LogError("Failed to load prefab.");
