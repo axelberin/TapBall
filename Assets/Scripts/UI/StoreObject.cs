@@ -58,6 +58,15 @@ public class StoreObject : CanvasElementLocator
         StoreManager.Instance.UpdateSkinsState += UpdateSkinState;
     }
 
+    private void OnEnable()
+    {
+        if (!_image || !_buyButton || !_equipButton || !_equipText||
+            LanguageManager.Instance == null)
+            return;
+
+        UpdateSkinState();
+    }
+
     public void UpdateSkinState()
     {
         if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
