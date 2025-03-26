@@ -6,9 +6,12 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioClip _buttonsSoundClip;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
+
+    private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -16,6 +19,9 @@ public class AudioManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -41,5 +47,11 @@ public class AudioManager : MonoBehaviour
     {
         _audioMixer.SetFloat(_mixerMusic, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
+    }
+
+    public void PlayButtonsSound()
+    {
+        if (_buttonsSoundClip != null && _audioSource != null)
+            _audioSource.PlayOneShot(_buttonsSoundClip);
     }
 }
