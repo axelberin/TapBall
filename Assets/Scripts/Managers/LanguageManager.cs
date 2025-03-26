@@ -83,7 +83,7 @@ public class LanguageManager : MonoBehaviour
         Debug.Log("Traducciones cargadas correctamente.");
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.LanguageName))
-            SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName);
+            SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
         else
             _currentLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
 

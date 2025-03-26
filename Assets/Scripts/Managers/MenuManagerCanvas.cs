@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class MenuManagerCanvas : CanvasElementLocator
 {
     private Button[] _dunkLevelsButtons;
-    private TextMeshProUGUI[] _dunkLevelsRecords;
+    private Image[] _dunkTouchesComplete;
     private Image[] _dunkWithoutDeath;
+    private Image[] _dunkHasCoins;
 
     private GameObject _menuPanel;
     private GameObject _selectModePanel;
@@ -28,6 +29,12 @@ public class MenuManagerCanvas : CanvasElementLocator
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
         _selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
+
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
+        {
+            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
+        }
 
         var playButton = FindAndValidateButtonComponent(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
@@ -100,6 +107,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
             _dunkLevelsButtons[i].onClick.AddListener(() =>
             {
+                _dunkLevelsButtons[levelIndex].interactable = false;
                 UIManager.Instance.ClearCnavasesList();
                 ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex + 1}", fadeAnimator);
             });
@@ -113,27 +121,49 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         _maxDunkLevels = _dunkLevelsButtons.Length;
         #endregion
-        #region BEST
-        var dunkBestTexts = new List<TextMeshProUGUI>();
+        #region HAS COINS
+        var dunkHasCoins = new List<Image>();
         for (int i = 1; i <= _maxDunkLevels; i++)
         {
-            var text = FindAndValidateTextComponent(transform, $"DunkRecord{i}");
+            var hasCoinImage = FindAndValidateImageComponent(transform, $"DunkHasCoin{i}");
 
-            if (text == null)
+            if (hasCoinImage == null)
                 break;
 
-            dunkBestTexts.Add(text);
+            dunkHasCoins.Add(hasCoinImage);
         }
 
-        if (dunkBestTexts.Count > 0)
-            _dunkLevelsRecords = dunkBestTexts.ToArray();
+        if (dunkHasCoins.Count > 0)
+            _dunkHasCoins = dunkHasCoins.ToArray();
 
-        for (int i = 0; i < _dunkLevelsRecords.Length; i++)
+        for (int i = 0; i < _dunkHasCoins.Length; i++)
         {
-            if (_dunkLevelsRecords[i] != null && SaveAndLoadManager.ContainsKey(
-                SaveAndLoadManager.DunkLevelName + i))
-                _dunkLevelsRecords[i].text = SaveAndLoadManager.GetIntValue(
-                    SaveAndLoadManager.DunkBestName + i).ToString();
+            _dunkHasCoins[i].gameObject.SetActive(
+                SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
+                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinNameByLevel + GameManager.GameModes.Dunk + (i + 1)) == 1);
+        }
+
+        #endregion
+        #region BEST
+        var dunkTouchesComplete = new List<Image>();
+        for (int i = 1; i <= _maxDunkLevels; i++)
+        {
+            var touchImage = FindAndValidateImageComponent(transform, $"DunkRecord{i}");
+
+            if (touchImage == null)
+                break;
+
+            dunkTouchesComplete.Add(touchImage);
+        }
+
+        if (dunkTouchesComplete.Count > 0)
+            _dunkTouchesComplete = dunkTouchesComplete.ToArray();
+
+        for (int i = 0; i < _dunkTouchesComplete.Length; i++)
+        {
+            _dunkTouchesComplete[i].gameObject.SetActive(
+                SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
+                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkTouchesCompleteName + i) == 1);
         }
         #endregion
         #region WITHOUT DEATH
@@ -153,8 +183,8 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         for (int i = 0; i < _dunkWithoutDeath.Length; i++)
         {
-            _dunkWithoutDeath[i].gameObject.SetActive(_dunkWithoutDeath[i]
-                && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
+            _dunkWithoutDeath[i].gameObject.SetActive(
+                SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + i) == 1);
         }
         #endregion

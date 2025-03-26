@@ -47,11 +47,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             LevelManager.Instance.OnLoseLevel += OnLose;
         }
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
-            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
-
-        Addressables.LoadAssetAsync<Sprite>(SaveAndLoadManager.GetStringValue(
-            SaveAndLoadManager.CurrentBallSkin)).Completed += OnSpriteLoaded;
+        Addressables.LoadAssetAsync<GameObject>(SaveAndLoadManager.GetStringValue(
+            SaveAndLoadManager.CurrentBallSkinName)).Completed += OnPrefabLoaded;
     }
 
     private void OnDestroy()
@@ -63,13 +60,17 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         }
     }
 
-    public void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
+    public void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            _spriteRenderer.sprite = handle.Result;
+            _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
+            _animator.runtimeAnimatorController= handle.Result.GetComponent<Animator>().runtimeAnimatorController;
         }
+        else
+            Debug.LogError("Failed to load prefab.");
     }
+
 
     public void OnTap(Vector3 touchPos)
     {

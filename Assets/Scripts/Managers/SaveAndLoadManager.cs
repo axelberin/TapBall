@@ -7,11 +7,12 @@ public static class SaveAndLoadManager
     /// The name + the game mode + level.
     /// </summary>
     public static string CoinNameByLevel = "Coin_";
-    public static string DunkBestName = "DunkBest_";
     public static string DunkLevelName = "DunkLevel_";
     public static string DunkWithoutDeathName = "DunkWithoutDeath_";
+    public static string DunkTouchesCompleteName = "DunkTouchesComplete_";
 
-    public static string CurrentBallSkin = "BallBasicSkin";
+    public static string CurrentBallSkinName = "CurrentBallSkin";
+    public static string ObtainedBallSkins = "BallSkin_";
 
     public static string SoundsVolumeName = "SoundsVolume";
     public static string MusicVolumeName = "MusicVolume";
@@ -42,7 +43,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Does´t exist '{parameterName}'");
+            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
 
@@ -53,7 +54,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Does´t exist '{parameterName}'");
+            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
 
@@ -64,7 +65,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Does´t exist '{parameterName}'");
+            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
 
