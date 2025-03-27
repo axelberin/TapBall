@@ -5,8 +5,15 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
+    public enum AudioClipType
+    {
+        ButtonsSound, 
+        PlayLevelSound
+    };
+
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioClip _buttonsSoundClip;
+    [SerializeField] private AudioClip _playLevelSoundClip;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
@@ -49,9 +56,23 @@ public class AudioManager : MonoBehaviour
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
     }
 
-    public void PlayButtonsSound()
+    public void PlaySoundByType(AudioClipType clipType)
     {
-        if (_buttonsSoundClip != null && _audioSource != null)
-            _audioSource.PlayOneShot(_buttonsSoundClip);
+        var clip = GetClipByClipType(clipType);
+
+        if (clip != null && _audioSource != null)
+            _audioSource.PlayOneShot(clip);
+        else
+            Debug.LogError("Audio source or audio clip not found.");
+    }
+
+    private AudioClip GetClipByClipType(AudioClipType clipType)
+    {
+        return clipType switch
+        {
+            AudioClipType.ButtonsSound => _buttonsSoundClip,
+            AudioClipType.PlayLevelSound => _playLevelSoundClip,
+            _ => null,
+        };
     }
 }

@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 6300738976143814865}
   - component: {fileID: 605092463261011348}
   - component: {fileID: 7104408883913416326}
+  - component: {fileID: 8436702859482010373}
   m_Layer: 5
   m_Name: EquipButton
   m_TagString: Untagged
@@ -196,6 +197,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8436702859482010373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055001559151536224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6524471910125386894
 GameObject:
   m_ObjectHideFlags: 0
