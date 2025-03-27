@@ -6,11 +6,15 @@ public class Coins : ObstaclesManager
     private string _coinName;
 
     private Animator _animator;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         if (_animator == null)
             _animator = GetComponent<Animator>();
+
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -20,7 +24,7 @@ public class Coins : ObstaclesManager
 
     private IEnumerator DelayToSet()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
         _coinName = SaveAndLoadManager.CoinNameByLevel +
              GameManager.Instance.GetCurrentGameMode +
@@ -42,6 +46,9 @@ public class Coins : ObstaclesManager
 
     private IEnumerator WaitForAnimation()
     {
+        if (_audioSource)
+            _audioSource.Play();
+
         _animator.SetTrigger("Geted");
         yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
