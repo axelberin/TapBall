@@ -74,7 +74,10 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerController>() && !_onPause)
+        {
             SetOnUpdate(WinCount);
+            _audioSource.Play();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -85,6 +88,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _timeToWin = 3;
             if (DunkLevelCanvas.Instance)
                 DunkLevelCanvas.Instance.OnExitWinBase();
+
+            _audioSource.Stop();
         }
     }
 
