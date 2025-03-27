@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -6,6 +7,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
     [SerializeField] float _jumpForce = 3;
     [SerializeField] string _deathPrefabName = "Death";
+    [SerializeField] List<AudioClip> _tapClips = new List<AudioClip>();
 
     private bool _death;
     private Vector2 _velocityOnPause;
@@ -14,6 +16,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private Collider2D _collider;
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    private AudioSource _audioSource;
 
     void Awake()
     {
@@ -28,6 +31,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         if (_animator == null)
             _animator = GetComponent<Animator>();
+
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -65,7 +71,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
-            _animator.runtimeAnimatorController= handle.Result.GetComponent<Animator>().runtimeAnimatorController;
+            _animator.runtimeAnimatorController = handle.Result.GetComponent<Animator>().runtimeAnimatorController;
         }
         else
             Debug.LogError("Failed to load prefab.");
@@ -78,6 +84,10 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         if (Random.Range(0, 10) < 3)
             _animator.SetTrigger("Flick");
+
+        int randomIndex = Random.Range(0, _tapClips.Count);
+        if (_audioSource && _tapClips[randomIndex])
+            _audioSource.PlayOneShot(_tapClips[randomIndex]);
     }
 
     private void AddForce(Vector3 touchPos)

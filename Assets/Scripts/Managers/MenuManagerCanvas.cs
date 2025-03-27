@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -110,6 +109,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 _dunkLevelsButtons[levelIndex].interactable = false;
                 UIManager.Instance.ClearCnavasesList();
                 ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex + 1}", fadeAnimator);
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PlayLevelSound);
             });
 
             if (i == 0)

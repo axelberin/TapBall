@@ -31,6 +31,8 @@ public class LevelManager : MonoBehaviour
         int currentCoins = savedCoins + _coinsObtained.Count;
         SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName);
 
+        AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.WinSound);
+
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
