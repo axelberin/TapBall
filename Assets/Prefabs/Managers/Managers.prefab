@@ -127,6 +127,7 @@ MonoBehaviour:
   _audioMixer: {fileID: 24100000, guid: b009a399f1b6ca64d8091fe4595983fb, type: 2}
   _buttonsSoundClip: {fileID: 8300000, guid: c64e0e913d465974fa59ddd4ccffc864, type: 3}
   _playLevelSoundClip: {fileID: 8300000, guid: 4cb38b24ddcd980409ef4514a89716ca, type: 3}
+  _winSound: {fileID: 8300000, guid: 4758ecdedeb34774db043fe0f333f7eb, type: 3}
 --- !u!114 &8537371994171092880
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,13 +7,15 @@ public class AudioManager : MonoBehaviour
 
     public enum AudioClipType
     {
-        ButtonsSound, 
-        PlayLevelSound
+        ButtonsSound,
+        PlayLevelSound,
+        WinSound
     };
 
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioClip _buttonsSoundClip;
     [SerializeField] private AudioClip _playLevelSoundClip;
+    [SerializeField] private AudioClip _winSound;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
@@ -72,6 +74,7 @@ public class AudioManager : MonoBehaviour
         {
             AudioClipType.ButtonsSound => _buttonsSoundClip,
             AudioClipType.PlayLevelSound => _playLevelSoundClip,
+            AudioClipType.WinSound => _winSound,
             _ => null,
         };
     }
