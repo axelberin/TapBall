@@ -13,7 +13,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private float _timeToStart = 0;
     private bool _onPause = false;
     private Vector3 _playerInitialPos;
+    private bool _playOnce;
 
+    private AudioSource _audioSource;
     private PlayerController _playerController;
     private List<MovableObjects> _movableObjectsInLevel = new List<MovableObjects>();
 
@@ -49,6 +51,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
         SetOnUpdate(StartCount);
+        if (!_audioSource)
+            _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -115,6 +119,12 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
             if (DunkLevelCanvas.Instance)
                 DunkLevelCanvas.Instance.OnCountTime(MathF.Min(_timeToStart + 1, 3));
+
+            if (!_playOnce)
+            {
+                _audioSource.Play();
+                _playOnce = true;
+            }
         }
         else
         {
@@ -126,6 +136,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
             _timeToStart = 0;
             SetOnUpdate();
+            _playOnce = false;
         }
     }
 
