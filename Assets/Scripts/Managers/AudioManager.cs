@@ -50,6 +50,9 @@ public class AudioManager : MonoBehaviour
             SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
         else
             SetMusicVolume(1);
+
+        PauseAndResumeManager.Instance.AddPauseAction(() => _audioSource.Pause());
+        PauseAndResumeManager.Instance.AddResumeAction(() => _audioSource.UnPause());
     }
 
     public void SetSoundVolume(float value)
