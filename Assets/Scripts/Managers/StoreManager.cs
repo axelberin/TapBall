@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public class StoreManager : MonoBehaviour
 {
     public static StoreManager Instance { get; private set; }
+    public Action UpdateSkinsState { get; set; }
 
     int _coins;
 
@@ -18,6 +20,11 @@ public class StoreManager : MonoBehaviour
     {
         if (LevelManager.Instance)
             _coins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
+    }
+
+    private void OnEnable()
+    {
+        UpdateSkinsState?.Invoke();
     }
 
     public void Buy(int cost)

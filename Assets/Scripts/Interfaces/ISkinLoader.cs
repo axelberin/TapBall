@@ -3,5 +3,5 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public interface ISkinLoader
 {
-    public void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle);
+    public void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle);
 }

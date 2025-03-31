@@ -83,13 +83,29 @@ public class LanguageManager : MonoBehaviour
         Debug.Log("Traducciones cargadas correctamente.");
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.LanguageName))
-            SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName);
+        {
+            _currentLanguage = GetLanguageFromDevice();
+            SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
+        }
         else
             _currentLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
 
         OnUpdateLanguage?.Invoke();
     }
 
+    private string GetLanguageFromDevice()
+    {
+        SystemLanguage language = Application.systemLanguage;
+        Debug.Log("Idioma del sistema: " + language);
+
+        // Puedes hacer algo específico según el idioma detectado
+        return language switch
+        {
+            SystemLanguage.Spanish => GetLanguageKeyFromIndex(1),
+            SystemLanguage.English => GetLanguageKeyFromIndex(0),
+            _ => GetLanguageKeyFromIndex(1),
+        };
+    }
 
     public string GetLocalizedText(string key)
     {

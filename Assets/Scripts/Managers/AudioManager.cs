@@ -5,10 +5,28 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
+    public enum AudioClipType
+    {
+        ButtonsSound,
+        PlayLevelSound,
+        WinSound,
+        PurchaseSound,
+        EqipSound,
+        RejectionSound
+    };
+
     [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioClip _buttonsSoundClip;
+    [SerializeField] private AudioClip _playLevelSoundClip;
+    [SerializeField] private AudioClip _winSound;
+    [SerializeField] private AudioClip _purchaseSound;
+    [SerializeField] private AudioClip _eqipSound;
+    [SerializeField] private AudioClip _rejectionSound;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
+
+    private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -16,6 +34,9 @@ public class AudioManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -29,6 +50,9 @@ public class AudioManager : MonoBehaviour
             SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
         else
             SetMusicVolume(1);
+
+        PauseAndResumeManager.Instance.AddPauseAction(() => _audioSource.Pause());
+        PauseAndResumeManager.Instance.AddResumeAction(() => _audioSource.UnPause());
     }
 
     public void SetSoundVolume(float value)
@@ -41,5 +65,29 @@ public class AudioManager : MonoBehaviour
     {
         _audioMixer.SetFloat(_mixerMusic, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
+    }
+
+    public void PlaySoundByType(AudioClipType clipType)
+    {
+        var clip = GetClipByClipType(clipType);
+
+        if (clip != null && _audioSource != null)
+            _audioSource.PlayOneShot(clip);
+        else
+            Debug.LogError("Audio source or audio clip not found.");
+    }
+
+    private AudioClip GetClipByClipType(AudioClipType clipType)
+    {
+        return clipType switch
+        {
+            AudioClipType.ButtonsSound => _buttonsSoundClip,
+            AudioClipType.PlayLevelSound => _playLevelSoundClip,
+            AudioClipType.WinSound => _winSound,
+            AudioClipType.PurchaseSound => _purchaseSound,
+            AudioClipType.EqipSound => _eqipSound,
+            AudioClipType.RejectionSound => _rejectionSound,
+            _ => null,
+        };
     }
 }

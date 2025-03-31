@@ -11,7 +11,8 @@ public static class SaveAndLoadManager
     public static string DunkWithoutDeathName = "DunkWithoutDeath_";
     public static string DunkTouchesCompleteName = "DunkTouchesComplete_";
 
-    public static string CurrentBallSkin = "BallBasicSkin";
+    public static string CurrentBallSkinName = "CurrentBallSkin";
+    public static string ObtainedBallSkins = "BallSkin_";
 
     public static string SoundsVolumeName = "SoundsVolume";
     public static string MusicVolumeName = "MusicVolume";

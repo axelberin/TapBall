@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3735285660915868238}
   - component: {fileID: 7685110581535776134}
   - component: {fileID: 4678027551771294020}
+  - component: {fileID: -2213243427193814489}
   m_Layer: 5
   m_Name: BTN
   m_TagString: Untagged
@@ -121,6 +122,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-2213243427193814489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659485997005106862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6694316679922053205
 PrefabInstance:
   m_ObjectHideFlags: 0

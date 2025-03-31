@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +12,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _menuPanel;
     private GameObject _selectModePanel;
     private GameObject _dunkLevelsPanel;
+    private GameObject _creditsPanel;
     private Button _dunkModeButton;
     private Button _dunkCloseButton;
     private Button _storeButton;
@@ -29,6 +29,13 @@ public class MenuManagerCanvas : CanvasElementLocator
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
         _selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
+        _creditsPanel = FindAndValidateGameObjectComponent(transform, "CreditsPanel");
+
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
+        {
+            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
+        }
 
         var playButton = FindAndValidateButtonComponent(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
@@ -58,6 +65,20 @@ public class MenuManagerCanvas : CanvasElementLocator
             _dunkLevelsPanel.SetActive(false);
             _selectModePanel.SetActive(true);
             GameManager.Instance.SelectGameMode(0);
+        });
+
+        var creditsButton = FindAndValidateButtonComponent(transform, "CreditsBTN");
+        creditsButton.onClick.AddListener(() =>
+        {
+            _menuPanel.SetActive(false);
+            _creditsPanel.SetActive(true);
+        });
+
+        var creditsCloseButton = FindAndValidateButtonComponent(transform, "CreditsCloseButton");
+        creditsCloseButton.onClick.AddListener(() =>
+        {
+            _creditsPanel.SetActive(false);
+            _menuPanel.SetActive(true);
         });
 
         _storeButton = FindAndValidateButtonComponent(transform, "StoreBTN");
@@ -104,6 +125,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 _dunkLevelsButtons[levelIndex].interactable = false;
                 UIManager.Instance.ClearCnavasesList();
                 ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex + 1}", fadeAnimator);
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PlayLevelSound);
             });
 
             if (i == 0)

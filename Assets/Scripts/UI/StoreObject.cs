@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,24 +9,24 @@ public class StoreObject : CanvasElementLocator
     private Image _image;
     private Button _buyButton;
     private Button _equipButton;
+    private TextMeshProUGUI _equipText;
+
 
     private void Awake()
     {
         if (_skinSC == null)
+        {
             gameObject.SetActive(false);
-    }
+            return;
+        }
 
-    private void Start()
-    {
         _image = FindAndValidateImageComponent(transform, "ObjectImage");
         _buyButton = FindAndValidateButtonComponent(transform, "BuyButton");
         _equipButton = FindAndValidateButtonComponent(transform, "EquipButton");
+        _equipText = FindAndValidateTextComponent(transform, "EquipText");
 
         _image.sprite = _skinSC.sprite;
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
-
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkin))
-            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, SaveAndLoadManager.CurrentBallSkin);
 
         var priceText = FindAndValidateTextComponent(transform, "PriceText");
         priceText.text = _skinSC.price.ToString();
@@ -35,8 +36,11 @@ public class StoreObject : CanvasElementLocator
             if (StoreManager.Instance.CanBuy(_skinSC.price, false))
             {
                 StoreManager.Instance.Buy(_skinSC.price);
-                OnSkinIsSelected();
                 StoreCanvas.Instance.UpdateCoinsText();
+                SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
+                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
+
+                StoreManager.Instance.UpdateSkinsState?.Invoke();
             }
             else
                 return; //TODO Crear cartel de que no se puede comprar.
@@ -44,12 +48,31 @@ public class StoreObject : CanvasElementLocator
 
         _equipButton.onClick.AddListener(() =>
         {
-            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkin, _skinSC.skinName);
-            OnSkinIsSelected();
+            SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
+            StoreManager.Instance.UpdateSkinsState?.Invoke();
         });
+    }
 
-        if (SaveAndLoadManager.CurrentBallSkin == _skinSC.skinName)
+    private void Start()
+    {
+        StoreManager.Instance.UpdateSkinsState += UpdateSkinState;
+    }
+
+    private void OnEnable()
+    {
+        if (!_image || !_buyButton || !_equipButton || !_equipText||
+            LanguageManager.Instance == null)
+            return;
+
+        UpdateSkinState();
+    }
+
+    public void UpdateSkinState()
+    {
+        if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
             OnSkinIsSelected();
+        else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
+            OnSkinUnselected();
     }
 
     private void OnSkinIsSelected()
@@ -57,10 +80,14 @@ public class StoreObject : CanvasElementLocator
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = false;
+        _equipText.text = LanguageManager.Instance.GetLocalizedText("equiped");
     }
 
     private void OnSkinUnselected()
     {
+        _buyButton.gameObject.SetActive(false);
+        _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = true;
+        _equipText.text = LanguageManager.Instance.GetLocalizedText("equip");
     }
 }

@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 5321437883187669021}
   - component: {fileID: 1288723865272523728}
   - component: {fileID: 1018777549766805713}
+  - component: {fileID: 1088041341549254053}
   m_Layer: 5
   m_Name: ConfigsButton
   m_TagString: Untagged
@@ -167,6 +168,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1088041341549254053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89822687967393447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &136978160778792564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,6 +1282,7 @@ GameObject:
   - component: {fileID: 4464367920003763726}
   - component: {fileID: 5600579342854650892}
   - component: {fileID: 2461119123912299961}
+  - component: {fileID: 2235182936094243745}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -1290,10 +1304,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2043872662946045488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.098000005, y: 0.92300004}
-  m_AnchorMax: {x: 0.17160785, y: 0.95254546}
-  m_AnchoredPosition: {x: -0.5, y: -0.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.093, y: 0.91245466}
+  m_AnchorMax: {x: 0.185, y: 0.95054543}
+  m_AnchoredPosition: {x: 0, y: -0.2121582}
+  m_SizeDelta: {x: 0, y: -0.42439985}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4464367920003763726
 CanvasRenderer:
@@ -1377,6 +1391,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2235182936094243745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423551847330598381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5630771230811057607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,7 +2159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.13684206}
   m_AnchorMax: {x: 0.71960986, y: 0.33014035}
-  m_AnchoredPosition: {x: -19.4, y: 0.1000061}
+  m_AnchoredPosition: {x: -15.1, y: 0.1000061}
   m_SizeDelta: {x: -10.5425, y: -0.041900635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7412526360920757459
@@ -2167,7 +2193,7 @@ MonoBehaviour:
   m_text: /0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
-  m_sharedMaterial: {fileID: 6586604654805713031, guid: e001cac6252e1794dae111b5a774858a, type: 2}
+  m_sharedMaterial: {fileID: -6863499743366239352, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2198,7 +2224,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2227,10 +2253,10 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -10.665667, w: 0}
+  m_margin: {x: 0, y: 0, z: -87.37299, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8179129517674058419
@@ -2475,7 +2501,7 @@ MonoBehaviour:
   m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
-  m_sharedMaterial: {fileID: 6586604654805713031, guid: e001cac6252e1794dae111b5a774858a, type: 2}
+  m_sharedMaterial: {fileID: -6863499743366239352, guid: 15bee4059f753344694b3a3bca488e15, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2538,7 +2564,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &9133800413242139183
