@@ -9,13 +9,19 @@ public class AudioManager : MonoBehaviour
     {
         ButtonsSound,
         PlayLevelSound,
-        WinSound
+        WinSound,
+        PurchaseSound,
+        EqipSound,
+        RejectionSound
     };
 
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioClip _buttonsSoundClip;
     [SerializeField] private AudioClip _playLevelSoundClip;
     [SerializeField] private AudioClip _winSound;
+    [SerializeField] private AudioClip _purchaseSound;
+    [SerializeField] private AudioClip _eqipSound;
+    [SerializeField] private AudioClip _rejectionSound;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
@@ -44,6 +50,9 @@ public class AudioManager : MonoBehaviour
             SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
         else
             SetMusicVolume(1);
+
+        PauseAndResumeManager.Instance.AddPauseAction(() => _audioSource.Pause());
+        PauseAndResumeManager.Instance.AddResumeAction(() => _audioSource.UnPause());
     }
 
     public void SetSoundVolume(float value)
@@ -75,6 +84,9 @@ public class AudioManager : MonoBehaviour
             AudioClipType.ButtonsSound => _buttonsSoundClip,
             AudioClipType.PlayLevelSound => _playLevelSoundClip,
             AudioClipType.WinSound => _winSound,
+            AudioClipType.PurchaseSound => _purchaseSound,
+            AudioClipType.EqipSound => _eqipSound,
+            AudioClipType.RejectionSound => _rejectionSound,
             _ => null,
         };
     }
