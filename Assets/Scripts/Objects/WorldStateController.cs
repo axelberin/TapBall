@@ -68,6 +68,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     private void Update()
     {
+        if (!TutorialManager.Instance || TutorialManager.Instance.GetInTutorial)
+            return;
+
         OnUpdate?.Invoke();
     }
 
