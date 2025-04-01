@@ -43,7 +43,7 @@ public class StoreObject : CanvasElementLocator
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
             }
             else
-                return; //TODO Crear cartel de que no se puede comprar.
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
         });
 
         _equipButton.onClick.AddListener(() =>
@@ -60,7 +60,7 @@ public class StoreObject : CanvasElementLocator
 
     private void OnEnable()
     {
-        if (!_image || !_buyButton || !_equipButton || !_equipText||
+        if (!_image || !_buyButton || !_equipButton || !_equipText ||
             LanguageManager.Instance == null)
             return;
 

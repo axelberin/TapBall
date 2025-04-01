@@ -86,9 +86,13 @@ public class LanguageManager : MonoBehaviour
         {
             _currentLanguage = GetLanguageFromDevice();
             SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
+            _currentLanguageIndex = 0;
         }
         else
+        {
             _currentLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
+            _currentLanguageIndex = GetLanguageIndexFromLanguage(_currentLanguage);
+        }
 
         OnUpdateLanguage?.Invoke();
     }
@@ -146,6 +150,16 @@ public class LanguageManager : MonoBehaviour
             0 => "en",// Inglés
             1 => "es",// Español
             _ => "en",// Def
+        };
+    }
+
+    private int GetLanguageIndexFromLanguage(string language)
+    {
+        return language switch
+        {
+            "en" => 0,
+            "es" => 1,
+            _ => 0,
         };
     }
 }
