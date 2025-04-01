@@ -157,6 +157,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 600b204a0dca8df4bbd6bca92863eda2
+    m_Address: CarpinchoBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48a108b6ce0497d4a9e9c9b7935a395a
+    m_Address: DeathCarpinchoBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 716e19a0410b77047b70b1649ff84ef8
+    m_Address: DeathCarpinchoBallSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 50966938486398a42b43087b314f2f7a, type: 2}
   m_SchemaSet:
