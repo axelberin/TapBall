@@ -127,6 +127,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f70a95a661740334fae506758e76e8cf
+    m_Address: CatBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ac9abedb00e79b4f93819656145eec0
+    m_Address: DeathCatBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cfdf1c78d20ce64fb7518c83666adf7
+    m_Address: DeathCatBallSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 50966938486398a42b43087b314f2f7a, type: 2}
   m_SchemaSet:
