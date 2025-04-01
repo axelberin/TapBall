@@ -3174,7 +3174,7 @@ PrefabInstance:
     - target: {fileID: 5752748981563252321, guid: 3f9a711eeba3a3743b0954bc860ab327, type: 3}
       propertyPath: _skinSC
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: c4e41347036489045944b1737f30cf7a, type: 2}
     - target: {fileID: 6524471910125386894, guid: 3f9a711eeba3a3743b0954bc860ab327, type: 3}
       propertyPath: m_Name
       value: StoreObject (2)
@@ -10430,7 +10430,7 @@ PrefabInstance:
     - target: {fileID: 87932531947285044, guid: 0d38d5938518a9847a91f66dda322c38, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: cf1d019350753164ca14de714bf17f54, type: 2}
+      objectReference: {fileID: 9100000, guid: 8cfe16db29dbfea44938cb3dae997f19, type: 2}
     - target: {fileID: 1097105863353506434, guid: 0d38d5938518a9847a91f66dda322c38, type: 3}
       propertyPath: m_Name
       value: Player

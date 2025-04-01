@@ -142,6 +142,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93bd2e07210816148a69a5afd0975523
+    m_Address: DogBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ecc407edeb767234e9a61337c2d183ab
+    m_Address: DeathDogBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c50a1c3e30d9f38438f11035f49a6b73
+    m_Address: DeathDogBallSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 50966938486398a42b43087b314f2f7a, type: 2}
   m_SchemaSet:
