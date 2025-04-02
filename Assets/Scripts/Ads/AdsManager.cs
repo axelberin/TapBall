@@ -1,5 +1,6 @@
 using UnityEngine;
 using GoogleMobileAds.Api;
+using System.Collections.Generic;
 
 public class AdsManager : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class AdsManager : MonoBehaviour
     void Start()
     {
         MobileAds.Initialize((InitializationStatus initStatus) => { });
+
+        List<string> testDevices = new List<string> { AdRequest.TestDeviceSimulator };
+        RequestConfiguration requestConfiguration = new RequestConfiguration.Builder()
+            .SetTestDeviceIds(testDevices)
+            .build();
+        MobileAds.SetRequestConfiguration(requestConfiguration);
     }
 
 

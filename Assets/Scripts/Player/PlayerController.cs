@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void Death()
     {
+        transform.parent = null;
         _death = true;
 
         _collider.enabled = false;
