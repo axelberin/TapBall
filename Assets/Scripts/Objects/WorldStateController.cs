@@ -156,11 +156,13 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public void OnResume()
     {
         _onPause = false;
+        _audioSource.UnPause();
     }
 
     public void OnPause()
     {
         _onPause = true;
+        _audioSource.Pause();
     }
 
     public int GetLevel
