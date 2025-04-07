@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     private IEnumerator DelayToLose()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.2f);
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
     }

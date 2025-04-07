@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour, IPauseble
 {
     public static AudioManager Instance;
 
@@ -13,7 +14,8 @@ public class AudioManager : MonoBehaviour
         PurchaseSound,
         EquipSound,
         RejectionSound,
-        AchivmentSound
+        AchivmentSound,
+        CountDownSound
     };
 
     [SerializeField] private AudioMixer _audioMixer;
@@ -24,9 +26,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _equipSoundClip;
     [SerializeField] private AudioClip _rejectionSoundClip;
     [SerializeField] private AudioClip _achivmentSoundClip;
+    [SerializeField] private AudioClip _countDownSoundClip;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
+    private string _mixerUI = "UIVolume";
 
     private AudioSource _audioSource;
 
@@ -52,14 +56,12 @@ public class AudioManager : MonoBehaviour
             SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
         else
             SetMusicVolume(1);
-
-        PauseAndResumeManager.Instance.AddPauseAction(() => _audioSource.Pause());
-        PauseAndResumeManager.Instance.AddResumeAction(() => _audioSource.UnPause());
     }
 
     public void SetSoundVolume(float value)
     {
         _audioMixer.SetFloat(_mixerSFX, Mathf.Log10(value) * 20);
+        _audioMixer.SetFloat(_mixerUI, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.SoundsVolumeName, true);
     }
 
@@ -79,6 +81,12 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Audio source or audio clip not found.");
     }
 
+    public void StopSound()
+    {
+        if (_audioSource != null)
+            _audioSource.Stop();
+    }
+
     private AudioClip GetClipByClipType(AudioClipType clipType)
     {
         return clipType switch
@@ -90,7 +98,20 @@ public class AudioManager : MonoBehaviour
             AudioClipType.EquipSound => _equipSoundClip,
             AudioClipType.RejectionSound => _rejectionSoundClip,
             AudioClipType.AchivmentSound => _achivmentSoundClip,
+            AudioClipType.CountDownSound => _countDownSoundClip,
             _ => null,
         };
+    }
+
+    public void OnResume()
+    {
+        if (_audioSource != null)
+            _audioSource.UnPause();
+    }
+
+    public void OnPause()
+    {
+        if (_audioSource != null)
+            _audioSource.Pause();
     }
 }
