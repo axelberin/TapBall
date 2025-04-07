@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -116,11 +117,18 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _collider.enabled = false;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
 
-        LevelManager.Instance.OnLose();
-        _collider.enabled = true;
-
         if (_audioSource && _deathClip)
             _audioSource.PlayOneShot(_deathClip);
+
+        transform.position = new Vector3(100, 0);
+        StartCoroutine(DelayToLose());
+    }
+
+    private IEnumerator DelayToLose()
+    {
+        yield return new WaitForSeconds(0.15f);
+        LevelManager.Instance.OnLose();
+        _collider.enabled = true;
     }
 
     public void OnResume()
