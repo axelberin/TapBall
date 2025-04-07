@@ -190,6 +190,7 @@ public class DunkLevelCanvas : CanvasElementLocator
     {
         yield return new WaitForSeconds(time);
         UIManager.Instance.ActivateUI(goalObject, true);
+        AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.AchivmentSound);
         yield return new WaitForSeconds(1f);
         UIManager.Instance.ActivateUI(emptyGoal, false);
     }

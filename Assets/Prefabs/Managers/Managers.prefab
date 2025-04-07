@@ -127,10 +127,11 @@ MonoBehaviour:
   _audioMixer: {fileID: 24100000, guid: b009a399f1b6ca64d8091fe4595983fb, type: 2}
   _buttonsSoundClip: {fileID: 8300000, guid: c64e0e913d465974fa59ddd4ccffc864, type: 3}
   _playLevelSoundClip: {fileID: 8300000, guid: 4cb38b24ddcd980409ef4514a89716ca, type: 3}
-  _winSound: {fileID: 8300000, guid: 4758ecdedeb34774db043fe0f333f7eb, type: 3}
-  _purchaseSound: {fileID: 8300000, guid: e1b0edd594b4f3644a1a25d8564b137e, type: 3}
-  _eqipSound: {fileID: 8300000, guid: cb91bf1994d9e3548a3665e0acb80418, type: 3}
-  _rejectionSound: {fileID: 8300000, guid: 6d0dc7248e995f449b86f4b611089442, type: 3}
+  _winSoundClip: {fileID: 8300000, guid: 4758ecdedeb34774db043fe0f333f7eb, type: 3}
+  _purchaseSoundClip: {fileID: 8300000, guid: e1b0edd594b4f3644a1a25d8564b137e, type: 3}
+  _equipSoundClip: {fileID: 8300000, guid: cb91bf1994d9e3548a3665e0acb80418, type: 3}
+  _rejectionSoundClip: {fileID: 8300000, guid: 6d0dc7248e995f449b86f4b611089442, type: 3}
+  _achivmentSoundClip: {fileID: 8300000, guid: 76cf7230be965b744aac9d6a1ec07503, type: 3}
 --- !u!114 &8537371994171092880
 MonoBehaviour:
   m_ObjectHideFlags: 0

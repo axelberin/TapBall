@@ -11,17 +11,19 @@ public class AudioManager : MonoBehaviour
         PlayLevelSound,
         WinSound,
         PurchaseSound,
-        EqipSound,
-        RejectionSound
+        EquipSound,
+        RejectionSound,
+        AchivmentSound
     };
 
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioClip _buttonsSoundClip;
     [SerializeField] private AudioClip _playLevelSoundClip;
-    [SerializeField] private AudioClip _winSound;
-    [SerializeField] private AudioClip _purchaseSound;
-    [SerializeField] private AudioClip _eqipSound;
-    [SerializeField] private AudioClip _rejectionSound;
+    [SerializeField] private AudioClip _winSoundClip;
+    [SerializeField] private AudioClip _purchaseSoundClip;
+    [SerializeField] private AudioClip _equipSoundClip;
+    [SerializeField] private AudioClip _rejectionSoundClip;
+    [SerializeField] private AudioClip _achivmentSoundClip;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
@@ -83,10 +85,11 @@ public class AudioManager : MonoBehaviour
         {
             AudioClipType.ButtonsSound => _buttonsSoundClip,
             AudioClipType.PlayLevelSound => _playLevelSoundClip,
-            AudioClipType.WinSound => _winSound,
-            AudioClipType.PurchaseSound => _purchaseSound,
-            AudioClipType.EqipSound => _eqipSound,
-            AudioClipType.RejectionSound => _rejectionSound,
+            AudioClipType.WinSound => _winSoundClip,
+            AudioClipType.PurchaseSound => _purchaseSoundClip,
+            AudioClipType.EquipSound => _equipSoundClip,
+            AudioClipType.RejectionSound => _rejectionSoundClip,
+            AudioClipType.AchivmentSound => _achivmentSoundClip,
             _ => null,
         };
     }

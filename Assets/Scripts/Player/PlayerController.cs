@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     [SerializeField] float _jumpForce = 3;
     [SerializeField] string _deathPrefabName = "Death";
     [SerializeField] List<AudioClip> _tapClips = new List<AudioClip>();
+    [SerializeField] AudioClip _deathClip;
 
     private bool _death;
     private Vector2 _velocityOnPause;
@@ -117,6 +118,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
+
+        if (_audioSource && _deathClip)
+            _audioSource.PlayOneShot(_deathClip);
     }
 
     public void OnResume()
