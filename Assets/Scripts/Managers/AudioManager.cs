@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour, IPauseble
 {
     public static AudioManager Instance;
 
@@ -11,20 +12,25 @@ public class AudioManager : MonoBehaviour
         PlayLevelSound,
         WinSound,
         PurchaseSound,
-        EqipSound,
-        RejectionSound
+        EquipSound,
+        RejectionSound,
+        AchivmentSound,
+        CountDownSound
     };
 
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioClip _buttonsSoundClip;
     [SerializeField] private AudioClip _playLevelSoundClip;
-    [SerializeField] private AudioClip _winSound;
-    [SerializeField] private AudioClip _purchaseSound;
-    [SerializeField] private AudioClip _eqipSound;
-    [SerializeField] private AudioClip _rejectionSound;
+    [SerializeField] private AudioClip _winSoundClip;
+    [SerializeField] private AudioClip _purchaseSoundClip;
+    [SerializeField] private AudioClip _equipSoundClip;
+    [SerializeField] private AudioClip _rejectionSoundClip;
+    [SerializeField] private AudioClip _achivmentSoundClip;
+    [SerializeField] private AudioClip _countDownSoundClip;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
+    private string _mixerUI = "UIVolume";
 
     private AudioSource _audioSource;
 
@@ -50,14 +56,12 @@ public class AudioManager : MonoBehaviour
             SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
         else
             SetMusicVolume(1);
-
-        PauseAndResumeManager.Instance.AddPauseAction(() => _audioSource.Pause());
-        PauseAndResumeManager.Instance.AddResumeAction(() => _audioSource.UnPause());
     }
 
     public void SetSoundVolume(float value)
     {
         _audioMixer.SetFloat(_mixerSFX, Mathf.Log10(value) * 20);
+        _audioMixer.SetFloat(_mixerUI, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.SoundsVolumeName, true);
     }
 
@@ -77,17 +81,37 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Audio source or audio clip not found.");
     }
 
+    public void StopSound()
+    {
+        if (_audioSource != null)
+            _audioSource.Stop();
+    }
+
     private AudioClip GetClipByClipType(AudioClipType clipType)
     {
         return clipType switch
         {
             AudioClipType.ButtonsSound => _buttonsSoundClip,
             AudioClipType.PlayLevelSound => _playLevelSoundClip,
-            AudioClipType.WinSound => _winSound,
-            AudioClipType.PurchaseSound => _purchaseSound,
-            AudioClipType.EqipSound => _eqipSound,
-            AudioClipType.RejectionSound => _rejectionSound,
+            AudioClipType.WinSound => _winSoundClip,
+            AudioClipType.PurchaseSound => _purchaseSoundClip,
+            AudioClipType.EquipSound => _equipSoundClip,
+            AudioClipType.RejectionSound => _rejectionSoundClip,
+            AudioClipType.AchivmentSound => _achivmentSoundClip,
+            AudioClipType.CountDownSound => _countDownSoundClip,
             _ => null,
         };
+    }
+
+    public void OnResume()
+    {
+        if (_audioSource != null)
+            _audioSource.UnPause();
+    }
+
+    public void OnPause()
+    {
+        if (_audioSource != null)
+            _audioSource.Pause();
     }
 }

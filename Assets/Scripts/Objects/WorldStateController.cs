@@ -15,7 +15,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private Vector3 _playerInitialPos;
     private bool _playOnce;
 
-    private AudioSource _audioSource;
     private PlayerController _playerController;
     private List<MovableObjects> _movableObjectsInLevel = new List<MovableObjects>();
 
@@ -51,8 +50,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
         SetOnUpdate(StartCount);
-        if (!_audioSource)
-            _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -79,7 +76,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (collision.GetComponent<PlayerController>() && !_onPause)
         {
             SetOnUpdate(WinCount);
-            _audioSource.Play();
+            AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.CountDownSound);
         }
     }
 
@@ -92,7 +89,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             if (DunkLevelCanvas.Instance)
                 DunkLevelCanvas.Instance.OnExitWinBase();
 
-            _audioSource.Stop();
+            AudioManager.Instance.StopSound();
         }
     }
 
@@ -130,7 +127,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
             if (!_playOnce)
             {
-                _audioSource.Play();
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.CountDownSound);
                 _playOnce = true;
             }
         }
@@ -156,13 +153,11 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public void OnResume()
     {
         _onPause = false;
-        _audioSource.UnPause();
     }
 
     public void OnPause()
     {
         _onPause = true;
-        _audioSource.Pause();
     }
 
     public int GetLevel

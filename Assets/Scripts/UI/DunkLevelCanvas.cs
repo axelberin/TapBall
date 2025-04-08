@@ -55,6 +55,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         {
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadSceneAsync("Menu", fadeAnimator);
+            AudioManager.Instance.StopSound();
         });
 
         _nextLevelButton = FindAndValidateButtonComponent(transform, "NextLevelBTN");
@@ -190,6 +191,7 @@ public class DunkLevelCanvas : CanvasElementLocator
     {
         yield return new WaitForSeconds(time);
         UIManager.Instance.ActivateUI(goalObject, true);
+        AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.AchivmentSound);
         yield return new WaitForSeconds(1f);
         UIManager.Instance.ActivateUI(emptyGoal, false);
     }

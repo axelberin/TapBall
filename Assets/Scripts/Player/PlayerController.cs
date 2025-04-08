@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     [SerializeField] float _jumpForce = 3;
     [SerializeField] string _deathPrefabName = "Death";
     [SerializeField] List<AudioClip> _tapClips = new List<AudioClip>();
+    [SerializeField] AudioClip _deathClip;
 
     private bool _death;
     private Vector2 _velocityOnPause;
@@ -115,6 +117,16 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _collider.enabled = false;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
 
+        if (_audioSource && _deathClip)
+            _audioSource.PlayOneShot(_deathClip);
+
+        transform.position = new Vector3(100, 0);
+        StartCoroutine(DelayToLose());
+    }
+
+    private IEnumerator DelayToLose()
+    {
+        yield return new WaitForSeconds(0.2f);
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
     }
