@@ -100,6 +100,8 @@ public class ScenesManager : MonoBehaviour
             case GameManager.GameModes.Dunk:
                 PauseAndResumeManager.Instance.RestartResumeAction();
                 PauseAndResumeManager.Instance.RestartPauseAction();
+                PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
+                PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
                 LoadSceneAsync("DunkLevel" + level, fadeAnimator);
                 break;
             case GameManager.GameModes.Endless:

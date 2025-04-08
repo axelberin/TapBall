@@ -88,6 +88,7 @@ public class DunkLevelCanvas : CanvasElementLocator
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
                                                         GameManager.Instance.GetCurrentGameMode, fadeAnimator);
+            AudioManager.Instance.StopSound();
         });
 
         _resumeButton = FindAndValidateButtonComponent(transform, "ResumeBTN");

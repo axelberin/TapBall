@@ -85,11 +85,12 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (collision.GetComponent<PlayerController>() && !_onPause)
         {
             OnUpdate -= WinCount;
-            _timeToWin = 3;
             if (DunkLevelCanvas.Instance)
                 DunkLevelCanvas.Instance.OnExitWinBase();
 
-            AudioManager.Instance.StopSound();
+            if (_timeToWin > 0f)
+                AudioManager.Instance.StopSound();
+            _timeToWin = 3;
         }
     }
 
@@ -107,7 +108,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         else
         {
             _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
-
+            _timeToWin = 0;
             LevelManager.Instance.OnWin();
             SetOnUpdate();
         }
