@@ -86,6 +86,8 @@ public class LevelManager : MonoBehaviour
             default:
                 break;
         }
+
+        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);    //TODO: Cambiar musica segun el modo de juego
     }
 
     public void OnGetCoin(Coins coinName)

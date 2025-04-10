@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -18,21 +20,22 @@ public class AudioManager : MonoBehaviour, IPauseble
         CountDownSound
     };
 
+    public enum MusicClipType
+    {
+        MenuMusic,
+        DunkMusic
+    };
+
     [SerializeField] private AudioMixer _audioMixer;
-    [SerializeField] private AudioClip _buttonsSoundClip;
-    [SerializeField] private AudioClip _playLevelSoundClip;
-    [SerializeField] private AudioClip _winSoundClip;
-    [SerializeField] private AudioClip _purchaseSoundClip;
-    [SerializeField] private AudioClip _equipSoundClip;
-    [SerializeField] private AudioClip _rejectionSoundClip;
-    [SerializeField] private AudioClip _achivmentSoundClip;
-    [SerializeField] private AudioClip _countDownSoundClip;
+    [SerializeField] private List<AudioClip> _audioClipList;
+    [SerializeField] private List<AudioClip> _musicClipList;
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
     private string _mixerUI = "UIVolume";
 
-    private AudioSource _audioSource;
+    private AudioSource _soundsAudioSource;
+    private AudioSource _musicAudioSource;
 
     private void Awake()
     {
@@ -41,8 +44,14 @@ public class AudioManager : MonoBehaviour, IPauseble
         else
             Destroy(this);
 
-        if (_audioSource == null)
-            _audioSource = GetComponent<AudioSource>();
+        if (_soundsAudioSource == null || _musicAudioSource == null)
+        {
+            _soundsAudioSource = GetComponentsInChildren<AudioSource>().
+                FirstOrDefault(a => a.gameObject.name == "SoundsAudioSource");
+
+            _musicAudioSource = GetComponentsInChildren<AudioSource>().
+                FirstOrDefault(a => a.gameObject.name == "MusicAudioSource");
+        }
     }
 
     private void Start()
@@ -56,6 +65,8 @@ public class AudioManager : MonoBehaviour, IPauseble
             SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
         else
             SetMusicVolume(1);
+
+        LevelManager.Instance.OnWinLevel += StopMusic;
     }
 
     public void SetSoundVolume(float value)
@@ -73,45 +84,45 @@ public class AudioManager : MonoBehaviour, IPauseble
 
     public void PlaySoundByType(AudioClipType clipType)
     {
-        var clip = GetClipByClipType(clipType);
+        var clip = _audioClipList[(int)clipType];
 
-        if (clip != null && _audioSource != null)
-            _audioSource.PlayOneShot(clip);
+        if (clip != null && _soundsAudioSource != null)
+            _soundsAudioSource.PlayOneShot(clip);
+        else
+            Debug.LogError("Audio source or audio clip not found.");
+    }
+
+    public void PlayMusicByType(MusicClipType musicType)
+    {
+        var clip = _musicClipList[(int)musicType];
+
+        if (clip != null && _musicAudioSource != null)
+            _musicAudioSource.PlayOneShot(clip);
         else
             Debug.LogError("Audio source or audio clip not found.");
     }
 
     public void StopSound()
     {
-        if (_audioSource != null)
-            _audioSource.Stop();
+        if (_soundsAudioSource != null)
+            _soundsAudioSource.Stop();
     }
 
-    private AudioClip GetClipByClipType(AudioClipType clipType)
+    public void StopMusic()
     {
-        return clipType switch
-        {
-            AudioClipType.ButtonsSound => _buttonsSoundClip,
-            AudioClipType.PlayLevelSound => _playLevelSoundClip,
-            AudioClipType.WinSound => _winSoundClip,
-            AudioClipType.PurchaseSound => _purchaseSoundClip,
-            AudioClipType.EquipSound => _equipSoundClip,
-            AudioClipType.RejectionSound => _rejectionSoundClip,
-            AudioClipType.AchivmentSound => _achivmentSoundClip,
-            AudioClipType.CountDownSound => _countDownSoundClip,
-            _ => null,
-        };
+        if (_musicAudioSource != null)
+            _musicAudioSource.Stop();
     }
 
     public void OnResume()
     {
-        if (_audioSource != null)
-            _audioSource.UnPause();
+        if (_soundsAudioSource != null)
+            _soundsAudioSource.UnPause();
     }
 
     public void OnPause()
     {
-        if (_audioSource != null)
-            _audioSource.Pause();
+        if (_soundsAudioSource != null)
+            _soundsAudioSource.Pause();
     }
 }

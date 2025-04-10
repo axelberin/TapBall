@@ -109,6 +109,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         _limitTouchesText = FindAndValidateTextComponent(transform, "LimitTouchesText");
 
         UIManager.Instance.AddCanvas(gameObject, true);
+        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
 
         if (LevelManager.Instance)
         {

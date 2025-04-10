@@ -128,6 +128,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 _dunkLevelsButtons[levelIndex].interactable = false;
                 UIManager.Instance.ClearCnavasesList();
                 ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex + 1}", fadeAnimator);
+                AudioManager.Instance.StopMusic();
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PlayLevelSound);
             });
 

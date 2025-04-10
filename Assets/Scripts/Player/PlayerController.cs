@@ -117,16 +117,17 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _collider.enabled = false;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
 
-        if (_audioSource && _deathClip)
-            _audioSource.PlayOneShot(_deathClip);
-
         transform.position = new Vector3(100, 0);
         StartCoroutine(DelayToLose());
     }
 
     private IEnumerator DelayToLose()
     {
-        yield return new WaitForSeconds(0.2f);
+        AudioManager.Instance.StopMusic();
+        if (_audioSource && _deathClip)
+            _audioSource.PlayOneShot(_deathClip);
+
+        yield return new WaitForSeconds(1);
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
     }
