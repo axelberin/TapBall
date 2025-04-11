@@ -76,7 +76,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (collision.GetComponent<PlayerController>() && !_onPause)
         {
             SetOnUpdate(WinCount);
-            AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.CountDownSound);
+            if (_timeToWin >= 3f)
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.CountDownSound);
         }
     }
 
