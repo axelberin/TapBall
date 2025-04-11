@@ -96,6 +96,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         UIManager.Instance.AddCanvas(gameObject, true);
         LevelManager.Instance.ResetCoins();
+        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
         OnDunkLevelsClicked();
     }

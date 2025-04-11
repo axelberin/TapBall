@@ -53,6 +53,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         _menuPauseButton = FindAndValidateButtonComponent(transform, "PauseMenuBTN");
         _menuPauseButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.StopMusic();
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadSceneAsync("Menu", fadeAnimator);
             AudioManager.Instance.StopSound();
