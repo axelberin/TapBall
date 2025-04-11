@@ -50,7 +50,7 @@ public class Coins : ObstaclesManager
             _audioSource.Play();
 
         _animator.SetTrigger("Geted");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.75f);
         gameObject.SetActive(false);
     }
 

@@ -86,6 +86,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         _restartPauseButton = FindAndValidateButtonComponent(transform, "PauseRestartBTN");
         _restartPauseButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.StopMusic();
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
                                                         GameManager.Instance.GetCurrentGameMode, fadeAnimator);
