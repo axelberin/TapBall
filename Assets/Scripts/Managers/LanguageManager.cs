@@ -144,8 +144,8 @@ public class LanguageManager : MonoBehaviour
     {
         return index switch
         {
-            0 => "en",// Inglés
-            1 => "es",// Español
+            1 => "en",// Inglés
+            2 => "es",// Español
             _ => "en",// Def
         };
     }
@@ -154,9 +154,9 @@ public class LanguageManager : MonoBehaviour
     {
         return language switch
         {
-            "en" => 0,
-            "es" => 1,
-            _ => 0,
+            "en" => 1,
+            "es" => 2,
+            _ => 1,
         };
     }
 }
