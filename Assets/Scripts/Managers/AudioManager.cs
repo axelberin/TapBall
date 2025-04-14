@@ -97,7 +97,10 @@ public class AudioManager : MonoBehaviour, IPauseble
         var clip = _musicClipList[(int)musicType];
 
         if (clip != null && _musicAudioSource != null)
-            _musicAudioSource.PlayOneShot(clip);
+        {
+            _musicAudioSource.clip = clip;
+            _musicAudioSource.Play();
+        }
         else
             Debug.LogError("Audio source or audio clip not found.");
     }

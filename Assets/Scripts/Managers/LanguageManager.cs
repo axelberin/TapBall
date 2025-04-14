@@ -86,14 +86,11 @@ public class LanguageManager : MonoBehaviour
         {
             _currentLanguage = GetLanguageFromDevice();
             SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
-            _currentLanguageIndex = 0;
         }
         else
-        {
             _currentLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
-            _currentLanguageIndex = GetLanguageIndexFromLanguage(_currentLanguage);
-        }
 
+        _currentLanguageIndex = GetLanguageIndexFromLanguage(_currentLanguage);
         OnUpdateLanguage?.Invoke();
     }
 
