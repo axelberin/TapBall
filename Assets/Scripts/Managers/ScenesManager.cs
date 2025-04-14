@@ -103,6 +103,14 @@ public class ScenesManager : MonoBehaviour
                 PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
                 PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
                 LoadSceneAsync("DunkLevel" + level, fadeAnimator);
+                Debug.Log(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ReviewSowed));
+                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
+                {
+                    // Mostrar la reseña
+                    ReviewManagerController.Instance.RequestReview();
+                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
+                }
+
                 break;
             case GameManager.GameModes.Endless:
                 break;
