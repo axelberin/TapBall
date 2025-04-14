@@ -1096,6 +1096,10 @@ PrefabInstance:
       propertyPath: anchorOffset.y
       value: 0.45
       objectReference: {fileID: 0}
+    - target: {fileID: 923670039596345393, guid: ce4ec37b3a4201740a12e8652df74f72, type: 3}
+      propertyPath: percentageOfScreenHeight
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 4660592656104447633, guid: ce4ec37b3a4201740a12e8652df74f72, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.09
