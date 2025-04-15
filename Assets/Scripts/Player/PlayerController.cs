@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
 
         transform.position = new Vector3(100, 0);
+        GameManager.Instance.SetGetCameraController.StartShake();
         StartCoroutine(DelayToLose());
     }
 
@@ -130,6 +131,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         yield return new WaitForSeconds(1);
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
+        transform.parent = null;
     }
 
     public void OnResume()

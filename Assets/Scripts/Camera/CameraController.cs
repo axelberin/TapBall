@@ -6,17 +6,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _duration;
     [SerializeField] private float _magnitude;
 
-    void Start()
+    private void Start()
     {
-        LevelManager.Instance.OnLoseLevel += StartShake;
+        GameManager.Instance.SetGetCameraController = this;
     }
 
-    private void OnDestroy()
-    {
-        LevelManager.Instance.OnLoseLevel -= StartShake;
-    }
-
-    private void StartShake()
+    public void StartShake()
     {
         StartCoroutine(Shake(_duration, _magnitude));
     }

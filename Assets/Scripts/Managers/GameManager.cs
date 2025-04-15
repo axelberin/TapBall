@@ -4,10 +4,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private PlayerController _playerController;
-    private TapController _tapController;
-    private WorldStateController _worldStateController;
-
     public enum GameModes
     {
         Null,
@@ -51,23 +47,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public PlayerController SetGetPlayer
-    {
-        set => _playerController = value;
-        get => _playerController;
-    }
+    public PlayerController SetGetPlayer { set; get; }
 
-    public TapController SetGetTapController
-    {
-        set => _tapController = value;
-        get => _tapController;
-    }
+    public TapController SetGetTapController { set; get; }
 
-    public WorldStateController SetGetWorldState
-    {
-        set => _worldStateController = value;
-        get => _worldStateController;
-    }
+    public WorldStateController SetGetWorldState { set; get; }
+
+    public CameraController SetGetCameraController { set; get; }
 
     public GameModes GetCurrentGameMode => _currentGameMode;
 }
