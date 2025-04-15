@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioClipType: 0
 --- !u!1 &136978160778792564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,6 +1404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioClipType: 0
 --- !u!1 &5630771230811057607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,6 +2729,10 @@ PrefabInstance:
     - target: {fileID: 2360218567627597901, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.5368042
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841604714072232227, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_Name
+      value: NextLevelText
       objectReference: {fileID: 0}
     - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: key

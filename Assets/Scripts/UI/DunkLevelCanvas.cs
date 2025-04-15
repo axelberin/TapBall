@@ -26,6 +26,7 @@ public class DunkLevelCanvas : CanvasElementLocator
     private GameObject _pauseUI;
     private TextMeshProUGUI _touchesInLevelText;
     private TextMeshProUGUI _limitTouchesText;
+    private TextMeshProUGUI _nextLevelText;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class DunkLevelCanvas : CanvasElementLocator
                 GameManager.Instance.GetCurrentGameMode, fadeAnimator);
             AdsManager.Instance.LoadInterstitialAd();
         });
+        _nextLevelText = FindAndValidateTextComponent(_nextLevelButton.transform, "NextLevelText");
 
         _pauseButton = FindAndValidateButtonComponent(transform, "PauseButton");
         _pauseButton.onClick.AddListener(OnPauseClicked);
@@ -143,8 +145,14 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     public void OnWin()
     {
-        _nextLevelButton.interactable = ScenesManager.Instance.IsSceneExisting(
+        var existsNextLevel = ScenesManager.Instance.IsSceneExisting(
             $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
+
+        _nextLevelButton.interactable = existsNextLevel;
+        if (!existsNextLevel)
+            _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("comingSoon");
+        else
+            _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
 
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winUI, true);
