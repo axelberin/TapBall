@@ -17,8 +17,6 @@ public class DeathShadow : MonoBehaviour, ISkinLoader
         if (_spriteRenderer != null)
             Addressables.LoadAssetAsync<GameObject>("Death" + SaveAndLoadManager.GetStringValue(
                 SaveAndLoadManager.CurrentBallSkinName)).Completed += OnPrefabLoaded;
-        //var key = "Death" + SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) + "Particles";
-        //Addressables.InstantiateAsync(key, transform.position, transform.rotation);
 
         TrySpawnDeathParticles();
     }
