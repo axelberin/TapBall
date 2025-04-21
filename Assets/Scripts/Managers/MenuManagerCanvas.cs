@@ -91,8 +91,6 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();
-        PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
-        PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
 
         UIManager.Instance.AddCanvas(gameObject, true);
         LevelManager.Instance.ResetCoins();

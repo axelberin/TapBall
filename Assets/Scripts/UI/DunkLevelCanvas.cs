@@ -38,6 +38,9 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     private void Start()
     {
+        PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
+        PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
+
         _tapCountText = FindAndValidateTextComponent(transform, "PointsText");
         _winTime = FindAndValidateTextComponent(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
