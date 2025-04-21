@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9f202317fd765374fb1c7d9f7b29327c
+guid: c91a4ca237652db40bec55de5cca7840
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -150,8 +150,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c12b55d2314f694d95507fc9740828a
-      internalID: -828045190
+      spriteID: cb4c78336a87f8f4d936a6ae1fed7114
+      internalID: -597238334
       vertices: []
       indices: 
       edges: []
@@ -171,8 +171,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b40a1ed5bccc02409c5ca5506bcc8ca
-      internalID: 408977829
+      spriteID: eba60fc3f56040a4983616d8a8dfda7f
+      internalID: -149007306
       vertices: []
       indices: 
       edges: []
@@ -192,8 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e4e8f62c54082c41b0c8783c7109d7f
-      internalID: 724166570
+      spriteID: 401f03a271410354591c69729383e102
+      internalID: -790618733
       vertices: []
       indices: 
       edges: []
@@ -213,8 +213,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e6f24e61a916ff42a37a2c421ee98a6
-      internalID: -469318479
+      spriteID: 6b1fcda42cf8d1f41ac8a5019d304368
+      internalID: -1972670256
       vertices: []
       indices: 
       edges: []
@@ -234,29 +234,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4293900cfc9f8f64f8746a8d41f27e4b
-      internalID: 1185745412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LavaBall spritesheet-Idle_5
-      rect:
-        serializedVersion: 2
-        x: 708
-        y: 0
-        width: 354
-        height: 354
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bfe9f5deb5f4a314aa3c2af0147230fb
-      internalID: -153410073
+      spriteID: e84c0142acdc1d14297e6752a4d3380a
+      internalID: 1493595276
       vertices: []
       indices: 
       edges: []
@@ -272,12 +251,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LavaBall spritesheet-Idle_0: -828045190
-      LavaBall spritesheet-Idle_1: 408977829
-      LavaBall spritesheet-Idle_2: 724166570
-      LavaBall spritesheet-Idle_3: -469318479
-      LavaBall spritesheet-Idle_4: 1185745412
-      LavaBall spritesheet-Idle_5: -153410073
+      LavaBall spritesheet-Idle_0: -597238334
+      LavaBall spritesheet-Idle_1: -149007306
+      LavaBall spritesheet-Idle_2: -790618733
+      LavaBall spritesheet-Idle_3: -1972670256
+      LavaBall spritesheet-Idle_4: 1493595276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

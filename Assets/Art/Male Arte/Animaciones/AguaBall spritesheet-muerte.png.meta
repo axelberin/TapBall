@@ -140,9 +140,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 700
-        width: 700
-        height: 700
+        y: 500
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,10 +160,10 @@ TextureImporter:
       name: AguaBall spritesheet-muerte_1
       rect:
         serializedVersion: 2
-        x: 700
-        y: 700
-        width: 700
-        height: 700
+        x: 500
+        y: 500
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,10 +181,10 @@ TextureImporter:
       name: AguaBall spritesheet-muerte_2
       rect:
         serializedVersion: 2
-        x: 1400
-        y: 700
-        width: 700
-        height: 700
+        x: 1000
+        y: 500
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +204,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 700
-        height: 700
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,10 +223,10 @@ TextureImporter:
       name: AguaBall spritesheet-muerte_4
       rect:
         serializedVersion: 2
-        x: 700
+        x: 500
         y: 0
-        width: 700
-        height: 700
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +244,10 @@ TextureImporter:
       name: AguaBall spritesheet-muerte_5
       rect:
         serializedVersion: 2
-        x: 1400
+        x: 1000
         y: 0
-        width: 700
-        height: 700
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
