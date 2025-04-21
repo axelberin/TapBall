@@ -6,8 +6,8 @@ public class AdsManager : MonoBehaviour
 {
     public static AdsManager Instance;
 
-    private string _InterstitialAdId = "ca-app-pub-6535800943757134/8262245155";
-    private string _RewardedAdId = "ca-app-pub-6535800943757134/3063850216";
+    private string _InterstitialAdId = "ca-app-pub-6535800943757134/8959235419";
+    private string _RewardedAdId = "ca-app-pub-6535800943757134/1989373086";
     private InterstitialAd _interstitialAd;
     private RewardedAd _rewardedAd;
 
