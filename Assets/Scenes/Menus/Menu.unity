@@ -849,7 +849,7 @@ MonoBehaviour:
     m_Top: -160
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -60
+  m_Spacing: -95
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -2009,7 +2009,7 @@ MonoBehaviour:
     m_Top: -160
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -60
+  m_Spacing: -95
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -2855,7 +2855,7 @@ MonoBehaviour:
     m_Top: -160
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -60
+  m_Spacing: -95
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -9381,7 +9381,7 @@ MonoBehaviour:
     m_Top: -160
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -60
+  m_Spacing: -95
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -9446,7 +9446,7 @@ MonoBehaviour:
     m_Top: -160
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -60
+  m_Spacing: -95
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -11504,7 +11504,7 @@ MonoBehaviour:
     m_Top: -160
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -60
+  m_Spacing: -95
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -12992,10 +12992,6 @@ PrefabInstance:
     - target: {fileID: 5281491332670631439, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
       propertyPath: m_Name
       value: ConfigsCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5281491332670631439, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5696032172923359169, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
       propertyPath: m_AnchorMax.y
