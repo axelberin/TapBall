@@ -22,10 +22,12 @@ public class LocalizedText : MonoBehaviour
         UpdateText();
     }
 
-    public void UpdateText()
+    private void UpdateText()
     {
         if (!LanguageManager.Instance)
             return;
+
+        _text.font = LanguageManager.Instance.GetFontByLanguage();
 
         _text.text = LanguageManager.Instance.GetLocalizedText(key);
     }
