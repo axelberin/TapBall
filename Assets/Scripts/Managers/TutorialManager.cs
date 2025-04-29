@@ -28,7 +28,9 @@ public class TutorialManager : CanvasElementLocator
             _tapTutorialImage = FindAndValidateImageComponent(transform, "TutorialImage");
 
         var tutorialText = FindAndValidateTextComponent(transform, "TutorialText");
-        tutorialText.text = LanguageManager.Instance.GetLocalizedText("tutorial" + _tutorialIndex);
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial" + _tutorialIndex);
+        tutorialText.text = text;
+        tutorialText.font = font;
 
         var nextTutorialButton = FindAndValidateButtonComponent(transform, "NextTutorialBTN");
         nextTutorialButton.onClick.AddListener(() =>
@@ -40,7 +42,9 @@ public class TutorialManager : CanvasElementLocator
 
                 _animator.SetTrigger("Tutorial" + _tutorialIndex);
                 _tutorialIndex++;
-                tutorialText.text = LanguageManager.Instance.GetLocalizedText("tutorial" + _tutorialIndex);
+                var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial" + _tutorialIndex);
+                tutorialText.text = text;
+                tutorialText.font = font;
             }
             else
                 FinishTutorial();

@@ -157,6 +157,8 @@ public class DunkLevelCanvas : CanvasElementLocator
         else
             _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
 
+        _nextLevelText.font = LanguageManager.Instance.GetFontByLanguage();
+
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winUI, true);
         _pauseButton.interactable = false;

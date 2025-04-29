@@ -113,6 +113,9 @@ public class LanguageManager : MonoBehaviour
         };
     }
 
+    public (string, TMP_FontAsset) GetlocalizatedTextAndFont(string key)
+        => (GetLocalizedText(key), GetFontByLanguage());
+
     public string GetLocalizedText(string key)
     {
         if (_localizedTexts.Count == 0 ||
@@ -125,6 +128,16 @@ public class LanguageManager : MonoBehaviour
             return _localizedTexts[_currentLanguage][key];
 
         return key;
+    }
+
+    public TMP_FontAsset GetFontByLanguage()
+    {
+        return _currentLanguage switch
+        {
+            "ch" => _chineseFont,
+            "jp" => _japaneseFont,
+            _ => _commonFont,
+        };
     }
 
     public void ChangeLanguage(int languageIndex)
@@ -174,16 +187,6 @@ public class LanguageManager : MonoBehaviour
             "ch" => 7,
             "jp" => 8,
             _ => 1,
-        };
-    }
-
-    public TMP_FontAsset GetFontByLanguage()
-    {
-        return _currentLanguage switch
-        {
-            "ch" => _chineseFont,
-            "jp" => _japaneseFont,
-            _ => _commonFont,
         };
     }
 }

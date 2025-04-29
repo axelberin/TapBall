@@ -86,8 +86,10 @@ public class StoreObject : CanvasElementLocator
     {
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
-        _equipButton.interactable = false;
-        _equipText.text = LanguageManager.Instance.GetLocalizedText("equiped");
+        _equipButton.interactable = false; 
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("equiped");
+        _equipText.text = text;
+        _equipText.font = font;
     }
 
     private void OnSkinUnselected()
@@ -95,6 +97,8 @@ public class StoreObject : CanvasElementLocator
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = true;
-        _equipText.text = LanguageManager.Instance.GetLocalizedText("equip");
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("equip");
+        _equipText.text = text;
+        _equipText.font = font;
     }
 }
