@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
 using System;
+using TMPro;
 
 public class LanguageManager : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class LanguageManager : MonoBehaviour
 
     public Action OnUpdateLanguage = delegate { };
 
+    [SerializeField] private TMP_FontAsset _commonFont;
+    [SerializeField] private TMP_FontAsset _japaneseFont;
+    [SerializeField] private TMP_FontAsset _chineseFont;
+
     private Dictionary<string, Dictionary<string, string>> _localizedTexts = new();
     private string _currentLanguage = "en"; // Idioma por defecto
     private string _sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZpoJwa5CcFffrM8gBTesuOZY3UaizH6oVSAgHGDuKslJ45fE9ITGNiL_AP_qqdhtjZXm_LndbY5OV/pub?output=csv";
     private int _currentLanguageIndex = 0;
     private int _minLanguageIndex = 1;
-    private int _maxLanguageIndex = 6;
+    private int _maxLanguageIndex = 8;
 
     private void Awake()
     {
@@ -150,8 +155,8 @@ public class LanguageManager : MonoBehaviour
             4 => "al",//Alemán
             5 => "fr",//Francés
             6 => "br",//Portugués/Brasilero
-            //7 => "ch",//Chino Tradicional
-            //8 => "jp",//Japonés
+            7 => "ch",//Chino Tradicional
+            8 => "jp",//Japonés
             _ => "en",// Def
         };
     }
@@ -166,9 +171,19 @@ public class LanguageManager : MonoBehaviour
             "al" => 4,
             "fr" => 5,
             "br" => 6,
-            //"ch" => 7,
-            //"jp" => 8,
+            "ch" => 7,
+            "jp" => 8,
             _ => 1,
+        };
+    }
+
+    public TMP_FontAsset GetFontByLanguage()
+    {
+        return _currentLanguage switch
+        {
+            "ch" => _chineseFont,
+            "jp" => _japaneseFont,
+            _ => _commonFont,
         };
     }
 }

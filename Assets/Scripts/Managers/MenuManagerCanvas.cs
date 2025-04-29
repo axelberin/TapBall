@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +11,6 @@ public class MenuManagerCanvas : CanvasElementLocator
     private Button _dunkCloseButton;
     private Button _storeButton;
     private Button _configsButton;
-
-    private int _maxDunkLevels;
 
     void Start()
     {
