@@ -23,7 +23,7 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadSceneAsync(string name, Animator fadeAnimator)
     {
-        StartCoroutine(LoadSceneAsyncCoroutine(name, GetCurrentSceneName(), fadeAnimator));
+        StartCoroutine(LoadSceneAsyncCoroutine(name, GetCurrentSceneName, fadeAnimator));
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string sceneToLoadName,
@@ -70,10 +70,7 @@ public class ScenesManager : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
-    public string GetCurrentSceneName()
-    {
-        return SceneManager.GetActiveScene().name;
-    }
+    public string GetCurrentSceneName => SceneManager.GetActiveScene().name;
 
     public bool IsSceneExisting(string sceneName)
     {
@@ -86,7 +83,7 @@ public class ScenesManager : MonoBehaviour
 
     public int GetLevelByCurrentScene()
     {
-        string numbers = new string(GetCurrentSceneName().Where(
+        string numbers = new string(GetCurrentSceneName.Where(
             char.IsDigit).ToArray());
         int.TryParse(numbers, out int level);
         return level;

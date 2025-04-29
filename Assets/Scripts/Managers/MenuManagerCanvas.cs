@@ -4,11 +4,6 @@ using UnityEngine.UI;
 
 public class MenuManagerCanvas : CanvasElementLocator
 {
-    private Button[] _dunkLevelsButtons;
-    private Image[] _dunkTouchesComplete;
-    private Image[] _dunkWithoutDeath;
-    private Image[] _dunkHasCoins;
-
     private GameObject _menuPanel;
     private GameObject _selectModePanel;
     private GameObject _dunkLevelsPanel;
@@ -102,111 +97,60 @@ public class MenuManagerCanvas : CanvasElementLocator
     #region DUNK
     private void OnDunkLevelsClicked()
     {
-        #region UNLOCK LEVELS
-        var dunkLevelsButtons = new List<Button>();
+        var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
+
         for (int i = 1; i <= 100; i++)
         {
-            var button = FindAndValidateButtonComponent(transform, $"DunkLevel{i}");
+            var button = FindAndValidateButtonComponent(transform, $"DunkLevel");
 
             if (button == null)
                 break;
 
-            dunkLevelsButtons.Add(button);
-        }
+            button.name = $"DunkLevel{i}";
 
-        if (dunkLevelsButtons.Count > 0)
-            _dunkLevelsButtons = dunkLevelsButtons.ToArray();
-
-        var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
-
-        for (int i = 0; i < _dunkLevelsButtons.Length; i++)
-        {
+            #region UNLOCK LEVELS
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
-            _dunkLevelsButtons[i].onClick.AddListener(() =>
+            button.onClick.AddListener(() =>
             {
-                _dunkLevelsButtons[levelIndex].interactable = false;
+                button.interactable = false;
                 UIManager.Instance.ClearCnavasesList();
-                ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex + 1}", fadeAnimator);
+                ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex}", fadeAnimator);
                 AudioManager.Instance.StopMusic();
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PlayLevelSound);
             });
 
-            if (i == 0)
-                _dunkLevelsButtons[i].interactable = true;
+            if (i == 1)
+                button.interactable = true;
             else
-                _dunkLevelsButtons[i].interactable = SaveAndLoadManager.ContainsKey(
+                button.interactable = SaveAndLoadManager.ContainsKey(
                     SaveAndLoadManager.DunkLevelName + (i - 1));
-        }
-
-        _maxDunkLevels = _dunkLevelsButtons.Length;
-        #endregion
-        #region HAS COINS
-        var dunkHasCoins = new List<Image>();
-        for (int i = 1; i <= _maxDunkLevels; i++)
-        {
-            var hasCoinImage = FindAndValidateImageComponent(transform, $"DunkHasCoin{i}");
-
-            if (hasCoinImage == null)
-                break;
-
-            dunkHasCoins.Add(hasCoinImage);
-        }
-
-        if (dunkHasCoins.Count > 0)
-            _dunkHasCoins = dunkHasCoins.ToArray();
-
-        for (int i = 0; i < _dunkHasCoins.Length; i++)
-        {
-            _dunkHasCoins[i].gameObject.SetActive(
+            #endregion
+            #region HAS COINS
+            var hasCoinImage = FindAndValidateImageComponent(button.transform, $"DunkHasCoin");
+            hasCoinImage.gameObject.SetActive(
                 SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
-                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinNameByLevel + GameManager.GameModes.Dunk + (i + 1)) == 1);
-        }
+                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinNameByLevel + GameManager.GameModes.Dunk + i) == 1);
+            #endregion
 
-        #endregion
-        #region BEST
-        var dunkTouchesComplete = new List<Image>();
-        for (int i = 1; i <= _maxDunkLevels; i++)
-        {
-            var touchImage = FindAndValidateImageComponent(transform, $"DunkRecord{i}");
-
-            if (touchImage == null)
-                break;
-
-            dunkTouchesComplete.Add(touchImage);
-        }
-
-        if (dunkTouchesComplete.Count > 0)
-            _dunkTouchesComplete = dunkTouchesComplete.ToArray();
-
-        for (int i = 0; i < _dunkTouchesComplete.Length; i++)
-        {
-            _dunkTouchesComplete[i].gameObject.SetActive(
+            #region BEST
+            var touchImage = FindAndValidateImageComponent(button.transform, $"DunkRecord");
+            touchImage.gameObject.SetActive(
                 SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkTouchesCompleteName + i) == 1);
-        }
-        #endregion
-        #region WITHOUT DEATH
-        var dunkWithoutDeathImage = new List<Image>();
-        for (int i = 1; i <= _maxDunkLevels; i++)
-        {
-            var image = FindAndValidateImageComponent(transform, $"DunkWithoutDeath{i}");
+            #endregion
 
-            if (image == null)
-                break;
-
-            dunkWithoutDeathImage.Add(image);
-        }
-
-        if (dunkWithoutDeathImage.Count > 0)
-            _dunkWithoutDeath = dunkWithoutDeathImage.ToArray();
-
-        for (int i = 0; i < _dunkWithoutDeath.Length; i++)
-        {
-            _dunkWithoutDeath[i].gameObject.SetActive(
+            #region WITHOUT DEATH
+            var noDeathImage = FindAndValidateImageComponent(button.transform, $"DunkWithoutDeath");
+            noDeathImage.gameObject.SetActive(
                 SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + i) == 1);
+            #endregion
+
+            #region LEVEL TEXT
+            var levelNumText = FindAndValidateTextComponent(button.transform, $"DunkLevelNumText");
+            levelNumText.text = i.ToString();
+            #endregion
         }
-        #endregion
     }
     #endregion
 }

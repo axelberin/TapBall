@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
 
     private void DunkOnWin()
     {
-        int level = GameManager.Instance.SetGetWorldState.GetLevel - 1;
+        int level = GameManager.Instance.SetGetWorldState.GetLevel;
         int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
