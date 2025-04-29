@@ -16,7 +16,7 @@ public class LanguageManager : MonoBehaviour
     private string _sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZpoJwa5CcFffrM8gBTesuOZY3UaizH6oVSAgHGDuKslJ45fE9ITGNiL_AP_qqdhtjZXm_LndbY5OV/pub?output=csv";
     private int _currentLanguageIndex = 0;
     private int _minLanguageIndex = 1;
-    private int _maxLanguageIndex = 2;
+    private int _maxLanguageIndex = 6;
 
     private void Awake()
     {
@@ -146,6 +146,12 @@ public class LanguageManager : MonoBehaviour
         {
             1 => "en",// Inglés
             2 => "es",// Español
+            3 => "it",// Italiano
+            4 => "al",//Alemán
+            5 => "fr",//Francés
+            6 => "br",//Portugués/Brasilero
+            //7 => "ch",//Chino Tradicional
+            //8 => "jp",//Japonés
             _ => "en",// Def
         };
     }
@@ -156,6 +162,12 @@ public class LanguageManager : MonoBehaviour
         {
             "en" => 1,
             "es" => 2,
+            "it" => 3,
+            "al" => 4,
+            "fr" => 5,
+            "br" => 6,
+            //"ch" => 7,
+            //"jp" => 8,
             _ => 1,
         };
     }
