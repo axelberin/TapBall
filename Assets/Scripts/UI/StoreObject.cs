@@ -41,6 +41,13 @@ public class StoreObject : CanvasElementLocator
                 SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
 
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
+
+                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
+                {
+                    // Mostrar la reseña
+                    ReviewManagerController.Instance.RequestReview();
+                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
+                }
             }
             else
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
