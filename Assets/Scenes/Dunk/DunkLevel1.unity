@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorType: 2
-  anchorOffset: {x: -0.8, y: 2, z: 0}
+  anchorOffset: {x: -1.2, y: 2, z: 0}
 --- !u!1 &1055958099
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6958972286708432112, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3428571
+      value: 0.942857
       objectReference: {fileID: 0}
     - target: {fileID: 6958972286708432112, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1350,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4761251840284092976, guid: 05a23d16ed761c447bea9af6e594c490, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.28
+      value: 0.503
       objectReference: {fileID: 0}
     - target: {fileID: 4761251840284092976, guid: 05a23d16ed761c447bea9af6e594c490, type: 3}
       propertyPath: m_LocalPosition.y
