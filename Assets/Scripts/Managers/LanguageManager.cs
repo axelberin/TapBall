@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 using System.IO;
 using System;
 using TMPro;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 public class LanguageManager : MonoBehaviour
 {
@@ -69,7 +71,10 @@ public class LanguageManager : MonoBehaviour
         while (reader.Peek() != -1)
         {
             string line = reader.ReadLine();
-            string[] values = line.Split(',');
+            string[] values = Regex.Matches(line, "(?:^|,)(\"(?:[^\"]|\"\")*\"|[^,]*)")
+                       .Cast<Match>()
+                       .Select(m => m.Value.TrimStart(',').Trim('"'))
+                       .ToArray();
 
             string key = values[0].Trim('"'); // Primera columna es la clave del texto
 
