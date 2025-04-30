@@ -109,11 +109,16 @@ public class LanguageManager : MonoBehaviour
         SystemLanguage language = Application.systemLanguage;
         Debug.Log("Idioma del sistema: " + language);
 
-        // Puedes hacer algo específico según el idioma detectado
         return language switch
         {
-            SystemLanguage.Spanish => GetLanguageKeyFromIndex(1),
-            SystemLanguage.English => GetLanguageKeyFromIndex(0),
+            SystemLanguage.English => GetLanguageKeyFromIndex(1),
+            SystemLanguage.Spanish => GetLanguageKeyFromIndex(2),
+            SystemLanguage.Italian => GetLanguageKeyFromIndex(3),
+            SystemLanguage.German => GetLanguageKeyFromIndex(4),
+            SystemLanguage.French => GetLanguageKeyFromIndex(5),
+            SystemLanguage.Portuguese => GetLanguageKeyFromIndex(6),
+            SystemLanguage.Chinese => GetLanguageKeyFromIndex(7),
+            SystemLanguage.Japanese => GetLanguageKeyFromIndex(8),
             _ => GetLanguageKeyFromIndex(1),
         };
     }
