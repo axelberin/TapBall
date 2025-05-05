@@ -7,6 +7,7 @@ public class Coins : ObstaclesManager
 
     private Animator _animator;
     private AudioSource _audioSource;
+    private CircleCollider2D _circleCollider;
 
     private void Awake()
     {
@@ -15,6 +16,9 @@ public class Coins : ObstaclesManager
 
         if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
+
+        if (_circleCollider == null)
+            _circleCollider = GetComponent<CircleCollider2D>();
     }
 
     private void Start()
@@ -39,6 +43,7 @@ public class Coins : ObstaclesManager
     {
         if (collision.TryGetComponent(out PlayerController player))
         {
+            _circleCollider.enabled = false;
             LevelManager.Instance.OnGetCoin(this);
             StartCoroutine(WaitForAnimation());
         }
@@ -59,6 +64,7 @@ public class Coins : ObstaclesManager
         StopAllCoroutines();
         gameObject.SetActive(true);
         _animator.SetTrigger("Lose");
+        _circleCollider.enabled = true;
     }
 
     public string GetCoinName => _coinName;
