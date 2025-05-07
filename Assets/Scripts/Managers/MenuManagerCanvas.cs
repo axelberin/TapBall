@@ -91,6 +91,14 @@ public class MenuManagerCanvas : CanvasElementLocator
         OnDunkLevelsClicked();
     }
 
+    private void Update()
+    {
+#if UNITY_ANDROID
+        if (Input.GetKeyUp(KeyCode.Escape))
+            Application.Quit();
+#endif
+    }
+
     #region DUNK
     private void OnDunkLevelsClicked()
     {
