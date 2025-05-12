@@ -286,8 +286,8 @@ TextureImporter:
       name: spritesheet trampolin_7
       rect:
         serializedVersion: 2
-        x: 7560
-        y: 472
+        x: 0
+        y: 0
         width: 1080
         height: 472
       alignment: 0
@@ -307,8 +307,8 @@ TextureImporter:
       name: spritesheet trampolin_8
       rect:
         serializedVersion: 2
-        x: 8640
-        y: 472
+        x: 1080
+        y: 0
         width: 1080
         height: 472
       alignment: 0
@@ -328,8 +328,8 @@ TextureImporter:
       name: spritesheet trampolin_9
       rect:
         serializedVersion: 2
-        x: 9720
-        y: 472
+        x: 2160
+        y: 0
         width: 1080
         height: 472
       alignment: 0
@@ -349,7 +349,7 @@ TextureImporter:
       name: spritesheet trampolin_10
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3240
         y: 0
         width: 1080
         height: 472
@@ -370,7 +370,7 @@ TextureImporter:
       name: spritesheet trampolin_11
       rect:
         serializedVersion: 2
-        x: 1080
+        x: 4320
         y: 0
         width: 1080
         height: 472
@@ -391,7 +391,7 @@ TextureImporter:
       name: spritesheet trampolin_12
       rect:
         serializedVersion: 2
-        x: 2160
+        x: 5400
         y: 0
         width: 1080
         height: 472
@@ -412,7 +412,7 @@ TextureImporter:
       name: spritesheet trampolin_13
       rect:
         serializedVersion: 2
-        x: 3240
+        x: 6480
         y: 0
         width: 1080
         height: 472
@@ -425,132 +425,6 @@ TextureImporter:
       bones: []
       spriteID: 5152e3e546d2e6440ae3d132fd70fb8c
       internalID: -72518334
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_14
-      rect:
-        serializedVersion: 2
-        x: 4320
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: efa9cf6e239be474b93720f575bcce3a
-      internalID: -1599153404
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_15
-      rect:
-        serializedVersion: 2
-        x: 5400
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca19bbb485ac8044db2c01510f0b99e2
-      internalID: 1675802469
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_16
-      rect:
-        serializedVersion: 2
-        x: 6480
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5bdbbbaa8aa06c4ab861c26db849160
-      internalID: 1343162638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_17
-      rect:
-        serializedVersion: 2
-        x: 7560
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c6da7de3cd09d1541be9dd54e7d0d234
-      internalID: -1767742557
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_18
-      rect:
-        serializedVersion: 2
-        x: 8640
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf1d85914f8684d4787f4c47d083c41a
-      internalID: 574015141
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spritesheet trampolin_19
-      rect:
-        serializedVersion: 2
-        x: 9720
-        y: 0
-        width: 1080
-        height: 472
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aeb97720feffc3448a932c7b5e31cd1d
-      internalID: 903226600
       vertices: []
       indices: 
       edges: []
@@ -572,12 +446,6 @@ TextureImporter:
       spritesheet trampolin_11: 1850046439
       spritesheet trampolin_12: 922705490
       spritesheet trampolin_13: -72518334
-      spritesheet trampolin_14: -1599153404
-      spritesheet trampolin_15: 1675802469
-      spritesheet trampolin_16: 1343162638
-      spritesheet trampolin_17: -1767742557
-      spritesheet trampolin_18: 574015141
-      spritesheet trampolin_19: 903226600
       spritesheet trampolin_2: -307573307
       spritesheet trampolin_3: 1917671127
       spritesheet trampolin_4: -70660466
