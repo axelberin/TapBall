@@ -11,6 +11,8 @@ public class AdsManager : MonoBehaviour
     private InterstitialAd _interstitialAd;
     private RewardedAd _rewardedAd;
 
+    private int _adsCounter = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,6 +38,13 @@ public class AdsManager : MonoBehaviour
     /// </summary>
     public void LoadInterstitialAd()
     {
+        _adsCounter++;
+
+        if (_adsCounter <= 3)
+            return;
+
+        _adsCounter = 0;
+
         // Clean up the old ad before loading a new one.
         if (_interstitialAd != null)
         {
