@@ -8,6 +8,7 @@ public class AdsManager : MonoBehaviour
     [SerializeField] private string androidAppKey = "TU_APP_KEY_AQUI";
     [SerializeField] private string iosAppKey = "TU_APP_KEY_AQUI";
 
+    private int _adsCounter;
     private string appKey;
 
     private void Awake()
@@ -107,6 +108,10 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAd()
     {
+        _adsCounter++;
+        if (_adsCounter <= 3)
+            return;
+
         if (IronSource.Agent.isInterstitialReady())
         {
             IronSource.Agent.showInterstitial();
