@@ -70,7 +70,7 @@ public class DunkLevelCanvas : CanvasElementLocator
 
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel + 1,
                 GameManager.Instance.GetCurrentGameMode, fadeAnimator);
-            AdsManager.Instance.LoadInterstitialAd();
+            AdsManager.Instance.ShowInterstitialAd();
         });
         _nextLevelText = FindAndValidateTextComponent(_nextLevelButton.transform, "NextLevelText");
 

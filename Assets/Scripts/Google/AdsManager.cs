@@ -1,17 +1,14 @@
 using UnityEngine;
-using GoogleMobileAds.Api;
-using System.Collections.Generic;
 
 public class AdsManager : MonoBehaviour
 {
-    public static AdsManager Instance;
+    public static AdsManager Instance { get; private set; }
 
-    private string _InterstitialAdId = "ca-app-pub-6535800943757134/7933239999";
-    private string _RewardedAdId = "ca-app-pub-6535800943757134/1109886745";
-    private InterstitialAd _interstitialAd;
-    private RewardedAd _rewardedAd;
+    [Header("IronSource App Key")]
+    [SerializeField] private string androidAppKey = "TU_APP_KEY_AQUI";
+    [SerializeField] private string iosAppKey = "TU_APP_KEY_AQUI";
 
-    private int _adsCounter = 0;
+    private string appKey;
 
     private void Awake()
     {
@@ -19,130 +16,105 @@ public class AdsManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+
+        InitIronSource();
     }
 
-    void Start()
+    private void InitIronSource()
     {
-        MobileAds.Initialize((InitializationStatus initStatus) => { });
+#if UNITY_ANDROID
+        appKey = androidAppKey;
+#elif UNITY_IOS
+        appKey = iosAppKey;
+#endif
 
-        List<string> testDevices = new List<string> { AdRequest.TestDeviceSimulator };
-        RequestConfiguration requestConfiguration = new RequestConfiguration.Builder()
-            .SetTestDeviceIds(testDevices)
-            .build();
-        MobileAds.SetRequestConfiguration(requestConfiguration);
+        // Inicializa IronSource con los tipos de anuncio que vas a usar
+        IronSource.Agent.init(appKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL);
+
+        // Opcional: valida que el SDK esté bien integrado
+        IronSource.Agent.validateIntegration();
+
+        Debug.Log("IronSource inicializado con appKey: " + appKey);
     }
 
-
-    /// <summary>
-    /// Loads the interstitial ad.
-    /// </summary>
-    public void LoadInterstitialAd()
+    private void OnEnable()
     {
-        _adsCounter++;
+        // Rewarded Video
+        IronSourceEvents.onRewardedVideoAdRewardedEvent += OnRewardedVideoAdRewarded;
+        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += OnRewardedVideoAvailabilityChanged;
 
-        if (_adsCounter <= 3)
-            return;
+        // Interstitial
+        IronSourceEvents.onInterstitialAdReadyEvent += OnInterstitialReady;
+        IronSourceEvents.onInterstitialAdLoadFailedEvent += OnInterstitialLoadFailed;
 
-        _adsCounter = 0;
-
-        // Clean up the old ad before loading a new one.
-        if (_interstitialAd != null)
-        {
-            _interstitialAd.Destroy();
-            _interstitialAd = null;
-        }
-
-        Debug.Log("Loading the interstitial ad.");
-
-        // create our request used to load the ad.
-        var adRequest = new AdRequest();
-
-        // send the request to load the ad.
-        InterstitialAd.Load(_InterstitialAdId, adRequest,
-            (InterstitialAd ad, LoadAdError error) =>
-            {
-                // if error is not null, the load request failed.
-                if (error != null || ad == null)
-                {
-                    Debug.LogError("interstitial ad failed to load an ad " +
-                                   "with error : " + error);
-                    return;
-                }
-
-                Debug.Log("Interstitial ad loaded with response : "
-                          + ad.GetResponseInfo());
-
-                _interstitialAd = ad;
-                ShowInterstitialAd();
-            });
+        // SDK Initialization
+        IronSourceEvents.onSdkInitializationCompletedEvent += OnSdkInitialized;
     }
 
-    /// <summary>
-    /// Shows the interstitial ad.
-    /// </summary>
-    public void ShowInterstitialAd()
+    private void OnDisable()
     {
-        if (_interstitialAd != null && _interstitialAd.CanShowAd())
-        {
-            Debug.Log("Showing interstitial ad.");
-            _interstitialAd.Show();
-        }
-        else
-        {
-            Debug.LogError("Interstitial ad is not ready yet.");
-        }
+        IronSourceEvents.onRewardedVideoAdRewardedEvent -= OnRewardedVideoAdRewarded;
+        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent -= OnRewardedVideoAvailabilityChanged;
+
+        IronSourceEvents.onInterstitialAdReadyEvent -= OnInterstitialReady;
+        IronSourceEvents.onInterstitialAdLoadFailedEvent -= OnInterstitialLoadFailed;
+
+        IronSourceEvents.onSdkInitializationCompletedEvent -= OnSdkInitialized;
     }
 
-    /// <summary>
-    /// Loads the rewarded interstitial ad.
-    /// </summary>
-    public void LoadRewardedAd()
+    // === CALLBACKS ===
+
+    private void OnSdkInitialized()
     {
-        // Clean up the old ad before loading a new one.
-        if (_rewardedAd != null)
-        {
-            _rewardedAd.Destroy();
-            _rewardedAd = null;
-        }
-
-        Debug.Log("Loading the rewarded ad.");
-
-        // create our request used to load the ad.
-        var adRequest = new AdRequest();
-        adRequest.Keywords.Add("unity-admob-sample");
-
-        // send the request to load the ad.
-        RewardedAd.Load(_RewardedAdId, adRequest,
-            (RewardedAd ad, LoadAdError error) =>
-            {
-                // if error is not null, the load request failed.
-                if (error != null || ad == null)
-                {
-                    Debug.LogError("rewarded ad failed to load an ad " +
-                                   "with error : " + error);
-                    return;
-                }
-
-                Debug.Log("Rewarded ad loaded with response : "
-                          + ad.GetResponseInfo());
-
-                _rewardedAd = ad;
-                ShowRewardedAd();
-            });
+        Debug.Log("IronSource SDK completamente inicializado");
     }
+
+    private void OnRewardedVideoAvailabilityChanged(bool available)
+    {
+        Debug.Log("Rewarded Video disponible: " + available);
+    }
+
+    private void OnRewardedVideoAdRewarded(IronSourcePlacement placement)
+    {
+        Debug.Log("Jugador recibió recompensa: " + placement.getRewardName());
+        // Aquí das la recompensa, por ejemplo:
+        // GameManager.Instance.AddCoins(placement.getRewardAmount());
+    }
+
+    private void OnInterstitialReady()
+    {
+        Debug.Log("Interstitial listo para mostrarse");
+    }
+
+    private void OnInterstitialLoadFailed(IronSourceError error)
+    {
+        Debug.LogError("Fallo al cargar Interstitial: " + error.getDescription());
+    }
+
+    // === MÉTODOS PÚBLICOS PARA USAR DESDE TUS BOTONES ===
 
     public void ShowRewardedAd()
     {
-        const string rewardMsg =
-            "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
-        if (_rewardedAd != null && _rewardedAd.CanShowAd())
+        if (IronSource.Agent.isRewardedVideoAvailable())
         {
-            _rewardedAd.Show((Reward reward) =>
-            {
-                Debug.Log("Es reward");
-                Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
-            });
+            IronSource.Agent.showRewardedVideo();
+        }
+        else
+        {
+            Debug.Log("Video recompensado no disponible");
+        }
+    }
+
+    public void ShowInterstitialAd()
+    {
+        if (IronSource.Agent.isInterstitialReady())
+        {
+            IronSource.Agent.showInterstitial();
+        }
+        else
+        {
+            Debug.Log("Interstitial no listo");
+            IronSource.Agent.loadInterstitial(); // Puedes forzar recarga aquí si quieres
         }
     }
 }
