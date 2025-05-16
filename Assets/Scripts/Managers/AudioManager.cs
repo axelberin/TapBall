@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour, IPauseble
         DunkMusic
     };
 
-    [SerializeField] private AudioMixer _audioMixer;
+    private AudioMixer _audioMixer;
     private Dictionary<AudioClipType, AudioClip> _audioClipByEnum = new();
     private Dictionary<MusicClipType, AudioClip> _musicClipsByEnum = new();
 
@@ -52,6 +52,8 @@ public class AudioManager : MonoBehaviour, IPauseble
             _musicAudioSource = GetComponentsInChildren<AudioSource>().
                 FirstOrDefault(a => a.gameObject.name == "MusicAudioSource");
         }
+
+        AddressablesManager.LoadAsset<AudioMixer>("AudioMixer", mixer => _audioMixer = mixer);
 
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.ButtonsSound.ToString(),
             clip => _audioClipByEnum.Add(AudioClipType.ButtonsSound, clip));

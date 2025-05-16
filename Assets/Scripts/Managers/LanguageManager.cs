@@ -14,9 +14,9 @@ public class LanguageManager : MonoBehaviour
 
     public Action OnUpdateLanguage = delegate { };
 
-    [SerializeField] private TMP_FontAsset _commonFont;
-    [SerializeField] private TMP_FontAsset _japaneseFont;
-    [SerializeField] private TMP_FontAsset _chineseFont;
+    private TMP_FontAsset _commonFont;
+    private TMP_FontAsset _japaneseFont;
+    private TMP_FontAsset _chineseFont;
 
     private Dictionary<string, Dictionary<string, string>> _localizedTexts = new();
     private string _currentLanguage = "en"; // Idioma por defecto
@@ -31,6 +31,10 @@ public class LanguageManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        AddressablesManager.LoadAsset<TMP_FontAsset>("CommonFont", font => _commonFont = font);
+        AddressablesManager.LoadAsset<TMP_FontAsset>("JapaneseFont", font => _japaneseFont = font);
+        AddressablesManager.LoadAsset<TMP_FontAsset>("ChineseFont", font => _chineseFont = font);
     }
 
     private void Start()
