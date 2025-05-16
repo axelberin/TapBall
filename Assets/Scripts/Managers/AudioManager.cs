@@ -26,9 +26,9 @@ public class AudioManager : MonoBehaviour, IPauseble
         DunkMusic
     };
 
-    [SerializeField] private AudioMixer _audioMixer;
-    [SerializeField] private List<AudioClip> _audioClipList;
-    [SerializeField] private List<AudioClip> _musicClipList;
+    private AudioMixer _audioMixer;
+    private Dictionary<AudioClipType, AudioClip> _audioClipByEnum = new();
+    private Dictionary<MusicClipType, AudioClip> _musicClipsByEnum = new();
 
     private string _mixerMusic = "MusicVolume";
     private string _mixerSFX = "SFXVolume";
@@ -52,6 +52,29 @@ public class AudioManager : MonoBehaviour, IPauseble
             _musicAudioSource = GetComponentsInChildren<AudioSource>().
                 FirstOrDefault(a => a.gameObject.name == "MusicAudioSource");
         }
+
+        AddressablesManager.LoadAsset<AudioMixer>("AudioMixer", mixer => _audioMixer = mixer);
+
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.ButtonsSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.ButtonsSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.PlayLevelSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.PlayLevelSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.WinSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.WinSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.PurchaseSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.PurchaseSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.EquipSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.EquipSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.RejectionSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.RejectionSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.AchivmentSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.AchivmentSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.CountDownSound.ToString(),
+            clip => _audioClipByEnum.Add(AudioClipType.CountDownSound, clip));
+        AddressablesManager.LoadAsset<AudioClip>(MusicClipType.MenuMusic.ToString()
+            , clip => _musicClipsByEnum.Add(MusicClipType.MenuMusic, clip));
+        AddressablesManager.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),
+            clip => _musicClipsByEnum.Add(MusicClipType.DunkMusic, clip));
     }
 
     private void Start()
@@ -84,7 +107,7 @@ public class AudioManager : MonoBehaviour, IPauseble
 
     public void PlaySoundByType(AudioClipType clipType)
     {
-        var clip = _audioClipList[(int)clipType];
+        var clip = _audioClipByEnum[clipType];
 
         if (clip != null && _soundsAudioSource != null)
             _soundsAudioSource.PlayOneShot(clip);
@@ -94,7 +117,7 @@ public class AudioManager : MonoBehaviour, IPauseble
 
     public void PlayMusicByType(MusicClipType musicType)
     {
-        var clip = _musicClipList[(int)musicType];
+        var clip = _musicClipsByEnum[musicType];
 
         if (clip != null && _musicAudioSource != null)
         {

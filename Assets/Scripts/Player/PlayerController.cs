@@ -7,13 +7,13 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
     [SerializeField] float _jumpForce = 3;
-    [SerializeField] string _deathPrefabName = "Death";
-    [SerializeField] List<AudioClip> _tapClips = new List<AudioClip>();
-    [SerializeField] AudioClip _deathClip;
 
+    private string _deathPrefabName = "Death";
     private bool _death;
     private Vector2 _velocityOnPause;
 
+    private List<AudioClip> _tapClips = new();
+    private AudioClip _deathClip;
     private Rigidbody2D _rb;
     private Collider2D _collider;
     private SpriteRenderer _spriteRenderer;
@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
+
+        AddressablesManager.LoadAsset<AudioClip>("Tap01Sound", clip => _tapClips.Add(clip));
+        AddressablesManager.LoadAsset<AudioClip>("Tap02Sound", clip => _tapClips.Add(clip));
+        AddressablesManager.LoadAsset<AudioClip>("Tap03Sound", clip => _tapClips.Add(clip));
+        AddressablesManager.LoadAsset<AudioClip>("DeathSound", clip => _deathClip = clip);
     }
 
     private void Start()
