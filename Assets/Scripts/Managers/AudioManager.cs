@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour, IPauseble
     };
 
     private AudioMixer _audioMixer;
-    private Dictionary<AudioClipType, AudioClip> _audioClipByEnum = new();
+    private Dictionary<AudioClipType, AudioClip> _soundClipsByEnum = new();
     private Dictionary<MusicClipType, AudioClip> _musicClipsByEnum = new();
 
     private string _mixerMusic = "MusicVolume";
@@ -56,21 +56,21 @@ public class AudioManager : MonoBehaviour, IPauseble
         AddressablesManager.LoadAsset<AudioMixer>("AudioMixer", mixer => _audioMixer = mixer);
 
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.ButtonsSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.ButtonsSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.ButtonsSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.PlayLevelSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.PlayLevelSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.PlayLevelSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.WinSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.WinSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.WinSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.PurchaseSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.PurchaseSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.PurchaseSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.EquipSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.EquipSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.EquipSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.RejectionSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.RejectionSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.RejectionSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.AchivmentSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.AchivmentSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.AchivmentSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(AudioClipType.CountDownSound.ToString(),
-            clip => _audioClipByEnum.Add(AudioClipType.CountDownSound, clip));
+            clip => _soundClipsByEnum.Add(AudioClipType.CountDownSound, clip));
         AddressablesManager.LoadAsset<AudioClip>(MusicClipType.MenuMusic.ToString()
             , clip => _musicClipsByEnum.Add(MusicClipType.MenuMusic, clip));
         AddressablesManager.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),
@@ -94,6 +94,9 @@ public class AudioManager : MonoBehaviour, IPauseble
 
     public void SetSoundVolume(float value)
     {
+        if (_audioMixer == null)
+            return;
+
         _audioMixer.SetFloat(_mixerSFX, Mathf.Log10(value) * 20);
         _audioMixer.SetFloat(_mixerUI, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.SoundsVolumeName, true);
@@ -101,13 +104,20 @@ public class AudioManager : MonoBehaviour, IPauseble
 
     public void SetMusicVolume(float value)
     {
+        if (_audioMixer == null)
+            return;
+
         _audioMixer.SetFloat(_mixerMusic, Mathf.Log10(value) * 20);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
     }
 
     public void PlaySoundByType(AudioClipType clipType)
     {
-        var clip = _audioClipByEnum[clipType];
+        if (_soundClipsByEnum == null || !_soundClipsByEnum.ContainsKey(clipType)
+            || _soundClipsByEnum[clipType] == null)
+            return;
+
+        var clip = _soundClipsByEnum[clipType];
 
         if (clip != null && _soundsAudioSource != null)
             _soundsAudioSource.PlayOneShot(clip);
@@ -117,6 +127,10 @@ public class AudioManager : MonoBehaviour, IPauseble
 
     public void PlayMusicByType(MusicClipType musicType)
     {
+        if (_musicClipsByEnum == null || !_musicClipsByEnum.ContainsKey(musicType) ||
+            _musicClipsByEnum[musicType] == null)
+            return;
+
         var clip = _musicClipsByEnum[musicType];
 
         if (clip != null && _musicAudioSource != null)
