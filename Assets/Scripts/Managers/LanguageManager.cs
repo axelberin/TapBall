@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using UtilityAddressables;
 
-public class LanguageManager : MonoBehaviour
+public class LanguageManager : ManagersManager
 {
     public static LanguageManager Instance;
 
@@ -32,15 +32,14 @@ public class LanguageManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-
-        AddressablesUtility.LoadAsset<TMP_FontAsset>("CommonFont", font => _commonFont = font);
-        AddressablesUtility.LoadAsset<TMP_FontAsset>("JapaneseFont", font => _japaneseFont = font);
-        AddressablesUtility.LoadAsset<TMP_FontAsset>("ChineseFont", font => _chineseFont = font);
     }
 
     private void Start()
     {
-        StartCoroutine(DownloadAndParseCSV());
+        if (LoadingGameManager.Instance)
+            LoadingGameManager.Instance.AddManager(this);
+        else
+            StartCoroutine(InizializeManagers());
     }
 
     private IEnumerator DownloadAndParseCSV()
@@ -203,6 +202,19 @@ public class LanguageManager : MonoBehaviour
             "jp" => 8,
             _ => 1,
         };
+    }
+
+    public override IEnumerator InizializeManagers()
+    {
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("CommonFont", font => _commonFont = font);
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("JapaneseFont", font => _japaneseFont = font);
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("ChineseFont", font => _chineseFont = font);
+
+        yield return StartCoroutine(DownloadAndParseCSV());
+
+        yield return new WaitForSeconds(1f);
+
+        _isInitialized = true;
     }
 }
 
