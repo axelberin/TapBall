@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
+using UtilityAddressables;
 
 public class AudioManager : MonoBehaviour, IPauseble
 {
@@ -53,27 +54,27 @@ public class AudioManager : MonoBehaviour, IPauseble
                 FirstOrDefault(a => a.gameObject.name == "MusicAudioSource");
         }
 
-        AddressablesManager.LoadAsset<AudioMixer>("AudioMixer", mixer => _audioMixer = mixer);
+        AddressablesUtility.LoadAsset<AudioMixer>("AudioMixer", mixer => _audioMixer = mixer);
 
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.ButtonsSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.ButtonsSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.ButtonsSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.PlayLevelSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.PlayLevelSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.PlayLevelSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.WinSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.WinSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.WinSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.PurchaseSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.PurchaseSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.PurchaseSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.EquipSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.EquipSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.EquipSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.RejectionSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.RejectionSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.RejectionSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.AchivmentSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.AchivmentSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.AchivmentSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(AudioClipType.CountDownSound.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.CountDownSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.CountDownSound, clip));
-        AddressablesManager.LoadAsset<AudioClip>(MusicClipType.MenuMusic.ToString()
+        AddressablesUtility.LoadAsset<AudioClip>(MusicClipType.MenuMusic.ToString()
             , clip => _musicClipsByEnum.Add(MusicClipType.MenuMusic, clip));
-        AddressablesManager.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),
+        AddressablesUtility.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),
             clip => _musicClipsByEnum.Add(MusicClipType.DunkMusic, clip));
     }
 

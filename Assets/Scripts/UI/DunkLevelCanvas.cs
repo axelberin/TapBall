@@ -16,13 +16,8 @@ public class DunkLevelCanvas : CanvasElementLocator
     private GameObject _emptydeathGoal;
     private GameObject _touchesGoal;
     private GameObject _emptytouchesGoal;
-    private Button _menuButton;
     private Button _nextLevelButton;
     private Button _pauseButton;
-    private Button _menuPauseButton;
-    private Button _restartButton;
-    private Button _restartPauseButton;
-    private Button _resumeButton;
     private GameObject _pauseUI;
     private TextMeshProUGUI _touchesInLevelText;
     private TextMeshProUGUI _limitTouchesText;
@@ -47,15 +42,15 @@ public class DunkLevelCanvas : CanvasElementLocator
 
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
-        _menuButton = FindAndValidateComponent<Button>(transform, "MenuBTN");
-        _menuButton.onClick.AddListener(() =>
+        var menuButton = FindAndValidateComponent<Button>(transform, "MenuBTN");
+        menuButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadSceneAsync("Menu", fadeAnimator);
         });
 
-        _menuPauseButton = FindAndValidateComponent<Button>(transform, "PauseMenuBTN");
-        _menuPauseButton.onClick.AddListener(() =>
+        var menuPauseButton = FindAndValidateComponent<Button>(transform, "PauseMenuBTN");
+        menuPauseButton.onClick.AddListener(() =>
         {
             AudioManager.Instance.StopMusic();
             UIManager.Instance.ClearCnavasesList();
@@ -63,8 +58,8 @@ public class DunkLevelCanvas : CanvasElementLocator
             AudioManager.Instance.StopSound();
         });
 
-        _nextLevelButton = FindAndValidateComponent<Button>(transform, "NextLevelBTN");
-        _nextLevelButton.onClick.AddListener(() =>
+        var nextLevelButton = FindAndValidateComponent<Button>(transform, "NextLevelBTN");
+        nextLevelButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
 
@@ -80,16 +75,16 @@ public class DunkLevelCanvas : CanvasElementLocator
         _pauseUI = FindAndValidateGameObjectComponent(transform, "PauseUI");
         _pauseUI.SetActive(false);
 
-        _restartButton = FindAndValidateComponent<Button>(transform, "RestartBTN");
-        _restartButton.onClick.AddListener(() =>
+        var restartButton = FindAndValidateComponent<Button>(transform, "RestartBTN");
+        restartButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel,
                                                         GameManager.Instance.GetCurrentGameMode, fadeAnimator);
         });
 
-        _restartPauseButton = FindAndValidateComponent<Button>(transform, "PauseRestartBTN");
-        _restartPauseButton.onClick.AddListener(() =>
+        var restartPauseButton = FindAndValidateComponent<Button>(transform, "PauseRestartBTN");
+        restartPauseButton.onClick.AddListener(() =>
         {
             AudioManager.Instance.StopMusic();
             UIManager.Instance.ClearCnavasesList();
@@ -98,8 +93,8 @@ public class DunkLevelCanvas : CanvasElementLocator
             AudioManager.Instance.StopSound();
         });
 
-        _resumeButton = FindAndValidateComponent<Button>(transform, "ResumeBTN");
-        _resumeButton.onClick.AddListener(OnResumeClicked);
+        var resumeButton = FindAndValidateComponent<Button>(transform, "ResumeBTN");
+        resumeButton.onClick.AddListener(OnResumeClicked);
 
         var configsButton = FindAndValidateComponent<Button>(transform, "ConfigsButton");
         configsButton.onClick.AddListener(() =>

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UtilityAddressables;
 
 public class DeathShadow : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class DeathShadow : MonoBehaviour
             _animator.SetTrigger("Death");
         }
 
-        AddressablesManager.CheckThenLoadAsset<GameObject>(
+        AddressablesUtility.CheckThenLoadAsset<GameObject>(
                "Death" + SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) + "Particles",
                prefabCargado =>
                {

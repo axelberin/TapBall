@@ -1,4 +1,5 @@
 using UnityEngine;
+using UtilityAddressables;
 
 public class DeathController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class DeathController : MonoBehaviour
         if (GameManager.Instance)
             GameManager.Instance.SetGetDeathController = this;
 
-        AddressablesManager.LoadAsset<GameObject>("Death" + SaveAndLoadManager.GetStringValue(
+        AddressablesUtility.LoadAsset<GameObject>("Death" + SaveAndLoadManager.GetStringValue(
             SaveAndLoadManager.CurrentBallSkinName), go =>
             {
                 _spriteRenderer = go.GetComponent<SpriteRenderer>();

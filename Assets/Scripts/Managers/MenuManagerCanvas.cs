@@ -8,10 +8,6 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _selectModePanel;
     private GameObject _dunkLevelsPanel;
     private GameObject _creditsPanel;
-    private Button _dunkModeButton;
-    private Button _dunkCloseButton;
-    private Button _storeButton;
-    private Button _configsButton;
 
     void Start()
     {
@@ -37,8 +33,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             _menuPanel.SetActive(false);
         });
 
-        _dunkModeButton = FindAndValidateComponent<Button>(transform, "DunkModeButton");
-        _dunkModeButton.onClick.AddListener(() =>
+        var dunkModeButton = FindAndValidateComponent<Button>(transform, "DunkModeButton");
+        dunkModeButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(true);
             _selectModePanel.SetActive(false);
@@ -52,8 +48,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             _menuPanel.SetActive(true);
         });
 
-        _dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
-        _dunkCloseButton.onClick.AddListener(() =>
+        var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
+        dunkCloseButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(false);
             _selectModePanel.SetActive(true);
@@ -74,12 +70,12 @@ public class MenuManagerCanvas : CanvasElementLocator
             _menuPanel.SetActive(true);
         });
 
-        _storeButton = FindAndValidateComponent<Button>(transform, "StoreBTN");
-        _storeButton.onClick.AddListener(() =>
+        var storeButton = FindAndValidateComponent<Button>(transform, "StoreBTN");
+        storeButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "StoreCanvas"));
 
-        _configsButton = FindAndValidateComponent<Button>(transform, "ConfigsButton");
-        _configsButton.onClick.AddListener(() =>
+        var configsButton = FindAndValidateComponent<Button>(transform, "ConfigsButton");
+        configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
         PauseAndResumeManager.Instance.RestartResumeAction();
