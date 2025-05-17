@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,14 +26,14 @@ public class TutorialManager : CanvasElementLocator
             _animator = GetComponent<Animator>();
 
         if (_tapTutorialImage == null)
-            _tapTutorialImage = FindAndValidateImageComponent(transform, "TutorialImage");
+            _tapTutorialImage = FindAndValidateComponent<Image>(transform, "TutorialImage");
 
-        var tutorialText = FindAndValidateTextComponent(transform, "TutorialText");
+        var tutorialText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TutorialText");
         var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial" + _tutorialIndex);
         tutorialText.text = text;
         tutorialText.font = font;
 
-        var nextTutorialButton = FindAndValidateButtonComponent(transform, "NextTutorialBTN");
+        var nextTutorialButton = FindAndValidateComponent<Button>(transform, "NextTutorialBTN");
         nextTutorialButton.onClick.AddListener(() =>
         {
             if (HasParameter("Tutorial" + _tutorialIndex, AnimatorControllerParameterType.Trigger))

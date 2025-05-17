@@ -20,15 +20,15 @@ public class StoreObject : CanvasElementLocator
             return;
         }
 
-        _image = FindAndValidateImageComponent(transform, "ObjectImage");
-        _buyButton = FindAndValidateButtonComponent(transform, "BuyButton");
-        _equipButton = FindAndValidateButtonComponent(transform, "EquipButton");
-        _equipText = FindAndValidateTextComponent(transform, "EquipText");
+        _image = FindAndValidateComponent<Image>(transform, "ObjectImage");
+        _buyButton = FindAndValidateComponent<Button>(transform, "BuyButton");
+        _equipButton = FindAndValidateComponent<Button>(transform, "EquipButton");
+        _equipText = FindAndValidateComponent<TextMeshProUGUI>(transform, "EquipText");
 
         _image.sprite = _skinSC.sprite;
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
 
-        var priceText = FindAndValidateTextComponent(transform, "PriceText");
+        var priceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PriceText");
         priceText.text = _skinSC.price.ToString();
 
         _buyButton.onClick.AddListener(() =>

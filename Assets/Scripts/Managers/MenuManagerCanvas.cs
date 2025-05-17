@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,14 +30,14 @@ public class MenuManagerCanvas : CanvasElementLocator
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
         }
 
-        var playButton = FindAndValidateButtonComponent(transform, "PlayBTN");
+        var playButton = FindAndValidateComponent<Button>(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
         {
             _selectModePanel.SetActive(true);
             _menuPanel.SetActive(false);
         });
 
-        _dunkModeButton = FindAndValidateButtonComponent(transform, "DunkModeButton");
+        _dunkModeButton = FindAndValidateComponent<Button>(transform, "DunkModeButton");
         _dunkModeButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(true);
@@ -44,14 +45,14 @@ public class MenuManagerCanvas : CanvasElementLocator
             GameManager.Instance.SelectGameMode(1);
         });
 
-        var backModePanelButton = FindAndValidateButtonComponent(transform, "ModePanelBackButton");
+        var backModePanelButton = FindAndValidateComponent<Button>(transform, "ModePanelBackButton");
         backModePanelButton.onClick.AddListener(() =>
         {
             _selectModePanel.SetActive(false);
             _menuPanel.SetActive(true);
         });
 
-        _dunkCloseButton = FindAndValidateButtonComponent(transform, "DunkCloseButton");
+        _dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
         _dunkCloseButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(false);
@@ -59,25 +60,25 @@ public class MenuManagerCanvas : CanvasElementLocator
             GameManager.Instance.SelectGameMode(0);
         });
 
-        var creditsButton = FindAndValidateButtonComponent(transform, "CreditsBTN");
+        var creditsButton = FindAndValidateComponent<Button>(transform, "CreditsBTN");
         creditsButton.onClick.AddListener(() =>
         {
             _menuPanel.SetActive(false);
             _creditsPanel.SetActive(true);
         });
 
-        var creditsCloseButton = FindAndValidateButtonComponent(transform, "CreditsCloseButton");
+        var creditsCloseButton = FindAndValidateComponent<Button>(transform, "CreditsCloseButton");
         creditsCloseButton.onClick.AddListener(() =>
         {
             _creditsPanel.SetActive(false);
             _menuPanel.SetActive(true);
         });
 
-        _storeButton = FindAndValidateButtonComponent(transform, "StoreBTN");
+        _storeButton = FindAndValidateComponent<Button>(transform, "StoreBTN");
         _storeButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "StoreCanvas"));
 
-        _configsButton = FindAndValidateButtonComponent(transform, "ConfigsButton");
+        _configsButton = FindAndValidateComponent<Button>(transform, "ConfigsButton");
         _configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
@@ -106,7 +107,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         for (int i = 1; i <= 100; i++)
         {
-            var button = FindAndValidateButtonComponent(transform, $"DunkLevel");
+            var button = FindAndValidateComponent<Button>(transform, $"DunkLevel");
 
             if (button == null)
                 break;
@@ -131,28 +132,28 @@ public class MenuManagerCanvas : CanvasElementLocator
                     SaveAndLoadManager.DunkLevelName + (i - 1));
             #endregion
             #region HAS COINS
-            var hasCoinImage = FindAndValidateImageComponent(button.transform, $"DunkHasCoin");
+            var hasCoinImage = FindAndValidateComponent<Image>(button.transform, $"DunkHasCoin");
             hasCoinImage.gameObject.SetActive(
                 SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinNameByLevel + GameManager.GameModes.Dunk + i) == 1);
             #endregion
 
             #region BEST
-            var touchImage = FindAndValidateImageComponent(button.transform, $"DunkRecord");
+            var touchImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
             touchImage.gameObject.SetActive(
                 SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkTouchesCompleteName + i) == 1);
             #endregion
 
             #region WITHOUT DEATH
-            var noDeathImage = FindAndValidateImageComponent(button.transform, $"DunkWithoutDeath");
+            var noDeathImage = FindAndValidateComponent<Image>(button.transform, $"DunkWithoutDeath");
             noDeathImage.gameObject.SetActive(
                 SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
                 SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + i) == 1);
             #endregion
 
             #region LEVEL TEXT
-            var levelNumText = FindAndValidateTextComponent(button.transform, $"DunkLevelNumText");
+            var levelNumText = FindAndValidateComponent<TextMeshProUGUI>(button.transform, $"DunkLevelNumText");
             levelNumText.text = i.ToString();
             #endregion
         }

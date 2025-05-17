@@ -20,15 +20,12 @@ public class DeathShadow : MonoBehaviour
             _animator.SetTrigger("Death");
         }
 
-        string key = "Death" + SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) + "Particles";
-
         AddressablesManager.CheckThenLoadAsset<GameObject>(
-               key, prefabCargado =>
+               "Death" + SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) + "Particles",
+               prefabCargado =>
                {
                    if (prefabCargado != null)
-                   {
                        Instantiate(prefabCargado, transform.position, transform.rotation);
-                   }
                });
     }
 }

@@ -22,14 +22,12 @@ public class StoreCanvas : CanvasElementLocator
 
     private void Start()
     {
-        //Addressables.InstantiateAsync(_storeObjectPrefabName, _ballSkinsViewportContent);
-
-        _coinsText = FindAndValidateTextComponent(transform, "CoinsText");
+        _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
         if (_coinsText != null && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
             _coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
 
-        _ballSkinsViewportContent = FindAndValidateTransformComponent(transform, "BallSkinsContent");
-        _closeButton = FindAndValidateButtonComponent(transform, "StoreCloseButton");
+        _ballSkinsViewportContent = FindAndValidateComponent<Transform>(transform, "BallSkinsContent");
+        _closeButton = FindAndValidateComponent<Button>(transform, "StoreCloseButton");
 
         _closeButton.onClick.AddListener(() => UIManager.Instance.ChangeCanvas(
             "StoreCanvas", "MenuManagerCanvas"));
