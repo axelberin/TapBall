@@ -13,11 +13,11 @@ public class CanvasElementLocator : MonoBehaviour
             return default;
         }
 
-        var textComponent = childTransform.GetComponent<T>();
-        if (textComponent == null) 
-            Debug.LogError("No se encontró un componente TMP_Text en " + childName);
+        var component = childTransform.GetComponent<T>();
+        if (component.Equals(default))
+            Debug.LogError($"No se encontró un componente {typeof(T)} en {childName}");
 
-        return textComponent;
+        return component;
     }
 
     protected GameObject FindAndValidateGameObjectComponent(Transform parent, string childName, bool alert = true)
