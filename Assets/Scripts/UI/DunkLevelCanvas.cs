@@ -58,8 +58,8 @@ public class DunkLevelCanvas : CanvasElementLocator
             AudioManager.Instance.StopSound();
         });
 
-        var nextLevelButton = FindAndValidateComponent<Button>(transform, "NextLevelBTN");
-        nextLevelButton.onClick.AddListener(() =>
+        _nextLevelButton = FindAndValidateComponent<Button>(transform, "NextLevelBTN");
+        _nextLevelButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
 

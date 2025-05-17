@@ -7,6 +7,8 @@ public class ScenesManager : MonoBehaviour
 {
     public static ScenesManager Instance;
 
+    private bool _isLoadingScene = false;
+
     private void Awake()
     {
         if (!Instance)
@@ -23,12 +25,17 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadSceneAsync(string name, Animator fadeAnimator)
     {
+        if (_isLoadingScene)
+            return;
+
         StartCoroutine(LoadSceneAsyncCoroutine(name, GetCurrentSceneName, fadeAnimator));
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(string sceneToLoadName,
         string lastSceneName, Animator fadeAnimator)
     {
+        _isLoadingScene = true;
+
         if (fadeAnimator != null)
             fadeAnimator.SetTrigger("Fade");
 
@@ -63,6 +70,8 @@ public class ScenesManager : MonoBehaviour
 
         UnloadScene(SceneManager.GetSceneByName("LoadingScene").name);
         Application.targetFrameRate = 60;
+
+        _isLoadingScene = false;
     }
 
     public void UnloadScene(string sceneName)
