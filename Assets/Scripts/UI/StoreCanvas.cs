@@ -8,8 +8,6 @@ public class StoreCanvas : CanvasElementLocator
 
     [SerializeField] private string _storeObjectPrefabName;
 
-    private Transform _ballSkinsViewportContent;
-    private Button _closeButton;
     private TextMeshProUGUI _coinsText;
 
     private void Awake()
@@ -22,16 +20,13 @@ public class StoreCanvas : CanvasElementLocator
 
     private void Start()
     {
-        //Addressables.InstantiateAsync(_storeObjectPrefabName, _ballSkinsViewportContent);
-
-        _coinsText = FindAndValidateTextComponent(transform, "CoinsText");
+        _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
         if (_coinsText != null && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
             _coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
 
-        _ballSkinsViewportContent = FindAndValidateTransformComponent(transform, "BallSkinsContent");
-        _closeButton = FindAndValidateButtonComponent(transform, "StoreCloseButton");
+        var closeButton = FindAndValidateComponent<Button>(transform, "StoreCloseButton");
 
-        _closeButton.onClick.AddListener(() => UIManager.Instance.ChangeCanvas(
+        closeButton.onClick.AddListener(() => UIManager.Instance.ChangeCanvas(
             "StoreCanvas", "MenuManagerCanvas"));
 
         UIManager.Instance.AddCanvas(gameObject, false);

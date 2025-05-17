@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UtilityAddressables;
 
 public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
@@ -37,10 +38,10 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
 
-        AddressablesManager.LoadAsset<AudioClip>("Tap01Sound", clip => _tapClips.Add(clip));
-        AddressablesManager.LoadAsset<AudioClip>("Tap02Sound", clip => _tapClips.Add(clip));
-        AddressablesManager.LoadAsset<AudioClip>("Tap03Sound", clip => _tapClips.Add(clip));
-        AddressablesManager.LoadAsset<AudioClip>("DeathSound", clip => _deathClip = clip);
+        AddressablesUtility.LoadAsset<AudioClip>("Tap01Sound", clip => _tapClips.Add(clip));
+        AddressablesUtility.LoadAsset<AudioClip>("Tap02Sound", clip => _tapClips.Add(clip));
+        AddressablesUtility.LoadAsset<AudioClip>("Tap03Sound", clip => _tapClips.Add(clip));
+        AddressablesUtility.LoadAsset<AudioClip>("DeathSound", clip => _deathClip = clip);
     }
 
     private void Start()

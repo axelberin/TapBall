@@ -7,6 +7,7 @@ using System;
 using TMPro;
 using System.Text.RegularExpressions;
 using System.Linq;
+using UtilityAddressables;
 
 public class LanguageManager : MonoBehaviour
 {
@@ -32,9 +33,9 @@ public class LanguageManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        AddressablesManager.LoadAsset<TMP_FontAsset>("CommonFont", font => _commonFont = font);
-        AddressablesManager.LoadAsset<TMP_FontAsset>("JapaneseFont", font => _japaneseFont = font);
-        AddressablesManager.LoadAsset<TMP_FontAsset>("ChineseFont", font => _chineseFont = font);
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("CommonFont", font => _commonFont = font);
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("JapaneseFont", font => _japaneseFont = font);
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("ChineseFont", font => _chineseFont = font);
     }
 
     private void Start()
