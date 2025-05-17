@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     public WorldStateController SetGetWorldState { set; get; }
 
     public CameraController SetGetCameraController { set; get; }
+    public DeathController SetGetDeathController { set; get; }
 
     public GameModes GetCurrentGameMode => _currentGameMode;
 }
