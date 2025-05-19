@@ -32,21 +32,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cb91bf1994d9e3548a3665e0acb80418
-    m_Address: EquipSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4cb38b24ddcd980409ef4514a89716ca
-    m_Address: PlayLevelSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e1b0edd594b4f3644a1a25d8564b137e
-    m_Address: PurchaseSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6fa3b8bb30f6549bd36d2e0fe1ebb1
     m_Address: RejectionSound
     m_ReadOnly: 0
@@ -99,11 +84,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64b0431a3d6d5d14c9bb533cd47ce351
     m_Address: Tap03Sound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c222cefb1dfe26b41aa4d4e350e2def3
-    m_Address: DeathSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
