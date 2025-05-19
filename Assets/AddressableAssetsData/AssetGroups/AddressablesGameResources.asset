@@ -32,21 +32,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cb91bf1994d9e3548a3665e0acb80418
-    m_Address: EquipSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4cb38b24ddcd980409ef4514a89716ca
-    m_Address: PlayLevelSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e1b0edd594b4f3644a1a25d8564b137e
-    m_Address: PurchaseSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a6fa3b8bb30f6549bd36d2e0fe1ebb1
     m_Address: RejectionSound
     m_ReadOnly: 0
@@ -57,12 +42,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ed5069882926bac45931f4519c853644
+  - m_GUID: c32cdf8de5b28bc40a04172a07074271
     m_Address: DunkMusic
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a5fe2abb02517e248ac277a829296861
+  - m_GUID: 9475449631df76e4f87dc23daa8f0478
     m_Address: MenuMusic
     m_ReadOnly: 0
     m_SerializedLabels: []
@@ -99,11 +84,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64b0431a3d6d5d14c9bb533cd47ce351
     m_Address: Tap03Sound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c222cefb1dfe26b41aa4d4e350e2def3
-    m_Address: DeathSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
