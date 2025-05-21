@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +10,12 @@ public class LoadingGameManager : CanvasElementLocator
 {
     public static LoadingGameManager Instance;
 
+    private bool _canShowTexts = false;
     private List<ManagersManager> _managers = new();
 
     private Animator _fadeAnimator;
     private Image _loadingBarImage;
+    private TextMeshProUGUI _loadingText;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class LoadingGameManager : CanvasElementLocator
     {
         _fadeAnimator = FindAndValidateGameObjectComponent(transform, "FadeController").GetComponent<Animator>();
         _loadingBarImage = FindAndValidateComponent<Image>(transform, "LoadingBarImage");
+        _loadingText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LoadingText");
         _loadingBarImage.fillAmount = 0;
 
         StartCoroutine(InitializeManagers());
@@ -38,10 +43,17 @@ public class LoadingGameManager : CanvasElementLocator
             StartCoroutine(SmoothFill((_managers.IndexOf(manager) + 1) / (float)_managers.Count));
 
             if (!manager.IsInitialized)
+            {
                 yield return manager.InizializeManagers();
+                if (manager.IsInitialized && manager is LanguageManager)
+                    _canShowTexts = true;
+            }
+
+            ShowRandomLoadingText();
         }
 
         yield return new WaitForSeconds(0.5f);
+        ShowRandomLoadingText();
 
         if (_managers.Any(m => !m.IsInitialized))
             StartCoroutine(InitializeManagers());
@@ -50,6 +62,17 @@ public class LoadingGameManager : CanvasElementLocator
             StartCoroutine(SmoothFill(1f));
             ScenesManager.Instance.LoadSceneAsync("Menu", _fadeAnimator);
         }
+    }
+
+    private void ShowRandomLoadingText()
+    {
+        if (!_canShowTexts)
+            return;
+
+        int randomIndex = UnityEngine.Random.Range(1, 5);
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("loadingText" + randomIndex);
+        _loadingText.font = font;
+        UIManager.Instance.SetText(_loadingText, text);
     }
 
     public void AddManager(ManagersManager manager)
