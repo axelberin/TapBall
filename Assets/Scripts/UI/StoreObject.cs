@@ -42,9 +42,8 @@ public class StoreObject : CanvasElementLocator
 
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
 
-                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
+                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed) && _skinSC.price > 0)
                 {
-                    // Mostrar la reseña
                     ReviewManagerController.Instance.RequestReview();
                     SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
                 }
@@ -86,7 +85,7 @@ public class StoreObject : CanvasElementLocator
     {
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
-        _equipButton.interactable = false; 
+        _equipButton.interactable = false;
         var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("equiped");
         _equipText.text = text;
         _equipText.font = font;
