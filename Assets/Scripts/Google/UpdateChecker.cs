@@ -1,43 +1,18 @@
 using Google.Play.AppUpdate;
 using Google.Play.Common;
 using System.Collections;
-using UnityEngine;
 
-public class UpdateChecker : MonoBehaviour
+public class UpdateChecker : ManagersManager
 {
     private AppUpdateManager _appUpdateManager;
     private AppUpdateInfo _appUpdateInfoResult;
 
-    private void Start()
+    protected override void Start()
     {
-        StartCoroutine(CheckForUpdate());
-    }
-
-    private IEnumerator CheckForUpdate()
-    {
-        PlayAsyncOperation<AppUpdateInfo, AppUpdateErrorCode> appUpdateInfoOperation =
-          _appUpdateManager.GetAppUpdateInfo();
-
-        // Wait until the asynchronous operation completes.
-        yield return appUpdateInfoOperation;
-
-        if (appUpdateInfoOperation != null && appUpdateInfoOperation.IsSuccessful)
-        {
-            var appUpdateInfoResult = appUpdateInfoOperation.GetResult();
-            var stalenessDays = appUpdateInfoOperation.GetResult().ClientVersionStalenessDays;
-            // Check AppUpdateInfo's UpdateAvailability, UpdatePriority,
-            // IsUpdateTypeAllowed(), ... and decide whether to ask the user
-            // to start an in-app update.
-            if (appUpdateInfoResult.UpdateAvailability == UpdateAvailability.UpdateAvailable)
-            {
-                // Start an in-app update.
-                // StartFlexibleUpdate() or StartImmediateUpdate().
-                if (stalenessDays > 1)
-                    StartCoroutine(StartFlexibleUpdate());
-                else if (stalenessDays > 10)
-                    StartCoroutine(StartImmediateUpdate());
-            }
-        }
+#if UNITY_ANDROID || UNITY_ANDROID_API
+        _appUpdateManager = new AppUpdateManager();
+        base.Start();
+#endif
     }
 
     private IEnumerator StartFlexibleUpdate()
@@ -90,5 +65,34 @@ public class UpdateChecker : MonoBehaviour
         // If the update completes successfully, then the app restarts and this line
         // is never reached. If this line is reached, then handle the failure (for
         // example, by logging result.Error or by displaying a message to the user).
+    }
+
+    public override IEnumerator InizializeManagers()
+    {
+        PlayAsyncOperation<AppUpdateInfo, AppUpdateErrorCode> appUpdateInfoOperation =
+          _appUpdateManager.GetAppUpdateInfo();
+
+        // Wait until the asynchronous operation completes.
+        yield return appUpdateInfoOperation;
+
+        if (appUpdateInfoOperation != null && appUpdateInfoOperation.IsSuccessful)
+        {
+            var appUpdateInfoResult = appUpdateInfoOperation.GetResult();
+            var stalenessDays = appUpdateInfoOperation.GetResult().ClientVersionStalenessDays;
+            // Check AppUpdateInfo's UpdateAvailability, UpdatePriority,
+            // IsUpdateTypeAllowed(), ... and decide whether to ask the user
+            // to start an in-app update.
+            if (appUpdateInfoResult.UpdateAvailability == UpdateAvailability.UpdateAvailable)
+            {
+                // Start an in-app update.
+                // StartFlexibleUpdate() or StartImmediateUpdate().
+                if (stalenessDays > 1)
+                    yield return StartCoroutine(StartFlexibleUpdate());
+                else if (stalenessDays > 10)
+                    yield return StartCoroutine(StartImmediateUpdate());
+            }
+        }
+
+        _isInitialized = true;
     }
 }

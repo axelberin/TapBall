@@ -55,14 +55,6 @@ public class AudioManager : ManagersManager, IPauseble
         }
     }
 
-    private void Start()
-    {
-        if (LoadingGameManager.Instance)
-            LoadingGameManager.Instance.AddManager(this);
-        else
-            StartCoroutine(InizializeManagers());
-    }
-
     public void SetSoundVolume(float value)
     {
         if (_audioMixer == null)
