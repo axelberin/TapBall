@@ -57,18 +57,6 @@ public class AudioManager : ManagersManager, IPauseble
 
     private void Start()
     {
-        if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.SoundsVolumeName))
-            SetSoundVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName));
-        else
-            SetSoundVolume(1);
-
-        if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.MusicVolumeName))
-            SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
-        else
-            SetMusicVolume(1);
-
-        LevelManager.Instance.OnWinLevel += StopMusic;
-
         if (LoadingGameManager.Instance)
             LoadingGameManager.Instance.AddManager(this);
         else
@@ -173,6 +161,20 @@ public class AudioManager : ManagersManager, IPauseble
             , clip => _musicClipsByEnum.Add(MusicClipType.MenuMusic, clip));
         AddressablesUtility.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),
             clip => _musicClipsByEnum.Add(MusicClipType.DunkMusic, clip));
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.SoundsVolumeName))
+            SetSoundVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName));
+        else
+            SetSoundVolume(1);
+
+        if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.MusicVolumeName))
+            SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
+        else
+            SetMusicVolume(1);
+
+        LevelManager.Instance.OnWinLevel += StopMusic;
 
         yield return new WaitForSeconds(0.5f);
 
