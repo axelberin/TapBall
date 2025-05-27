@@ -34,14 +34,6 @@ public class LanguageManager : ManagersManager
             Destroy(gameObject);
     }
 
-    private void Start()
-    {
-        if (LoadingGameManager.Instance)
-            LoadingGameManager.Instance.AddManager(this);
-        else
-            StartCoroutine(InizializeManagers());
-    }
-
     private IEnumerator DownloadAndParseCSV()
     {
         using (UnityWebRequest request = UnityWebRequest.Get(_sheetUrl))
