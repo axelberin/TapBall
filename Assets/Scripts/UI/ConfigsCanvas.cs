@@ -30,13 +30,30 @@ public class ConfigsCanvas : CanvasElementLocator
 #else
         resetDataButton.gameObject.SetActive(false);
 #endif
-        var soundsSlide = FindAndValidateComponent<Slider>(transform, "SoundsSlider");
-        soundsSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetSoundVolume(soundsSlide.value));
-        soundsSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName);
+        var soundImage = FindAndValidateComponent<Image>(transform, "SoundImage");
+        var soundMuteImage = FindAndValidateComponent<Image>(transform, "SoundMuteImage");
+        soundImage.gameObject.SetActive(!AudioManager.Instance.GetSoundIsMuted);
+        soundMuteImage.gameObject.SetActive(AudioManager.Instance.GetSoundIsMuted);
+        var musicImage = FindAndValidateComponent<Image>(transform, "MusicImage");
+        var musicMuteImage = FindAndValidateComponent<Image>(transform, "MusicMuteImage");
+        musicImage.gameObject.SetActive(!AudioManager.Instance.GetMusicIsMuted);
+        musicMuteImage.gameObject.SetActive(AudioManager.Instance.GetMusicIsMuted);
 
-        var musicSlide = FindAndValidateComponent<Slider>(transform, "MusicSlider");
-        musicSlide.onValueChanged.AddListener((value) => AudioManager.Instance.SetMusicVolume(musicSlide.value));
-        musicSlide.value = SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName);
+        var soundMuteButton = FindAndValidateComponent<Button>(transform, "SoundMuteButton");
+        soundMuteButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.SetSoundVolume(!AudioManager.Instance.GetSoundIsMuted);
+            soundImage.gameObject.SetActive(!AudioManager.Instance.GetSoundIsMuted);
+            soundMuteImage.gameObject.SetActive(AudioManager.Instance.GetSoundIsMuted);
+        });
+
+        var musicMuteButton = FindAndValidateComponent<Button>(transform, "MusicMuteButton");
+        musicMuteButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.SetMusicVolume(!AudioManager.Instance.GetMusicIsMuted);
+            musicImage.gameObject.SetActive(!AudioManager.Instance.GetMusicIsMuted);
+            musicMuteImage.gameObject.SetActive(AudioManager.Instance.GetMusicIsMuted);
+        });
 
         var leftArrowButton = FindAndValidateComponent<Button>(transform, "LeftArrowButton");
         leftArrowButton.onClick.AddListener(() => LanguageManager.Instance.ChangeLanguage(-1));

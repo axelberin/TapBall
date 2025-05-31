@@ -55,22 +55,26 @@ public class AudioManager : ManagersManager, IPauseble
         }
     }
 
-    public void SetSoundVolume(float value)
+    public void SetSoundVolume(bool isMuted)
     {
         if (_audioMixer == null)
             return;
 
-        _audioMixer.SetFloat(_mixerSFX, Mathf.Log10(value) * 20);
-        _audioMixer.SetFloat(_mixerUI, Mathf.Log10(value) * 20);
+        var value = isMuted ? -80f : 0f;
+
+        _audioMixer.SetFloat(_mixerSFX, value);
+        _audioMixer.SetFloat(_mixerUI, value);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.SoundsVolumeName, true);
     }
 
-    public void SetMusicVolume(float value)
+    public void SetMusicVolume(bool isMuted)
     {
         if (_audioMixer == null)
             return;
 
-        _audioMixer.SetFloat(_mixerMusic, Mathf.Log10(value) * 20);
+        var value = isMuted ? -80f : 0f;
+
+        _audioMixer.SetFloat(_mixerMusic, value);
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
     }
 
@@ -157,14 +161,14 @@ public class AudioManager : ManagersManager, IPauseble
         yield return new WaitForSeconds(0.5f);
 
         if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.SoundsVolumeName))
-            SetSoundVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName));
+            SetSoundVolume(GetSoundIsMuted);
         else
-            SetSoundVolume(1);
+            SetSoundVolume(false);
 
         if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.MusicVolumeName))
-            SetMusicVolume(SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName));
+            SetMusicVolume(GetMusicIsMuted);
         else
-            SetMusicVolume(1);
+            SetMusicVolume(false);
 
         LevelManager.Instance.OnWinLevel += StopMusic;
 
@@ -173,4 +177,8 @@ public class AudioManager : ManagersManager, IPauseble
         _isInitialized = true;
         PlayMusicByType(MusicClipType.MenuMusic);
     }
+
+    public bool GetSoundIsMuted => SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName) < 0;
+
+    public bool GetMusicIsMuted => SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.MusicVolumeName) < 0;
 }
