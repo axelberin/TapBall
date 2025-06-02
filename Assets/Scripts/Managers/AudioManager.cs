@@ -27,7 +27,7 @@ public class AudioManager : ManagersManager, IPauseble
         DunkMusic
     };
 
-    private AudioMixer _audioMixer;
+    [SerializeField] private AudioMixer _audioMixer;
     private Dictionary<AudioClipType, AudioClip> _soundClipsByEnum = new();
     private Dictionary<MusicClipType, AudioClip> _musicClipsByEnum = new();
 
@@ -57,8 +57,12 @@ public class AudioManager : ManagersManager, IPauseble
 
     public void SetSoundVolume(bool isMuted)
     {
+        Debug.LogError("SetSoundVolume");
         if (_audioMixer == null)
+        {
+            Debug.LogError("AudioMixer not found.");
             return;
+        }
 
         var value = isMuted ? -80f : 0f;
 
@@ -69,8 +73,12 @@ public class AudioManager : ManagersManager, IPauseble
 
     public void SetMusicVolume(bool isMuted)
     {
+        Debug.LogError("SetMusicVolume");
         if (_audioMixer == null)
+        {
+            Debug.LogError("AudioMixer not found.");
             return;
+        }
 
         var value = isMuted ? -80f : 0f;
 
