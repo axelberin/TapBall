@@ -57,7 +57,6 @@ public class AudioManager : ManagersManager, IPauseble
 
     public void SetSoundVolume(bool isMuted)
     {
-        Debug.LogError("SetSoundVolume");
         if (_audioMixer == null)
         {
             Debug.LogError("AudioMixer not found.");
@@ -73,7 +72,6 @@ public class AudioManager : ManagersManager, IPauseble
 
     public void SetMusicVolume(bool isMuted)
     {
-        Debug.LogError("SetMusicVolume");
         if (_audioMixer == null)
         {
             Debug.LogError("AudioMixer not found.");
@@ -143,8 +141,6 @@ public class AudioManager : ManagersManager, IPauseble
 
     public override IEnumerator InizializeManagers()
     {
-        AddressablesUtility.LoadAsset<AudioMixer>("AudioMixer", mixer => _audioMixer = mixer);
-
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.ButtonsSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.ButtonsSound, clip));
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.PlayLevelSound.ToString(),
