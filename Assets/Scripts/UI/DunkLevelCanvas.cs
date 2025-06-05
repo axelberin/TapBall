@@ -65,7 +65,6 @@ public class DunkLevelCanvas : CanvasElementLocator
 
             ScenesManager.Instance.LoadLevelByType(GameManager.Instance.SetGetWorldState.GetLevel + 1,
                 GameManager.Instance.GetCurrentGameMode, fadeAnimator);
-            AdsManager.Instance.ShowInterstitialAd();
         });
         _nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(_nextLevelButton.transform, "NextLevelText");
 
@@ -143,6 +142,8 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     public void OnWin()
     {
+        AdsManager.Instance.ShowInterstitialAd();
+
         var existsNextLevel = ScenesManager.Instance.IsSceneExisting(
             $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
 
