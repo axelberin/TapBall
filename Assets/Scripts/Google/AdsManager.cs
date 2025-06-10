@@ -152,7 +152,6 @@ public class AdsManager : MonoBehaviour
         Debug.Log("Interstitial cerrado");
 
         // Resetea el contador y precarga el siguiente
-        _adsCounter = 0;
         LoadInterstitial();
     }
 
@@ -192,15 +191,15 @@ public class AdsManager : MonoBehaviour
             return;
         }
 
-        _adsCounter++;
+        if (!IronSource.Agent.isInterstitialReady())
+            LoadInterstitial();
 
+        _adsCounter++;
         if (_adsCounter < 3)
             return;
 
-        if (IronSource.Agent.isInterstitialReady())
-            IronSource.Agent.showInterstitial();
-        else
-            LoadInterstitial();
+        IronSource.Agent.showInterstitial();
+        _adsCounter = 0;
     }
 
     // Método para testing
