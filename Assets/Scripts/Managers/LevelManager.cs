@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public Action OnWinLevel = delegate { };
     public Action OnLoseLevel = delegate { };
 
+    private int _deathCount = 0;
     private List<Coins> _coinsObtained = new List<Coins>();
 
     private void Awake()
@@ -77,6 +78,13 @@ public class LevelManager : MonoBehaviour
 
         _coinsObtained.ForEach(coin => coin.OnLose());
         _coinsObtained.Clear();
+
+        _deathCount++;
+        if (_deathCount >= 10)
+        {
+            AdsManager.Instance.ShowInterstitialAd();
+            _deathCount = 0;
+        }
 
         switch (GameManager.Instance.GetCurrentGameMode)
         {

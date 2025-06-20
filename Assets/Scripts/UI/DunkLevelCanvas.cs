@@ -142,8 +142,6 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     public void OnWin()
     {
-        AdsManager.Instance.ShowInterstitialAd();
-
         var existsNextLevel = ScenesManager.Instance.IsSceneExisting(
             $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
 

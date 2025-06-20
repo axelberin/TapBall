@@ -8,6 +8,7 @@ public class ScenesManager : MonoBehaviour
     public static ScenesManager Instance;
 
     private bool _isLoadingScene = false;
+    private int _levelsPassedCounter;
 
     private void Awake()
     {
@@ -101,6 +102,13 @@ public class ScenesManager : MonoBehaviour
     public void LoadLevelByType(int level, GameManager.GameModes gameMode,
         Animator fadeAnimator)
     {
+        _levelsPassedCounter++;
+        if (_levelsPassedCounter >= 3)
+        {
+            AdsManager.Instance.ShowInterstitialAd();
+            _levelsPassedCounter = 0;
+        }
+
         switch (gameMode)
         {
             case GameManager.GameModes.Dunk:

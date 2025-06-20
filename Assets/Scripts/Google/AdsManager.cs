@@ -8,7 +8,6 @@ public class AdsManager : MonoBehaviour
     [SerializeField] private string androidAppKey = "TU_APP_KEY_AQUI";
     [SerializeField] private string iosAppKey = "TU_APP_KEY_AQUI";
 
-    private int _adsCounter;
     private string appKey;
     private bool isInitialized = false;
 
@@ -193,13 +192,8 @@ public class AdsManager : MonoBehaviour
 
         if (!IronSource.Agent.isInterstitialReady())
             LoadInterstitial();
-
-        _adsCounter++;
-        if (_adsCounter < 3)
-            return;
-
-        IronSource.Agent.showInterstitial();
-        _adsCounter = 0;
+        else
+            IronSource.Agent.showInterstitial();
     }
 
     // Método para testing
@@ -209,15 +203,6 @@ public class AdsManager : MonoBehaviour
             IronSource.Agent.showInterstitial();
         else
             LoadInterstitial();
-    }
-
-    // Información de debug
-    public void LogAdStatus()
-    {
-        Debug.Log($"SDK Inicializado: {isInitialized}");
-        Debug.Log($"Interstitial listo: {IronSource.Agent.isInterstitialReady()}");
-        Debug.Log($"Rewarded disponible: {IronSource.Agent.isRewardedVideoAvailable()}");
-        Debug.Log($"Contador ads: {_adsCounter}");
     }
 
     // Para pausar/reanudar cuando el juego pierde/gana foco
