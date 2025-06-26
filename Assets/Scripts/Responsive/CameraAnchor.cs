@@ -21,7 +21,7 @@ public class CameraAnchor : MonoBehaviour
     public Vector3 anchorOffset;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         StartCoroutine(UpdateAnchorAsync());
     }
