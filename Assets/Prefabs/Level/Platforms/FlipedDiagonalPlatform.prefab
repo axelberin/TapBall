@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207becfe8fce0ec4fbeff10ae7aa0d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _updateAnchor: 0
   anchorType: 5
-  anchorOffset: {x: -1.35, y: -0.18, z: 0}
+  anchorOffset: {x: -1.32, y: -0.18, z: 0}
 --- !u!114 &5894266103812056769
 MonoBehaviour:
   m_ObjectHideFlags: 0

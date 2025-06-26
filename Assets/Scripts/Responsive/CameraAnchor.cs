@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class CameraAnchor : MonoBehaviour
 {
+    [SerializeField] private bool _updateAnchor = false;
+
     public enum AnchorType
     {
         BottomLeft,
@@ -19,13 +20,10 @@ public class CameraAnchor : MonoBehaviour
     public AnchorType anchorType;
     public Vector3 anchorOffset;
 
-    IEnumerator updateAnchorRoutine; //Coroutine handle so we don't start it if it's already running
-
     // Use this for initialization
     void Start()
     {
-        updateAnchorRoutine = UpdateAnchorAsync();
-        StartCoroutine(updateAnchorRoutine);
+        StartCoroutine(UpdateAnchorAsync());
     }
 
     /// <summary>
@@ -44,7 +42,6 @@ public class CameraAnchor : MonoBehaviour
                 "You might want to check that ViewportHandler has an earlie execution order.", cameraWaitCycles));
 
         UpdateAnchor();
-        updateAnchorRoutine = null;
     }
 
     void UpdateAnchor()
@@ -89,13 +86,12 @@ public class CameraAnchor : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    // Update is called once per frame
     void Update()
     {
-        if (updateAnchorRoutine == null)
+        if (_updateAnchor)
         {
-            updateAnchorRoutine = UpdateAnchorAsync();
-            StartCoroutine(updateAnchorRoutine);
+            _updateAnchor = false;
+            StartCoroutine(UpdateAnchorAsync());
         }
     }
 #endif

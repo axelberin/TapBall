@@ -483,11 +483,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.x
-      value: -0.07
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.y
-      value: -3.21
+      value: -3.19
       objectReference: {fileID: 0}
     - target: {fileID: 5570913006856101119, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: m_SortingOrder
@@ -959,11 +959,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.x
-      value: -0.07
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.y
-      value: 2.79
+      value: 2.77
       objectReference: {fileID: 0}
     - target: {fileID: 5570913006856101119, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: m_SortingOrder
@@ -1050,11 +1050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.x
-      value: 0.07
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.y
-      value: -0.18
+      value: -0.16
       objectReference: {fileID: 0}
     - target: {fileID: 5570913006856101119, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: m_SortingOrder
@@ -1148,6 +1148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207becfe8fce0ec4fbeff10ae7aa0d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _updateAnchor: 0
   anchorType: 0
   anchorOffset: {x: 1.77, y: 2.53, z: 0}
 --- !u!1001 &1788938943

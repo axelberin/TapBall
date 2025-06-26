@@ -483,11 +483,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.x
-      value: 1.18
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.y
-      value: -1.85
+      value: -1.87
       objectReference: {fileID: 0}
     - target: {fileID: 8272291935525750501, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: m_Name
@@ -822,11 +822,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.x
-      value: 1.18
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.y
-      value: -2.85
+      value: -2.87
       objectReference: {fileID: 0}
     - target: {fileID: 8272291935525750501, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: m_Name
@@ -909,11 +909,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.x
-      value: -1.18
+      value: -1.16
       objectReference: {fileID: 0}
     - target: {fileID: 2055591310861133136, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: anchorOffset.y
-      value: 0.16
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 8272291935525750501, guid: f1a60596f5e3c3f4ab1ce50c8ace139d, type: 3}
       propertyPath: m_Name
@@ -1003,6 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207becfe8fce0ec4fbeff10ae7aa0d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _updateAnchor: 0
   anchorType: 3
   anchorOffset: {x: 1.01, y: -1.3, z: 0}
 --- !u!1001 &1788938943
