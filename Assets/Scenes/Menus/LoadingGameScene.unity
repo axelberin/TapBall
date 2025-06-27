@@ -180,17 +180,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
---- !u!114 &286109013 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2212187989701215666, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-  m_PrefabInstance: {fileID: 286109012}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58317d86429f7b342bb1a87bd3c27c68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &434740784
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +574,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9692d1d7f88b3d4469686e488c10b58d, type: 3}
+--- !u!114 &1073382517 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2212187989701215666, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
+  m_PrefabInstance: {fileID: 286109012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58317d86429f7b342bb1a87bd3c27c68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1174786381
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +869,7 @@ MonoBehaviour:
   onPurchaseComplete:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 286109013}
+      - m_Target: {fileID: 1073382517}
         m_TargetAssemblyTypeName: IAPManager, Assembly-CSharp
         m_MethodName: Buy100Coins
         m_Mode: 1
