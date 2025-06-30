@@ -42,7 +42,7 @@ public class StoreObject : CanvasElementLocator
 
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
 
-                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed) && _skinSC.price > 0)
+                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
                 {
                     ReviewManagerController.Instance.RequestReview();
                     SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
