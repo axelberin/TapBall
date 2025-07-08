@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Events;
+using Unity.Services.LevelPlay;
 
 public class AdsManager : MonoBehaviour
 {
@@ -43,48 +45,17 @@ public class AdsManager : MonoBehaviour
         }
 
         // Inicializa IronSource
-        IronSource.Agent.init(appKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL);
+        //IronSource.Agent.setSdkInitializationListener(this);
+        //IronSource.Agent.init(appKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL);
 
-        // Opcional: valida integración
-        IronSource.Agent.validateIntegration();
+        //// Opcional: valida integración
+        //IronSource.Agent.validateIntegration();
+
+        //// Listeners
+        //IronSource.Agent.setRewardedVideoAdListener(this);
+        //IronSource.Agent.setInterstitialAdListener(this);
 
         Debug.Log("IronSource inicializado con appKey: " + appKey);
-    }
-
-    private void OnEnable()
-    {
-        // SDK Initialization
-        IronSourceEvents.onSdkInitializationCompletedEvent += OnSdkInitialized;
-
-        // Rewarded Video
-        IronSourceEvents.onRewardedVideoAdRewardedEvent += OnRewardedVideoAdRewarded;
-        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += OnRewardedVideoAvailabilityChanged;
-
-        // Interstitial - EVENTOS COMPLETOS
-        IronSourceEvents.onInterstitialAdReadyEvent += OnInterstitialReady;
-        IronSourceEvents.onInterstitialAdLoadFailedEvent += OnInterstitialLoadFailed;
-        IronSourceEvents.onInterstitialAdShowSucceededEvent += OnInterstitialShowSucceeded;
-        IronSourceEvents.onInterstitialAdShowFailedEvent += OnInterstitialShowFailed;
-        IronSourceEvents.onInterstitialAdClickedEvent += OnInterstitialClicked;
-        IronSourceEvents.onInterstitialAdClosedEvent += OnInterstitialClosed;
-    }
-
-    private void OnDisable()
-    {
-        // SDK
-        IronSourceEvents.onSdkInitializationCompletedEvent -= OnSdkInitialized;
-
-        // Rewarded
-        IronSourceEvents.onRewardedVideoAdRewardedEvent -= OnRewardedVideoAdRewarded;
-        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent -= OnRewardedVideoAvailabilityChanged;
-
-        // Interstitial
-        IronSourceEvents.onInterstitialAdReadyEvent -= OnInterstitialReady;
-        IronSourceEvents.onInterstitialAdLoadFailedEvent -= OnInterstitialLoadFailed;
-        IronSourceEvents.onInterstitialAdShowSucceededEvent -= OnInterstitialShowSucceeded;
-        IronSourceEvents.onInterstitialAdShowFailedEvent -= OnInterstitialShowFailed;
-        IronSourceEvents.onInterstitialAdClickedEvent -= OnInterstitialClicked;
-        IronSourceEvents.onInterstitialAdClosedEvent -= OnInterstitialClosed;
     }
 
     private void Update()
@@ -93,65 +64,58 @@ public class AdsManager : MonoBehaviour
     }
 
     // === CALLBACKS SDK ===
-    private void OnSdkInitialized()
+    public void onSdkInitializationCompleted()
     {
         Debug.Log("IronSource SDK completamente inicializado");
         isInitialized = true;
 
-        // Precarga el primer interstitial
         LoadInterstitial();
     }
 
-    // === CALLBACKS REWARDED ===
-    private void OnRewardedVideoAvailabilityChanged(bool available)
+    // === CALLBACKS REWARDED VIDEO ===
+    public void onAdAvailable(IronSourceAdInfo adInfo)
     {
-        Debug.Log("Rewarded Video disponible: " + available);
+        Debug.Log("Rewarded Video disponible.");
     }
 
-    private void OnRewardedVideoAdRewarded(IronSourcePlacement placement)
+    public void onAdUnavailable()
+    {
+        Debug.Log("Rewarded Video no disponible.");
+    }
+
+    public void onAdRewarded(IronSourcePlacement placement, IronSourceAdInfo adInfo)
     {
         Debug.Log("Jugador recibió recompensa: " + placement.getRewardName());
         // Aquí das la recompensa
     }
 
+    public void onAdShowFailed(IronSourceError error, IronSourceAdInfo adInfo) { }
+    public void onAdOpened(IronSourceAdInfo adInfo) { }
+    public void onAdClosed(IronSourceAdInfo adInfo) { }
+    public void onAdClicked(IronSourcePlacement placement, IronSourceAdInfo adInfo) { }
+    public void onAdStarted(IronSourceAdInfo adInfo) { }
+    public void onAdEnded(IronSourceAdInfo adInfo) { }
+
     // === CALLBACKS INTERSTITIAL ===
-    private void OnInterstitialReady()
+    public void onAdReady(IronSourceAdInfo adInfo)
     {
         Debug.Log("Interstitial listo para mostrarse");
     }
 
-    private void OnInterstitialLoadFailed(IronSourceError error)
+    public void onAdLoadFailed(IronSourceError error)
     {
         Debug.LogError("Fallo al cargar Interstitial: " + error.getDescription());
-
-        // Reintenta cargar después de 30 segundos
         Invoke(nameof(LoadInterstitial), 30f);
     }
 
-    private void OnInterstitialShowSucceeded()
+    public void onAdShowSucceeded(IronSourceAdInfo adInfo)
     {
         Debug.Log("Interstitial mostrado exitosamente");
     }
 
-    private void OnInterstitialShowFailed(IronSourceError error)
-    {
-        Debug.LogError("Fallo al mostrar Interstitial: " + error.getDescription());
-
-        // Recarga inmediatamente si falla al mostrar
-        LoadInterstitial();
-    }
-
-    private void OnInterstitialClicked()
+    public void onAdClicked(IronSourceAdInfo adInfo)
     {
         Debug.Log("Usuario hizo click en Interstitial");
-    }
-
-    private void OnInterstitialClosed()
-    {
-        Debug.Log("Interstitial cerrado");
-
-        // Resetea el contador y precarga el siguiente
-        LoadInterstitial();
     }
 
     // === MÉTODOS PRIVADOS ===
@@ -196,7 +160,6 @@ public class AdsManager : MonoBehaviour
             IronSource.Agent.showInterstitial();
     }
 
-    // Método para testing
     public void ForceShowInterstitial()
     {
         if (IronSource.Agent.isInterstitialReady())
@@ -205,7 +168,6 @@ public class AdsManager : MonoBehaviour
             LoadInterstitial();
     }
 
-    // Para pausar/reanudar cuando el juego pierde/gana foco
     private void OnApplicationPause(bool pauseStatus)
     {
         if (isInitialized)
