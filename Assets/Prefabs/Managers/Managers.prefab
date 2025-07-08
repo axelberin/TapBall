@@ -43,6 +43,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8138576285574699797, guid: b009a399f1b6ca64d8091fe4595983fb, type: 2}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.25
   m_Pitch: 1
@@ -195,8 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12820eea563375f408901549cc21fba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidAppKey: 220d313b5
-  iosAppKey: 220d313b5
+  YOUR_APP_KEY: c96c7da53effe8ddb75fae7a89100852ee5346b5d8b96d5a0a1c2e8d824f85a2
+  REWARDED_AD_UNIT_ID: 23623996
+  INTERSTITIAL_AD_UNIT_ID: 23623997
+  BANNER_AD_UNIT_ID: DefaultBanner
 --- !u!114 &8644073165336461060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +340,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8180835227326775856, guid: b009a399f1b6ca64d8091fe4595983fb, type: 2}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

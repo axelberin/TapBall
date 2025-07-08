@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     private void AddForce(Vector3 touchPos)
     {
-        _rb.velocity = Vector3.zero;
+        _rb.linearVelocity = Vector3.zero;
 
         Vector3 dir = (transform.position - touchPos).normalized;
 
@@ -146,13 +146,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             return;
 
         _rb.bodyType = RigidbodyType2D.Dynamic;
-        _rb.velocity = _velocityOnPause;
+        _rb.linearVelocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;
     }
 
     public void OnPause()
     {
-        _velocityOnPause = _rb.velocity;
+        _velocityOnPause = _rb.linearVelocity;
         _rb.bodyType = RigidbodyType2D.Static;
     }
 
