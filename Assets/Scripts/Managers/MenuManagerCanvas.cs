@@ -56,12 +56,12 @@ public class MenuManagerCanvas : CanvasElementLocator
             GameManager.Instance.SelectGameMode(0);
         });
 
-        var creditsButton = FindAndValidateComponent<Button>(transform, "CreditsBTN");
-        creditsButton.onClick.AddListener(() =>
-        {
-            _menuPanel.SetActive(false);
-            _creditsPanel.SetActive(true);
-        });
+        //var creditsButton = FindAndValidateComponent<Button>(transform, "CreditsBTN");
+        //creditsButton.onClick.AddListener(() =>
+        //{
+        //    _menuPanel.SetActive(false);
+        //    _creditsPanel.SetActive(true);
+        //});
 
         var creditsCloseButton = FindAndValidateComponent<Button>(transform, "CreditsCloseButton");
         creditsCloseButton.onClick.AddListener(() =>
