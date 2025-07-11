@@ -7,7 +7,6 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _menuPanel;
     private GameObject _selectModePanel;
     private GameObject _dunkLevelsPanel;
-    private GameObject _creditsPanel;
 
     void Start()
     {
@@ -18,7 +17,6 @@ public class MenuManagerCanvas : CanvasElementLocator
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
         _selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
-        _creditsPanel = FindAndValidateGameObjectComponent(transform, "CreditsPanel");
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
@@ -54,20 +52,6 @@ public class MenuManagerCanvas : CanvasElementLocator
             _dunkLevelsPanel.SetActive(false);
             _selectModePanel.SetActive(true);
             GameManager.Instance.SelectGameMode(0);
-        });
-
-        //var creditsButton = FindAndValidateComponent<Button>(transform, "CreditsBTN");
-        //creditsButton.onClick.AddListener(() =>
-        //{
-        //    _menuPanel.SetActive(false);
-        //    _creditsPanel.SetActive(true);
-        //});
-
-        var creditsCloseButton = FindAndValidateComponent<Button>(transform, "CreditsCloseButton");
-        creditsCloseButton.onClick.AddListener(() =>
-        {
-            _creditsPanel.SetActive(false);
-            _menuPanel.SetActive(true);
         });
 
         var storeButton = FindAndValidateComponent<Button>(transform, "StoreBTN");

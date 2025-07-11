@@ -61,6 +61,23 @@ public class ConfigsCanvas : CanvasElementLocator
         var rightArrowButton = FindAndValidateComponent<Button>(transform, "RightArrowButton");
         rightArrowButton.onClick.AddListener(() => LanguageManager.Instance.ChangeLanguage(1));
 
+        var creditsPanel = FindAndValidateGameObjectComponent(transform, "CreditsPanel");
+        var configsPanel = FindAndValidateGameObjectComponent(transform, "ConfigsPanel");
+
+        var creditsButton = FindAndValidateComponent<Button>(transform, "CreditsBTN");
+        creditsButton.onClick.AddListener(() =>
+        {
+            configsPanel.SetActive(false);
+            creditsPanel.SetActive(true);
+        });
+
+        var creditsCloseButton = FindAndValidateComponent<Button>(transform, "CreditsCloseButton");
+        creditsCloseButton.onClick.AddListener(() =>
+            {
+                configsPanel.SetActive(true);
+                creditsPanel.SetActive(false);
+            });
+
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 
