@@ -17,7 +17,7 @@ public class ConfigsCanvas : CanvasElementLocator
     {
         var configsBackButton = FindAndValidateComponent<Button>(transform, "ConfigsBackButton");
         configsBackButton.onClick.AddListener(() =>
-            UIManager.Instance.ChangeCanvas("ConfigsCanvas", GetCanvasFromGameMode(GameManager.Instance.GetCurrentGameMode)));
+            UIManager.Instance.ChangeCanvas("ConfigsCanvas", "MenuManagerCanvas"));
 
         var resetDataButton = FindAndValidateComponent<Button>(transform, "ResetDataBTN");
 #if UNITY_EDITOR
@@ -79,15 +79,5 @@ public class ConfigsCanvas : CanvasElementLocator
             });
 
         UIManager.Instance.AddCanvas(gameObject, false);
-    }
-
-    private string GetCanvasFromGameMode(GameManager.GameModes gameMode)
-    {
-        return gameMode switch
-        {
-            GameManager.GameModes.Null => "MenuManagerCanvas",
-            GameManager.GameModes.Dunk => "DunkCanvas",
-            _ => "MenuManagerCanvas",
-        };
     }
 }
