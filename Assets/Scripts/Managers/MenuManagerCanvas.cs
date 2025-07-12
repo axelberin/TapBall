@@ -26,6 +26,9 @@ public class MenuManagerCanvas : CanvasElementLocator
             GameManager.Instance.SelectGameMode(1);
         });
 
+        var coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
+        UIManager.Instance.SetText(coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
             SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
