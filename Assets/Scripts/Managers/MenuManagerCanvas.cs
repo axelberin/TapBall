@@ -71,7 +71,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
-        int lastDunkLevel = 1;
+        int nextDunkLevel = 1;
 
         for (int i = 1; i <= 100; i++)
         {
@@ -82,7 +82,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
             button.name = $"DunkLevel{i}";
             if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i))
-                lastDunkLevel = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkLevelName + i) + 1;
+                nextDunkLevel = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkLevelName + i) + 1;
 
             #region UNLOCK LEVELS
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
@@ -131,7 +131,10 @@ public class MenuManagerCanvas : CanvasElementLocator
         var playButton = FindAndValidateComponent<Button>(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
             ScenesManager.Instance.LoadSceneAsync((SaveAndLoadManager.DunkLevelName +
-                lastDunkLevel).Replace("_", ""), fadeAnimator));
+                nextDunkLevel).Replace("_", ""), fadeAnimator));
+
+        var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
+        nextLevelText.text = $"{nextDunkLevel}";
     }
     #endregion
 }
