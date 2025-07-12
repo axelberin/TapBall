@@ -18,8 +18,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         //_selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
 
-        var dunkModeButton = FindAndValidateComponent<Button>(transform, "DunkModeButton");
-        dunkModeButton.onClick.AddListener(() =>
+        var levelsSelectorButton = FindAndValidateComponent<Button>(transform, "LevelsSelectorButton");
+        levelsSelectorButton.onClick.AddListener(() =>
         {
             _dunkLevelsPanel.SetActive(true);
             _menuPanel.SetActive(false);
