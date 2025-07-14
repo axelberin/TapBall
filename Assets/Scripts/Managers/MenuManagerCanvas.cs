@@ -23,7 +23,6 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             _dunkLevelsPanel.SetActive(true);
             _menuPanel.SetActive(false);
-            GameManager.Instance.SelectGameMode(1);
         });
 
         var coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
@@ -40,7 +39,6 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             _dunkLevelsPanel.SetActive(false);
             _menuPanel.SetActive(true);
-            GameManager.Instance.SelectGameMode(0);
         });
 
         var storeButton = FindAndValidateComponent<Button>(transform, "StoreBTN");
