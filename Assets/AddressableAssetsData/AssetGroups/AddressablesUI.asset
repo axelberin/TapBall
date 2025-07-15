@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: AddressablesUI
   m_EditorClassIdentifier: 
   m_GroupName: AddressablesUI
-  m_Data:
-    m_SerializedData: []
   m_GUID: fbcd39efc9f9d274887b5ffd77b96361
   m_SerializeEntries:
   - m_GUID: 3f9a711eeba3a3743b0954bc860ab327
     m_Address: StoreObject
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ce466b4b7f848c47882ab24565e0837
+    m_Address: ComingSoonNotifyText
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

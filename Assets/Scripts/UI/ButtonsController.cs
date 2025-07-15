@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class ButtonsController : MonoBehaviour
 {
     [SerializeField] private AudioManager.AudioClipType _audioClipType = AudioManager.AudioClipType.ButtonsSound;
+    [SerializeField] private bool _isActive = true;
+    [SerializeField] Transform _textParentTransform;
 
     void Start()
     {
@@ -14,6 +16,9 @@ public class ButtonsController : MonoBehaviour
                 AudioManager.Instance.PlaySoundByType(_audioClipType);
             else
                 Debug.LogError("AudioManager is null");
+
+            if (!_isActive && _textParentTransform != null)
+                StartCoroutine(UIManager.Instance.ShowComingSoonNotify(_textParentTransform));
         });
     }
 }

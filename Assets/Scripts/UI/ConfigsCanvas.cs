@@ -17,7 +17,7 @@ public class ConfigsCanvas : CanvasElementLocator
     {
         var configsBackButton = FindAndValidateComponent<Button>(transform, "ConfigsBackButton");
         configsBackButton.onClick.AddListener(() =>
-            UIManager.Instance.ChangeCanvas("ConfigsCanvas", GetCanvasFromGameMode(GameManager.Instance.GetCurrentGameMode)));
+            UIManager.Instance.ChangeCanvas("ConfigsCanvas", "MenuManagerCanvas"));
 
         var resetDataButton = FindAndValidateComponent<Button>(transform, "ResetDataBTN");
 #if UNITY_EDITOR
@@ -61,16 +61,23 @@ public class ConfigsCanvas : CanvasElementLocator
         var rightArrowButton = FindAndValidateComponent<Button>(transform, "RightArrowButton");
         rightArrowButton.onClick.AddListener(() => LanguageManager.Instance.ChangeLanguage(1));
 
-        UIManager.Instance.AddCanvas(gameObject, false);
-    }
+        var creditsPanel = FindAndValidateGameObjectComponent(transform, "CreditsPanel");
+        var configsPanel = FindAndValidateGameObjectComponent(transform, "ConfigsPanel");
 
-    private string GetCanvasFromGameMode(GameManager.GameModes gameMode)
-    {
-        return gameMode switch
+        var creditsButton = FindAndValidateComponent<Button>(transform, "CreditsBTN");
+        creditsButton.onClick.AddListener(() =>
         {
-            GameManager.GameModes.Null => "MenuManagerCanvas",
-            GameManager.GameModes.Dunk => "DunkCanvas",
-            _ => "MenuManagerCanvas",
-        };
+            configsPanel.SetActive(false);
+            creditsPanel.SetActive(true);
+        });
+
+        var creditsCloseButton = FindAndValidateComponent<Button>(transform, "CreditsCloseButton");
+        creditsCloseButton.onClick.AddListener(() =>
+            {
+                configsPanel.SetActive(true);
+                creditsPanel.SetActive(false);
+            });
+
+        UIManager.Instance.AddCanvas(gameObject, false);
     }
 }

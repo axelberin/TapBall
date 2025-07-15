@@ -1,12 +1,15 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UtilityAddressables;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
     private List<GameObject> _canvasesNmaes = new();
+    private GameObject _comingSoonNotifyText;
 
     private void Awake()
     {
@@ -14,6 +17,12 @@ public class UIManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+    }
+
+    private void Start()
+    {
+        AddressablesUtility.LoadAsset<GameObject>("ComingSoonNotifyText",
+            text => _comingSoonNotifyText = text);
     }
 
     public void ActivateUI(GameObject gameObject, bool active)
@@ -73,5 +82,20 @@ public class UIManager : MonoBehaviour
             if (canvas.name == canvasTo)
                 canvas.SetActive(true);
         }
+    }
+
+    public IEnumerator ShowComingSoonNotify(Transform parent)
+    {
+        if (_comingSoonNotifyText == null)
+        {
+            Debug.LogError("Missing coming soon text");
+            yield break;
+        }
+
+        var textGO = Instantiate(_comingSoonNotifyText, parent);
+        var text = textGO.GetComponent<TextMeshProUGUI>();
+        text.font = LanguageManager.Instance.GetFontByLanguage();
+        yield return new WaitForSeconds(2f);
+        textGO.SetActive(false);
     }
 }

@@ -7,7 +7,6 @@ public class TutorialManager : CanvasElementLocator
     public static TutorialManager Instance;
 
     private bool _inTutorial = true;
-    private int _tutorialIndex = 1;
 
     private Animator _animator;
     private Image _tapTutorialImage;
@@ -29,27 +28,12 @@ public class TutorialManager : CanvasElementLocator
             _tapTutorialImage = FindAndValidateComponent<Image>(transform, "TutorialImage");
 
         var tutorialText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TutorialText");
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial" + _tutorialIndex);
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial1");
         tutorialText.text = text;
         tutorialText.font = font;
 
         var nextTutorialButton = FindAndValidateComponent<Button>(transform, "NextTutorialBTN");
-        nextTutorialButton.onClick.AddListener(() =>
-        {
-            if (HasParameter("Tutorial" + _tutorialIndex, AnimatorControllerParameterType.Trigger))
-            {
-                if (_tapTutorialImage.rectTransform.localScale.x < 0)
-                    FlipTutorial();
-
-                _animator.SetTrigger("Tutorial" + _tutorialIndex);
-                _tutorialIndex++;
-                var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial" + _tutorialIndex);
-                tutorialText.text = text;
-                tutorialText.font = font;
-            }
-            else
-                FinishTutorial();
-        });
+        nextTutorialButton.onClick.AddListener(() => FinishTutorial());
     }
 
     public void FlipTutorial()
@@ -62,17 +46,6 @@ public class TutorialManager : CanvasElementLocator
     {
         gameObject.SetActive(false);
         _inTutorial = false;
-    }
-
-    private bool HasParameter(string paramName, AnimatorControllerParameterType type)
-    {
-        foreach (AnimatorControllerParameter param in _animator.parameters)
-        {
-            if (param.name == paramName && param.type == type)
-                return true;
-        }
-
-        return false;
     }
 
     public bool GetInTutorial => _inTutorial;
