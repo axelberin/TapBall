@@ -9,7 +9,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     private List<GameObject> _canvasesNmaes = new();
-    private GameObject _comingSoonNotifyText;
+    private GameObject _comingSoonNotifyPrefab;
+    private TextMeshProUGUI _comingSoonNotifyText;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         AddressablesUtility.LoadAsset<GameObject>("ComingSoonNotifyText",
-            text => _comingSoonNotifyText = text);
+            text => _comingSoonNotifyPrefab = text);
     }
 
     public void ActivateUI(GameObject gameObject, bool active)
@@ -86,16 +87,21 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator ShowComingSoonNotify(Transform parent)
     {
-        if (_comingSoonNotifyText == null)
+        if (_comingSoonNotifyPrefab == null)
         {
             Debug.LogError("Missing coming soon text");
             yield break;
         }
 
-        var textGO = Instantiate(_comingSoonNotifyText, parent);
-        var text = textGO.GetComponent<TextMeshProUGUI>();
-        text.font = LanguageManager.Instance.GetFontByLanguage();
-        yield return new WaitForSeconds(2f);
-        textGO.SetActive(false);
+        if (_comingSoonNotifyText == null)
+        {
+            var textGO = Instantiate(_comingSoonNotifyPrefab, parent);
+            _comingSoonNotifyText = textGO.GetComponent<TextMeshProUGUI>();
+        }
+
+        _comingSoonNotifyText.gameObject.SetActive(true);
+        _comingSoonNotifyText.font = LanguageManager.Instance.GetFontByLanguage();
+        yield return new WaitForSeconds(1f);
+        _comingSoonNotifyText.gameObject.SetActive(false);
     }
 }
