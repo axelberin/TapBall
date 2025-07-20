@@ -74,7 +74,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         int nextDunkLevel = 1;
 
-        for (int i = 1; i <= 100; i++)
+        for (int i = 1; i <= 50; i++)
         {
             var button = FindAndValidateComponent<Button>(transform, $"DunkLevel");
 
@@ -82,7 +82,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 break;
 
             button.name = $"DunkLevel{i}";
-            if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i))
+            if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) && nextDunkLevel <= 47)
                 nextDunkLevel = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkLevelName + i) + 1;
 
             #region UNLOCK LEVELS
