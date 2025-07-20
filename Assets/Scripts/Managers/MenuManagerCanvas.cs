@@ -131,8 +131,12 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         var playButton = FindAndValidateComponent<Button>(transform, "PlayBTN");
         playButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ClearCnavasesList();
+
             ScenesManager.Instance.LoadSceneAsync((SaveAndLoadManager.DunkLevelName +
-                nextDunkLevel).Replace("_", ""), fadeAnimator));
+                nextDunkLevel).Replace("_", ""), fadeAnimator);
+        });
 
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
         nextLevelText.text = $"{nextDunkLevel}";
