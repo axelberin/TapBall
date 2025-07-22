@@ -13,17 +13,10 @@ MonoBehaviour:
   m_Name: AddressablesGameResources
   m_EditorClassIdentifier: 
   m_GroupName: AddressablesGameResources
-  m_Data:
-    m_SerializedData: []
   m_GUID: f24790c40c5a38f43bfc688d63f05673
   m_SerializeEntries:
-  - m_GUID: 3bb1e32a648848b4a9f3cf9a5b995c73
-    m_Address: ButtonsSound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: de55738750d5dbe4d8fef1e05974cfdd
-    m_Address: AchivmentSound
+  - m_GUID: 042e5e3d248f96c47b90ec22169ba3ab
+    m_Address: SpikeDownSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -32,8 +25,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9a6fa3b8bb30f6549bd36d2e0fe1ebb1
-    m_Address: RejectionSound
+  - m_GUID: 3309de45c813f8a47a9058751ce139b3
+    m_Address: Tap02Sound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -42,53 +35,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c32cdf8de5b28bc40a04172a07074271
-    m_Address: DunkMusic
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9475449631df76e4f87dc23daa8f0478
-    m_Address: MenuMusic
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b009a399f1b6ca64d8091fe4595983fb
-    m_Address: AudioMixer
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 56966264d46734545bf49e0a749877f4
-    m_Address: JapaneseFont
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e001cac6252e1794dae111b5a774858a
-    m_Address: CommonFont
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a39681c49973cf849bfdb601d1f8c056
-    m_Address: ChineseFont
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 78a48028940322e4cae982148303a4f7
-    m_Address: Tap01Sound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3309de45c813f8a47a9058751ce139b3
-    m_Address: Tap02Sound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 64b0431a3d6d5d14c9bb533cd47ce351
-    m_Address: Tap03Sound
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 903c698c37501554d88d893e16376149
-    m_Address: EquipSound
+  - m_GUID: 3bb1e32a648848b4a9f3cf9a5b995c73
+    m_Address: ButtonsSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -97,8 +45,73 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 486fe520c70bb5e49b7d436e860a1e7a
+    m_Address: SpikeFullUpSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56966264d46734545bf49e0a749877f4
+    m_Address: JapaneseFont
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64b0431a3d6d5d14c9bb533cd47ce351
+    m_Address: Tap03Sound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78a48028940322e4cae982148303a4f7
+    m_Address: Tap01Sound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 903c698c37501554d88d893e16376149
+    m_Address: EquipSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9475449631df76e4f87dc23daa8f0478
+    m_Address: MenuMusic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a6fa3b8bb30f6549bd36d2e0fe1ebb1
+    m_Address: RejectionSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a39681c49973cf849bfdb601d1f8c056
+    m_Address: ChineseFont
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b009a399f1b6ca64d8091fe4595983fb
+    m_Address: AudioMixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c32cdf8de5b28bc40a04172a07074271
+    m_Address: DunkMusic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de55738750d5dbe4d8fef1e05974cfdd
+    m_Address: AchivmentSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e001cac6252e1794dae111b5a774858a
+    m_Address: CommonFont
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e5aa76e2f4a7a524a952650756c0eca7
     m_Address: DeathSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e782d6e89329cb64197c7954eb1b9d62
+    m_Address: SpikeUpSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

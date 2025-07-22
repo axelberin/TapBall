@@ -55,6 +55,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,6 +101,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6902110298334437859}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 5422c87b0ce1d9649869e03718e0e6b6, type: 2}
   m_IncludeLayers:
@@ -121,7 +125,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,7 +137,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 8.44, y: 0.8}
   m_EdgeRadius: 0
 --- !u!114 &678546982224903395
@@ -147,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207becfe8fce0ec4fbeff10ae7aa0d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _updateAnchor: 0
   anchorType: 1
   anchorOffset: {x: 0.09, y: 0.5, z: 0}
 --- !u!114 &923670039596345393
@@ -168,7 +173,7 @@ MonoBehaviour:
   padding: {x: 0, y: 0}
 --- !u!95 &8769357339250471118
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -182,6 +187,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -209,7 +215,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2536882253757904051, guid: b009a399f1b6ca64d8091fe4595983fb, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b16b6c826fa59a445b6653fd4413bac3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7c0f0d52ad1c1b24aadd071a6ec4df5a, type: 3}
+  m_Resource: {fileID: 8300000, guid: 7c0f0d52ad1c1b24aadd071a6ec4df5a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
