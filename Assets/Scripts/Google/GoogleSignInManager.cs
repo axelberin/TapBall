@@ -13,12 +13,6 @@ public class GoogleSignInManager : MonoBehaviour
     private void Start()
     {
         // Configura la autenticación
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-            .RequestServerAuthCode(false) // Esto es opcional, establece en true si necesitas el código de autorización del servidor
-            .RequestIdToken() // Si necesitas el ID Token (para autenticación con tu propio backend)
-            .Build();
-
-        PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
 
@@ -74,7 +68,7 @@ public class GoogleSignInManager : MonoBehaviour
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            PlayGamesPlatform.Instance.SignOut();
+            //PlayGamesPlatform.Instance.SignOut();
             Debug.Log("Sesión cerrada.");
             if (statusText != null) statusText.text = "Sesión cerrada.";
         }
