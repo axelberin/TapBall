@@ -2,6 +2,16 @@ apply plugin: 'com.android.library'
 apply from: '../shared/keepUnitySymbols.gradle'
 **APPLY_PLUGINS**
 
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
