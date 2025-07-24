@@ -18,7 +18,7 @@ dependencyResolutionManagement {
         mavenCentral()
 // Android Resolver Repos Start
         maven {
-            url "file:///D:/Proyectos/Mio/TapBall/Packages/com.google.play.games/Editor/m2repository" // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
+            url "file:///D:/Proyectos/Mio/TapBall/Assets/GeneratedLocalRepo/GooglePlayGames/com.google.play.games/Editor/m2repository" // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
         }
         maven {
             url "https://maven.google.com/" // Assets/LevelPlay/Editor/IronSourceSDKDependencies.xml:12, Assets/LevelPlay/Editor/ISUnityAdsAdapterDependencies.xml:12, Packages/com.unity.ads/Editor/Source/Dependencies.xml:7
