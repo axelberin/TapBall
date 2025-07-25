@@ -38,7 +38,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             if (GameManager.Instance.SetGetPlayer)
                 _playerController = GameManager.Instance.SetGetPlayer;
             else
-                _playerController = FindObjectOfType<PlayerController>();
+                _playerController = FindAnyObjectByType<PlayerController>();
         }
 
         if (_playerInitialPos == Vector3.zero)
