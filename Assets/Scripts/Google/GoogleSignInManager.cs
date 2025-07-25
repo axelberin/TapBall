@@ -7,23 +7,19 @@ public class GoogleSignInManager : ManagersManager
 {
     private void Awake()
     {
-        PlayGamesPlatform.Activate();
-        Social.localUser.Authenticate(SignInSilently);
+        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
     }
 
     // Método para iniciar sesión de forma silenciosa (si ya ha iniciado sesión antes)
-    public void SignInSilently(bool status)
+    public void SignInSilently(SignInStatus status)
     {
-        PlayGamesPlatform.Instance.Authenticate((success) =>
+        if (status == SignInStatus.Success)
         {
-            if (success == SignInStatus.Success)
-            {
-                Debug.Log("Inicio de sesión silencioso exitoso. ¡Bienvenido, " + PlayGamesPlatform.Instance.GetUserDisplayName() + "!");
-                OnSignInSuccess();
-            }
-            else
-                Debug.Log("Inicio de sesión silencioso fallido. Estado: " + success);
-        });
+            Debug.Log("Inicio de sesión silencioso exitoso. ¡Bienvenido, " + PlayGamesPlatform.Instance.GetUserDisplayName() + "!");
+            OnSignInSuccess();
+        }
+        else
+            Debug.Log("Inicio de sesión silencioso fallido. Estado: " + status);
     }
 
     // Método para iniciar sesión cuando el usuario hace clic en un botón
