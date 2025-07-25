@@ -7,16 +7,12 @@ public class GoogleSignInManager : ManagersManager
 {
     private void Awake()
     {
-        // Configura la autenticación
-        PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
-
-        // Intenta iniciar sesión automáticamente si el usuario ya ha autenticado antes
-        SignInSilently();
+        Social.localUser.Authenticate(SignInSilently);
     }
 
     // Método para iniciar sesión de forma silenciosa (si ya ha iniciado sesión antes)
-    public void SignInSilently()
+    public void SignInSilently(bool status)
     {
         PlayGamesPlatform.Instance.Authenticate((success) =>
         {
