@@ -2,32 +2,25 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Collections;
+using GooglePlayGames.BasicApi.SavedGame;
 
 public class GoogleSignInManager : ManagersManager
 {
     private void Awake()
     {
-        // Configura la autenticación
-        PlayGamesPlatform.DebugLogEnabled = true;
-        PlayGamesPlatform.Activate();
-
-        // Intenta iniciar sesión automáticamente si el usuario ya ha autenticado antes
-        SignInSilently();
+        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
     }
 
     // Método para iniciar sesión de forma silenciosa (si ya ha iniciado sesión antes)
-    public void SignInSilently()
+    public void SignInSilently(SignInStatus status)
     {
-        PlayGamesPlatform.Instance.Authenticate((success) =>
+        if (status == SignInStatus.Success)
         {
-            if (success == SignInStatus.Success)
-            {
-                Debug.Log("Inicio de sesión silencioso exitoso. ¡Bienvenido, " + PlayGamesPlatform.Instance.GetUserDisplayName() + "!");
-                OnSignInSuccess();
-            }
-            else
-                Debug.Log("Inicio de sesión silencioso fallido. Estado: " + success);
-        });
+            Debug.Log("Inicio de sesión silencioso exitoso. ¡Bienvenido, " + PlayGamesPlatform.Instance.GetUserDisplayName() + "!");
+            OnSignInSuccess();
+        }
+        else
+            Debug.Log("Inicio de sesión silencioso fallido. Estado: " + status);
     }
 
     // Método para iniciar sesión cuando el usuario hace clic en un botón
@@ -77,6 +70,4 @@ public class GoogleSignInManager : ManagersManager
 
         _isInitialized = true;
     }
-
-    // Puedes agregar más funciones aquí, como mostrar logros, tablas de clasificación, etc.
 }
