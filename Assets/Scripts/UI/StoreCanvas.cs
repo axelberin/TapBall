@@ -9,6 +9,7 @@ public class StoreCanvas : CanvasElementLocator
     [SerializeField] private string _storeObjectPrefabName;
 
     private TextMeshProUGUI _coinsText;
+    private GameObject _reviewPopUp;
 
     private void Awake()
     {
@@ -29,11 +30,19 @@ public class StoreCanvas : CanvasElementLocator
         closeButton.onClick.AddListener(() => UIManager.Instance.ChangeCanvas(
             "StoreCanvas", "MenuManagerCanvas"));
 
+        _reviewPopUp = FindAndValidateGameObjectComponent(transform, "ReviewPopUp");
+        _reviewPopUp.SetActive(false);
+
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 
     public void UpdateCoinsText()
     {
         UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+    }
+
+    public void ShowReview()
+    {
+        _reviewPopUp.SetActive(true);
     }
 }
