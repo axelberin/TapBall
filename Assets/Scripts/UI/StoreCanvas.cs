@@ -9,7 +9,7 @@ public class StoreCanvas : CanvasElementLocator
     [SerializeField] private string _storeObjectPrefabName;
 
     private TextMeshProUGUI _coinsText;
-    private GameObject _reviewPopUp;
+    private PopUp _reviewPopUp;
 
     private void Awake()
     {
@@ -30,8 +30,9 @@ public class StoreCanvas : CanvasElementLocator
         closeButton.onClick.AddListener(() => UIManager.Instance.ChangeCanvas(
             "StoreCanvas", "MenuManagerCanvas"));
 
-        _reviewPopUp = FindAndValidateGameObjectComponent(transform, "ReviewPopUp");
-        _reviewPopUp.SetActive(false);
+        _reviewPopUp = FindAndValidateComponent<PopUp>(transform, "ReviewPopUp");
+        _reviewPopUp.Initialize("ReviewOkBTN", "rateus", "reviewdescription", "ReviewCancelBTN",
+            ReviewManagerController.Instance.RequestReview);
 
         UIManager.Instance.AddCanvas(gameObject, false);
     }
@@ -43,6 +44,6 @@ public class StoreCanvas : CanvasElementLocator
 
     public void ShowReview()
     {
-        _reviewPopUp.SetActive(true);
+        _reviewPopUp.Show();
     }
 }

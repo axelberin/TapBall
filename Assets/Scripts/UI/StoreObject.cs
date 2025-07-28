@@ -44,7 +44,7 @@ public class StoreObject : CanvasElementLocator
 
                 if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
                 {
-                    ReviewManagerController.Instance.RequestReview();
+                    StoreCanvas.Instance.ShowReview();
                     SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
                 }
             }

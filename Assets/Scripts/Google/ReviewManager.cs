@@ -32,6 +32,7 @@ public class ReviewManagerController : MonoBehaviour
         if (requestFlowOperation.Error != ReviewErrorCode.NoError)
         {
             Debug.Log("Error solicitando el flujo de reseñas: " + requestFlowOperation.Error);
+            OpenReviewFromLink();
             yield break;
         }
 
@@ -42,13 +43,14 @@ public class ReviewManagerController : MonoBehaviour
 
         _playReviewInfo = null;
 
-        if (launchFlowOperation.Error != ReviewErrorCode.NoError)
-        {
-            Debug.Log("Error al mostrar el flujo de reseñas: " + launchFlowOperation.Error);
-        }
-        else
-        {
-            Debug.Log("Reseña mostrada con éxito (si el usuario cumple los criterios de Google)");
-        }
+        if (launchFlowOperation.Error == ReviewErrorCode.NoError)
+            OpenReviewFromLink();
+
+        yield return null;
+    }
+
+    private void OpenReviewFromLink()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/details?id=" + Application.identifier);
     }
 }
