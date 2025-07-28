@@ -43,8 +43,7 @@ public class ReviewManagerController : MonoBehaviour
 
         _playReviewInfo = null;
 
-        if (launchFlowOperation.Error == ReviewErrorCode.NoError)
-            OpenReviewFromLink();
+        OpenReviewFromLink();
 
         yield return null;
     }
