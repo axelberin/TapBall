@@ -92,7 +92,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         else
         {
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot load data.");
-            _isInitialized = true; // Marcar como inicializado aunque no se pudo cargar de la nube
         }
     }
 
@@ -105,7 +104,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         else
         {
             Debug.LogError("Error opening saved game for loading: " + status);
-            _isInitialized = true; // Marcar como inicializado aunque falló
         }
     }
 

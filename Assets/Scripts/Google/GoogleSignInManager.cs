@@ -2,7 +2,6 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Collections;
-using GooglePlayGames.BasicApi.SavedGame;
 
 public class GoogleSignInManager : ManagersManager
 {
@@ -53,6 +52,7 @@ public class GoogleSignInManager : ManagersManager
     // Método que se llama cuando el inicio de sesión es exitoso
     private void OnSignInSuccess()
     {
+        _isInitialized = true;
         // Aquí puedes realizar acciones posteriores al inicio de sesión exitoso, como:
         // - Cargar datos del usuario desde un servidor
         // - Habilitar funcionalidades del juego
@@ -66,8 +66,7 @@ public class GoogleSignInManager : ManagersManager
 
     public override IEnumerator InizializeManagers()
     {
+        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
         yield return new WaitForSeconds(1);
-
-        _isInitialized = true;
     }
 }
