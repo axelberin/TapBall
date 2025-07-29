@@ -99,7 +99,7 @@ public static class SaveAndLoadManager
 
         try
         {
-            GameData data = JsonUtility.FromJson<GameData>(cloudData);
+            GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
 
             // Aplicar los datos deserializados
             if (data.coins >= 0)
@@ -201,7 +201,7 @@ public static class SaveAndLoadManager
             data.obtainedSkins[skinKey] = GetIntValue(ObtainedBallSkins + skinKey) == 1;
         }
 
-        return JsonUtility.ToJson(data);
+        return Newtonsoft.Json.JsonConvert.SerializeObject(data);
     }
 
     public static void DeleteData()
