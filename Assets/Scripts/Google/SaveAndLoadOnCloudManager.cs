@@ -6,7 +6,7 @@ using System.Collections;
 
 public class SaveAndLoadOnCloudManager : ManagersManager
 {
-    private void Start()
+    private void Awake()
     {
         SaveAndLoadManager.SetCloudManager(this);
     }
@@ -91,6 +91,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            OnLoadDataFailed();
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot load data.");
         }
     }
@@ -103,6 +104,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            OnLoadDataFailed();
             Debug.LogError("Error opening saved game for loading: " + status);
         }
     }
@@ -122,10 +124,14 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            OnLoadDataFailed();
             Debug.LogError("Error reading saved game data: " + status);
         }
+    }
 
-        _isInitialized = true;
+    private void OnLoadDataFailed()
+    {
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
     }
 
     public override IEnumerator InizializeManagers()
@@ -134,8 +140,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
         // Esperar hasta que se complete la carga
         while (!_isInitialized)
-        {
             yield return null;
-        }
     }
 }

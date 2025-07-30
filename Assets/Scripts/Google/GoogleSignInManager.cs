@@ -5,11 +5,6 @@ using System.Collections;
 
 public class GoogleSignInManager : ManagersManager
 {
-    private void Awake()
-    {
-        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
-    }
-
     // Método para iniciar sesión de forma silenciosa (si ya ha iniciado sesión antes)
     public void SignInSilently(SignInStatus status)
     {
@@ -19,7 +14,10 @@ public class GoogleSignInManager : ManagersManager
             OnSignInSuccess();
         }
         else
-            Debug.Log("Inicio de sesión silencioso fallido. Estado: " + status);
+        {
+            OnFailSignIn();
+            Debug.LogError("Inicio de sesión silencioso fallido. Estado: " + status);
+        }
     }
 
     // Método para iniciar sesión cuando el usuario hace clic en un botón
@@ -33,7 +31,10 @@ public class GoogleSignInManager : ManagersManager
                 OnSignInSuccess();
             }
             else
-                Debug.Log("Inicio de sesión manual fallido. Estado: " + success);
+            {
+                OnFailSignIn();
+                Debug.LogError("Inicio de sesión manual fallido. Estado: " + success);
+            }
         });
     }
 
@@ -46,7 +47,7 @@ public class GoogleSignInManager : ManagersManager
             Debug.Log("Sesión cerrada.");
         }
         else
-            Debug.Log("No hay sesión activa para cerrar.");
+            Debug.LogError("No hay sesión activa para cerrar.");
     }
 
     // Método que se llama cuando el inicio de sesión es exitoso
@@ -64,9 +65,16 @@ public class GoogleSignInManager : ManagersManager
         // string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
     }
 
+    private void OnFailSignIn()
+    {
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect", () => _isInitialized = true, Application.Quit);
+    }
+
     public override IEnumerator InizializeManagers()
     {
         PlayGamesPlatform.Instance.Authenticate(SignInSilently);
-        yield return new WaitForSeconds(1);
+
+        while (!_isInitialized)
+            yield return null;
     }
 }
