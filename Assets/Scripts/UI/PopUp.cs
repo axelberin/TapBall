@@ -17,8 +17,7 @@ public class PopUp : CanvasElementLocator
         _animator = GetComponent<Animator>();
     }
 
-    public void Initialize(string okBtnName, string tittleText, string description = null, string cancelBtnName = null,
-        Action okAction = null, Action cancelAction = null)
+    public void Initialize(string tittleText, string description = null, Action okAction = null, Action cancelAction = null)
     {
         _tittleText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TittleText");
         SetTittle(tittleText);
@@ -26,22 +25,19 @@ public class PopUp : CanvasElementLocator
         _descriptionText = FindAndValidateComponent<TextMeshProUGUI>(transform, "DescriptionText");
         SetDescription(description);
 
-        _okButton = FindAndValidateComponent<Button>(transform, okBtnName);
+        _okButton = FindAndValidateComponent<Button>(transform, "SquareOkBTN");
         _okButton.onClick.AddListener(() =>
         {
             okAction?.Invoke();
             Hide();
         });
 
-        _cancelButton = FindAndValidateComponent<Button>(transform, cancelBtnName);
-        if (cancelBtnName != null)
-            _cancelButton.onClick.AddListener(() =>
-            {
-                cancelAction?.Invoke();
-                Hide();
-            });
-        else
-            _cancelButton.gameObject.SetActive(false);
+        _cancelButton = FindAndValidateComponent<Button>(transform, "SquareCancelBTN");
+        _cancelButton.onClick.AddListener(() =>
+        {
+            cancelAction?.Invoke();
+            Hide();
+        });
 
         _elements = FindAndValidateGameObjectComponent(transform, "PopUpElements");
         _elements.SetActive(false);
@@ -74,7 +70,7 @@ public class PopUp : CanvasElementLocator
             });
         }
 
-        _elements.SetActive(true);
+        Show();
     }
 
     private void SetTittle(string tittleText)

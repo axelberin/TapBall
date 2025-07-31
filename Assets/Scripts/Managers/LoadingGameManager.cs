@@ -24,16 +24,13 @@ public class LoadingGameManager : CanvasElementLocator
             Instance = this;
         else
             Destroy(this);
-    }
 
-    private void Start()
-    {
         _fadeAnimator = FindAndValidateGameObjectComponent(transform, "FadeController").GetComponent<Animator>();
         _loadingBarImage = FindAndValidateComponent<Image>(transform, "LoadingBarImage");
         _loadingText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LoadingText");
         _loadingBarImage.fillAmount = 0;
         _popUp = FindAndValidateComponent<PopUp>(transform, "ErrorConectingPopUp");
-        _popUp.Initialize("SquareOkBTN", "conectionfail", "cantconnect", "SquareCancelBTN");
+        _popUp.Initialize("conectionfail", "cantconnect");
 
         StartCoroutine(InitializeManagers());
     }
