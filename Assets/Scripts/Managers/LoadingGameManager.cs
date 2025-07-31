@@ -29,6 +29,10 @@ public class LoadingGameManager : CanvasElementLocator
         _loadingBarImage = FindAndValidateComponent<Image>(transform, "LoadingBarImage");
         _loadingText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LoadingText");
         _loadingBarImage.fillAmount = 0;
+    }
+
+    private void Start()
+    {
         _popUp = FindAndValidateComponent<PopUp>(transform, "ErrorConectingPopUp");
         _popUp.Initialize("conectionfail", "cantconnect");
 
