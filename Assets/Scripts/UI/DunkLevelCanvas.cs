@@ -147,7 +147,10 @@ public class DunkLevelCanvas : CanvasElementLocator
 
         _nextLevelButton.interactable = existsNextLevel;
         if (!existsNextLevel)
+        {
             _nextLevelText.gameObject.SetActive(false);
+            GameManager.Instance.OnCompleteWorld(SaveAndLoadManager.CurrentWorldName);
+        }
         else
             _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
 

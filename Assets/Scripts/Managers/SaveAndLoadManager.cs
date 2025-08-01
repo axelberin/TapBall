@@ -14,6 +14,7 @@ public static class SaveAndLoadManager
     public static string MusicVolumeName = "MusicVolume";
     public static string LanguageName = "Language";
     public static string ReviewSowed = "ReviewSowed";
+    public static string CurrentWorldName = "CurrentWorld";
 
     private static SaveAndLoadOnCloudManager cloudManager;
     private static bool isLoadingFromCloud = false;

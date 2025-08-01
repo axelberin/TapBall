@@ -34,6 +34,9 @@ public class MenuManagerCanvas : CanvasElementLocator
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
         }
 
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
+            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName);
+
         var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
         dunkCloseButton.onClick.AddListener(() =>
         {
@@ -88,7 +91,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 break;
 
             button.name = $"DunkLevel{i}";
-            if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) && nextDunkLevel <= 47)
+            if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) && nextDunkLevel <= 49)
                 nextDunkLevel = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkLevelName + i) + 1;
 
             #region UNLOCK LEVELS

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -46,6 +45,11 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning($"Game mode not found: " + gameModeIndex);
                 break;
         }
+    }
+
+    public void OnCompleteWorld(string currentWorldName)
+    {
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName);
     }
 
     public PlayerController SetGetPlayer { set; get; }
