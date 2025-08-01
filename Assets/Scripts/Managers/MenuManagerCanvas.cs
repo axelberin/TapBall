@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UtilityAddressables;
 
 public class MenuManagerCanvas : CanvasElementLocator
 {
@@ -8,6 +9,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _dunkLevelsPanel;
 
     private TextMeshProUGUI _coinsText;
+    private PopUp _unlockSkinsPopUp;
 
     void Start()
     {
@@ -35,7 +37,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         }
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
-            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName);
+            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true);
 
         var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
         dunkCloseButton.onClick.AddListener(() =>
@@ -52,6 +54,10 @@ public class MenuManagerCanvas : CanvasElementLocator
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
+        _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
+        if (!string.IsNullOrEmpty(GameManager.UnlokedSkin))
+            OnUnlockSkin();
+
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();
 
@@ -66,14 +72,6 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         if (_coinsText != null)
             UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
-    }
-
-    private void Update()
-    {
-#if UNITY_ANDROID
-        if (Input.GetKeyUp(KeyCode.Escape))
-            Application.Quit();
-#endif
     }
 
     #region DUNK
@@ -151,4 +149,17 @@ public class MenuManagerCanvas : CanvasElementLocator
         nextLevelText.text = $"{nextDunkLevel}";
     }
     #endregion
+
+    private void OnUnlockSkin()
+    {
+
+        AddressablesUtility.LoadAsset<GameObject>(
+            SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI", iGo =>
+            {
+                _unlockSkinsPopUp.InitializeWithIcon("unlockskin", iGo, "wantequipskin",
+                () => SaveAndLoadManager.SetStringValue(GameManager.UnlokedSkin, SaveAndLoadManager.CurrentBallSkinName, true));
+                _unlockSkinsPopUp.Show();
+                GameManager.UnlokedSkin = null;
+            });
+    }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static string UnlokedSkin = "";
 
     public enum GameModes
     {
@@ -49,7 +50,8 @@ public class GameManager : MonoBehaviour
 
     public void OnCompleteWorld(string currentWorldName)
     {
-        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName);
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true);
+        UnlokedSkin = currentWorldName;
     }
 
     public PlayerController SetGetPlayer { set; get; }

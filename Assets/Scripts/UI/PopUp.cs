@@ -73,6 +73,22 @@ public class PopUp : CanvasElementLocator
         Show();
     }
 
+    public void InitializeWithIcon(string tittleText, GameObject icon, string description = null, Action okAction = null, Action cancelAction = null)
+    {
+        Initialize(tittleText, description, okAction, cancelAction);
+
+        var image = FindAndValidateComponent<Image>(transform, "Image");
+        image.sprite = icon.GetComponent<Image>().sprite;
+
+        if (icon.TryGetComponent(out Animator animator))
+        {
+            if (image.GetComponent<Animator>() == null)
+                image.gameObject.AddComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
+            else
+                image.GetComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
+        }
+    }
+
     private void SetTittle(string tittleText)
     {
         var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont(tittleText);
