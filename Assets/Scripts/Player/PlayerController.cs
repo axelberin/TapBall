@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
+    private SpecialSkin _specialSkin;
 
     void Awake()
     {
@@ -79,7 +80,10 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
-            _animator.runtimeAnimatorController = handle.Result.GetComponent<Animator>().runtimeAnimatorController;
+            if (handle.Result.TryGetComponent(out Animator animator))
+                _animator.runtimeAnimatorController = animator.runtimeAnimatorController;
+            if (handle.Result.TryGetComponent(out SpecialSkin specialSkin))
+                _specialSkin = specialSkin;
         }
         else
             Debug.LogError("Failed to load prefab.");
@@ -96,6 +100,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         int randomIndex = Random.Range(0, _tapClips.Count);
         if (_audioSource && _tapClips[randomIndex])
             _audioSource.PlayOneShot(_tapClips[randomIndex]);
+
+        if (_specialSkin != null)
+            _specialSkin.OnTap();
     }
 
     private void AddForce(Vector3 touchPos)
