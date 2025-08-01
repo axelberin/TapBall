@@ -75,10 +75,25 @@ public class StoreObject : CanvasElementLocator
 
     public void UpdateSkinState()
     {
-        if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
-            OnSkinIsSelected();
-        else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
-            OnSkinUnselected();
+        if (_skinSC.unlockeable && SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 0)
+            OnSkinLocked();
+        else
+        {
+            if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
+                OnSkinIsSelected();
+            else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
+                OnSkinUnselected();
+        }
+    }
+
+    private void OnSkinLocked()
+    {
+        _buyButton.gameObject.SetActive(false);
+        _equipButton.gameObject.SetActive(true);
+        _equipButton.interactable = false;
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("locked");
+        _equipText.text = text;
+        _equipText.font = font;
     }
 
     private void OnSkinIsSelected()

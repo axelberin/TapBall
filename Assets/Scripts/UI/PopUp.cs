@@ -86,6 +86,8 @@ public class PopUp : CanvasElementLocator
                 image.gameObject.AddComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
             else
                 image.GetComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
+
+            animator.Play("Idle");
         }
     }
 
