@@ -2,15 +2,9 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Collections;
-using GooglePlayGames.BasicApi.SavedGame;
 
 public class GoogleSignInManager : ManagersManager
 {
-    private void Awake()
-    {
-        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
-    }
-
     // Método para iniciar sesión de forma silenciosa (si ya ha iniciado sesión antes)
     public void SignInSilently(SignInStatus status)
     {
@@ -20,7 +14,10 @@ public class GoogleSignInManager : ManagersManager
             OnSignInSuccess();
         }
         else
-            Debug.Log("Inicio de sesión silencioso fallido. Estado: " + status);
+        {
+            OnFailSignIn();
+            Debug.LogError("Inicio de sesión silencioso fallido. Estado: " + status);
+        }
     }
 
     // Método para iniciar sesión cuando el usuario hace clic en un botón
@@ -34,7 +31,10 @@ public class GoogleSignInManager : ManagersManager
                 OnSignInSuccess();
             }
             else
-                Debug.Log("Inicio de sesión manual fallido. Estado: " + success);
+            {
+                OnFailSignIn();
+                Debug.LogError("Inicio de sesión manual fallido. Estado: " + success);
+            }
         });
     }
 
@@ -47,12 +47,13 @@ public class GoogleSignInManager : ManagersManager
             Debug.Log("Sesión cerrada.");
         }
         else
-            Debug.Log("No hay sesión activa para cerrar.");
+            Debug.LogError("No hay sesión activa para cerrar.");
     }
 
     // Método que se llama cuando el inicio de sesión es exitoso
     private void OnSignInSuccess()
     {
+        _isInitialized = true;
         // Aquí puedes realizar acciones posteriores al inicio de sesión exitoso, como:
         // - Cargar datos del usuario desde un servidor
         // - Habilitar funcionalidades del juego
@@ -64,10 +65,16 @@ public class GoogleSignInManager : ManagersManager
         // string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
     }
 
+    private void OnFailSignIn()
+    {
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect", () => _isInitialized = true, Application.Quit);
+    }
+
     public override IEnumerator InizializeManagers()
     {
-        yield return new WaitForSeconds(1);
+        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
 
-        _isInitialized = true;
+        while (!_isInitialized)
+            yield return null;
     }
 }

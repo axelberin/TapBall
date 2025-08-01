@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class MenuManagerCanvas : CanvasElementLocator
 {
     private GameObject _menuPanel;
-    //private GameObject _selectModePanel;
     private GameObject _dunkLevelsPanel;
+
+    private TextMeshProUGUI _coinsText;
 
     void Start()
     {
@@ -15,7 +16,6 @@ public class MenuManagerCanvas : CanvasElementLocator
         GameManager.Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
-        //_selectModePanel = FindAndValidateGameObjectComponent(transform, "SelectModePanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
 
         var levelsSelectorButton = FindAndValidateComponent<Button>(transform, "LevelsSelectorButton");
@@ -25,8 +25,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             _menuPanel.SetActive(false);
         });
 
-        var coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
-        UIManager.Instance.SetText(coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
+        UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
@@ -57,6 +57,12 @@ public class MenuManagerCanvas : CanvasElementLocator
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
         OnDunkLevelsClicked();
+    }
+
+    private void OnEnable()
+    {
+        if (_coinsText != null)
+            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
     }
 
     private void Update()

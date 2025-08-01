@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class LoadingGameManager : CanvasElementLocator
 {
@@ -15,6 +16,7 @@ public class LoadingGameManager : CanvasElementLocator
     private Animator _fadeAnimator;
     private Image _loadingBarImage;
     private TextMeshProUGUI _loadingText;
+    private PopUp _popUp;
 
     private void Awake()
     {
@@ -22,14 +24,17 @@ public class LoadingGameManager : CanvasElementLocator
             Instance = this;
         else
             Destroy(this);
-    }
 
-    private void Start()
-    {
         _fadeAnimator = FindAndValidateGameObjectComponent(transform, "FadeController").GetComponent<Animator>();
         _loadingBarImage = FindAndValidateComponent<Image>(transform, "LoadingBarImage");
         _loadingText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LoadingText");
         _loadingBarImage.fillAmount = 0;
+    }
+
+    private void Start()
+    {
+        _popUp = FindAndValidateComponent<PopUp>(transform, "ErrorConectingPopUp");
+        _popUp.Initialize("conectionfail", "cantconnect");
 
         StartCoroutine(InitializeManagers());
     }
@@ -74,13 +79,25 @@ public class LoadingGameManager : CanvasElementLocator
         UIManager.Instance.SetText(_loadingText, text);
     }
 
-    public void AddManager(ManagersManager manager)
+    public void AddManager(ManagersManager manager, int index = -1)
     {
         if (manager == null)
             return;
 
         if (!_managers.Contains(manager))
-            _managers.Add(manager);
+        {
+            if (index < 0)
+                _managers.Add(manager); // Añadir al final
+            else
+            {
+                // Expandir la lista si es necesario
+                while (_managers.Count <= index)
+                {
+                    _managers.Add(null); // O un valor por defecto
+                }
+                _managers[index] = manager;
+            }
+        }
     }
 
     private IEnumerator SmoothFill(float target)
@@ -97,5 +114,10 @@ public class LoadingGameManager : CanvasElementLocator
         }
 
         _loadingBarImage.fillAmount = target;
+    }
+
+    public void ShowCantSignInPopUp(string titleKey, string messageKey, Action okAction = null, Action cancelAction = null)
+    {
+        _popUp.SetElements(titleKey, messageKey, okAction, cancelAction);
     }
 }
