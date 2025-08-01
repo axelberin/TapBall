@@ -121,6 +121,8 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             {
                 SaveAndLoadManager.ApplyCloudData(loadedData);
             }
+
+            _isInitialized = true;
         }
         else
         {
