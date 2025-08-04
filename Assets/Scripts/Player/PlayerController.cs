@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
-    private SpecialSkin _specialSkin;
+    private ISpecialSkin _specialSkin;
 
     void Awake()
     {
@@ -82,8 +82,11 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
             if (handle.Result.TryGetComponent(out Animator animator))
                 _animator.runtimeAnimatorController = animator.runtimeAnimatorController;
-            if (handle.Result.TryGetComponent(out SpecialSkin specialSkin))
+            if (handle.Result.TryGetComponent(out ISpecialSkin specialSkin))
+            {
                 _specialSkin = specialSkin;
+                _specialSkin.Initialize();
+            }
         }
         else
             Debug.LogError("Failed to load prefab.");

@@ -19,12 +19,12 @@ public class Spikes : ObstaclesManager
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
 
-        AddressablesUtility.LoadAsset<AudioClip>("SpikeDownSound", clip => _inSpikeClip = clip);
-        AddressablesUtility.LoadAsset<AudioClip>("SpikeUpSound", clip => _upSpikeClip = clip);
-        AddressablesUtility.LoadAsset<AudioClip>("SpikeFullUpSound", clip => _fullUpSpikeClip = clip);
-
         if (_animator != null)
         {
+            AddressablesUtility.LoadAsset<AudioClip>("SpikeDownSound", clip => _inSpikeClip = clip);
+            AddressablesUtility.LoadAsset<AudioClip>("SpikeUpSound", clip => _upSpikeClip = clip);
+            AddressablesUtility.LoadAsset<AudioClip>("SpikeFullUpSound", clip => _fullUpSpikeClip = clip);
+
             _animator.speed = _animatorSpeed;
             StartCoroutine(StartAnim(_animationDelay +
                 (_animator.runtimeAnimatorController.animationClips[0].length / _animatorSpeed)));
