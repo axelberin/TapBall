@@ -105,8 +105,8 @@ public static class SaveAndLoadManager
             // Aplicar los datos deserializados
             if (data.coins >= 0)
                 SetIntValue(data.coins, CoinsName);
-            if (data.currentBallSkin >= 0)
-                SetIntValue(data.currentBallSkin, CurrentBallSkinName);
+            if (!string.IsNullOrEmpty(data.currentBallSkin))
+                SetStringValue(data.currentBallSkin, CurrentBallSkinName);
 
             SetFloatValue(data.soundsVolume, SoundsVolumeName);
             SetFloatValue(data.musicVolume, MusicVolumeName);
@@ -156,7 +156,7 @@ public static class SaveAndLoadManager
 
         // Datos básicos
         data.coins = GetIntValue(CoinsName);
-        data.currentBallSkin = GetIntValue(CurrentBallSkinName);
+        data.currentBallSkin = GetStringValue(CurrentBallSkinName);
         data.soundsVolume = GetFloatValue(SoundsVolumeName);
         data.musicVolume = GetFloatValue(MusicVolumeName);
         data.language = GetStringValue(LanguageName);
@@ -220,7 +220,7 @@ public static class SaveAndLoadManager
 public class GameData
 {
     public int coins;
-    public int currentBallSkin;
+    public string currentBallSkin;
     public float soundsVolume;
     public float musicVolume;
     public string language;

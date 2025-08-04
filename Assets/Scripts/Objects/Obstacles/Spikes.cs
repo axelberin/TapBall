@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using static AudioManager;
 using UtilityAddressables;
 
-public class Spikes : ObstaclesManager
+public class Spikes : ObstaclesManager, IPauseble
 {
     [SerializeField] private float _animatorSpeed = 1;
     [SerializeField] private float _animationDelay = 3;
@@ -28,6 +27,12 @@ public class Spikes : ObstaclesManager
             _animator.speed = _animatorSpeed;
             StartCoroutine(StartAnim(_animationDelay +
                 (_animator.runtimeAnimatorController.animationClips[0].length / _animatorSpeed)));
+
+            if (PauseAndResumeManager.Instance)
+            {
+                PauseAndResumeManager.Instance.AddResumeAction(OnResume);
+                PauseAndResumeManager.Instance.AddPauseAction(OnPause);
+            }
         }
     }
 
@@ -90,5 +95,15 @@ public class Spikes : ObstaclesManager
             float normalizedDistance = (distance - 1f) / (2f - 1f); // Esto da un valor entre 0 y 1
             return Mathf.Lerp(0.8f, 0f, normalizedDistance);
         }
+    }
+
+    public void OnResume()
+    {
+        _animator.speed = _animatorSpeed;
+    }
+
+    public void OnPause()
+    {
+        _animator.speed = 0f;
     }
 }

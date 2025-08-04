@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
 
     public void OnCompleteWorld(string currentWorldName)
     {
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)
+            return;
+
         SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true);
         UnlokedSkin = currentWorldName;
     }
