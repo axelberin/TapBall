@@ -36,7 +36,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
         }
         else
-            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + SaveAndLoadManager.CurrentBallSkinName, true);
+            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.CurrentBallSkinName, SaveAndLoadManager.CurrentBallSkinName, true);
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
             SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true);
@@ -154,7 +154,6 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void OnUnlockSkin()
     {
-
         AddressablesUtility.LoadAsset<GameObject>(
             SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI", iGo =>
             {

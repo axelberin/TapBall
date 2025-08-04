@@ -77,18 +77,18 @@ public class PopUp : CanvasElementLocator
     {
         Initialize(tittleText, description, okAction, cancelAction);
 
-        var image = FindAndValidateComponent<Image>(transform, "Image");
-        image.sprite = icon.GetComponent<Image>().sprite;
+        //var image = FindAndValidateComponent<Image>(transform, "Image");
+        //image.sprite = icon.GetComponent<Image>().sprite;
 
-        if (icon.TryGetComponent(out Animator animator))
-        {
-            if (image.GetComponent<Animator>() == null)
-                image.gameObject.AddComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
-            else
-                image.GetComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
+        //if (icon.TryGetComponent(out Animator animator))
+        //{
+        //    if (image.GetComponent<Animator>() == null)
+        //        image.gameObject.AddComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
+        //    else
+        //        image.GetComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
 
-            animator.Play("Idle");
-        }
+        //    animator.SetTrigger("Idle");
+        //}
     }
 
     private void SetTittle(string tittleText)
