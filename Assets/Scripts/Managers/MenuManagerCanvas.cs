@@ -165,11 +165,13 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void OnUnlockSkin()
     {
+        string unlockedSkinName = GameManager.UnlokedSkin;
+
         AddressablesUtility.LoadAsset<GameObject>(
             SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI", iGo =>
             {
                 _unlockSkinsPopUp.InitializeWithIcon("unlockskin", iGo, "wantequipskin",
-                () => SaveAndLoadManager.SetStringValue(GameManager.UnlokedSkin, SaveAndLoadManager.CurrentBallSkinName, true));
+                () => SaveAndLoadManager.SetStringValue(unlockedSkinName, SaveAndLoadManager.CurrentBallSkinName, true));
                 _unlockSkinsPopUp.Show();
                 GameManager.UnlokedSkin = null;
             });
