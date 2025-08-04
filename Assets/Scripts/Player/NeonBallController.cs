@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class NeonBallController : MonoBehaviour, ISpecialSkin
+public class NeonBallController : SpecialSkin
 {
     private SpriteRenderer _renderer;
 
-    public void Initialize()
+    public override void Initialize()
     {
         _renderer ??= GetComponent<SpriteRenderer>();
         _renderer.color = GetRandomColor(Random.Range(0, 7));
     }
 
-    public void OnTap()
+    public override void OnTap()
     {
         _renderer.color = GetRandomColor(Random.Range(0, 7));
     }

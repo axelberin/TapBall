@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
-    private ISpecialSkin _specialSkin;
+    private SpecialSkin _specialSkin;
 
     void Awake()
     {
@@ -79,12 +79,16 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
             if (handle.Result.TryGetComponent(out Animator animator))
                 _animator.runtimeAnimatorController = animator.runtimeAnimatorController;
-            if (handle.Result.TryGetComponent(out ISpecialSkin specialSkin))
+            else
+                _animator.runtimeAnimatorController = null;
+
+            _spriteRenderer.sprite = handle.Result.GetComponent<SpriteRenderer>().sprite;
+
+            if (handle.Result.TryGetComponent(out SpecialSkin specialSkin))
             {
-                _specialSkin = specialSkin;
+                _specialSkin = gameObject.AddComponent(specialSkin.GetType()) as SpecialSkin;
                 _specialSkin.Initialize();
             }
         }
@@ -97,15 +101,14 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     {
         AddForce(touchPos);
 
-        if (Random.Range(0, 10) < 3)
+        if (_animator.runtimeAnimatorController != null && Random.Range(0, 10) < 3)
             _animator.SetTrigger("Flick");
 
         int randomIndex = Random.Range(0, _tapClips.Count);
         if (_audioSource && _tapClips[randomIndex])
             _audioSource.PlayOneShot(_tapClips[randomIndex]);
 
-        if (_specialSkin != null)
-            _specialSkin.OnTap();
+        _specialSkin?.OnTap();
     }
 
     private void AddForce(Vector3 touchPos)
