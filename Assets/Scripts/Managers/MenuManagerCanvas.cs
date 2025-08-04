@@ -35,6 +35,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
         }
+        else
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + SaveAndLoadManager.CurrentBallSkinName, true);
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
             SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true);
