@@ -151,7 +151,7 @@ public class LanguageManager : ManagersManager
         SetCurrentLanguageIndex(languageIndex);
         _currentLanguage = GetLanguageKeyFromIndex(_currentLanguageIndex);
         OnUpdateLanguage?.Invoke();
-        SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName);
+        SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
     }
 
     private void SetCurrentLanguageIndex(int index)
