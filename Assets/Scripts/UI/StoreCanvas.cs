@@ -1,12 +1,9 @@
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreCanvas : CanvasElementLocator
 {
     public static StoreCanvas Instance { get; private set; }
-
-    [SerializeField] private string _storeObjectPrefabName;
 
     private TextMeshProUGUI _coinsText;
     private PopUp _reviewPopUp;

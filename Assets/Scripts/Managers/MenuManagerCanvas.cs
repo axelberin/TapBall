@@ -52,6 +52,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
             SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true);
 
+        StoreManager.Instance.UpdateSkinsState?.Invoke();
+
         var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
         dunkCloseButton.onClick.AddListener(() =>
         {
@@ -171,7 +173,11 @@ public class MenuManagerCanvas : CanvasElementLocator
             SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI", iGo =>
             {
                 _unlockSkinsPopUp.InitializeWithIcon("unlockskin", iGo, "wantequipskin",
-                () => SaveAndLoadManager.SetStringValue(unlockedSkinName, SaveAndLoadManager.CurrentBallSkinName, true));
+                () =>
+                {
+                    SaveAndLoadManager.SetStringValue(unlockedSkinName, SaveAndLoadManager.CurrentBallSkinName, true);
+                    StoreManager.Instance.UpdateSkinsState?.Invoke();
+                });
                 _unlockSkinsPopUp.Show();
                 GameManager.UnlokedSkin = null;
             });
