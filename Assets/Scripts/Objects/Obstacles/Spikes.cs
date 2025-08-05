@@ -13,6 +13,8 @@ public class Spikes : ObstaclesManager, IPauseble
     private AudioClip _upSpikeClip;
     private AudioClip _fullUpSpikeClip;
 
+    private bool _isPaused;
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -27,21 +29,34 @@ public class Spikes : ObstaclesManager, IPauseble
             _animator.speed = _animatorSpeed;
             StartCoroutine(StartAnim(_animationDelay +
                 (_animator.runtimeAnimatorController.animationClips[0].length / _animatorSpeed)));
+        }
+    }
 
-            if (PauseAndResumeManager.Instance)
-            {
-                PauseAndResumeManager.Instance.AddResumeAction(OnResume);
-                PauseAndResumeManager.Instance.AddPauseAction(OnPause);
-            }
+    private void Start()
+    {
+        if (_animator && PauseAndResumeManager.Instance)
+        {
+            PauseAndResumeManager.Instance.AddResumeAction(OnResume);
+            PauseAndResumeManager.Instance.AddPauseAction(OnPause);
         }
     }
 
     private IEnumerator StartAnim(float delay)
     {
+        while (_isPaused)
+            yield return null;
+
         _animator.SetTrigger("Out");
         yield return new WaitForSeconds(delay);
+
+        while (_isPaused)
+            yield return null;
+
         _animator.SetTrigger("In");
         yield return new WaitForSeconds(delay);
+
+        while (_isPaused)
+            yield return null;
 
         StartCoroutine(StartAnim(delay));
     }
@@ -99,11 +114,22 @@ public class Spikes : ObstaclesManager, IPauseble
 
     public void OnResume()
     {
+        _isPaused = false;
         _animator.speed = _animatorSpeed;
     }
 
     public void OnPause()
     {
+        _isPaused = true;
         _animator.speed = 0f;
+    }
+
+    private void OnDestroy()
+    {
+        if (PauseAndResumeManager.Instance)
+        {
+            PauseAndResumeManager.Instance.RemoveResumeAction(OnResume);
+            PauseAndResumeManager.Instance.RemovePauseAction(OnPause);
+        }
     }
 }
