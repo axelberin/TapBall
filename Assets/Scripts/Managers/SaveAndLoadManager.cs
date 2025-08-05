@@ -109,14 +109,15 @@ public static class SaveAndLoadManager
                 SetStringValue(data.currentBallSkin, CurrentBallSkinName);
 
             SetFloatValue(data.soundsVolume, SoundsVolumeName);
-            AudioManager.Instance.SetSoundVolume(AudioManager.Instance.GetSoundIsMuted);
             SetFloatValue(data.musicVolume, MusicVolumeName);
-            AudioManager.Instance.SetMusicVolume(AudioManager.Instance.GetMusicIsMuted);
+            if (AudioManager.Instance)
+                AudioManager.Instance.ApplyAudioSettings();
 
             if (!string.IsNullOrEmpty(data.language))
             {
                 SetStringValue(data.language, LanguageName);
-                LanguageManager.Instance.LoadSavedOrDetectLanguage();
+                if (LanguageManager.Instance)
+                    LanguageManager.Instance.LoadSavedOrDetectLanguage();
             }
 
             SetIntValue(data.reviewSowed, ReviewSowed);
