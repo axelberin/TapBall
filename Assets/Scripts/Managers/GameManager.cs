@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -67,4 +68,16 @@ public class GameManager : MonoBehaviour
     public DeathController SetGetDeathController { set; get; }
 
     public GameModes GetCurrentGameMode => _currentGameMode;
+
+    public static string SavedErrorText;
+    public static string SavedLanguageText;
+    public static string SavedMusicText;
+    public static string SavedSoundText;
+    public static string SavedSkinText;
+
+    public static string LoadedErrorText;
+    public static string LoadedLanguageText;
+    public static string LoadedMusicText;
+    public static string LoadedSoundText;
+    public static string LoadedSkinText;
 }

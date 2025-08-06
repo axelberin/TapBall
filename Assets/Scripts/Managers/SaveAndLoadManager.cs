@@ -107,11 +107,14 @@ public static class SaveAndLoadManager
                 SetIntValue(data.coins, CoinsName);
             if (!string.IsNullOrEmpty(data.currentBallSkin))
                 SetStringValue(data.currentBallSkin, CurrentBallSkinName);
+            GameManager.LoadedSkinText = data.currentBallSkin;
 
             SetFloatValue(data.soundsVolume, SoundsVolumeName);
             SetFloatValue(data.musicVolume, MusicVolumeName);
             if (AudioManager.Instance)
                 AudioManager.Instance.ApplyAudioSettings();
+            GameManager.LoadedSoundText = data.soundsVolume.ToString();
+            GameManager.LoadedMusicText = data.musicVolume.ToString();
 
             if (!string.IsNullOrEmpty(data.language))
             {
@@ -119,6 +122,7 @@ public static class SaveAndLoadManager
                 if (LanguageManager.Instance)
                     LanguageManager.Instance.LoadSavedOrDetectLanguage();
             }
+            GameManager.LoadedLanguageText = data.language;
 
             SetIntValue(data.reviewSowed, ReviewSowed);
 
@@ -140,6 +144,7 @@ public static class SaveAndLoadManager
         }
         catch (System.Exception e)
         {
+            GameManager.LoadedErrorText = e.Message;
             Debug.LogError("Error applying cloud data: " + e.Message);
         }
         finally
@@ -167,6 +172,11 @@ public static class SaveAndLoadManager
         data.musicVolume = GetFloatValue(MusicVolumeName);
         data.language = GetStringValue(LanguageName);
         data.reviewSowed = GetIntValue(ReviewSowed);
+
+        GameManager.SavedLanguageText = data.language;
+        GameManager.SavedMusicText = data.musicVolume.ToString();
+        GameManager.SavedSoundText = data.soundsVolume.ToString();
+        GameManager.SavedSkinText = data.currentBallSkin;
 
         for (int i = 1; i <= 50; i++) // Ajusta el rango según tus niveles
         {
