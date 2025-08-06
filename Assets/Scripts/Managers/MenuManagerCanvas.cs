@@ -89,6 +89,14 @@ public class MenuManagerCanvas : CanvasElementLocator
             UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
     }
 
+    private void Update()
+    {
+#if UNITY_ANDROID
+        if (Input.GetKeyUp(KeyCode.Escape))
+            Application.Quit();
+#endif
+    }
+
     #region DUNK
     private void OnDunkLevelsClicked()
     {
