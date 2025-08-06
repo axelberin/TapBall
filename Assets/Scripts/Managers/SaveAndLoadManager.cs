@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public static class SaveAndLoadManager
 {
@@ -94,7 +95,7 @@ public static class SaveAndLoadManager
     }
 
     // Método para aplicar datos cargados desde la nube
-    public static void ApplyCloudData(string cloudData)
+    public static void ApplyCloudData(string cloudData, Action onComplete)
     {
         isLoadingFromCloud = true;
 
@@ -150,6 +151,7 @@ public static class SaveAndLoadManager
         finally
         {
             isLoadingFromCloud = false;
+            onComplete?.Invoke();
         }
     }
 
