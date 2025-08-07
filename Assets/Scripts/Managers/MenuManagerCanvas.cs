@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UtilityAddressables;
+using static GameManager;
 
 public class MenuManagerCanvas : CanvasElementLocator
 {
@@ -10,6 +11,9 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private TextMeshProUGUI _coinsText;
     private PopUp _unlockSkinsPopUp;
+
+    // Mundo actual - temporal hasta que implementes el sistema completo
+    private string _currentWorld = "Neon";
 
     void Start()
     {
@@ -51,6 +55,11 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
             SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true);
+
+        // Obtener mundo actual del save
+        _currentWorld = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName);
+        if (string.IsNullOrEmpty(_currentWorld))
+            _currentWorld = "Neon";
 
         StoreManager.Instance.UpdateSkinsState?.Invoke();
 
@@ -104,8 +113,10 @@ public class MenuManagerCanvas : CanvasElementLocator
                 break;
 
             button.name = $"DunkLevel{i}";
-            if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) && nextDunkLevel <= 49)
-                nextDunkLevel = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkLevelName + i) + 1;
+
+            // Usar nuevo sistema para determinar el siguiente nivel
+            if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) && nextDunkLevel <= 49)
+                nextDunkLevel = i + 1;
 
             #region UNLOCK LEVELS
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
@@ -121,28 +132,32 @@ public class MenuManagerCanvas : CanvasElementLocator
             if (i == 1)
                 button.interactable = true;
             else
-                button.interactable = SaveAndLoadManager.ContainsKey(
-                    SaveAndLoadManager.DunkLevelName + (i - 1));
-            #endregion
-            #region HAS COINS
-            var hasCoinImage = FindAndValidateComponent<Image>(button.transform, $"DunkHasCoin");
-            hasCoinImage.gameObject.SetActive(
-                SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
-                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinNameByLevel + GameManager.GameModes.Dunk + i) == 1);
+                // Usar nuevo sistema para verificar si el nivel anterior está completado
+                button.interactable = SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i - 1);
             #endregion
 
-            #region BEST
+            #region HAS COINS
+            var hasCoinImage = FindAndValidateComponent<Image>(button.transform, $"DunkHasCoin");
+            // Usar nuevo sistema para verificar monedas
+            hasCoinImage.gameObject.SetActive(
+                SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i));
+            #endregion
+
+            #region BEST (Objetivo del modo - en Dunk son los toques)
             var touchImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
+            // Usar nuevo sistema para verificar objetivo completado
             touchImage.gameObject.SetActive(
-                SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
-                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkTouchesCompleteName + i) == 1);
+                SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i));
             #endregion
 
             #region WITHOUT DEATH
             var noDeathImage = FindAndValidateComponent<Image>(button.transform, $"DunkWithoutDeath");
+            // Usar nuevo sistema para verificar sin muerte
             noDeathImage.gameObject.SetActive(
-                SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + i) &&
-                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + i) == 1);
+                SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i));
             #endregion
 
             #region LEVEL TEXT
@@ -155,9 +170,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         playButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
-
-            ScenesManager.Instance.LoadSceneAsync((SaveAndLoadManager.DunkLevelName +
-                nextDunkLevel).Replace("_", ""), fadeAnimator);
+            ScenesManager.Instance.LoadSceneAsync($"DunkLevel{nextDunkLevel}", fadeAnimator);
         });
 
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
@@ -183,8 +196,75 @@ public class MenuManagerCanvas : CanvasElementLocator
             });
     }
 
-    #region DEBUG
+    #region Migration Helper - Solo para desarrollo/testing
+    [ContextMenu("Migrate Legacy Data to New System")]
+    public void MigrateLegacyDataFromMenu()
+    {
+        SaveAndLoadManager.MigrateLegacyData();
 
+        // Refrescar la UI después de la migración
+        OnDunkLevelsClicked();
+
+        Debug.Log("Legacy data migration completed from Menu. UI refreshed.");
+    }
+    #endregion
+
+    #region Utility Methods
+    /// <summary>
+    /// Cambia el mundo actual y actualiza la UI
+    /// Usar cuando implementes el selector de mundos
+    /// </summary>
+    public void ChangeCurrentWorld(string worldName)
+    {
+        _currentWorld = worldName;
+        SaveAndLoadManager.SetStringValue(worldName, SaveAndLoadManager.CurrentWorldName, true);
+
+        // Refrescar la UI de niveles
+        OnDunkLevelsClicked();
+
+        Debug.Log($"World changed to: {worldName}");
+    }
+
+    /// <summary>
+    /// Obtiene el mundo actual
+    /// </summary>
+    public string GetCurrentWorld()
+    {
+        return _currentWorld;
+    }
+
+    /// <summary>
+    /// Obtiene estadísticas del mundo actual
+    /// </summary>
+    public (int completed, int withCoins, int withoutDeath, int objectiveComplete) GetWorldStats()
+    {
+        int completed = 0;
+        int withCoins = 0;
+        int withoutDeath = 0;
+        int objectiveComplete = 0;
+
+        for (int i = 1; i <= 50; i++)
+        {
+            if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i))
+            {
+                completed++;
+
+                if (SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i))
+                    withCoins++;
+
+                if (SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i))
+                    withoutDeath++;
+
+                if (SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i))
+                    objectiveComplete++;
+            }
+        }
+
+        return (completed, withCoins, withoutDeath, objectiveComplete);
+    }
+    #endregion
+
+    #region DEBUG
     public static MenuManagerCanvas Instance { get; private set; }
 
     private void Awake()

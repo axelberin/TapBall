@@ -13,6 +13,9 @@ public class LevelManager : MonoBehaviour
     private int _deathCount = 0;
     private List<Coins> _coinsObtained = new List<Coins>();
 
+    // Mundo actual - temporal hasta que implementes el sistema de mundos
+    private string _currentWorld = "Neon";
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,6 +28,7 @@ public class LevelManager : MonoBehaviour
     {
         OnWinLevel?.Invoke();
 
+        // Guardar monedas obtenidas
         int savedCoins = 0;
         if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
             savedCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
@@ -34,12 +38,26 @@ public class LevelManager : MonoBehaviour
 
         AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.WinSound);
 
+        // Procesar según el modo de juego
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
                 DunkOnWin();
                 break;
+            case GameModes.Time:
+                TimeOnWin();
+                break;
+            case GameModes.OneTouch:
+                OneTouchOnWin();
+                break;
+            case GameModes.Endless:
+                EndlessOnWin();
+                break;
+            case GameModes.Fall:
+                FallOnWin();
+                break;
             default:
+                Debug.LogWarning("Game mode not implemented for win processing: " + GameManager.Instance.GetCurrentGameMode);
                 break;
         }
 
@@ -50,26 +68,85 @@ public class LevelManager : MonoBehaviour
     {
         int level = GameManager.Instance.SetGetWorldState.GetLevel;
         int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
+        bool hasCoins = _coinsObtained.Count > 0;
+        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath;
+        bool isUnderTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkLevelName + level))
-            SaveAndLoadManager.SetIntValue(level, SaveAndLoadManager.DunkLevelName + level);
+        // Guardar datos usando el nuevo sistema
+        SaveAndLoadManager.SetLevelData(
+            GameModes.Dunk,
+            _currentWorld,
+            level,
+            hasCoins,
+            withoutDeath,
+            isUnderTouchLimit,
+            true // Guardar inmediatamente
+        );
 
-        foreach (var coinName in _coinsObtained)
-            SaveAndLoadManager.SetIntValue(1, coinName.GetCoinName);
+        // Mostrar información en UI
+        DunkLevelCanvas.Instance.SetTouchesInLevel(tapCount, !isUnderTouchLimit);
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkWithoutDeathName + level) ||
-            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkWithoutDeathName + level) == 0)
-            SaveAndLoadManager.SetIntValue(GameManager.Instance.SetGetPlayer.HasDeath ? 0 : 1,
-                SaveAndLoadManager.DunkWithoutDeathName + level, true);
+        Debug.Log($"Dunk Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Under Touch Limit: {isUnderTouchLimit}");
+    }
 
-        bool isOverTouchesLimit = tapCount > GameManager.Instance.SetGetWorldState.GetLimitTouches;
+    private void TimeOnWin()
+    {
+        int level = GameManager.Instance.SetGetWorldState.GetLevel;
+        bool hasCoins = _coinsObtained.Count > 0;
+        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath;
 
-        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DunkTouchesCompleteName + level) ||
-            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DunkTouchesCompleteName + level) == 0)
-            SaveAndLoadManager.SetIntValue(!isOverTouchesLimit ? 1 : 0,
-                SaveAndLoadManager.DunkTouchesCompleteName + level, true);
+        // Para Time mode, el objetivo sería completar dentro del tiempo límite
+        // Aquí necesitarías obtener el tiempo actual y compararlo con el límite
+        bool underTimeLimit = true; // TODO: Implementar lógica de tiempo
 
-        DunkLevelCanvas.Instance.SetTouchesInLevel(tapCount, isOverTouchesLimit);
+        SaveAndLoadManager.SetLevelData(
+            GameModes.Time,
+            _currentWorld,
+            level,
+            hasCoins,
+            withoutDeath,
+            underTimeLimit,
+            true
+        );
+
+        Debug.Log($"Time Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
+    }
+
+    private void OneTouchOnWin()
+    {
+        int level = GameManager.Instance.SetGetWorldState.GetLevel;
+        int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
+        bool hasCoins = _coinsObtained.Count > 0;
+        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath;
+
+        // Para OneTouch, el objetivo es usar exactamente 1 toque o menos del límite
+        int touchLimit = GameManager.Instance.SetGetWorldState.GetLimitTouches;
+        bool underTouchLimit = tapCount <= touchLimit;
+
+        SaveAndLoadManager.SetLevelData(
+            GameModes.OneTouch,
+            _currentWorld,
+            level,
+            hasCoins,
+            withoutDeath,
+            underTouchLimit,
+            true
+        );
+
+        Debug.Log($"OneTouch Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{touchLimit}");
+    }
+
+    private void EndlessOnWin()
+    {
+        // Endless es procedural, no tiene niveles específicos
+        // Podrías guardar estadísticas como mejor puntuación, tiempo sobrevivido, etc.
+        Debug.Log("Endless mode completed - No level data to save");
+    }
+
+    private void FallOnWin()
+    {
+        // Fall es procedural, similar a Endless
+        Debug.Log("Fall mode completed - No level data to save");
     }
 
     public void OnLose()
@@ -86,16 +163,19 @@ public class LevelManager : MonoBehaviour
             _deathCount = 0;
         }
 
+        // Resetear según el modo de juego
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
+            case GameModes.Time:
+            case GameModes.OneTouch:
                 GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
                 break;
             default:
                 break;
         }
 
-        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);    //TODO: Cambiar musica segun el modo de juego
+        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
     }
 
     public void OnGetCoin(Coins coinName)
@@ -108,8 +188,64 @@ public class LevelManager : MonoBehaviour
         _coinsObtained.Clear();
     }
 
+    /// <summary>
+    /// Verifica si ya se obtuvieron monedas en el nivel actual
+    /// Compatibilidad con el sistema nuevo
+    /// </summary>
     public bool HasGetedCoins => _coinsObtained.Count > 0 ||
-        SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinNameByLevel +
-             GameManager.Instance.GetCurrentGameMode +
-             GameManager.Instance.SetGetWorldState.GetLevel);
+        SaveAndLoadManager.GetLevelCoinObtained(
+            GameManager.Instance.GetCurrentGameMode,
+            _currentWorld,
+            GameManager.Instance.SetGetWorldState.GetLevel
+        );
+
+    /// <summary>
+    /// Obtiene los datos completos del nivel actual
+    /// </summary>
+    public LevelData GetCurrentLevelData()
+    {
+        return SaveAndLoadManager.GetLevelData(
+            GameManager.Instance.GetCurrentGameMode,
+            _currentWorld,
+            GameManager.Instance.SetGetWorldState.GetLevel
+        );
+    }
+
+    /// <summary>
+    /// Verifica si el nivel actual está completado
+    /// </summary>
+    public bool IsCurrentLevelCompleted()
+    {
+        return SaveAndLoadManager.HasLevelData(
+            GameManager.Instance.GetCurrentGameMode,
+            _currentWorld,
+            GameManager.Instance.SetGetWorldState.GetLevel
+        );
+    }
+
+    /// <summary>
+    /// Establece el mundo actual
+    /// Usar cuando implementes el sistema de mundos
+    /// </summary>
+    public void SetCurrentWorld(string world)
+    {
+        _currentWorld = world;
+        Debug.Log($"Current world set to: {world}");
+    }
+
+    /// <summary>
+    /// Obtiene el mundo actual
+    /// </summary>
+    public string GetCurrentWorld()
+    {
+        return _currentWorld;
+    }
+
+    #region Migration Helper - Llamar una vez para migrar datos existentes
+    [ContextMenu("Migrate Legacy Data")]
+    public void MigrateLegacyData()
+    {
+        SaveAndLoadManager.MigrateLegacyData();
+    }
+    #endregion
 }

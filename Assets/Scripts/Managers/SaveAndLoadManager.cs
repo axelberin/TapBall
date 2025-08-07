@@ -5,11 +5,8 @@ using static GameManager;
 
 public static class SaveAndLoadManager
 {
+    // Nombres de parámetros base
     public static string CoinsName = "Coins";
-    public static string CoinNameByLevel = "Coin_";
-    public static string DunkLevelName = "DunkLevel_";
-    public static string DunkWithoutDeathName = "DunkWithoutDeath_";
-    public static string DunkTouchesCompleteName = "DunkTouchesComplete_";
     public static string CurrentBallSkinName = "CurrentBallSkin";
     public static string ObtainedBallSkins = "BallSkin_";
     public static string SoundsVolumeName = "SoundsVolume";
@@ -18,14 +15,30 @@ public static class SaveAndLoadManager
     public static string ReviewSowed = "ReviewSowed";
     public static string CurrentWorldName = "CurrentWorld";
 
+    // DEPRECATED - Mantener para compatibilidad hacia atrás
+    public static string CoinNameByLevel = "Coin_";
+    public static string DunkLevelName = "DunkLevel_";
+    public static string DunkWithoutDeathName = "DunkWithoutDeath_";
+    public static string DunkTouchesCompleteName = "DunkTouchesComplete_";
+
+    // Nueva estructura: Modo_Mundo_Nivel_TipoDato
+    private static string LevelDataPrefix = "LevelData_";
+    private static string CoinSuffix = "_Coin";
+    private static string WithoutDeathSuffix = "_WithoutDeath";
+    private static string ObjectiveCompleteSuffix = "_ObjectiveComplete";
+
     private static SaveAndLoadOnCloudManager cloudManager;
     private static bool isLoadingFromCloud = false;
+
+    // Mundos disponibles - actualiza esta lista cuando agregues mundos
+    private static string[] _availableWorlds = new string[] { "Default" }; // Temporal hasta que definas los mundos reales
 
     public static void SetCloudManager(SaveAndLoadOnCloudManager manager)
     {
         cloudManager = manager;
     }
 
+    #region Basic Data Methods
     public static void SetIntValue(int value, string parameterName, bool withSave = false)
     {
         PlayerPrefs.SetInt(parameterName, value);
@@ -54,7 +67,6 @@ public static class SaveAndLoadManager
             Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
-
         return PlayerPrefs.GetInt(parameterName);
     }
 
@@ -65,7 +77,6 @@ public static class SaveAndLoadManager
             Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
-
         return PlayerPrefs.GetFloat(parameterName);
     }
 
@@ -76,7 +87,6 @@ public static class SaveAndLoadManager
             Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
-
         return PlayerPrefs.GetString(parameterName);
     }
 
@@ -84,18 +94,198 @@ public static class SaveAndLoadManager
     {
         return PlayerPrefs.HasKey(parameterName);
     }
+    #endregion
 
+    #region Level Data Methods - Nueva Estructura
+    /// <summary>
+    /// Genera la clave para un dato específico de un nivel
+    /// Formato: LevelData_[GameMode]_[World]_[Level]_[DataType]
+    /// </summary>
+    private static string GenerateLevelDataKey(GameModes gameMode, string world, int level, string dataSuffix)
+    {
+        return $"{LevelDataPrefix}{gameMode}_{world}_{level}{dataSuffix}";
+    }
+
+    /// <summary>
+    /// Guarda si el jugador obtuvo la moneda en un nivel específico
+    /// </summary>
+    public static void SetLevelCoinObtained(GameModes gameMode, string world, int level, bool obtained, bool withSave = false)
+    {
+        string key = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
+        SetIntValue(obtained ? 1 : 0, key, withSave);
+    }
+
+    /// <summary>
+    /// Obtiene si el jugador obtuvo la moneda en un nivel específico
+    /// </summary>
+    public static bool GetLevelCoinObtained(GameModes gameMode, string world, int level)
+    {
+        string key = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
+        return GetIntValue(key) == 1;
+    }
+
+    /// <summary>
+    /// Guarda si el jugador completó el nivel sin morir
+    /// </summary>
+    public static void SetLevelWithoutDeath(GameModes gameMode, string world, int level, bool withoutDeath, bool withSave = false)
+    {
+        string key = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
+        SetIntValue(withoutDeath ? 1 : 0, key, withSave);
+    }
+
+    /// <summary>
+    /// Obtiene si el jugador completó el nivel sin morir
+    /// </summary>
+    public static bool GetLevelWithoutDeath(GameModes gameMode, string world, int level)
+    {
+        string key = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
+        return GetIntValue(key) == 1;
+    }
+
+    /// <summary>
+    /// Guarda si el jugador cumplió el objetivo específico del modo de juego
+    /// Dunk: toques máximos, Time: tiempo límite, OneTouch: límite de toques, etc.
+    /// </summary>
+    public static void SetLevelObjectiveComplete(GameModes gameMode, string world, int level, bool objectiveComplete, bool withSave = false)
+    {
+        string key = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
+        SetIntValue(objectiveComplete ? 1 : 0, key, withSave);
+    }
+
+    /// <summary>
+    /// Obtiene si el jugador cumplió el objetivo específico del modo de juego
+    /// </summary>
+    public static bool GetLevelObjectiveComplete(GameModes gameMode, string world, int level)
+    {
+        string key = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
+        return GetIntValue(key) == 1;
+    }
+
+    /// <summary>
+    /// Guarda todos los datos de un nivel de una vez
+    /// </summary>
+    public static void SetLevelData(GameModes gameMode, string world, int level, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false)
+    {
+        SetLevelCoinObtained(gameMode, world, level, coinObtained, false);
+        SetLevelWithoutDeath(gameMode, world, level, withoutDeath, false);
+        SetLevelObjectiveComplete(gameMode, world, level, objectiveComplete, withSave);
+    }
+
+    /// <summary>
+    /// Obtiene todos los datos de un nivel específico
+    /// </summary>
+    public static LevelData GetLevelData(GameModes gameMode, string world, int level)
+    {
+        return new LevelData
+        {
+            coinObtained = GetLevelCoinObtained(gameMode, world, level),
+            withoutDeath = GetLevelWithoutDeath(gameMode, world, level),
+            objectiveComplete = GetLevelObjectiveComplete(gameMode, world, level)
+        };
+    }
+
+    /// <summary>
+    /// Verifica si existe algún dato guardado para un nivel específico
+    /// </summary>
+    public static bool HasLevelData(GameModes gameMode, string world, int level)
+    {
+        string coinKey = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
+        string deathKey = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
+        string objectiveKey = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
+
+        return ContainsKey(coinKey) || ContainsKey(deathKey) || ContainsKey(objectiveKey);
+    }
+    #endregion
+
+    #region Compatibility Methods - Para migrar del sistema viejo
+    /// <summary>
+    /// Genera el nombre de moneda por nivel como lo hacías antes
+    /// DEPRECATED - Usar SetLevelCoinObtained en su lugar
+    /// </summary>
+    public static string GenerateCoinNameByLevel(string gameMode, int level)
+    {
+        return CoinNameByLevel + gameMode + level;
+    }
+
+    /// <summary>
+    /// Migra datos del formato viejo al nuevo
+    /// Llamar una sola vez para migrar datos existentes
+    /// </summary>
+    public static void MigrateLegacyData()
+    {
+        Debug.Log("Starting legacy data migration...");
+        int migratedLevels = 0;
+
+        // Migrar datos de Dunk (formato viejo)
+        for (int level = 1; level <= 50; level++)
+        {
+            bool hasAnyData = false;
+
+            // Migrar nivel completado
+            string oldLevelKey = DunkLevelName + level;
+            if (ContainsKey(oldLevelKey))
+            {
+                // En el formato viejo, si existe la key significa que se completó
+                hasAnyData = true;
+            }
+
+            // Migrar sin muerte
+            string oldWithoutDeathKey = DunkWithoutDeathName + level;
+            bool withoutDeath = false;
+            if (ContainsKey(oldWithoutDeathKey))
+            {
+                withoutDeath = GetIntValue(oldWithoutDeathKey) == 1;
+                hasAnyData = true;
+            }
+
+            // Migrar toques completos (objetivo de Dunk)
+            string oldTouchesKey = DunkTouchesCompleteName + level;
+            bool touchesComplete = false;
+            if (ContainsKey(oldTouchesKey))
+            {
+                touchesComplete = GetIntValue(oldTouchesKey) == 1;
+                hasAnyData = true;
+            }
+
+            // Migrar moneda
+            string oldCoinKey = GenerateCoinNameByLevel(GameModes.Dunk.ToString(), level);
+            bool coinObtained = false;
+            if (ContainsKey(oldCoinKey))
+            {
+                coinObtained = GetIntValue(oldCoinKey) == 1;
+                hasAnyData = true;
+            }
+
+            // Si hay datos para este nivel, migrarlos al nuevo formato
+            if (hasAnyData)
+            {
+                SetLevelData(GameModes.Dunk, "Default", level, coinObtained, withoutDeath, touchesComplete, false);
+                migratedLevels++;
+                Debug.Log($"Migrated level {level} data to new format");
+            }
+        }
+
+        if (migratedLevels > 0)
+        {
+            Save();
+            Debug.Log($"Migration completed. {migratedLevels} levels migrated to new format.");
+        }
+        else
+        {
+            Debug.Log("No legacy data found to migrate.");
+        }
+    }
+    #endregion
+
+    #region Save/Load/Cloud Methods
     public static void Save()
     {
-        // Guardar localmente
         PlayerPrefs.Save();
 
-        // Guardar en la nube si está disponible
         if (cloudManager != null && !isLoadingFromCloud)
             cloudManager.SaveGameData(SerializeGameData());
     }
 
-    // Método para aplicar datos cargados desde la nube
     public static void ApplyCloudData(string cloudData, Action onComplete)
     {
         isLoadingFromCloud = true;
@@ -104,7 +294,7 @@ public static class SaveAndLoadManager
         {
             GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
 
-            // Aplicar los datos deserializados
+            // Aplicar datos básicos
             if (data.coins >= 0)
                 SetIntValue(data.coins, CoinsName);
             if (!string.IsNullOrEmpty(data.currentBallSkin))
@@ -128,18 +318,28 @@ public static class SaveAndLoadManager
 
             SetIntValue(data.reviewSowed, ReviewSowed);
 
-            // Aplicar datos de niveles
-            foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
+            // Aplicar datos de niveles con nueva estructura
+            foreach (var modeData in data.gameModeData)
             {
-                if (mode == GameModes.Null)
-                    continue;
-
-                foreach (var levelData in data.levelData)
+                if (Enum.TryParse<GameModes>(modeData.Key, out GameModes gameMode))
                 {
-                    SetIntValue(levelData.Value.level, DunkLevelName + levelData.Key);
-                    SetIntValue(levelData.Value.withoutDeath ? 1 : 0, DunkWithoutDeathName + levelData.Key);
-                    SetIntValue(levelData.Value.touchesComplete ? 1 : 0, DunkTouchesCompleteName + levelData.Key);
-                    SetIntValue(levelData.Value.coinObteined ? 1 : 0, GenerateCoinNameByLevel(mode.ToString(), int.Parse(levelData.Key)));
+                    foreach (var worldData in modeData.Value)
+                    {
+                        string world = worldData.Key;
+
+                        foreach (var levelData in worldData.Value)
+                        {
+                            if (int.TryParse(levelData.Key, out int level))
+                            {
+                                LevelData levelInfo = levelData.Value;
+                                SetLevelData(gameMode, world, level,
+                                           levelInfo.coinObtained,
+                                           levelInfo.withoutDeath,
+                                           levelInfo.objectiveComplete,
+                                           false);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -170,7 +370,6 @@ public static class SaveAndLoadManager
         "NeonBallSkin"
     };
 
-    // Serializar todos los datos del juego
     private static string SerializeGameData()
     {
         GameData data = new();
@@ -187,67 +386,73 @@ public static class SaveAndLoadManager
         GameManager.SavedMusicText = data.musicVolume.ToString();
         GameManager.SavedSoundText = data.soundsVolume.ToString();
         GameManager.SavedSkinText = data.currentBallSkin;
+
+        // Serializar datos de niveles con nueva estructura
         foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
         {
             if (mode == GameModes.Null)
                 continue;
-            for (int i = 1; i <= 50; i++) // Ajusta el rango según tus niveles
+
+            foreach (string world in _availableWorlds)
             {
-                string levelKey = i.ToString();
-
-                // Solo agregar si existe al menos un dato para este nivel
-                if (PlayerPrefs.HasKey(DunkLevelName + levelKey) ||
-                    PlayerPrefs.HasKey(DunkWithoutDeathName + levelKey) ||
-                    PlayerPrefs.HasKey(DunkTouchesCompleteName + levelKey) ||
-                    PlayerPrefs.HasKey(CoinNameByLevel + levelKey))
+                for (int level = 1; level <= 50; level++)
                 {
-                    LevelData levelData = new LevelData
+                    if (HasLevelData(mode, world, level))
                     {
-                        level = GetIntValue(DunkLevelName + levelKey),
-                        withoutDeath = GetIntValue(DunkWithoutDeathName + levelKey) == 1,
-                        touchesComplete = GetIntValue(DunkTouchesCompleteName + levelKey) == 1,
-                        coinObteined = GetIntValue(GenerateCoinNameByLevel(mode.ToString(), int.Parse(levelKey))) == 1
-                    };
+                        // Asegurar que existe la estructura anidada
+                        if (!data.gameModeData.ContainsKey(mode.ToString()))
+                            data.gameModeData[mode.ToString()] = new Dictionary<string, Dictionary<string, LevelData>>();
 
-                    data.levelData[levelKey] = levelData;
+                        if (!data.gameModeData[mode.ToString()].ContainsKey(world))
+                            data.gameModeData[mode.ToString()][world] = new Dictionary<string, LevelData>();
+
+                        // Agregar los datos del nivel
+                        data.gameModeData[mode.ToString()][world][level.ToString()] = GetLevelData(mode, world, level);
+                    }
                 }
             }
         }
 
-        var skinKeys = new HashSet<string>();
-
+        // Serializar skins
         foreach (string skinName in _skinNames)
         {
             string skinPrefKey = ObtainedBallSkins + skinName;
-
             if (PlayerPrefs.HasKey(skinPrefKey))
             {
-                skinKeys.Add(skinName);
+                data.obtainedSkins[skinName] = GetIntValue(skinPrefKey) == 1;
             }
         }
 
-        // Serializar skins encontradas por nombre
-        foreach (string skinKey in skinKeys)
-        {
-            data.obtainedSkins[skinKey] = GetIntValue(ObtainedBallSkins + skinKey) == 1;
-        }
-
         return Newtonsoft.Json.JsonConvert.SerializeObject(data);
-    }
-
-    public static string GenerateCoinNameByLevel(string gameMode, int level)
-    {
-        return CoinNameByLevel + gameMode + level;
     }
 
     public static void DeleteData()
     {
         PlayerPrefs.DeleteAll();
 
-        // También podrías implementar borrado en la nube si es necesario
         if (cloudManager != null)
-            cloudManager.SaveGameData("{}"); // Guardar datos vacíos
+            cloudManager.SaveGameData("{}");
     }
+    #endregion
+
+    #region Utility Methods
+    /// <summary>
+    /// Actualiza la lista de mundos disponibles
+    /// Llamar cuando agregues nuevos mundos al juego
+    /// </summary>
+    public static void SetAvailableWorlds(string[] worlds)
+    {
+        _availableWorlds = worlds;
+    }
+
+    /// <summary>
+    /// Obtiene los mundos disponibles
+    /// </summary>
+    public static string[] GetAvailableWorlds()
+    {
+        return _availableWorlds;
+    }
+    #endregion
 }
 
 // Clases para la serialización
@@ -260,12 +465,14 @@ public class GameData
     public float musicVolume;
     public string language;
     public int reviewSowed;
-    public Dictionary<string, LevelData> levelData;
+
+    // Estructura: GameMode -> World -> Level -> LevelData
+    public Dictionary<string, Dictionary<string, Dictionary<string, LevelData>>> gameModeData;
     public Dictionary<string, bool> obtainedSkins;
 
     public GameData()
     {
-        levelData = new Dictionary<string, LevelData>();
+        gameModeData = new Dictionary<string, Dictionary<string, Dictionary<string, LevelData>>>();
         obtainedSkins = new Dictionary<string, bool>();
     }
 }
@@ -273,8 +480,7 @@ public class GameData
 [System.Serializable]
 public class LevelData
 {
-    public int level;
+    public bool coinObtained;
     public bool withoutDeath;
-    public bool touchesComplete;
-    public bool coinObteined;
+    public bool objectiveComplete; // Dunk: toques máximos, Time: tiempo límite, etc.
 }
