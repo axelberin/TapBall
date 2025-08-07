@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using static GameManager;
 
 public static class SaveAndLoadManager
 {
@@ -128,12 +129,18 @@ public static class SaveAndLoadManager
             SetIntValue(data.reviewSowed, ReviewSowed);
 
             // Aplicar datos de niveles
-            foreach (var levelData in data.levelData)
+            foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
             {
-                SetIntValue(levelData.Value.level, DunkLevelName + levelData.Key);
-                SetIntValue(levelData.Value.withoutDeath ? 1 : 0, DunkWithoutDeathName + levelData.Key);
-                SetIntValue(levelData.Value.touchesComplete ? 1 : 0, DunkTouchesCompleteName + levelData.Key);
-                SetIntValue(levelData.Value.coins, CoinNameByLevel + levelData.Key);
+                if (mode == GameModes.Null)
+                    continue;
+
+                foreach (var levelData in data.levelData)
+                {
+                    SetIntValue(levelData.Value.level, DunkLevelName + levelData.Key);
+                    SetIntValue(levelData.Value.withoutDeath ? 1 : 0, DunkWithoutDeathName + levelData.Key);
+                    SetIntValue(levelData.Value.touchesComplete ? 1 : 0, DunkTouchesCompleteName + levelData.Key);
+                    SetIntValue(levelData.Value.coinObteined ? 1 : 0, GenerateCoinNameByLevel(mode.ToString(), int.Parse(levelData.Key)));
+                }
             }
 
             // Aplicar skins obtenidas
@@ -143,7 +150,7 @@ public static class SaveAndLoadManager
             PlayerPrefs.Save();
             Debug.Log("Cloud data successfully applied to local save.");
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             GameManager.LoadedErrorText = e.Message;
             Debug.LogError("Error applying cloud data: " + e.Message);
@@ -160,6 +167,7 @@ public static class SaveAndLoadManager
         "CatBallSkin","DogBallSkin","CarpinchoBallSkin","PandaBallSkin","GrizzlyBallSkin",
         "FutbolBallSkin","BasketBallSkin","TennisBallSkin","BaseBallSkin",
         "MagmaBallSkin","WaterBallSkin",
+        "NeonBallSkin"
     };
 
     // Serializar todos los datos del juego
@@ -179,26 +187,30 @@ public static class SaveAndLoadManager
         GameManager.SavedMusicText = data.musicVolume.ToString();
         GameManager.SavedSoundText = data.soundsVolume.ToString();
         GameManager.SavedSkinText = data.currentBallSkin;
-
-        for (int i = 1; i <= 50; i++) // Ajusta el rango según tus niveles
+        foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
         {
-            string levelKey = i.ToString();
-
-            // Solo agregar si existe al menos un dato para este nivel
-            if (PlayerPrefs.HasKey(DunkLevelName + levelKey) ||
-                PlayerPrefs.HasKey(DunkWithoutDeathName + levelKey) ||
-                PlayerPrefs.HasKey(DunkTouchesCompleteName + levelKey) ||
-                PlayerPrefs.HasKey(CoinNameByLevel + levelKey))
+            if (mode == GameModes.Null)
+                continue;
+            for (int i = 1; i <= 50; i++) // Ajusta el rango según tus niveles
             {
-                LevelData levelData = new LevelData
-                {
-                    level = GetIntValue(DunkLevelName + levelKey),
-                    withoutDeath = GetIntValue(DunkWithoutDeathName + levelKey) == 1,
-                    touchesComplete = GetIntValue(DunkTouchesCompleteName + levelKey) == 1,
-                    coins = GetIntValue(CoinNameByLevel + levelKey)
-                };
+                string levelKey = i.ToString();
 
-                data.levelData[levelKey] = levelData;
+                // Solo agregar si existe al menos un dato para este nivel
+                if (PlayerPrefs.HasKey(DunkLevelName + levelKey) ||
+                    PlayerPrefs.HasKey(DunkWithoutDeathName + levelKey) ||
+                    PlayerPrefs.HasKey(DunkTouchesCompleteName + levelKey) ||
+                    PlayerPrefs.HasKey(CoinNameByLevel + levelKey))
+                {
+                    LevelData levelData = new LevelData
+                    {
+                        level = GetIntValue(DunkLevelName + levelKey),
+                        withoutDeath = GetIntValue(DunkWithoutDeathName + levelKey) == 1,
+                        touchesComplete = GetIntValue(DunkTouchesCompleteName + levelKey) == 1,
+                        coinObteined = GetIntValue(GenerateCoinNameByLevel(mode.ToString(), int.Parse(levelKey))) == 1
+                    };
+
+                    data.levelData[levelKey] = levelData;
+                }
             }
         }
 
@@ -221,6 +233,11 @@ public static class SaveAndLoadManager
         }
 
         return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+    }
+
+    public static string GenerateCoinNameByLevel(string gameMode, int level)
+    {
+        return CoinNameByLevel + gameMode + level;
     }
 
     public static void DeleteData()
@@ -259,5 +276,5 @@ public class LevelData
     public int level;
     public bool withoutDeath;
     public bool touchesComplete;
-    public int coins;
+    public bool coinObteined;
 }
