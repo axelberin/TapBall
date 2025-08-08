@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+
+        SaveAndLoadManager.MigrateLegacyData();
     }
 
     public void OnWin()
@@ -240,12 +242,4 @@ public class LevelManager : MonoBehaviour
     {
         return _currentWorld;
     }
-
-    #region Migration Helper - Llamar una vez para migrar datos existentes
-    [ContextMenu("Migrate Legacy Data")]
-    public void MigrateLegacyData()
-    {
-        SaveAndLoadManager.MigrateLegacyData();
-    }
-    #endregion
 }

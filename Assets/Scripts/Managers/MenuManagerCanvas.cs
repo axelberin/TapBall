@@ -17,6 +17,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     void Start()
     {
+        SaveAndLoadManager.MigrateLegacyData();
         Application.targetFrameRate = 60;
 
         GameManager.Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu
@@ -204,19 +205,6 @@ public class MenuManagerCanvas : CanvasElementLocator
                 GameManager.UnlokedSkin = null;
             });
     }
-
-    #region Migration Helper - Solo para desarrollo/testing
-    [ContextMenu("Migrate Legacy Data to New System")]
-    public void MigrateLegacyDataFromMenu()
-    {
-        SaveAndLoadManager.MigrateLegacyData();
-
-        // Refrescar la UI después de la migración
-        OnDunkLevelsClicked();
-
-        Debug.Log("Legacy data migration completed from Menu. UI refreshed.");
-    }
-    #endregion
 
     #region Utility Methods
     /// <summary>
