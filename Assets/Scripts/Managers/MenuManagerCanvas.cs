@@ -37,7 +37,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin");
-            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName, true);
+            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
         }
         else
         {
@@ -49,12 +49,12 @@ public class MenuManagerCanvas : CanvasElementLocator
             {
                 Debug.LogWarning($"Current skin '{currentSkin}' is not unlocked. Reverting to BallBasicSkin.");
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin");
-                SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName, true);
+                SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
             }
         }
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
-            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true);
+            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName);
 
         // Obtener mundo actual del save
         _currentWorld = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName);
@@ -62,6 +62,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             _currentWorld = "Neon";
 
         StoreManager.Instance.UpdateSkinsState?.Invoke();
+        SaveAndLoadManager.Save();
 
         var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
         dunkCloseButton.onClick.AddListener(() =>

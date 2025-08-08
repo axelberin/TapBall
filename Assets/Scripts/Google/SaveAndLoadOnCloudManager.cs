@@ -122,7 +122,12 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             // Aplicar los datos cargados al sistema local
             if (!string.IsNullOrEmpty(loadedData) && loadedData != "{}")
             {
-                SaveAndLoadManager.ApplyCloudData(loadedData, () => _isInitialized = true);
+                SaveAndLoadManager.ApplyCloudData(loadedData, () => _isInitialized = true, OnLoadDataFailed);
+            }
+            else
+            {
+                Debug.LogWarning("Cloud data is empty. Keeping local save data.");
+                _isInitialized = true;
             }
         }
         else

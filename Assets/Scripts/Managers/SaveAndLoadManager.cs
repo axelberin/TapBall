@@ -31,7 +31,7 @@ public static class SaveAndLoadManager
     private static bool isLoadingFromCloud = false;
 
     // Mundos disponibles - actualiza esta lista cuando agregues mundos
-    private static string[] _availableWorlds = new string[] { "Default" }; // Temporal hasta que definas los mundos reales
+    private static string[] _availableWorlds = new string[] { "Neon" }; // Temporal hasta que definas los mundos reales
 
     public static void SetCloudManager(SaveAndLoadOnCloudManager manager)
     {
@@ -286,7 +286,7 @@ public static class SaveAndLoadManager
             cloudManager.SaveGameData(SerializeGameData());
     }
 
-    public static void ApplyCloudData(string cloudData, Action onComplete)
+    public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
     {
         isLoadingFromCloud = true;
 
@@ -321,7 +321,7 @@ public static class SaveAndLoadManager
             // Aplicar datos de niveles con nueva estructura
             foreach (var modeData in data.gameModeData)
             {
-                if (Enum.TryParse<GameModes>(modeData.Key, out GameModes gameMode))
+                if (Enum.TryParse(modeData.Key, out GameModes gameMode))
                 {
                     foreach (var worldData in modeData.Value)
                     {
@@ -354,6 +354,7 @@ public static class SaveAndLoadManager
         {
             GameManager.LoadedErrorText = e.Message;
             Debug.LogError("Error applying cloud data: " + e.Message);
+            onFail?.Invoke();
         }
         finally
         {
