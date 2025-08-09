@@ -36,6 +36,7 @@ public class LoadingGameManager : CanvasElementLocator
         _popUp = FindAndValidateComponent<PopUp>(transform, "ErrorConectingPopUp");
         _popUp.Initialize("conectionfail", "cantconnect");
 
+        SaveAndLoadManager.MigrateLegacyData();
         StartCoroutine(InitializeManagers());
     }
 
@@ -49,7 +50,7 @@ public class LoadingGameManager : CanvasElementLocator
             if (!manager.IsInitialized)
             {
                 yield return manager.InizializeManagers();
-                if (manager.IsInitialized && manager is LanguageManager)
+                if (manager.IsInitialized && manager is SaveAndLoadOnCloudManager)
                     _canShowTexts = true;
             }
 
@@ -64,6 +65,7 @@ public class LoadingGameManager : CanvasElementLocator
         else
         {
             StartCoroutine(SmoothFill(1f));
+            yield return new WaitForSeconds(1f);
             ScenesManager.Instance.LoadSceneAsync("Menu", _fadeAnimator);
         }
     }

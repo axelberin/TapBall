@@ -19,6 +19,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            GameManager.SavedErrorText = "Not authenticated with Google Play Games";
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot save data.");
         }
     }
@@ -60,6 +61,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            GameManager.SavedErrorText = status.ToString();
             Debug.LogError("Error opening saved game: " + status);
             onComplete?.Invoke();
         }
@@ -73,6 +75,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            GameManager.SavedErrorText = status.ToString();
             Debug.LogError("Error saving game data: " + status);
         }
 
@@ -119,10 +122,13 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             // Aplicar los datos cargados al sistema local
             if (!string.IsNullOrEmpty(loadedData) && loadedData != "{}")
             {
-                SaveAndLoadManager.ApplyCloudData(loadedData);
+                SaveAndLoadManager.ApplyCloudData(loadedData, () => _isInitialized = true, OnLoadDataFailed);
             }
-
-            _isInitialized = true;
+            else
+            {
+                Debug.LogWarning("Cloud data is empty. Keeping local save data.");
+                _isInitialized = true;
+            }
         }
         else
         {
