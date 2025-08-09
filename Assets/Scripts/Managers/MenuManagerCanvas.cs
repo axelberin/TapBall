@@ -17,7 +17,6 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     void Start()
     {
-        SaveAndLoadManager.MigrateLegacyData();
         Application.targetFrameRate = 60;
 
         GameManager.Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu

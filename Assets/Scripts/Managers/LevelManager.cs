@@ -22,8 +22,6 @@ public class LevelManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
-
-        SaveAndLoadManager.MigrateLegacyData();
     }
 
     public void OnWin()

@@ -259,7 +259,7 @@ public static class SaveAndLoadManager
             // Si hay datos para este nivel, migrarlos al nuevo formato
             if (hasAnyData)
             {
-                SetLevelData(GameModes.Dunk, "Default", level, coinObtained, withoutDeath, touchesComplete, false);
+                SetLevelData(GameModes.Dunk, "Neon", level, coinObtained, withoutDeath, touchesComplete, false);
                 migratedLevels++;
                 Debug.Log($"Migrated level {level} data to new format");
             }

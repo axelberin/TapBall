@@ -36,6 +36,7 @@ public class LoadingGameManager : CanvasElementLocator
         _popUp = FindAndValidateComponent<PopUp>(transform, "ErrorConectingPopUp");
         _popUp.Initialize("conectionfail", "cantconnect");
 
+        SaveAndLoadManager.MigrateLegacyData();
         StartCoroutine(InitializeManagers());
     }
 
