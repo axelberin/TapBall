@@ -19,6 +19,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
+            MenuManagerCanvas.Instance.DebugIsAuthenticated("Not authenticated");
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot save data.");
         }
     }

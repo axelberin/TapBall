@@ -36,6 +36,7 @@ public static class SaveAndLoadManager
     public static void SetCloudManager(SaveAndLoadOnCloudManager manager)
     {
         cloudManager = manager;
+        MenuManagerCanvas.Instance.DebugCloudManager(cloudManager != null ? cloudManager.name : null);
     }
 
     #region Basic Data Methods
@@ -291,6 +292,8 @@ public static class SaveAndLoadManager
 
     public static void SaveCloud()
     {
+        MenuManagerCanvas.Instance.DebugCloudManager(cloudManager != null ? cloudManager.name : null);
+        MenuManagerCanvas.Instance.DebugIsLoadingFromCloud(isLoadingFromCloud.ToString());
         if (cloudManager != null && !isLoadingFromCloud)
             cloudManager.SaveGameData(SerializeGameData());
     }
@@ -301,6 +304,7 @@ public static class SaveAndLoadManager
 
         try
         {
+            MenuManagerCanvas.Instance.DebugIsLoadingFromCloud(isLoadingFromCloud.ToString());
             GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
 
             // Aplicar datos básicos
@@ -357,6 +361,8 @@ public static class SaveAndLoadManager
             isLoadingFromCloud = false;
             onComplete?.Invoke();
         }
+
+        MenuManagerCanvas.Instance.DebugIsLoadingFromCloud(isLoadingFromCloud.ToString());
     }
 
     private static string[] _skinNames = new string[] {

@@ -1205,50 +1205,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: SavedSkinText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: LoadedSkinText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: SavedErrorText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: SavedMusicText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: SavedSoundText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: LoadedErrorText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: LoadedMusicText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: LoadedSoundText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: SavedLanguageText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477420390077258540, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: LoadedLanguageText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5325007653730257692, guid: e1657246342800741ac32a86f052b236, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
