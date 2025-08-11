@@ -97,7 +97,6 @@ public class LanguageManager : ManagersManager
         {
             // Primera vez - detectar idioma del dispositivo
             _currentLanguage = GetLanguageFromDevice();
-            SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
             Debug.Log($"Detected device language: {_currentLanguage}");
         }
         else
@@ -107,6 +106,7 @@ public class LanguageManager : ManagersManager
             _currentLanguage = savedLanguage;
             Debug.Log($"Loaded saved language: {_currentLanguage}");
         }
+        SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
 
         _currentLanguageIndex = GetLanguageIndexFromLanguage(_currentLanguage);
         OnUpdateLanguage?.Invoke();

@@ -38,14 +38,14 @@ public class StoreObject : CanvasElementLocator
                 StoreManager.Instance.Buy(_skinSC.price);
                 StoreCanvas.Instance.UpdateCoinsText();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
-                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
+                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true, true);
 
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
 
                 if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
                 {
                     StoreCanvas.Instance.ShowReview();
-                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
+                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true, true);
                 }
             }
             else
@@ -54,7 +54,7 @@ public class StoreObject : CanvasElementLocator
 
         _equipButton.onClick.AddListener(() =>
         {
-            SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
+            SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true, true);
             StoreManager.Instance.UpdateSkinsState?.Invoke();
         });
     }

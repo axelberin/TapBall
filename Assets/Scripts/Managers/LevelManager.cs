@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
             savedCoins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
 
         int currentCoins = savedCoins + _coinsObtained.Count;
-        SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName);
+        SaveAndLoadManager.SetIntValue(currentCoins, SaveAndLoadManager.CoinsName, true);
 
         AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.WinSound);
 
@@ -80,7 +80,8 @@ public class LevelManager : MonoBehaviour
             hasCoins,
             withoutDeath,
             isUnderTouchLimit,
-            true // Guardar inmediatamente
+            true, // Guardar inmediatamente
+            true
         );
 
         // Mostrar información en UI
@@ -106,6 +107,7 @@ public class LevelManager : MonoBehaviour
             hasCoins,
             withoutDeath,
             underTimeLimit,
+            true,
             true
         );
 
@@ -130,6 +132,7 @@ public class LevelManager : MonoBehaviour
             hasCoins,
             withoutDeath,
             underTouchLimit,
+            true,
             true
         );
 

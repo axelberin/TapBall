@@ -55,6 +55,7 @@ public class Coins : ObstaclesManager
                     _currentWorld,
                     GameManager.Instance.SetGetWorldState.GetLevel,
                     true,
+                    true,
                     true);
             }
         }
