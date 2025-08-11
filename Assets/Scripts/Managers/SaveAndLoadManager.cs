@@ -284,8 +284,6 @@ public static class SaveAndLoadManager
 
         if (cloudManager != null && !isLoadingFromCloud)
             cloudManager.SaveGameData(SerializeGameData());
-
-        DebugSaveSystem();
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
@@ -446,35 +444,6 @@ public static class SaveAndLoadManager
         return _availableWorlds;
     }
     #endregion
-    private static bool debugSaving = true;
-
-    /// <summary>
-    /// Habilita o deshabilita el debug del sistema de guardado
-    /// </summary>
-    public static void SetDebugMode(bool enabled)
-    {
-        debugSaving = enabled;
-        Debug.Log($"[SaveLoad] Debug mode {(enabled ? "enabled" : "disabled")}");
-    }
-
-    /// <summary>
-    /// Verifica el estado actual del sistema de guardado
-    /// </summary>
-    public static void DebugSaveSystem()
-    {
-        Debug.Log("=== SAVE SYSTEM DEBUG ===");
-        Debug.Log($"Cloud Manager: {(cloudManager != null ? "Connected" : "Not Connected")}");
-        Debug.Log($"Loading from Cloud: {isLoadingFromCloud}");
-        Debug.Log($"Available Worlds: {string.Join(", ", _availableWorlds)}");
-
-        // Verificar datos básicos
-        Debug.Log($"Coins: {(ContainsKey(CoinsName) ? GetIntValue(CoinsName).ToString() : "Not Set")}");
-        Debug.Log($"Current Skin: {(ContainsKey(CurrentBallSkinName) ? GetStringValue(CurrentBallSkinName) : "Not Set")}");
-        Debug.Log($"Language: {(ContainsKey(LanguageName) ? GetStringValue(LanguageName) : "Not Set")}");
-        Debug.Log($"Sound Volume: {(ContainsKey(SoundsVolumeName) ? GetFloatValue(SoundsVolumeName).ToString() : "Not Set")}");
-        Debug.Log($"Music Volume: {(ContainsKey(MusicVolumeName) ? GetFloatValue(MusicVolumeName).ToString() : "Not Set")}");
-        Debug.Log("========================");
-    }
 }
 
 // Clases para la serialización

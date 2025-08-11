@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-        SaveAndLoadManager.SetDebugMode(true);
     }
 
     /// <summary>

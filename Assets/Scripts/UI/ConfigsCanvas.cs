@@ -17,8 +17,12 @@ public class ConfigsCanvas : CanvasElementLocator
     {
         var configsBackButton = FindAndValidateComponent<Button>(transform, "ConfigsBackButton");
         configsBackButton.onClick.AddListener(() =>
-            UIManager.Instance.ChangeCanvas("ConfigsCanvas", 
-            ScenesManager.Instance.GetCurrentSceneName.Contains("Menu")? "MenuManagerCanvas" : "DunkCanvas"));
+        {
+            SaveAndLoadManager.Save();
+            UIManager.Instance.ChangeCanvas("ConfigsCanvas",
+                ScenesManager.Instance.GetCurrentSceneName.Contains("Menu") ? "MenuManagerCanvas" : "DunkCanvas");
+        });
+
 
         var resetDataButton = FindAndValidateComponent<Button>(transform, "ResetDataBTN");
 #if UNITY_EDITOR
