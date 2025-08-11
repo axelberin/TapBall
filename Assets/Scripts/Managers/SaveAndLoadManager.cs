@@ -284,6 +284,8 @@ public static class SaveAndLoadManager
 
         if (cloudManager != null && !isLoadingFromCloud)
             cloudManager.SaveGameData(SerializeGameData());
+
+        DebugSaveSystem();
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
@@ -299,14 +301,11 @@ public static class SaveAndLoadManager
                 SetIntValue(data.coins, CoinsName);
             if (!string.IsNullOrEmpty(data.currentBallSkin))
                 SetStringValue(data.currentBallSkin, CurrentBallSkinName);
-            GameManager.LoadedSkinText = data.currentBallSkin;
 
             SetFloatValue(data.soundsVolume, SoundsVolumeName);
             SetFloatValue(data.musicVolume, MusicVolumeName);
             if (AudioManager.Instance)
                 AudioManager.Instance.ApplyAudioSettings();
-            GameManager.LoadedSoundText = data.soundsVolume.ToString();
-            GameManager.LoadedMusicText = data.musicVolume.ToString();
 
             if (!string.IsNullOrEmpty(data.language))
             {
@@ -314,7 +313,6 @@ public static class SaveAndLoadManager
                 if (LanguageManager.Instance)
                     LanguageManager.Instance.LoadSavedOrDetectLanguage();
             }
-            GameManager.LoadedLanguageText = data.language;
 
             SetIntValue(data.reviewSowed, ReviewSowed);
 
@@ -352,7 +350,6 @@ public static class SaveAndLoadManager
         }
         catch (Exception e)
         {
-            GameManager.LoadedErrorText = e.Message;
             Debug.LogError("Error applying cloud data: " + e.Message);
             onFail?.Invoke();
         }
@@ -382,11 +379,6 @@ public static class SaveAndLoadManager
         data.musicVolume = GetFloatValue(MusicVolumeName);
         data.language = GetStringValue(LanguageName);
         data.reviewSowed = GetIntValue(ReviewSowed);
-
-        GameManager.SavedLanguageText = data.language;
-        GameManager.SavedMusicText = data.musicVolume.ToString();
-        GameManager.SavedSoundText = data.soundsVolume.ToString();
-        GameManager.SavedSkinText = data.currentBallSkin;
 
         // Serializar datos de niveles con nueva estructura
         foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
@@ -454,6 +446,35 @@ public static class SaveAndLoadManager
         return _availableWorlds;
     }
     #endregion
+    private static bool debugSaving = true;
+
+    /// <summary>
+    /// Habilita o deshabilita el debug del sistema de guardado
+    /// </summary>
+    public static void SetDebugMode(bool enabled)
+    {
+        debugSaving = enabled;
+        Debug.Log($"[SaveLoad] Debug mode {(enabled ? "enabled" : "disabled")}");
+    }
+
+    /// <summary>
+    /// Verifica el estado actual del sistema de guardado
+    /// </summary>
+    public static void DebugSaveSystem()
+    {
+        Debug.Log("=== SAVE SYSTEM DEBUG ===");
+        Debug.Log($"Cloud Manager: {(cloudManager != null ? "Connected" : "Not Connected")}");
+        Debug.Log($"Loading from Cloud: {isLoadingFromCloud}");
+        Debug.Log($"Available Worlds: {string.Join(", ", _availableWorlds)}");
+
+        // Verificar datos básicos
+        Debug.Log($"Coins: {(ContainsKey(CoinsName) ? GetIntValue(CoinsName).ToString() : "Not Set")}");
+        Debug.Log($"Current Skin: {(ContainsKey(CurrentBallSkinName) ? GetStringValue(CurrentBallSkinName) : "Not Set")}");
+        Debug.Log($"Language: {(ContainsKey(LanguageName) ? GetStringValue(LanguageName) : "Not Set")}");
+        Debug.Log($"Sound Volume: {(ContainsKey(SoundsVolumeName) ? GetFloatValue(SoundsVolumeName).ToString() : "Not Set")}");
+        Debug.Log($"Music Volume: {(ContainsKey(MusicVolumeName) ? GetFloatValue(MusicVolumeName).ToString() : "Not Set")}");
+        Debug.Log("========================");
+    }
 }
 
 // Clases para la serialización
