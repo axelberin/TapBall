@@ -19,6 +19,7 @@ public class ConfigsCanvas : CanvasElementLocator
         configsBackButton.onClick.AddListener(() =>
         {
             SaveAndLoadManager.Save();
+            SaveAndLoadManager.SaveCloud();
             UIManager.Instance.ChangeCanvas("ConfigsCanvas",
                 ScenesManager.Instance.GetCurrentSceneName.Contains("Menu") ? "MenuManagerCanvas" : "DunkCanvas");
         });

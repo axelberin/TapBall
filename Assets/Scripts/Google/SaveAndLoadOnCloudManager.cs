@@ -6,9 +6,14 @@ using System.Collections;
 
 public class SaveAndLoadOnCloudManager : ManagersManager
 {
+    public static SaveAndLoadOnCloudManager Instance;
+
     private void Awake()
     {
-        SaveAndLoadManager.SetCloudManager(this);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     public void SaveGameData(string dataToSave)
@@ -19,7 +24,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
-            MenuManagerCanvas.Instance.DebugIsAuthenticated("Not authenticated");
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot save data.");
         }
     }

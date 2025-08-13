@@ -258,22 +258,4 @@ public class MenuManagerCanvas : CanvasElementLocator
         return (completed, withCoins, withoutDeath, objectiveComplete);
     }
     #endregion
-
-    public static MenuManagerCanvas Instance;
-
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(this);
-    }
-
-    public TextMeshProUGUI IsAuthenticated;
-    public TextMeshProUGUI isLoadingFromCloud;
-    public TextMeshProUGUI cloudManager;
-
-    public void DebugIsAuthenticated(string text) => IsAuthenticated.text = text;
-    public void DebugIsLoadingFromCloud(string text) => isLoadingFromCloud.text = text;
-    public void DebugCloudManager(string text) => cloudManager.text = text;
 }

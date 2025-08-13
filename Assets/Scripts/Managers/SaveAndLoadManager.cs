@@ -27,17 +27,10 @@ public static class SaveAndLoadManager
     private static string WithoutDeathSuffix = "_WithoutDeath";
     private static string ObjectiveCompleteSuffix = "_ObjectiveComplete";
 
-    private static SaveAndLoadOnCloudManager cloudManager;
     private static bool isLoadingFromCloud = false;
 
     // Mundos disponibles - actualiza esta lista cuando agregues mundos
     private static string[] _availableWorlds = new string[] { "Neon" }; // Temporal hasta que definas los mundos reales
-
-    public static void SetCloudManager(SaveAndLoadOnCloudManager manager)
-    {
-        cloudManager = manager;
-        MenuManagerCanvas.Instance?.DebugCloudManager(cloudManager != null ? cloudManager.name : null);
-    }
 
     #region Basic Data Methods
     public static void SetIntValue(int value, string parameterName, bool withSave = false, bool saveCloud = false)
@@ -292,10 +285,8 @@ public static class SaveAndLoadManager
 
     public static void SaveCloud()
     {
-        MenuManagerCanvas.Instance?.DebugCloudManager(cloudManager != null ? cloudManager.name : null);
-        MenuManagerCanvas.Instance?.DebugIsLoadingFromCloud(isLoadingFromCloud.ToString());
-        if (cloudManager != null && !isLoadingFromCloud)
-            cloudManager.SaveGameData(SerializeGameData());
+        if (SaveAndLoadOnCloudManager.Instance != null && !isLoadingFromCloud)
+            SaveAndLoadOnCloudManager.Instance.SaveGameData(SerializeGameData());
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
@@ -304,7 +295,6 @@ public static class SaveAndLoadManager
 
         try
         {
-            MenuManagerCanvas.Instance?.DebugIsLoadingFromCloud(isLoadingFromCloud.ToString());
             GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
 
             // Aplicar datos básicos
@@ -364,8 +354,6 @@ public static class SaveAndLoadManager
             onComplete?.Invoke();
             LanguageManager.Instance?.LoadSavedOrDetectLanguage();
         }
-
-        MenuManagerCanvas.Instance?.DebugIsLoadingFromCloud(isLoadingFromCloud.ToString());
     }
 
     private static string[] _skinNames = new string[] {
@@ -431,8 +419,8 @@ public static class SaveAndLoadManager
     {
         PlayerPrefs.DeleteAll();
 
-        if (cloudManager != null)
-            cloudManager.SaveGameData("{}");
+        if (SaveAndLoadOnCloudManager.Instance != null)
+            SaveAndLoadOnCloudManager.Instance.SaveGameData("{}");
     }
     #endregion
 
