@@ -2,22 +2,28 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 
-public class IAPManager : MonoBehaviour
+public class IAPManager : MonoBehaviour, IStoreListener
 {
     private static IStoreController m_StoreController;
     private static IExtensionProvider m_StoreExtensionProvider;
 
-    public const string TEST_PRODUCT = "test.product";
-    public const string PRODUCT_200_COINS = "com.miempresa.migame.monedas200";
+    public const string PRODUCT_NO_ADS = "no_ads_product";
+
+    void Start()
+    {
+        if (m_StoreController == null)
+        {
+            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+
+            builder.AddProduct(PRODUCT_NO_ADS, ProductType.NonConsumable);
+
+            UnityPurchasing.Initialize(this, builder);
+        }
+    }
 
     private bool IsInitialized()
     {
         return m_StoreController != null && m_StoreExtensionProvider != null;
-    }
-
-    public void Buy100Coins()
-    {
-        BuyProductID(TEST_PRODUCT);
     }
 
     public void BuyProductID(string productId)
@@ -28,12 +34,12 @@ public class IAPManager : MonoBehaviour
 
             if (product != null && product.availableToPurchase)
             {
-                Debug.Log($"Purchasing product: {product.transactionID}");
+                Debug.Log($"Purchasing product: {product.definition.id}");
                 m_StoreController.InitiatePurchase(product);
             }
             else
             {
-                Debug.Log("BuyProductID: FAIL. Not initialized or product not found/available.");
+                Debug.Log("BuyProductID: FAIL. Product not found or not available.");
             }
         }
         else
@@ -42,13 +48,55 @@ public class IAPManager : MonoBehaviour
         }
     }
 
+    // --------------------------
+    // Funciones para IAPButton
+    // --------------------------
+    public void OnPurchaseComplete(Product product)
+    {
+        Debug.Log($"OnPurchaseComplete (IAPButton): {product.definition.storeSpecificId}");
+    }
+
     public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureReason)
     {
-        Debug.Log($"OnPurchaseFailed: FAIL. Product: {product.definition.storeSpecificId}, Reason: {failureReason}");
+        Debug.Log($"OnPurchaseFailed (IAPButton): {product.definition.storeSpecificId}, Reason: {failureReason}");
     }
 
     public void OnProductFetched(Product product)
     {
-        Debug.Log($"OnProductFetched: PASS. Product: {product.definition.storeSpecificId}");
+        Debug.Log($"OnProductFetched (IAPButton): {product.definition.storeSpecificId}");
+    }
+
+    // --------------------------
+    // Implementación IStoreListener
+    // --------------------------
+    public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    {
+        m_StoreController = controller;
+        m_StoreExtensionProvider = extensions;
+        Debug.Log("IAPManager Initialized");
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error)
+    {
+        Debug.Log($"IAP Initialization Failed: {error}");
+    }
+
+    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
+    {
+        string id = args.purchasedProduct.definition.id;
+
+        Debug.Log($"ProcessPurchase: {id}");
+
+        return PurchaseProcessingResult.Complete;
+    }
+
+    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+    {
+        Debug.Log($"OnPurchaseFailed (Global): {product.definition.id}, Reason: {failureReason}");
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error, string message)
+    {
+        Debug.Log($"OnPurchaseFailed: {error}, Reason: {message}");
     }
 }

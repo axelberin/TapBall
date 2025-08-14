@@ -19,7 +19,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         Application.targetFrameRate = 60;
 
-        GameManager.Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu
+        Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
@@ -78,8 +78,13 @@ public class MenuManagerCanvas : CanvasElementLocator
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
+        var noAdsPopUp = FindAndValidateComponent<PopUp>(transform, "NoAdsPopUp");
+        noAdsPopUp.Initialize("noadstittle", "noadsdescription");
+        var noAdsBtn = FindAndValidateComponent<Button>(transform, "NoAdsBtn");
+        noAdsBtn.onClick.AddListener(() => noAdsPopUp.Show());
+
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
-        if (!string.IsNullOrEmpty(GameManager.UnlokedSkin))
+        if (!string.IsNullOrEmpty(UnlokedSkin))
             OnUnlockSkin();
 
         PauseAndResumeManager.Instance.RestartResumeAction();
