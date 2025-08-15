@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: BallBasicBlueSkin
   sprite: {fileID: 21300000, guid: 959509aa9e21aef4f9ca4c54e5132450, type: 3}
-  price: 1
+  price: 2
   spriteSize: {x: 185, y: 185}
+  unlockeable: 0

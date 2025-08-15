@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: DogBallSkin
   sprite: {fileID: 21300000, guid: 31117e578c37d3d4a8dd11632611f316, type: 3}
-  price: 3
+  price: 5
   spriteSize: {x: 185, y: 185}
+  unlockeable: 0
