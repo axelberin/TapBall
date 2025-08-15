@@ -1,13 +1,24 @@
+using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
+    public static IAPManager Instance { get; private set; }
+
     private static IStoreController m_StoreController;
     private static IExtensionProvider m_StoreExtensionProvider;
 
     public const string PRODUCT_NO_ADS = "no_ads_product";
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
+    }
 
     void Start()
     {
@@ -46,6 +57,11 @@ public class IAPManager : MonoBehaviour, IStoreListener
         {
             Debug.Log("BuyProductID FAIL. Not initialized.");
         }
+    }
+
+    public Product GetProductByID(string id)
+    {
+        return m_StoreController.products.WithID(id);
     }
 
     // --------------------------

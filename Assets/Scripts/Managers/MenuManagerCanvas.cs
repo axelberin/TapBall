@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using UtilityAddressables;
 using static GameManager;
@@ -10,6 +11,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _dunkLevelsPanel;
 
     private TextMeshProUGUI _coinsText;
+    private TextMeshProUGUI _noAdsPriceText;
     private PopUp _unlockSkinsPopUp;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
@@ -80,8 +82,15 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         var noAdsPopUp = FindAndValidateComponent<PopUp>(transform, "NoAdsPopUp");
         noAdsPopUp.Initialize("noadstittle", "noadsdescription");
+
+        _noAdsPriceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NoAdsPriceText");
+
         var noAdsBtn = FindAndValidateComponent<Button>(transform, "NoAdsBtn");
-        noAdsBtn.onClick.AddListener(() => noAdsPopUp.Show());
+        noAdsBtn.onClick.AddListener(() =>
+        {
+            _noAdsPriceText.text = IAPManager.Instance.GetProductByID("no_ads_product").metadata.localizedPriceString;
+            noAdsPopUp.Show();
+        });
 
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
         if (!string.IsNullOrEmpty(UnlokedSkin))
