@@ -88,7 +88,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         var noAdsBtn = FindAndValidateComponent<Button>(transform, "NoAdsBtn");
         noAdsBtn.onClick.AddListener(() =>
         {
-            noAdsPriceText.text = IAPManager.Instance.GetProductByID("no_ads_product").metadata.localizedPriceString;
+            noAdsPriceText.text = "US$ " + IAPManager.Instance.GetProductByID(
+                "no_ads_product").metadata.localizedPriceString;
             noAdsPopUp.Show();
         });
 
