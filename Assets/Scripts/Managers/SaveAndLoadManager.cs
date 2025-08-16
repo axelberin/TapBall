@@ -7,12 +7,14 @@ public static class SaveAndLoadManager
 {
     // Nombres de parámetros base
     public static string CoinsName = "Coins";
+    public static string OrbsName = "Orbs";
     public static string CurrentBallSkinName = "CurrentBallSkin";
     public static string ObtainedBallSkins = "BallSkin_";
     public static string SoundsVolumeName = "SoundsVolume";
     public static string MusicVolumeName = "MusicVolume";
     public static string LanguageName = "Language";
-    public static string ReviewSowed = "ReviewSowed";
+    public static string ReviewSowedName = "ReviewSowed";
+    public static string NoAdsBougthName = "NoAdsBougth";
     public static string CurrentWorldName = "CurrentWorld";
 
     // DEPRECATED - Mantener para compatibilidad hacia atrás
@@ -310,7 +312,7 @@ public static class SaveAndLoadManager
                 SetStringValue(data.language, LanguageName);
             }
 
-            SetIntValue(data.reviewSowed, ReviewSowed);
+            SetIntValue(data.reviewSowed, ReviewSowedName);
 
             // Aplicar datos de niveles con nueva estructura
             foreach (var modeData in data.gameModeData)
@@ -374,7 +376,7 @@ public static class SaveAndLoadManager
         data.soundsVolume = GetFloatValue(SoundsVolumeName);
         data.musicVolume = GetFloatValue(MusicVolumeName);
         data.language = GetStringValue(LanguageName);
-        data.reviewSowed = GetIntValue(ReviewSowed);
+        data.reviewSowed = GetIntValue(ReviewSowedName);
 
         // Serializar datos de niveles con nueva estructura
         foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))

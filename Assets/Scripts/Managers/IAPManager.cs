@@ -7,6 +7,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
 {
     public static IAPManager Instance { get; private set; }
 
+    public Action OnCompletePurchase = delegate { };
+
     private static IStoreController m_StoreController;
     private static IExtensionProvider m_StoreExtensionProvider;
 
@@ -102,8 +104,29 @@ public class IAPManager : MonoBehaviour, IStoreListener
         string id = args.purchasedProduct.definition.id;
 
         Debug.Log($"ProcessPurchase: {id}");
+        GetRewardAfterProcessPurchase(id);
 
         return PurchaseProcessingResult.Complete;
+    }
+
+    private void GetRewardAfterProcessPurchase(string id)
+    {
+        switch (id)
+        {
+            case PRODUCT_NO_ADS:
+                SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 30, SaveAndLoadManager.CoinsName);
+                SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 10, SaveAndLoadManager.OrbsName);
+                SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.NoAdsBougthName, true, true);
+                Debug.Log($"Reward: {id}");
+                break;
+            default:
+                Debug.LogError($"Product not found: {id}");
+                break;
+        }
+
+        OnCompletePurchase?.Invoke();
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)

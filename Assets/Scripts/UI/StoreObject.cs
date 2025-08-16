@@ -36,16 +36,16 @@ public class StoreObject : CanvasElementLocator
             if (StoreManager.Instance.CanBuy(_skinSC.price, false))
             {
                 StoreManager.Instance.Buy(_skinSC.price);
-                StoreCanvas.Instance.UpdateCoinsText();
+                StoreCanvas.Instance.UpdateCoinsAndOrbsTexts();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
                 SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true, true);
 
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
 
-                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
+                if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowedName))
                 {
                     StoreCanvas.Instance.ShowReview();
-                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true, true);
+                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowedName, true, true);
                 }
             }
             else

@@ -6,6 +6,7 @@ public class StoreCanvas : CanvasElementLocator
     public static StoreCanvas Instance { get; private set; }
 
     private TextMeshProUGUI _coinsText;
+    private TextMeshProUGUI _orbsText;
     private PopUp _reviewPopUp;
 
     private void Awake()
@@ -19,8 +20,8 @@ public class StoreCanvas : CanvasElementLocator
     private void Start()
     {
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
-        if (_coinsText != null && SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
-            _coinsText.text = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName).ToString();
+        _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
+        UpdateCoinsAndOrbsTexts();
 
         var closeButton = FindAndValidateComponent<Button>(transform, "StoreCloseButton");
 
@@ -33,9 +34,25 @@ public class StoreCanvas : CanvasElementLocator
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 
-    public void UpdateCoinsText()
+    private void OnEnable()
     {
-        UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        UpdateCoinsAndOrbsTexts();
+        if (IAPManager.Instance)
+            IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
+    }
+
+    private void OnDisable()
+    {
+        if (IAPManager.Instance)
+            IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
+    }
+
+    public void UpdateCoinsAndOrbsTexts()
+    {
+        if (_coinsText != null)
+            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        if (_orbsText != null)
+            UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
     }
 
     public void ShowReview()

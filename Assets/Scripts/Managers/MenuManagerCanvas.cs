@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using UtilityAddressables;
 using static GameManager;
@@ -11,6 +10,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _dunkLevelsPanel;
 
     private TextMeshProUGUI _coinsText;
+    private TextMeshProUGUI _orbsText;
     private PopUp _unlockSkinsPopUp;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
@@ -33,7 +33,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
-        UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
+        UpdateCoinsAndOrbsTexts();
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
@@ -107,8 +108,15 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void OnEnable()
     {
-        if (_coinsText != null)
-            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        UpdateCoinsAndOrbsTexts();
+        if (IAPManager.Instance)
+            IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
+    }
+
+    private void OnDisable()
+    {
+        if (IAPManager.Instance)
+            IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
     }
 
     private void Update()
@@ -218,57 +226,66 @@ public class MenuManagerCanvas : CanvasElementLocator
     }
 
     #region Utility Methods
-    /// <summary>
-    /// Cambia el mundo actual y actualiza la UI
-    /// Usar cuando implementes el selector de mundos
-    /// </summary>
-    public void ChangeCurrentWorld(string worldName)
+
+    public void UpdateCoinsAndOrbsTexts()
     {
-        _currentWorld = worldName;
-        SaveAndLoadManager.SetStringValue(worldName, SaveAndLoadManager.CurrentWorldName, true, true);
-
-        // Refrescar la UI de niveles
-        OnDunkLevelsClicked();
-
-        Debug.Log($"World changed to: {worldName}");
+        if (_coinsText != null)
+            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        if (_orbsText != null)
+            UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
     }
 
-    /// <summary>
-    /// Obtiene el mundo actual
-    /// </summary>
-    public string GetCurrentWorld()
-    {
-        return _currentWorld;
-    }
+    ///// <summary>
+    ///// Cambia el mundo actual y actualiza la UI
+    ///// Usar cuando implementes el selector de mundos
+    ///// </summary>
+    //public void ChangeCurrentWorld(string worldName)
+    //{
+    //    _currentWorld = worldName;
+    //    SaveAndLoadManager.SetStringValue(worldName, SaveAndLoadManager.CurrentWorldName, true, true);
 
-    /// <summary>
-    /// Obtiene estadísticas del mundo actual
-    /// </summary>
-    public (int completed, int withCoins, int withoutDeath, int objectiveComplete) GetWorldStats()
-    {
-        int completed = 0;
-        int withCoins = 0;
-        int withoutDeath = 0;
-        int objectiveComplete = 0;
+    //    // Refrescar la UI de niveles
+    //    OnDunkLevelsClicked();
 
-        for (int i = 1; i <= 50; i++)
-        {
-            if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i))
-            {
-                completed++;
+    //    Debug.Log($"World changed to: {worldName}");
+    //}
 
-                if (SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i))
-                    withCoins++;
+    ///// <summary>
+    ///// Obtiene el mundo actual
+    ///// </summary>
+    //public string GetCurrentWorld()
+    //{
+    //    return _currentWorld;
+    //}
 
-                if (SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i))
-                    withoutDeath++;
+    ///// <summary>
+    ///// Obtiene estadísticas del mundo actual
+    ///// </summary>
+    //public (int completed, int withCoins, int withoutDeath, int objectiveComplete) GetWorldStats()
+    //{
+    //    int completed = 0;
+    //    int withCoins = 0;
+    //    int withoutDeath = 0;
+    //    int objectiveComplete = 0;
 
-                if (SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i))
-                    objectiveComplete++;
-            }
-        }
+    //    for (int i = 1; i <= 50; i++)
+    //    {
+    //        if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i))
+    //        {
+    //            completed++;
 
-        return (completed, withCoins, withoutDeath, objectiveComplete);
-    }
+    //            if (SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i))
+    //                withCoins++;
+
+    //            if (SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i))
+    //                withoutDeath++;
+
+    //            if (SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i))
+    //                objectiveComplete++;
+    //        }
+    //    }
+
+    //    return (completed, withCoins, withoutDeath, objectiveComplete);
+    //}
     #endregion
 }
