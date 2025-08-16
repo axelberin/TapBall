@@ -29,7 +29,6 @@ public class StoreCanvas : CanvasElementLocator
             "StoreCanvas", "MenuManagerCanvas"));
 
         _reviewPopUp = FindAndValidateComponent<PopUp>(transform, "ReviewPopUp");
-        _reviewPopUp.Initialize("rateus", "reviewdescription", ReviewManagerController.Instance.RequestReview);
 
         UIManager.Instance.AddCanvas(gameObject, false);
     }
@@ -57,6 +56,7 @@ public class StoreCanvas : CanvasElementLocator
 
     public void ShowReview()
     {
+        _reviewPopUp.Initialize("rateus", "reviewdescription", ReviewManagerController.Instance.RequestReview);
         _reviewPopUp.Show();
     }
 }

@@ -81,13 +81,12 @@ public class MenuManagerCanvas : CanvasElementLocator
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
         var noAdsPopUp = FindAndValidateComponent<PopUp>(transform, "NoAdsPopUp");
-        noAdsPopUp.Initialize("noadstittle", "noadsdescription");
-
         var noAdsPriceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NoAdsPriceText");
 
         var noAdsBtn = FindAndValidateComponent<Button>(transform, "NoAdsBtn");
         noAdsBtn.onClick.AddListener(() =>
         {
+            noAdsPopUp.Initialize("noadstittle", "noadsdescription");
             noAdsPriceText.text = "US$ " + IAPManager.Instance.GetProductByID(
                 "no_ads_product").metadata.localizedPriceString;
             noAdsPopUp.Show();
@@ -111,13 +110,19 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         UpdateCoinsAndOrbsTexts();
         if (IAPManager.Instance)
+        {
             IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase += ActivatePopUpAfterBuy;
+        }
     }
 
     private void OnDisable()
     {
         if (IAPManager.Instance)
+        {
             IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase -= ActivatePopUpAfterBuy;
+        }
     }
 
     private void Update()
@@ -224,6 +229,16 @@ public class MenuManagerCanvas : CanvasElementLocator
                 _unlockSkinsPopUp.Show();
                 UnlokedSkin = null;
             });
+    }
+
+    private void ActivatePopUpAfterBuy()
+    {
+        var thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
+        if (thanksForBuyPopUp == null)
+            return;
+
+        thanksForBuyPopUp.Initialize("tnksforbuytittle", "tnksforbuydescription");
+        thanksForBuyPopUp.Show();
     }
 
     #region Utility Methods
