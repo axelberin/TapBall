@@ -164,6 +164,18 @@ public class AudioManager : ManagersManager, IPauseble
 
         yield return new WaitForSeconds(0.5f);
 
+        ApplyAudioSettings();
+
+        LevelManager.Instance.OnWinLevel += StopMusic;
+
+        yield return new WaitForSeconds(0.5f);
+
+        _isInitialized = true;
+        PlayMusicByType(MusicClipType.MenuMusic);
+    }
+
+    public void ApplyAudioSettings()
+    {
         if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.SoundsVolumeName))
             SetSoundVolume(GetSoundIsMuted);
         else
@@ -173,13 +185,6 @@ public class AudioManager : ManagersManager, IPauseble
             SetMusicVolume(GetMusicIsMuted);
         else
             SetMusicVolume(false);
-
-        LevelManager.Instance.OnWinLevel += StopMusic;
-
-        yield return new WaitForSeconds(0.5f);
-
-        _isInitialized = true;
-        PlayMusicByType(MusicClipType.MenuMusic);
     }
 
     public bool GetSoundIsMuted => SaveAndLoadManager.GetFloatValue(SaveAndLoadManager.SoundsVolumeName) < 0;

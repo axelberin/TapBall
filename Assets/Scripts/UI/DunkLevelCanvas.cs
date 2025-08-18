@@ -147,7 +147,11 @@ public class DunkLevelCanvas : CanvasElementLocator
 
         _nextLevelButton.interactable = existsNextLevel;
         if (!existsNextLevel)
-            _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("comingSoon");
+        {
+            _nextLevelText.gameObject.SetActive(false);
+            GameManager.Instance.OnCompleteWorld(
+                SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "BallSkin");
+        }
         else
             _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
 

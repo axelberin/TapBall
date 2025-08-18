@@ -6,34 +6,50 @@ using System.Collections;
 
 public class SaveAndLoadOnCloudManager : ManagersManager
 {
-    public void SaveGameData(string dataToSave) // 'dataToSave' sería tu JSON o datos serializados
+    private void Awake()
+    {
+        SaveAndLoadManager.SetCloudManager(this);
+    }
+
+    public void SaveGameData(string dataToSave)
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
-                "MultiverseTapBallProgress",
-                DataSource.ReadCacheOrNetwork, // Intentar leer de la caché o la red
-                ConflictResolutionStrategy.UseMostRecentlySaved, // Estrategia de resolución de conflictos
-                OnSavedGameOpened);
+            StartCoroutine(SaveGameDataCoroutine(dataToSave));
         }
         else
+        {
+            GameManager.SavedErrorText = "Not authenticated with Google Play Games";
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot save data.");
+        }
     }
 
-    private void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
+    private IEnumerator SaveGameDataCoroutine(string dataToSave)
+    {
+        bool operationComplete = false;
+
+        PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
+            "MultiverseTapBallProgress",
+            DataSource.ReadCacheOrNetwork,
+            ConflictResolutionStrategy.UseMostRecentlySaved,
+            (status, game) => OnSavedGameOpened(status, game, dataToSave, () => operationComplete = true));
+
+        // Esperar a que se complete la operación
+        while (!operationComplete)
+        {
+            yield return null;
+        }
+    }
+
+    private void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game, string dataToSave, System.Action onComplete)
     {
         if (status == SavedGameRequestStatus.Success)
         {
-            // El archivo se ha abierto correctamente. Ahora, lee los datos actuales, modifícalos y escríbelos.
-            // Para simplificar, aquí se asume que solo queremos escribir directamente.
-            // En un caso real, primero leerías los datos existentes, los actualizarías y luego escribirías.
-
-            string currentData = "{\"level\": 5, \"score\": 1200}"; // Ejemplo de datos (reemplazar con tus datos reales)
-            byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes(currentData);
+            byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes(dataToSave);
 
             SavedGameMetadataUpdate.Builder builder = new SavedGameMetadataUpdate.Builder()
                 .WithUpdatedDescription("Saved Game at " + System.DateTime.Now.ToShortTimeString())
-                .WithUpdatedPlayedTime(System.TimeSpan.FromMinutes(10)); // Actualiza el tiempo de juego
+                .WithUpdatedPlayedTime(System.TimeSpan.FromMinutes(10));
 
             SavedGameMetadataUpdate updatedMetadata = builder.Build();
 
@@ -41,18 +57,29 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 game,
                 updatedMetadata,
                 dataBytes,
-                OnSavedGameWritten);
+                (commitStatus, commitGame) => OnSavedGameWritten(commitStatus, onComplete));
         }
         else
+        {
+            GameManager.SavedErrorText = status.ToString();
             Debug.LogError("Error opening saved game: " + status);
+            onComplete?.Invoke();
+        }
     }
 
-    private void OnSavedGameWritten(SavedGameRequestStatus status, ISavedGameMetadata game)
+    private void OnSavedGameWritten(SavedGameRequestStatus status, System.Action onComplete)
     {
         if (status == SavedGameRequestStatus.Success)
+        {
             Debug.Log("Game data successfully saved to Google Play Games cloud.");
+        }
         else
+        {
+            GameManager.SavedErrorText = status.ToString();
             Debug.LogError("Error saving game data: " + status);
+        }
+
+        onComplete?.Invoke();
     }
 
     public void LoadGameData()
@@ -66,19 +93,23 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 OnSavedGameDataOpenedToLoad);
         }
         else
+        {
+            OnLoadDataFailed();
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot load data.");
+        }
     }
 
     private void OnSavedGameDataOpenedToLoad(SavedGameRequestStatus status, ISavedGameMetadata game)
     {
         if (status == SavedGameRequestStatus.Success)
         {
-            // Ahora, lee el contenido del archivo guardado
-            PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(
-                game, OnSavedGameDataRead);
+            PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(game, OnSavedGameDataRead);
         }
         else
+        {
+            OnLoadDataFailed();
             Debug.LogError("Error opening saved game for loading: " + status);
+        }
     }
 
     private void OnSavedGameDataRead(SavedGameRequestStatus status, byte[] data)
@@ -87,17 +118,36 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         {
             string loadedData = System.Text.Encoding.UTF8.GetString(data);
             Debug.Log("Game data successfully loaded from Google Play Games cloud: " + loadedData);
-            // Aquí puedes deserializar 'loadedData' y aplicar los datos a tu juego
 
-            _isInitialized = true;
+            // Aplicar los datos cargados al sistema local
+            if (!string.IsNullOrEmpty(loadedData) && loadedData != "{}")
+            {
+                SaveAndLoadManager.ApplyCloudData(loadedData, () => _isInitialized = true, OnLoadDataFailed);
+            }
+            else
+            {
+                Debug.LogWarning("Cloud data is empty. Keeping local save data.");
+                _isInitialized = true;
+            }
         }
         else
+        {
+            OnLoadDataFailed();
             Debug.LogError("Error reading saved game data: " + status);
+        }
+    }
+
+    private void OnLoadDataFailed()
+    {
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
     }
 
     public override IEnumerator InizializeManagers()
     {
         LoadGameData();
-        yield return new WaitForSeconds(1);
+
+        // Esperar hasta que se complete la carga
+        while (!_isInitialized)
+            yield return null;
     }
 }

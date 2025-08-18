@@ -88,17 +88,30 @@ public class LanguageManager : ManagersManager
 
         Debug.Log("Traducciones cargadas correctamente.");
 
+        LoadSavedOrDetectLanguage();
+    }
+
+    public void LoadSavedOrDetectLanguage()
+    {
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.LanguageName))
         {
+            // Primera vez - detectar idioma del dispositivo
             _currentLanguage = GetLanguageFromDevice();
             SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
+            Debug.Log($"Detected device language: {_currentLanguage}");
         }
         else
-            _currentLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
+        {
+            // Cargar idioma guardado
+            string savedLanguage = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LanguageName);
+            _currentLanguage = savedLanguage;
+            Debug.Log($"Loaded saved language: {_currentLanguage}");
+        }
 
         _currentLanguageIndex = GetLanguageIndexFromLanguage(_currentLanguage);
         OnUpdateLanguage?.Invoke();
     }
+
 
     private string GetLanguageFromDevice()
     {
@@ -151,7 +164,7 @@ public class LanguageManager : ManagersManager
         SetCurrentLanguageIndex(languageIndex);
         _currentLanguage = GetLanguageKeyFromIndex(_currentLanguageIndex);
         OnUpdateLanguage?.Invoke();
-        SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName);
+        SaveAndLoadManager.SetStringValue(_currentLanguage, SaveAndLoadManager.LanguageName, true);
     }
 
     private void SetCurrentLanguageIndex(int index)
@@ -180,7 +193,7 @@ public class LanguageManager : ManagersManager
         };
     }
 
-    private int GetLanguageIndexFromLanguage(string language)
+    public int GetLanguageIndexFromLanguage(string language)
     {
         return language switch
         {

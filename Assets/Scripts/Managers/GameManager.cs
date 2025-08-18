@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static string UnlokedSkin = "";
 
     public enum GameModes
     {
@@ -48,6 +48,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnCompleteWorld(string currentWorldName)
+    {
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)
+            return;
+
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true);
+        UnlokedSkin = currentWorldName;
+    }
+
     public PlayerController SetGetPlayer { set; get; }
 
     public TapController SetGetTapController { set; get; }
@@ -58,4 +67,16 @@ public class GameManager : MonoBehaviour
     public DeathController SetGetDeathController { set; get; }
 
     public GameModes GetCurrentGameMode => _currentGameMode;
+
+    public static string SavedErrorText;
+    public static string SavedLanguageText;
+    public static string SavedMusicText;
+    public static string SavedSoundText;
+    public static string SavedSkinText;
+
+    public static string LoadedErrorText;
+    public static string LoadedLanguageText;
+    public static string LoadedMusicText;
+    public static string LoadedSoundText;
+    public static string LoadedSkinText;
 }

@@ -1,12 +1,9 @@
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreCanvas : CanvasElementLocator
 {
     public static StoreCanvas Instance { get; private set; }
-
-    [SerializeField] private string _storeObjectPrefabName;
 
     private TextMeshProUGUI _coinsText;
     private PopUp _reviewPopUp;
@@ -31,8 +28,7 @@ public class StoreCanvas : CanvasElementLocator
             "StoreCanvas", "MenuManagerCanvas"));
 
         _reviewPopUp = FindAndValidateComponent<PopUp>(transform, "ReviewPopUp");
-        _reviewPopUp.Initialize("ReviewOkBTN", "rateus", "reviewdescription", "ReviewCancelBTN",
-            ReviewManagerController.Instance.RequestReview);
+        _reviewPopUp.Initialize("rateus", "reviewdescription", ReviewManagerController.Instance.RequestReview);
 
         UIManager.Instance.AddCanvas(gameObject, false);
     }

@@ -38,15 +38,17 @@ public class StoreObject : CanvasElementLocator
                 StoreManager.Instance.Buy(_skinSC.price);
                 StoreCanvas.Instance.UpdateCoinsText();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
-                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true);
+                SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName);
 
                 StoreManager.Instance.UpdateSkinsState?.Invoke();
 
                 if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.ReviewSowed))
                 {
                     StoreCanvas.Instance.ShowReview();
-                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed, true);
+                    SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ReviewSowed);
                 }
+
+                SaveAndLoadManager.Save();
             }
             else
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
@@ -75,10 +77,25 @@ public class StoreObject : CanvasElementLocator
 
     public void UpdateSkinState()
     {
-        if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
-            OnSkinIsSelected();
-        else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
-            OnSkinUnselected();
+        if (_skinSC.unlockeable && SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 0)
+            OnSkinLocked();
+        else
+        {
+            if (SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentBallSkinName) == _skinSC.skinName)
+                OnSkinIsSelected();
+            else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
+                OnSkinUnselected();
+        }
+    }
+
+    private void OnSkinLocked()
+    {
+        _buyButton.gameObject.SetActive(false);
+        _equipButton.gameObject.SetActive(true);
+        _equipButton.interactable = false;
+        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("locked");
+        _equipText.text = text;
+        _equipText.font = font;
     }
 
     private void OnSkinIsSelected()

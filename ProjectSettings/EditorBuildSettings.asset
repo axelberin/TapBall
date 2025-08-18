@@ -158,11 +158,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dunk/DunkLevel48.unity
     guid: c8214ec2c776eb04b9cc0ba7524d1107
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Dunk/DunkLevel49.unity
     guid: 626a32bdc34fe1c4e851400938091bfe
+  - enabled: 1
+    path: Assets/Scenes/Dunk/DunkLevel50.unity
+    guid: 40725a4a6f14d04428083529ce4bedb5
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: affc826a6903b604481895050d6ae3de, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: af2aa3ddca474e545a5eedabd9f7b208, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 799ab312874f53c4c9b6729d23ba3f32, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: 7699f06e84da906419a0fbe3c4013561, type: 2}
+  m_UseUCBPForAssetBundles: 0

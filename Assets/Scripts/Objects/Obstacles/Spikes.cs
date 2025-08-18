@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using static AudioManager;
 using UtilityAddressables;
 
-public class Spikes : ObstaclesManager
+public class Spikes : ObstaclesManager, IPauseble
 {
     [SerializeField] private float _animatorSpeed = 1;
     [SerializeField] private float _animationDelay = 3;
@@ -14,29 +13,50 @@ public class Spikes : ObstaclesManager
     private AudioClip _upSpikeClip;
     private AudioClip _fullUpSpikeClip;
 
+    private bool _isPaused;
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
 
-        AddressablesUtility.LoadAsset<AudioClip>("SpikeDownSound", clip => _inSpikeClip = clip);
-        AddressablesUtility.LoadAsset<AudioClip>("SpikeUpSound", clip => _upSpikeClip = clip);
-        AddressablesUtility.LoadAsset<AudioClip>("SpikeFullUpSound", clip => _fullUpSpikeClip = clip);
-
         if (_animator != null)
         {
+            AddressablesUtility.LoadAsset<AudioClip>("SpikeDownSound", clip => _inSpikeClip = clip);
+            AddressablesUtility.LoadAsset<AudioClip>("SpikeUpSound", clip => _upSpikeClip = clip);
+            AddressablesUtility.LoadAsset<AudioClip>("SpikeFullUpSound", clip => _fullUpSpikeClip = clip);
+
             _animator.speed = _animatorSpeed;
             StartCoroutine(StartAnim(_animationDelay +
                 (_animator.runtimeAnimatorController.animationClips[0].length / _animatorSpeed)));
         }
     }
 
+    private void Start()
+    {
+        if (_animator && PauseAndResumeManager.Instance)
+        {
+            PauseAndResumeManager.Instance.AddResumeAction(OnResume);
+            PauseAndResumeManager.Instance.AddPauseAction(OnPause);
+        }
+    }
+
     private IEnumerator StartAnim(float delay)
     {
+        while (_isPaused)
+            yield return null;
+
         _animator.SetTrigger("Out");
         yield return new WaitForSeconds(delay);
+
+        while (_isPaused)
+            yield return null;
+
         _animator.SetTrigger("In");
         yield return new WaitForSeconds(delay);
+
+        while (_isPaused)
+            yield return null;
 
         StartCoroutine(StartAnim(delay));
     }
@@ -89,6 +109,27 @@ public class Spikes : ObstaclesManager
         {
             float normalizedDistance = (distance - 1f) / (2f - 1f); // Esto da un valor entre 0 y 1
             return Mathf.Lerp(0.8f, 0f, normalizedDistance);
+        }
+    }
+
+    public void OnResume()
+    {
+        _isPaused = false;
+        _animator.speed = _animatorSpeed;
+    }
+
+    public void OnPause()
+    {
+        _isPaused = true;
+        _animator.speed = 0f;
+    }
+
+    private void OnDestroy()
+    {
+        if (PauseAndResumeManager.Instance)
+        {
+            PauseAndResumeManager.Instance.RemoveResumeAction(OnResume);
+            PauseAndResumeManager.Instance.RemovePauseAction(OnPause);
         }
     }
 }
