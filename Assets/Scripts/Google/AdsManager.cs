@@ -94,8 +94,7 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAd(Action onCompleted = null, Action onFailed = null)
     {
-        if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.NoAdsBougthName) ||
-            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.NoAdsBougthName) == 1)
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.NoAdsBougthName) == 1)
             return;
 
         if (Time.time - lastInterstitialTime < interstitialCooldown)

@@ -67,24 +67,6 @@ public class IAPManager : MonoBehaviour, IStoreListener
     }
 
     // --------------------------
-    // Funciones para IAPButton
-    // --------------------------
-    public void OnPurchaseComplete(Product product)
-    {
-        Debug.Log($"OnPurchaseComplete (IAPButton): {product.definition.storeSpecificId}");
-    }
-
-    public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureReason)
-    {
-        Debug.Log($"OnPurchaseFailed (IAPButton): {product.definition.storeSpecificId}, Reason: {failureReason}");
-    }
-
-    public void OnProductFetched(Product product)
-    {
-        Debug.Log($"OnProductFetched (IAPButton): {product.definition.storeSpecificId}");
-    }
-
-    // --------------------------
     // Implementación IStoreListener
     // --------------------------
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
@@ -115,9 +97,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
         {
             case PRODUCT_NO_ADS:
                 SaveAndLoadManager.SetIntValue(
-                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 30, SaveAndLoadManager.CoinsName);
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 15, SaveAndLoadManager.CoinsName);
                 SaveAndLoadManager.SetIntValue(
-                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 10, SaveAndLoadManager.OrbsName);
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 5, SaveAndLoadManager.OrbsName);
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.NoAdsBougthName, true, true);
                 Debug.Log($"Reward: {id}");
                 break;

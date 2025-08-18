@@ -92,6 +92,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             noAdsPopUp.Show();
         });
 
+        UpdateNotificationsOnNoAds();
+
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
         if (!string.IsNullOrEmpty(UnlokedSkin))
             OnUnlockSkin();
@@ -113,6 +115,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
             IAPManager.Instance.OnCompletePurchase += ActivatePopUpAfterBuy;
+            IAPManager.Instance.OnCompletePurchase += UpdateNotificationsOnNoAds;
         }
     }
 
@@ -122,6 +125,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
             IAPManager.Instance.OnCompletePurchase -= ActivatePopUpAfterBuy;
+            IAPManager.Instance.OnCompletePurchase -= UpdateNotificationsOnNoAds;
         }
     }
 
@@ -249,6 +253,12 @@ public class MenuManagerCanvas : CanvasElementLocator
             UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
         if (_orbsText != null)
             UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
+    }
+
+    public void UpdateNotificationsOnNoAds()
+    {
+        var hasNotificationsNoAds = FindAndValidateComponent<Image>(transform, "HasNotificationsNoAds");
+        hasNotificationsNoAds.gameObject.SetActive(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.NoAdsBougthName) != 1);
     }
 
     ///// <summary>

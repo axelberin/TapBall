@@ -6310,7 +6310,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_text
-      value: x30
+      value: x15
       objectReference: {fileID: 0}
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_fontAsset
@@ -8403,7 +8403,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_text
-      value: x10
+      value: x5
       objectReference: {fileID: 0}
     - target: {fileID: 5782060255451215396, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_fontAsset
@@ -9892,49 +9892,13 @@ MonoBehaviour:
       m_Calls: []
   onPurchaseComplete:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: IAPManager, Assembly-CSharp
-        m_MethodName: OnPurchaseComplete
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
   onPurchaseFailed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: IAPManager, Assembly-CSharp
-        m_MethodName: OnPurchaseFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
   onProductFetched:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: IAPManager, Assembly-CSharp
-        m_MethodName: OnProductFetched
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
   button: {fileID: 4911884838963983289}
 --- !u!224 &3532480800422759205 stripped
 RectTransform:
@@ -13102,7 +13066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8946352028578256920, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.5898819
+      value: -0.58987427
       objectReference: {fileID: 0}
     - target: {fileID: 8946352028578256920, guid: 58354c95160891a46826fd1a25a41867, type: 3}
       propertyPath: m_AnchoredPosition.y
