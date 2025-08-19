@@ -7,12 +7,14 @@ public static class SaveAndLoadManager
 {
     // Nombres de parámetros base
     public static string CoinsName = "Coins";
+    public static string OrbsName = "Orbs";
     public static string CurrentBallSkinName = "CurrentBallSkin";
     public static string ObtainedBallSkins = "BallSkin_";
     public static string SoundsVolumeName = "SoundsVolume";
     public static string MusicVolumeName = "MusicVolume";
     public static string LanguageName = "Language";
-    public static string ReviewSowed = "ReviewSowed";
+    public static string ReviewSowedName = "ReviewSowed";
+    public static string NoAdsBougthName = "NoAdsBougth";
     public static string CurrentWorldName = "CurrentWorld";
 
     // DEPRECATED - Mantener para compatibilidad hacia atrás
@@ -27,37 +29,37 @@ public static class SaveAndLoadManager
     private static string WithoutDeathSuffix = "_WithoutDeath";
     private static string ObjectiveCompleteSuffix = "_ObjectiveComplete";
 
-    private static SaveAndLoadOnCloudManager cloudManager;
     private static bool isLoadingFromCloud = false;
 
     // Mundos disponibles - actualiza esta lista cuando agregues mundos
     private static string[] _availableWorlds = new string[] { "Neon" }; // Temporal hasta que definas los mundos reales
 
-    public static void SetCloudManager(SaveAndLoadOnCloudManager manager)
-    {
-        cloudManager = manager;
-    }
-
     #region Basic Data Methods
-    public static void SetIntValue(int value, string parameterName, bool withSave = false)
+    public static void SetIntValue(int value, string parameterName, bool withSave = false, bool saveCloud = false)
     {
         PlayerPrefs.SetInt(parameterName, value);
         if (withSave)
             Save();
+        if (saveCloud)
+            SaveCloud();
     }
 
-    public static void SetFloatValue(float value, string parameterName, bool withSave = false)
+    public static void SetFloatValue(float value, string parameterName, bool withSave = false, bool saveCloud = false)
     {
         PlayerPrefs.SetFloat(parameterName, value);
         if (withSave)
             Save();
+        if (saveCloud)
+            SaveCloud();
     }
 
-    public static void SetStringValue(string value, string parameterName, bool withSave = false)
+    public static void SetStringValue(string value, string parameterName, bool withSave = false, bool saveCloud = false)
     {
         PlayerPrefs.SetString(parameterName, value);
         if (withSave)
             Save();
+        if (saveCloud)
+            SaveCloud();
     }
 
     public static int GetIntValue(string parameterName)
@@ -109,10 +111,10 @@ public static class SaveAndLoadManager
     /// <summary>
     /// Guarda si el jugador obtuvo la moneda en un nivel específico
     /// </summary>
-    public static void SetLevelCoinObtained(GameModes gameMode, string world, int level, bool obtained, bool withSave = false)
+    public static void SetLevelCoinObtained(GameModes gameMode, string world, int level, bool obtained, bool withSave = false, bool saveCloud = false)
     {
         string key = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
-        SetIntValue(obtained ? 1 : 0, key, withSave);
+        SetIntValue(obtained ? 1 : 0, key, withSave, saveCloud);
     }
 
     /// <summary>
@@ -127,10 +129,10 @@ public static class SaveAndLoadManager
     /// <summary>
     /// Guarda si el jugador completó el nivel sin morir
     /// </summary>
-    public static void SetLevelWithoutDeath(GameModes gameMode, string world, int level, bool withoutDeath, bool withSave = false)
+    public static void SetLevelWithoutDeath(GameModes gameMode, string world, int level, bool withoutDeath, bool withSave = false, bool saveCloud = false)
     {
         string key = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
-        SetIntValue(withoutDeath ? 1 : 0, key, withSave);
+        SetIntValue(withoutDeath ? 1 : 0, key, withSave, saveCloud);
     }
 
     /// <summary>
@@ -146,10 +148,10 @@ public static class SaveAndLoadManager
     /// Guarda si el jugador cumplió el objetivo específico del modo de juego
     /// Dunk: toques máximos, Time: tiempo límite, OneTouch: límite de toques, etc.
     /// </summary>
-    public static void SetLevelObjectiveComplete(GameModes gameMode, string world, int level, bool objectiveComplete, bool withSave = false)
+    public static void SetLevelObjectiveComplete(GameModes gameMode, string world, int level, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
     {
         string key = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
-        SetIntValue(objectiveComplete ? 1 : 0, key, withSave);
+        SetIntValue(objectiveComplete ? 1 : 0, key, withSave, saveCloud);
     }
 
     /// <summary>
@@ -164,11 +166,11 @@ public static class SaveAndLoadManager
     /// <summary>
     /// Guarda todos los datos de un nivel de una vez
     /// </summary>
-    public static void SetLevelData(GameModes gameMode, string world, int level, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false)
+    public static void SetLevelData(GameModes gameMode, string world, int level, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
     {
         SetLevelCoinObtained(gameMode, world, level, coinObtained, false);
         SetLevelWithoutDeath(gameMode, world, level, withoutDeath, false);
-        SetLevelObjectiveComplete(gameMode, world, level, objectiveComplete, withSave);
+        SetLevelObjectiveComplete(gameMode, world, level, objectiveComplete, withSave, saveCloud);
     }
 
     /// <summary>
@@ -259,7 +261,7 @@ public static class SaveAndLoadManager
             // Si hay datos para este nivel, migrarlos al nuevo formato
             if (hasAnyData)
             {
-                SetLevelData(GameModes.Dunk, "Neon", level, coinObtained, withoutDeath, touchesComplete, false);
+                SetLevelData(GameModes.Dunk, "Neon", level, coinObtained, withoutDeath, touchesComplete);
                 migratedLevels++;
                 Debug.Log($"Migrated level {level} data to new format");
             }
@@ -281,9 +283,12 @@ public static class SaveAndLoadManager
     public static void Save()
     {
         PlayerPrefs.Save();
+    }
 
-        if (cloudManager != null && !isLoadingFromCloud)
-            cloudManager.SaveGameData(SerializeGameData());
+    public static void SaveCloud()
+    {
+        if (SaveAndLoadOnCloudManager.Instance != null && !isLoadingFromCloud)
+            SaveAndLoadOnCloudManager.Instance.SaveGameData(SerializeGameData());
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
@@ -295,28 +300,19 @@ public static class SaveAndLoadManager
             GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
 
             // Aplicar datos básicos
-            if (data.coins >= 0)
-                SetIntValue(data.coins, CoinsName);
+            SetIntValue(data.coins, CoinsName);
             if (!string.IsNullOrEmpty(data.currentBallSkin))
                 SetStringValue(data.currentBallSkin, CurrentBallSkinName);
-            GameManager.LoadedSkinText = data.currentBallSkin;
 
             SetFloatValue(data.soundsVolume, SoundsVolumeName);
             SetFloatValue(data.musicVolume, MusicVolumeName);
-            if (AudioManager.Instance)
-                AudioManager.Instance.ApplyAudioSettings();
-            GameManager.LoadedSoundText = data.soundsVolume.ToString();
-            GameManager.LoadedMusicText = data.musicVolume.ToString();
 
             if (!string.IsNullOrEmpty(data.language))
             {
                 SetStringValue(data.language, LanguageName);
-                if (LanguageManager.Instance)
-                    LanguageManager.Instance.LoadSavedOrDetectLanguage();
             }
-            GameManager.LoadedLanguageText = data.language;
 
-            SetIntValue(data.reviewSowed, ReviewSowed);
+            SetIntValue(data.reviewSowed, ReviewSowedName);
 
             // Aplicar datos de niveles con nueva estructura
             foreach (var modeData in data.gameModeData)
@@ -335,8 +331,7 @@ public static class SaveAndLoadManager
                                 SetLevelData(gameMode, world, level,
                                            levelInfo.coinObtained,
                                            levelInfo.withoutDeath,
-                                           levelInfo.objectiveComplete,
-                                           false);
+                                           levelInfo.objectiveComplete);
                             }
                         }
                     }
@@ -352,7 +347,6 @@ public static class SaveAndLoadManager
         }
         catch (Exception e)
         {
-            GameManager.LoadedErrorText = e.Message;
             Debug.LogError("Error applying cloud data: " + e.Message);
             onFail?.Invoke();
         }
@@ -360,6 +354,7 @@ public static class SaveAndLoadManager
         {
             isLoadingFromCloud = false;
             onComplete?.Invoke();
+            LanguageManager.Instance?.LoadSavedOrDetectLanguage();
         }
     }
 
@@ -381,12 +376,7 @@ public static class SaveAndLoadManager
         data.soundsVolume = GetFloatValue(SoundsVolumeName);
         data.musicVolume = GetFloatValue(MusicVolumeName);
         data.language = GetStringValue(LanguageName);
-        data.reviewSowed = GetIntValue(ReviewSowed);
-
-        GameManager.SavedLanguageText = data.language;
-        GameManager.SavedMusicText = data.musicVolume.ToString();
-        GameManager.SavedSoundText = data.soundsVolume.ToString();
-        GameManager.SavedSkinText = data.currentBallSkin;
+        data.reviewSowed = GetIntValue(ReviewSowedName);
 
         // Serializar datos de niveles con nueva estructura
         foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
@@ -431,8 +421,8 @@ public static class SaveAndLoadManager
     {
         PlayerPrefs.DeleteAll();
 
-        if (cloudManager != null)
-            cloudManager.SaveGameData("{}");
+        if (SaveAndLoadOnCloudManager.Instance != null)
+            SaveAndLoadOnCloudManager.Instance.SaveGameData("{}");
     }
     #endregion
 

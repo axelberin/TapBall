@@ -16,15 +16,25 @@ public class StoreManager : MonoBehaviour
             Destroy(this);
     }
 
-    private void Start()
-    {
-        if (LevelManager.Instance)
-            _coins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
-    }
-
     private void OnEnable()
     {
         UpdateSkinsState?.Invoke();
+        UpdateCoins();
+        if (IAPManager.Instance)
+            IAPManager.Instance.OnCompletePurchase += UpdateCoins;
+    }
+
+    private void OnDisable()
+    {
+        if (IAPManager.Instance)
+            IAPManager.Instance.OnCompletePurchase -= UpdateCoins;
+    }
+
+    private void UpdateCoins()
+    {
+        _coins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
+        Debug.Log(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        Debug.Log(_coins);
     }
 
     public void Buy(int cost)

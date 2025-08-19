@@ -94,6 +94,9 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAd(Action onCompleted = null, Action onFailed = null)
     {
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.NoAdsBougthName) == 1)
+            return;
+
         if (Time.time - lastInterstitialTime < interstitialCooldown)
         {
             Debug.Log($"Interstitial cooldown {interstitialCooldown - (Time.time - lastInterstitialTime):F1}s");

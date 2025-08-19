@@ -171,7 +171,6 @@ public class AudioManager : ManagersManager, IPauseble
         yield return new WaitForSeconds(0.5f);
 
         _isInitialized = true;
-        PlayMusicByType(MusicClipType.MenuMusic);
     }
 
     public void ApplyAudioSettings()
