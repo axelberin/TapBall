@@ -66,9 +66,6 @@ public class IAPManager : MonoBehaviour, IStoreListener
         return m_StoreController.products.WithID(id);
     }
 
-    // --------------------------
-    // Implementación IStoreListener
-    // --------------------------
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
         m_StoreController = controller;
@@ -121,3 +118,143 @@ public class IAPManager : MonoBehaviour, IStoreListener
         Debug.Log($"OnPurchaseFailed: {error}, Reason: {message}");
     }
 }
+
+/*
+using UnityEngine;
+using UnityEngine.Purchasing;
+using Unity.Services.Core;
+using Unity.Services.Core.Environments;
+using System;
+using System.Threading.Tasks;
+
+public class IAPManager : MonoBehaviour, IStoreListener
+{
+    public static IAPManager Instance { get; private set; }
+
+    private IStoreController storeController;
+    private IExtensionProvider extensionProvider;
+
+    public const string PRODUCT_NO_ADS = "no_ads_product";
+    public Action OnCompletePurchase = delegate { };
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
+        InitializeUnityServices();
+    }
+
+    // --------------------
+    // Inicializa Unity Gaming Services manualmente
+    // --------------------
+    private async void InitializeUnityServices()
+    {
+        try
+        {
+            var options = new InitializationOptions()
+                .SetEnvironmentName("production"); // podes cambiarlo si usas otro env
+
+            await UnityServices.InitializeAsync(options);
+            Debug.Log("Unity Gaming Services inicializado");
+
+            InitializePurchasing(); // ahora sí inicializamos IAP
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error inicializando UGS: " + e);
+        }
+    }
+
+    private void InitializePurchasing()
+    {
+        if (storeController != null)
+        {
+            Debug.Log("IAP ya estaba inicializado");
+            return;
+        }
+
+        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+        builder.AddProduct(PRODUCT_NO_ADS, ProductType.NonConsumable);
+
+        UnityPurchasing.Initialize(this, builder);
+    }
+
+    public void BuyNoAds()
+    {
+        if (storeController != null)
+        {
+            storeController.InitiatePurchase(PRODUCT_NO_ADS);
+        }
+        else
+        {
+            Debug.LogError("IAP no inicializado");
+        }
+    }
+
+    public Product GetProductByID(string id)
+    {
+        if (storeController != null)
+            return storeController.products.WithID(id);
+
+        Debug.LogError("StoreController no inicializado");
+        return null;
+    }
+
+    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
+    {
+        Debug.Log("Compra completada: " + args.purchasedProduct.definition.id);
+        GetRewardAfterProcessPurchase(args.purchasedProduct.definition.id);
+        return PurchaseProcessingResult.Complete;
+    }
+
+    public void OnPurchaseFailed(Product product, PurchaseFailureReason reason)
+    {
+        Debug.LogError($"Compra fallida: {product.definition.id}, Razón: {reason}");
+    }
+
+    public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    {
+        storeController = controller;
+        extensionProvider = extensions;
+        Debug.Log("IAP inicializado correctamente con " + controller.products.all.Length + " productos");
+        foreach (var p in controller.products.all)
+            Debug.Log($"Producto cargado: {p.definition.id}, disponible={p.availableToPurchase}");
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error)
+    {
+        Debug.LogError("Falló la inicialización de IAP: " + error);
+    }
+
+    private void GetRewardAfterProcessPurchase(string id)
+    {
+        switch (id)
+        {
+            case PRODUCT_NO_ADS:
+                SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 15, SaveAndLoadManager.CoinsName);
+                SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 5, SaveAndLoadManager.OrbsName);
+                SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.NoAdsBougthName, true, true);
+
+                Debug.Log("Recompensa aplicada: No Ads comprado");
+                break;
+
+            default:
+                Debug.LogError($"Producto no reconocido: {id}");
+                break;
+        }
+
+        OnCompletePurchase?.Invoke();
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error, string message)
+    {
+        Debug.LogError(error + " " + message);
+    }
+}
+
+*/
