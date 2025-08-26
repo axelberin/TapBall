@@ -109,6 +109,8 @@ public class ScenesManager : MonoBehaviour
             _levelsPassedCounter = 0;
         }
 
+        var currentWorld = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName);
+
         switch (gameMode)
         {
             case GameManager.GameModes.Dunk:
@@ -116,7 +118,7 @@ public class ScenesManager : MonoBehaviour
                 PauseAndResumeManager.Instance.RestartPauseAction();
                 PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
                 PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
-                LoadSceneAsync("DunkLevel" + level, fadeAnimator);
+                LoadSceneAsync($"{currentWorld}Level" + level, fadeAnimator);
                 break;
             case GameManager.GameModes.Endless:
                 break;

@@ -154,7 +154,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             if (button == null)
                 break;
 
-            button.name = $"DunkLevel{i}";
+            button.name = $"{_currentWorld}Level{i}";
 
             // Usar nuevo sistema para determinar el siguiente nivel
             if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) && nextDunkLevel <= 49)
@@ -166,7 +166,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             {
                 button.interactable = false;
                 UIManager.Instance.ClearCnavasesList();
-                ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex}", fadeAnimator);
+                ScenesManager.Instance.LoadSceneAsync($"{_currentWorld}Level{levelIndex}", fadeAnimator);
                 AudioManager.Instance.StopMusic();
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PlayLevelSound);
             });
@@ -212,7 +212,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         playButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
-            ScenesManager.Instance.LoadSceneAsync($"DunkLevel{nextDunkLevel}", fadeAnimator);
+            ScenesManager.Instance.LoadSceneAsync($"{_currentWorld}Level{nextDunkLevel}", fadeAnimator);
         });
 
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");

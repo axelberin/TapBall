@@ -143,7 +143,8 @@ public class DunkLevelCanvas : CanvasElementLocator
     public void OnWin()
     {
         var existsNextLevel = ScenesManager.Instance.IsSceneExisting(
-            $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
+            $"{SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName)}" +
+            $"Level{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
 
         _nextLevelButton.interactable = existsNextLevel;
         if (!existsNextLevel)
@@ -153,9 +154,10 @@ public class DunkLevelCanvas : CanvasElementLocator
                 SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "BallSkin");
         }
         else
+        {
             _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
-
-        _nextLevelText.font = LanguageManager.Instance.GetFontByLanguage();
+            _nextLevelText.font = LanguageManager.Instance.GetFontByLanguage();
+        }
 
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winUI, true);
