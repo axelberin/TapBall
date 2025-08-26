@@ -16,6 +16,7 @@ public static class SaveAndLoadManager
     public static string ReviewSowedName = "ReviewSowed";
     public static string NoAdsBougthName = "NoAdsBougth";
     public static string CurrentWorldName = "CurrentWorld";
+    public static string CurrentModeName = "CurrentMode";
 
     // DEPRECATED - Mantener para compatibilidad hacia atrás
     public static string CoinNameByLevel = "Coin_";
@@ -312,6 +313,12 @@ public static class SaveAndLoadManager
                 SetStringValue(data.language, LanguageName);
             }
 
+            if (!string.IsNullOrEmpty(data.currentModeName))
+                SetStringValue(data.currentModeName, CurrentModeName);
+
+            if (!string.IsNullOrEmpty(data.currentWorldName))
+                SetStringValue(data.currentWorldName, CurrentWorldName);
+
             SetIntValue(data.reviewSowed, ReviewSowedName);
 
             // Aplicar datos de niveles con nueva estructura
@@ -377,6 +384,8 @@ public static class SaveAndLoadManager
         data.musicVolume = GetFloatValue(MusicVolumeName);
         data.language = GetStringValue(LanguageName);
         data.reviewSowed = GetIntValue(ReviewSowedName);
+        data.currentModeName = GetStringValue(CurrentModeName);
+        data.currentWorldName = GetStringValue(CurrentWorldName);
 
         // Serializar datos de niveles con nueva estructura
         foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
@@ -447,7 +456,7 @@ public static class SaveAndLoadManager
 }
 
 // Clases para la serialización
-[System.Serializable]
+[Serializable]
 public class GameData
 {
     public int coins;
@@ -456,6 +465,8 @@ public class GameData
     public float musicVolume;
     public string language;
     public int reviewSowed;
+    public string currentWorldName;
+    public string currentModeName;
 
     // Estructura: GameMode -> World -> Level -> LevelData
     public Dictionary<string, Dictionary<string, Dictionary<string, LevelData>>> gameModeData;
@@ -468,7 +479,7 @@ public class GameData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class LevelData
 {
     public bool coinObtained;

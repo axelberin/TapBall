@@ -20,7 +20,10 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         Application.targetFrameRate = 60;
 
-        Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName))
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CurrentModeName, true, true);
+
+        Instance.SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName));
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");

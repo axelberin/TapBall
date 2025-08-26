@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     {
         Null,
         Dunk,               // Obstacle mode. Less touches. A lot of levels.
-        Endless,            // Endless. More time. One procedural level.
         Time,               // Time mode. Less Time. A lot of levels.
+        Endless,            // Endless. More time. One procedural level.
         OneTouch,            // Limit touches. Less touches than limit. A lot of levels.
         Fall,               // Fall mode. More time. One procedural level.
     }
@@ -40,6 +40,18 @@ public class GameManager : MonoBehaviour
                 break;
             case 1:
                 _currentGameMode = GameModes.Dunk;
+                break;
+            case 2:
+                _currentGameMode = GameModes.Time;
+                break;
+            case 3:
+                _currentGameMode = GameModes.Endless;
+                break;
+            case 4:
+                _currentGameMode = GameModes.OneTouch;
+                break;
+            case 5:
+                _currentGameMode = GameModes.Fall;
                 break;
             default:
                 _currentGameMode = GameModes.Null;
