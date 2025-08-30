@@ -155,8 +155,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         }
         else
         {
-            _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
-            _nextLevelText.font = LanguageManager.Instance.GetFontByLanguage();
+            UIManager.Instance.SetText(_nextLevelText, LanguageManager.Instance.GetLocalizedText("nextLevel"));
         }
 
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);

@@ -29,7 +29,7 @@ public class StoreObject : CanvasElementLocator
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
 
         var priceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PriceText");
-        priceText.text = _skinSC.price.ToString();
+        UIManager.Instance.SetText(priceText, _skinSC.price);
 
         _buyButton.onClick.AddListener(() =>
         {
@@ -88,31 +88,24 @@ public class StoreObject : CanvasElementLocator
 
     private void OnSkinLocked()
     {
-        _buyButton.gameObject.SetActive(false);
-        _equipButton.gameObject.SetActive(true);
-        _equipButton.interactable = false;
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("locked");
-        _equipText.text = text;
-        _equipText.font = font;
+        ChangeButtonConditions(false, "locked");
     }
 
     private void OnSkinIsSelected()
     {
-        _buyButton.gameObject.SetActive(false);
-        _equipButton.gameObject.SetActive(true);
-        _equipButton.interactable = false;
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("equiped");
-        _equipText.text = text;
-        _equipText.font = font;
+        ChangeButtonConditions(false, "equiped");
     }
 
     private void OnSkinUnselected()
     {
+        ChangeButtonConditions(true, "equip");
+    }
+
+    private void ChangeButtonConditions(bool interactable, string buttonText)
+    {
         _buyButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(true);
-        _equipButton.interactable = true;
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("equip");
-        _equipText.text = text;
-        _equipText.font = font;
+        _equipButton.interactable = interactable;
+        UIManager.Instance.SetText(_equipText, LanguageManager.Instance.GetLocalizedText(buttonText));
     }
 }

@@ -93,9 +93,7 @@ public class PopUp : CanvasElementLocator
 
     private void SetTittle(string tittleText)
     {
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont(tittleText);
-        _tittleText.text = text;
-        _tittleText.font = font;
+        UIManager.Instance.SetText(_tittleText, LanguageManager.Instance.GetLocalizedText(tittleText));
     }
 
     private void SetDescription(string descriptionText)
@@ -103,9 +101,7 @@ public class PopUp : CanvasElementLocator
         if (descriptionText != null)
         {
             _descriptionText.gameObject.SetActive(true);
-            var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont(descriptionText);
-            _descriptionText.text = text;
-            _descriptionText.font = font;
+            UIManager.Instance.SetText(_descriptionText, LanguageManager.Instance.GetLocalizedText(descriptionText));
         }
         else
             _descriptionText.gameObject.SetActive(false);

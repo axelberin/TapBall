@@ -27,9 +27,6 @@ public class LocalizedText : MonoBehaviour
         if (!LanguageManager.Instance)
             return;
 
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont(key);
-
-        _text.font = font;
-        _text.text = text;
+        UIManager.Instance.SetText(_text, LanguageManager.Instance.GetLocalizedText(key));
     }
 }

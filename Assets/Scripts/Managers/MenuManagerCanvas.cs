@@ -90,8 +90,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         noAdsBtn.onClick.AddListener(() =>
         {
             noAdsPopUp.Initialize("noadstittle", "noadsdescription");
-            noAdsPriceText.text = "US$ " + IAPManager.Instance.GetProductByID(
-                "no_ads_product").metadata.localizedPriceString;
+            UIManager.Instance.SetText(noAdsPriceText, "US$ " + IAPManager.Instance.GetProductByID(
+                "no_ads_product").metadata.localizedPriceString);
             noAdsPopUp.Show();
         });
 
@@ -204,7 +204,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
             #region LEVEL TEXT
             var levelNumText = FindAndValidateComponent<TextMeshProUGUI>(button.transform, $"DunkLevelNumText");
-            levelNumText.text = i.ToString();
+            UIManager.Instance.SetText(levelNumText, i);
             #endregion
         }
 
@@ -216,7 +216,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
-        nextLevelText.text = $"{nextDunkLevel}";
+        UIManager.Instance.SetText(nextLevelText, nextDunkLevel);
     }
     #endregion
 
