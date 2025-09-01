@@ -28,11 +28,11 @@ public class SplashController : MonoBehaviour
         _animator.Play("SplashAnim");
         yield return new WaitForSeconds(0.25f);
         _audioSource.Play();
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.35f);
         _audioSource.Play();
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.4f);
         _audioSource.Play();
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1.1f);
         LoadNextScene();
     }
 
