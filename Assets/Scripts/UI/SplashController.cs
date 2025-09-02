@@ -32,7 +32,7 @@ public class SplashController : MonoBehaviour
         _audioSource.Play();
         yield return new WaitForSeconds(0.4f);
         _audioSource.Play();
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(1.5f);
         LoadNextScene();
     }
 
