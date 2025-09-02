@@ -95,6 +95,34 @@ public class MenuManagerCanvas : CanvasElementLocator
             noAdsPopUp.Show();
         });
 
+        var modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
+
+        var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
+        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1 > 2;
+        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon")));
+        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15));
+        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1);
+        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1 > 2);
+
+        nextModeBtn.onClick.AddListener(() =>
+        {
+            Instance.GetCurrentModeIndex(1);
+            UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+
+        });
+
+        var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
+        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1 > 2;
+
+        previousModeBtn.onClick.AddListener(() =>
+        {
+            Instance.GetCurrentModeIndex(-1);
+            UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+        });
+
+        UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+
+
         UpdateNotificationsOnNoAds();
 
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
