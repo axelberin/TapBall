@@ -114,8 +114,7 @@ public static class SaveAndLoadManager
     /// </summary>
     public static void SetLevelCoinObtained(GameModes gameMode, string world, int level, bool obtained, bool withSave = false, bool saveCloud = false)
     {
-        string key = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
-        SetIntValue(obtained ? 1 : 0, key, withSave, saveCloud);
+        SetIntValue(obtained ? 1 : 0, GenerateLevelDataKey(gameMode, world, level, CoinSuffix), withSave, saveCloud);
     }
 
     /// <summary>
@@ -123,8 +122,7 @@ public static class SaveAndLoadManager
     /// </summary>
     public static bool GetLevelCoinObtained(GameModes gameMode, string world, int level)
     {
-        string key = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
-        return GetIntValue(key) == 1;
+        return GetIntValue(GenerateLevelDataKey(gameMode, world, level, CoinSuffix)) == 1;
     }
 
     /// <summary>
@@ -132,8 +130,7 @@ public static class SaveAndLoadManager
     /// </summary>
     public static void SetLevelWithoutDeath(GameModes gameMode, string world, int level, bool withoutDeath, bool withSave = false, bool saveCloud = false)
     {
-        string key = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
-        SetIntValue(withoutDeath ? 1 : 0, key, withSave, saveCloud);
+        SetIntValue(withoutDeath ? 1 : 0, GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix), withSave, saveCloud);
     }
 
     /// <summary>
@@ -141,8 +138,7 @@ public static class SaveAndLoadManager
     /// </summary>
     public static bool GetLevelWithoutDeath(GameModes gameMode, string world, int level)
     {
-        string key = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
-        return GetIntValue(key) == 1;
+        return GetIntValue(GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix)) == 1;
     }
 
     /// <summary>
@@ -151,8 +147,7 @@ public static class SaveAndLoadManager
     /// </summary>
     public static void SetLevelObjectiveComplete(GameModes gameMode, string world, int level, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
     {
-        string key = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
-        SetIntValue(objectiveComplete ? 1 : 0, key, withSave, saveCloud);
+        SetIntValue(objectiveComplete ? 1 : 0, GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix), withSave, saveCloud);
     }
 
     /// <summary>
@@ -160,8 +155,7 @@ public static class SaveAndLoadManager
     /// </summary>
     public static bool GetLevelObjectiveComplete(GameModes gameMode, string world, int level)
     {
-        string key = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
-        return GetIntValue(key) == 1;
+        return GetIntValue(GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix)) == 1;
     }
 
     /// <summary>
@@ -192,11 +186,20 @@ public static class SaveAndLoadManager
     /// </summary>
     public static bool HasLevelData(GameModes gameMode, string world, int level)
     {
-        string coinKey = GenerateLevelDataKey(gameMode, world, level, CoinSuffix);
-        string deathKey = GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix);
-        string objectiveKey = GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix);
+        return ContainsKey(GenerateLevelDataKey(gameMode, world, level, CoinSuffix)) ||
+            ContainsKey(GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix)) ||
+            ContainsKey(GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix));
+    }
 
-        return ContainsKey(coinKey) || ContainsKey(deathKey) || ContainsKey(objectiveKey);
+    public static int GetHighestLevelReached(GameModes gameMode, string world, int maxLevels = 50)
+    {
+        for (int level = 1; level <= maxLevels; level++)
+        {
+            if (!HasLevelData(gameMode, world, level))
+                return level - 1;
+        }
+
+        return maxLevels;
     }
     #endregion
 
