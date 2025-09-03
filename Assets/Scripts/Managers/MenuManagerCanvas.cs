@@ -98,7 +98,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         var modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
 
         var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
-        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1 > 2;
+        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1 > 1;
         Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon")));
         Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15));
         Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1);
@@ -112,7 +112,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
-        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1 > 2;
+        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1 > 1;
 
         previousModeBtn.onClick.AddListener(() =>
         {
