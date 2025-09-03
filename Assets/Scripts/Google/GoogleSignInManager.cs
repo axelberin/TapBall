@@ -72,7 +72,24 @@ public class GoogleSignInManager : ManagersManager
 
     public override IEnumerator InizializeManagers()
     {
-        PlayGamesPlatform.Instance.Authenticate(SignInSilently);
+        PlayGamesPlatform.Activate();
+
+        // Primer intento: silencioso
+        PlayGamesPlatform.Instance.Authenticate((status) =>
+        {
+            if (status == SignInStatus.Success)
+            {
+                Debug.Log("Inicio de sesión silencioso exitoso. Usuario: "
+                    + PlayGamesPlatform.Instance.GetUserDisplayName());
+                OnSignInSuccess();
+            }
+            else
+            {
+                Debug.LogWarning("Inicio de sesión silencioso fallido. Estado: " + status);
+                OnFailSignIn();
+            }
+        });
+
 
         while (!_isInitialized)
             yield return null;
