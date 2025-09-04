@@ -99,10 +99,6 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
         nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
-        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon")));
-        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15));
-        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1);
-        Debug.Log((SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") % 15) + 1 > 1);
 
         nextModeBtn.onClick.AddListener(() =>
         {

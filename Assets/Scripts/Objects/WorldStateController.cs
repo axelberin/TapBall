@@ -8,7 +8,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private Action OnUpdate = delegate { };
 
     [SerializeField] private int _limitTouches = 1;
-    [SerializeField] private float _limitTime = 31f;
+    [SerializeField] private float _limitTime = 30f;
     private float _timerCounter;
     private int _level;
     private float _timeToWin = 3;
@@ -109,7 +109,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_timerCounter > 0)
         {
             _timerCounter -= Time.deltaTime;
-            DunkLevelCanvas.Instance.ShowTimerText(Mathf.Clamp(_timerCounter,0 , _limitTime));
+            DunkLevelCanvas.Instance.ShowTimerText(_timerCounter + 1);
         }
         else if (_timerCounter <= 0)
         {
