@@ -67,29 +67,13 @@ public class GoogleSignInManager : ManagersManager
 
     private void OnFailSignIn()
     {
-        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect", () => _isInitialized = true, Application.Quit);
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect", () => _isInitialized = true, SignInManually);
     }
 
     public override IEnumerator InizializeManagers()
     {
         PlayGamesPlatform.Activate();
-
-        // Primer intento: silencioso
-        PlayGamesPlatform.Instance.Authenticate((status) =>
-        {
-            if (status == SignInStatus.Success)
-            {
-                Debug.Log("Inicio de sesión silencioso exitoso. Usuario: "
-                    + PlayGamesPlatform.Instance.GetUserDisplayName());
-                OnSignInSuccess();
-            }
-            else
-            {
-                Debug.LogWarning("Inicio de sesión silencioso fallido. Estado: " + status);
-                OnFailSignIn();
-            }
-        });
-
+        SignInManually();
 
         while (!_isInitialized)
             yield return null;
