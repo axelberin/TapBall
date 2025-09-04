@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     {
         Null,
         Dunk,               // Obstacle mode. Less touches. A lot of levels.
-        Endless,            // Endless. More time. One procedural level.
         Time,               // Time mode. Less Time. A lot of levels.
+        Endless,            // Endless. More time. One procedural level.
         OneTouch,            // Limit touches. Less touches than limit. A lot of levels.
         Fall,               // Fall mode. More time. One procedural level.
     }
@@ -41,6 +41,18 @@ public class GameManager : MonoBehaviour
             case 1:
                 _currentGameMode = GameModes.Dunk;
                 break;
+            case 2:
+                _currentGameMode = GameModes.Time;
+                break;
+            case 3:
+                _currentGameMode = GameModes.Endless;
+                break;
+            case 4:
+                _currentGameMode = GameModes.OneTouch;
+                break;
+            case 5:
+                _currentGameMode = GameModes.Fall;
+                break;
             default:
                 _currentGameMode = GameModes.Null;
                 Debug.LogWarning($"Game mode not found: " + gameModeIndex);
@@ -53,7 +65,7 @@ public class GameManager : MonoBehaviour
         if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)
             return;
 
-        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true);
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true, true);
         UnlokedSkin = currentWorldName;
     }
 
@@ -67,16 +79,4 @@ public class GameManager : MonoBehaviour
     public DeathController SetGetDeathController { set; get; }
 
     public GameModes GetCurrentGameMode => _currentGameMode;
-
-    public static string SavedErrorText;
-    public static string SavedLanguageText;
-    public static string SavedMusicText;
-    public static string SavedSoundText;
-    public static string SavedSkinText;
-
-    public static string LoadedErrorText;
-    public static string LoadedLanguageText;
-    public static string LoadedMusicText;
-    public static string LoadedSoundText;
-    public static string LoadedSkinText;
 }

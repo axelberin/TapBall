@@ -6,9 +6,14 @@ using System.Collections;
 
 public class SaveAndLoadOnCloudManager : ManagersManager
 {
+    public static SaveAndLoadOnCloudManager Instance;
+
     private void Awake()
     {
-        SaveAndLoadManager.SetCloudManager(this);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     public void SaveGameData(string dataToSave)
@@ -19,7 +24,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
-            GameManager.SavedErrorText = "Not authenticated with Google Play Games";
             Debug.LogWarning("Not authenticated with Google Play Games. Cannot save data.");
         }
     }
@@ -61,7 +65,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
-            GameManager.SavedErrorText = status.ToString();
             Debug.LogError("Error opening saved game: " + status);
             onComplete?.Invoke();
         }
@@ -75,7 +78,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         else
         {
-            GameManager.SavedErrorText = status.ToString();
             Debug.LogError("Error saving game data: " + status);
         }
 

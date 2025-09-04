@@ -28,9 +28,7 @@ public class TutorialManager : CanvasElementLocator
             _tapTutorialImage = FindAndValidateComponent<Image>(transform, "TutorialImage");
 
         var tutorialText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TutorialText");
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("tutorial1");
-        tutorialText.text = text;
-        tutorialText.font = font;
+        UIManager.Instance.SetText(tutorialText, LanguageManager.Instance.GetLocalizedText("tutorial1"));
 
         var nextTutorialButton = FindAndValidateComponent<Button>(transform, "NextTutorialBTN");
         nextTutorialButton.onClick.AddListener(() => FinishTutorial());

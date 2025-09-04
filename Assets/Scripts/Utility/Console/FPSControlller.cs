@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class FPSControlller : MonoBehaviour
 {
-    public TMP_Text fpsText;
+    public TextMeshProUGUI fpsText;
     public float time = 0;
 
     // Start is called before the first frame update
@@ -20,7 +18,7 @@ public class FPSControlller : MonoBehaviour
         if (time >= 0.5f)
         {
             int fps = (int)(1 / Time.unscaledDeltaTime);
-            fpsText.text = fps.ToString();
+            UIManager.Instance.SetText(fpsText, fps);
             time = 0;
         }
         time += Time.unscaledDeltaTime;

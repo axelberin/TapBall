@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: TennisBallSkin
   sprite: {fileID: 21300000, guid: 1e49451371e03dc41bdaf01eb77a280e, type: 3}
-  price: 2
+  price: 4
   spriteSize: {x: 185, y: 185}
+  unlockeable: 0

@@ -10,6 +10,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _dunkLevelsPanel;
 
     private TextMeshProUGUI _coinsText;
+    private TextMeshProUGUI _orbsText;
     private PopUp _unlockSkinsPopUp;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
@@ -19,7 +20,10 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         Application.targetFrameRate = 60;
 
-        GameManager.Instance.SelectGameMode(1);     //TODO: Mandar un 0 y luego cambiar el modo desde el menu
+        if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName))
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CurrentModeName, true, true);
+
+        Instance.SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName));
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
@@ -32,12 +36,13 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
-        UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
+        UpdateCoinsAndOrbsTexts();
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin");
-            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
+            SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName, true, true);
         }
         else
         {
@@ -48,13 +53,13 @@ public class MenuManagerCanvas : CanvasElementLocator
             if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentSkin) == 0)
             {
                 Debug.LogWarning($"Current skin '{currentSkin}' is not unlocked. Reverting to BallBasicSkin.");
-                SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin");
-                SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName);
+                SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + "BallBasicSkin", true);
+                SaveAndLoadManager.SetStringValue("BallBasicSkin", SaveAndLoadManager.CurrentBallSkinName, true, true);
             }
         }
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentWorldName))
-            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName);
+            SaveAndLoadManager.SetStringValue("Neon", SaveAndLoadManager.CurrentWorldName, true, true);
 
         // Obtener mundo actual del save
         _currentWorld = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName);
@@ -62,7 +67,6 @@ public class MenuManagerCanvas : CanvasElementLocator
             _currentWorld = "Neon";
 
         StoreManager.Instance.UpdateSkinsState?.Invoke();
-        SaveAndLoadManager.Save();
 
         var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
         dunkCloseButton.onClick.AddListener(() =>
@@ -79,8 +83,22 @@ public class MenuManagerCanvas : CanvasElementLocator
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("MenuManagerCanvas", "ConfigsCanvas"));
 
+        var noAdsPopUp = FindAndValidateComponent<PopUp>(transform, "NoAdsPopUp");
+        var noAdsPriceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NoAdsPriceText");
+
+        var noAdsBtn = FindAndValidateComponent<Button>(transform, "NoAdsBtn");
+        noAdsBtn.onClick.AddListener(() =>
+        {
+            noAdsPopUp.Initialize("noadstittle", "noadsdescription");
+            UIManager.Instance.SetText(noAdsPriceText, "US$ " + IAPManager.Instance.GetProductByID(
+                "no_ads_product").metadata.localizedPriceString);
+            noAdsPopUp.Show();
+        });
+
+        UpdateNotificationsOnNoAds();
+
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
-        if (!string.IsNullOrEmpty(GameManager.UnlokedSkin))
+        if (!string.IsNullOrEmpty(UnlokedSkin))
             OnUnlockSkin();
 
         PauseAndResumeManager.Instance.RestartResumeAction();
@@ -95,8 +113,23 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void OnEnable()
     {
-        if (_coinsText != null)
-            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        UpdateCoinsAndOrbsTexts();
+        if (IAPManager.Instance)
+        {
+            IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase += ActivatePopUpAfterBuy;
+            IAPManager.Instance.OnCompletePurchase += UpdateNotificationsOnNoAds;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (IAPManager.Instance)
+        {
+            IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase -= ActivatePopUpAfterBuy;
+            IAPManager.Instance.OnCompletePurchase -= UpdateNotificationsOnNoAds;
+        }
     }
 
     private void Update()
@@ -121,7 +154,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             if (button == null)
                 break;
 
-            button.name = $"DunkLevel{i}";
+            button.name = $"{_currentWorld}Level{i}";
 
             // Usar nuevo sistema para determinar el siguiente nivel
             if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) && nextDunkLevel <= 49)
@@ -133,7 +166,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             {
                 button.interactable = false;
                 UIManager.Instance.ClearCnavasesList();
-                ScenesManager.Instance.LoadSceneAsync($"DunkLevel{levelIndex}", fadeAnimator);
+                ScenesManager.Instance.LoadSceneAsync($"{_currentWorld}Level{levelIndex}", fadeAnimator);
                 AudioManager.Instance.StopMusic();
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PlayLevelSound);
             });
@@ -171,7 +204,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
             #region LEVEL TEXT
             var levelNumText = FindAndValidateComponent<TextMeshProUGUI>(button.transform, $"DunkLevelNumText");
-            levelNumText.text = i.ToString();
+            UIManager.Instance.SetText(levelNumText, i);
             #endregion
         }
 
@@ -179,17 +212,17 @@ public class MenuManagerCanvas : CanvasElementLocator
         playButton.onClick.AddListener(() =>
         {
             UIManager.Instance.ClearCnavasesList();
-            ScenesManager.Instance.LoadSceneAsync($"DunkLevel{nextDunkLevel}", fadeAnimator);
+            ScenesManager.Instance.LoadSceneAsync($"{_currentWorld}Level{nextDunkLevel}", fadeAnimator);
         });
 
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
-        nextLevelText.text = $"{nextDunkLevel}";
+        UIManager.Instance.SetText(nextLevelText, nextDunkLevel);
     }
     #endregion
 
     private void OnUnlockSkin()
     {
-        string unlockedSkinName = GameManager.UnlokedSkin;
+        string unlockedSkinName = UnlokedSkin;
 
         AddressablesUtility.LoadAsset<GameObject>(
             SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI", iGo =>
@@ -197,114 +230,91 @@ public class MenuManagerCanvas : CanvasElementLocator
                 _unlockSkinsPopUp.InitializeWithIcon("unlockskin", iGo, "wantequipskin",
                 () =>
                 {
-                    SaveAndLoadManager.SetStringValue(unlockedSkinName, SaveAndLoadManager.CurrentBallSkinName, true);
+                    SaveAndLoadManager.SetStringValue(unlockedSkinName, SaveAndLoadManager.CurrentBallSkinName, true, true);
                     StoreManager.Instance.UpdateSkinsState?.Invoke();
                 });
                 _unlockSkinsPopUp.Show();
-                GameManager.UnlokedSkin = null;
+                UnlokedSkin = null;
             });
     }
 
+    private void ActivatePopUpAfterBuy()
+    {
+        var thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
+        if (thanksForBuyPopUp == null)
+            return;
+
+        thanksForBuyPopUp.Initialize("tnksforbuytittle", "tnksforbuydescription");
+        thanksForBuyPopUp.Show();
+    }
+
     #region Utility Methods
-    /// <summary>
-    /// Cambia el mundo actual y actualiza la UI
-    /// Usar cuando implementes el selector de mundos
-    /// </summary>
-    public void ChangeCurrentWorld(string worldName)
+
+    public void UpdateCoinsAndOrbsTexts()
     {
-        _currentWorld = worldName;
-        SaveAndLoadManager.SetStringValue(worldName, SaveAndLoadManager.CurrentWorldName, true);
-
-        // Refrescar la UI de niveles
-        OnDunkLevelsClicked();
-
-        Debug.Log($"World changed to: {worldName}");
+        if (_coinsText != null)
+            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        if (_orbsText != null)
+            UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
     }
 
-    /// <summary>
-    /// Obtiene el mundo actual
-    /// </summary>
-    public string GetCurrentWorld()
+    public void UpdateNotificationsOnNoAds()
     {
-        return _currentWorld;
+        var hasNotificationsNoAds = FindAndValidateComponent<Image>(transform, "HasNotificationsNoAds");
+        hasNotificationsNoAds.gameObject.SetActive(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.NoAdsBougthName) != 1);
     }
 
-    /// <summary>
-    /// Obtiene estadísticas del mundo actual
-    /// </summary>
-    public (int completed, int withCoins, int withoutDeath, int objectiveComplete) GetWorldStats()
-    {
-        int completed = 0;
-        int withCoins = 0;
-        int withoutDeath = 0;
-        int objectiveComplete = 0;
+    ///// <summary>
+    ///// Cambia el mundo actual y actualiza la UI
+    ///// Usar cuando implementes el selector de mundos
+    ///// </summary>
+    //public void ChangeCurrentWorld(string worldName)
+    //{
+    //    _currentWorld = worldName;
+    //    SaveAndLoadManager.SetStringValue(worldName, SaveAndLoadManager.CurrentWorldName, true, true);
 
-        for (int i = 1; i <= 50; i++)
-        {
-            if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i))
-            {
-                completed++;
+    //    // Refrescar la UI de niveles
+    //    OnDunkLevelsClicked();
 
-                if (SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i))
-                    withCoins++;
+    //    Debug.Log($"World changed to: {worldName}");
+    //}
 
-                if (SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i))
-                    withoutDeath++;
+    ///// <summary>
+    ///// Obtiene el mundo actual
+    ///// </summary>
+    //public string GetCurrentWorld()
+    //{
+    //    return _currentWorld;
+    //}
 
-                if (SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i))
-                    objectiveComplete++;
-            }
-        }
+    ///// <summary>
+    ///// Obtiene estadísticas del mundo actual
+    ///// </summary>
+    //public (int completed, int withCoins, int withoutDeath, int objectiveComplete) GetWorldStats()
+    //{
+    //    int completed = 0;
+    //    int withCoins = 0;
+    //    int withoutDeath = 0;
+    //    int objectiveComplete = 0;
 
-        return (completed, withCoins, withoutDeath, objectiveComplete);
-    }
-    #endregion
+    //    for (int i = 1; i <= 50; i++)
+    //    {
+    //        if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i))
+    //        {
+    //            completed++;
 
-    #region DEBUG
-    public static MenuManagerCanvas Instance { get; private set; }
+    //            if (SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i))
+    //                withCoins++;
 
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(this);
+    //            if (SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i))
+    //                withoutDeath++;
 
-        SetSavedError(GameManager.SavedErrorText);
-        SetSavedLanguageText(GameManager.SavedLanguageText);
-        SetSavedMusicText(GameManager.SavedMusicText);
-        SetSavedSoundText(GameManager.SavedSoundText);
-        SetSavedSkinText(GameManager.SavedSkinText);
+    //            if (SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i))
+    //                objectiveComplete++;
+    //        }
+    //    }
 
-        SetLoadedError(GameManager.LoadedErrorText);
-        SetLoadedLanguageText(GameManager.LoadedLanguageText);
-        SetLoadedMusicText(GameManager.LoadedMusicText);
-        SetLoadedSoundText(GameManager.LoadedSoundText);
-        SetLoadedSkinText(GameManager.LoadedSkinText);
-    }
-
-    public TextMeshProUGUI SavedErrorText;
-    public TextMeshProUGUI SavedLanguageText;
-    public TextMeshProUGUI SavedMusicText;
-    public TextMeshProUGUI SavedSoundText;
-    public TextMeshProUGUI SavedSkinText;
-
-    public TextMeshProUGUI LoadedErrorText;
-    public TextMeshProUGUI LoadedLanguageText;
-    public TextMeshProUGUI LoadedMusicText;
-    public TextMeshProUGUI LoadedSoundText;
-    public TextMeshProUGUI LoadedSkinText;
-
-    void SetSavedError(string text) => SavedErrorText.text = $"'{text}'";
-    void SetSavedLanguageText(string text) => SavedLanguageText.text = $"'{text}'";
-    void SetSavedMusicText(string text) => SavedMusicText.text = $"'{text}'";
-    void SetSavedSoundText(string text) => SavedSoundText.text = $"'{text}'";
-    void SetSavedSkinText(string text) => SavedSkinText.text = $"'{text}'";
-
-    void SetLoadedError(string text) => LoadedErrorText.text = $"'{text}'";
-    void SetLoadedLanguageText(string text) => LoadedLanguageText.text = $"'{text}'";
-    void SetLoadedMusicText(string text) => LoadedMusicText.text = $"'{text}'";
-    void SetLoadedSoundText(string text) => LoadedSoundText.text = $"'{text}'";
-    void SetLoadedSkinText(string text) => LoadedSkinText.text = $"'{text}'";
+    //    return (completed, withCoins, withoutDeath, objectiveComplete);
+    //}
     #endregion
 }

@@ -143,7 +143,8 @@ public class DunkLevelCanvas : CanvasElementLocator
     public void OnWin()
     {
         var existsNextLevel = ScenesManager.Instance.IsSceneExisting(
-            $"DunkLevel{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
+            $"{SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName)}" +
+            $"Level{GameManager.Instance.SetGetWorldState.GetLevel + 1}");
 
         _nextLevelButton.interactable = existsNextLevel;
         if (!existsNextLevel)
@@ -153,9 +154,9 @@ public class DunkLevelCanvas : CanvasElementLocator
                 SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "BallSkin");
         }
         else
-            _nextLevelText.text = LanguageManager.Instance.GetLocalizedText("nextLevel");
-
-        _nextLevelText.font = LanguageManager.Instance.GetFontByLanguage();
+        {
+            UIManager.Instance.SetText(_nextLevelText, LanguageManager.Instance.GetLocalizedText("nextLevel"));
+        }
 
         UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winUI, true);
@@ -188,17 +189,17 @@ public class DunkLevelCanvas : CanvasElementLocator
         UIManager.Instance.SetText(_winTime, (int)time);
     }
 
-    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit)
+    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit, bool isOverLimitEver)
     {
         UIManager.Instance.SetText(_touchesInLevelText, touchesInLevel);
         UIManager.Instance.SetText(_limitTouchesText, "/ " +
             GameManager.Instance.SetGetWorldState.GetLimitTouches);
-        if (isOverLimit)
+        if (isOverLimitEver)
             _touchesInLevelText.color = Color.red;
         else
         {
             StartCoroutine(ShowGoal(2.8f, _touchesGoal, _emptytouchesGoal));
-            _touchesInLevelText.color = Color.green;
+            _touchesInLevelText.color = isOverLimit ? Color.red : Color.green;
         }
     }
 
