@@ -7,7 +7,7 @@ public class DunkLevelCanvas : CanvasElementLocator
 {
     public static DunkLevelCanvas Instance;
 
-    private TextMeshProUGUI _tapCountText;
+    private TextMeshProUGUI _countText;
     private TextMeshProUGUI _winTime;
     private GameObject _winUI;
     private GameObject _hasCoinGoal;
@@ -36,7 +36,7 @@ public class DunkLevelCanvas : CanvasElementLocator
         PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
         PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
 
-        _tapCountText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
+        _countText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
         _winTime = FindAndValidateComponent<TextMeshProUGUI>(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
 
@@ -171,12 +171,17 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     public void OnLose()
     {
-        UIManager.Instance.SetText(_tapCountText, 0);
+        UIManager.Instance.SetText(_countText, 0);
     }
 
     public void OnTap(int tapCount)
     {
-        UIManager.Instance.SetText(_tapCountText, tapCount);
+        UIManager.Instance.SetText(_countText, tapCount);
+    }
+
+    public void ShowTimerText(float timer)
+    {
+        UIManager.Instance.SetText(_countText, Mathf.Floor(timer));
     }
 
     public void OnExitWinBase()
