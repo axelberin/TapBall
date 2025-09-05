@@ -125,7 +125,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
     }
 
-    void WinCount()
+    private void WinCount()
     {
         if (_onPause)
             return;
@@ -145,10 +145,11 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
     }
 
-    public void StartCount()
+    private void StartCount()
     {
         if (_onPause)
             return;
+
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
             DunkLevelCanvas.Instance.ShowTimerText(_limitTime);
 
