@@ -104,13 +104,14 @@ public class LevelManager : MonoBehaviour
     {
         LevelData currentData = GetCurrentLevelData();
 
+        float timeCount = GameManager.Instance.SetGetWorldState.GetLimitTime;
         int level = GameManager.Instance.SetGetWorldState.GetLevel;
         bool hasCoins = _coinsObtained.Count > 0 || currentData.coinObtained;
         bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
 
         // Para Time mode, el objetivo sería completar dentro del tiempo límite
         // Aquí necesitarías obtener el tiempo actual y compararlo con el límite
-        bool underTimeLimit = (GameManager.Instance.SetGetWorldState.GetLimitTime % 10) <= 3; // TODO: Implementar lógica de tiempo
+        bool underTimeLimit =  timeCount <= (timeCount * 0.1); // TODO: Implementar lógica de tiempo
 
         // Guardar solo si hay cambios
         if (hasCoins != currentData.coinObtained ||
