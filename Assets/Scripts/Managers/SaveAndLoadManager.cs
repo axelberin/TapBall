@@ -193,13 +193,16 @@ public static class SaveAndLoadManager
 
     public static int GetHighestLevelReached(GameModes gameMode, string world, int maxLevels = 50)
     {
-        for (int level = 1; level <= maxLevels; level++)
-        {
-            if (!HasLevelData(gameMode, world, level))
-                return level - 1;
-        }
+        int highestLevel = 0;
 
-        return maxLevels;
+        for(int level = 1; level <= maxLevels; level++)
+        {
+            if(HasLevelData(gameMode, world,level))
+            {
+                highestLevel = level;
+            }
+        }
+        return highestLevel;
     }
     #endregion
 

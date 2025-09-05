@@ -29,7 +29,8 @@ public class StoreObject : CanvasElementLocator
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
 
         var priceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PriceText");
-        UIManager.Instance.SetText(priceText, _skinSC.price);
+        if (UIManager.Instance != null)
+            UIManager.Instance.SetText(priceText, _skinSC.price);
 
         _buyButton.onClick.AddListener(() =>
         {

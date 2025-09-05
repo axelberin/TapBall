@@ -114,6 +114,7 @@ public class ScenesManager : MonoBehaviour
         switch (gameMode)
         {
             case GameManager.GameModes.Dunk:
+            case GameManager.GameModes.Time:
                 PauseAndResumeManager.Instance.RestartResumeAction();
                 PauseAndResumeManager.Instance.RestartPauseAction();
                 PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
@@ -121,8 +122,6 @@ public class ScenesManager : MonoBehaviour
                 LoadSceneAsync($"{currentWorld}Level" + level, fadeAnimator);
                 break;
             case GameManager.GameModes.Endless:
-                break;
-            case GameManager.GameModes.Time:
                 break;
             default: break;
         }

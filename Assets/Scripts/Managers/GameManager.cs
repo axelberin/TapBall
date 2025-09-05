@@ -60,6 +60,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetCurrentModeByIndex(int index)
+    {
+        int last = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1;
+
+        if (_currentGameMode == GameModes.Dunk && index < 0)
+            SelectGameMode(last);
+        else if (((int)_currentGameMode) == last && index > 0)
+            SelectGameMode((int)GameModes.Dunk);
+        else
+            SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName) + index);
+
+        SaveAndLoadManager.SetIntValue(((int)_currentGameMode), SaveAndLoadManager.CurrentModeName);
+    }
+
     public void OnCompleteWorld(string currentWorldName)
     {
         if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)

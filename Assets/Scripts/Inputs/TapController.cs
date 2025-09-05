@@ -32,7 +32,7 @@ public class TapController : MonoBehaviour
             return;
 
         _tapCount++;
-        if (DunkLevelCanvas.Instance)
+        if (DunkLevelCanvas.Instance && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Dunk)
             DunkLevelCanvas.Instance.OnTap(_tapCount);
         if (GameManager.Instance)
             GameManager.Instance.SetGetPlayer.OnTap(Camera.main.ScreenToWorldPoint(pos));

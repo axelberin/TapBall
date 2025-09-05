@@ -95,6 +95,29 @@ public class MenuManagerCanvas : CanvasElementLocator
             noAdsPopUp.Show();
         });
 
+        var modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
+
+        var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
+        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
+
+        nextModeBtn.onClick.AddListener(() =>
+        {
+            Instance.SetCurrentModeByIndex(1);
+            UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+
+        });
+
+        var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
+        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15)  > 0;
+
+        previousModeBtn.onClick.AddListener(() =>
+        {
+            Instance.SetCurrentModeByIndex(-1);
+            UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+        });
+
+        UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+
         UpdateNotificationsOnNoAds();
 
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");

@@ -9,6 +9,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     [SerializeField] private int _limitTouches = 1;
     [SerializeField] private float _limitTime = 30f;
+    private float _timerCounter;
     private int _level;
     private float _timeToWin = 3;
     private float _timeToStart = 0;
@@ -18,6 +19,11 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     private PlayerController _playerController;
     private List<MovableObjects> _movableObjectsInLevel = new List<MovableObjects>();
+
+    private void Awake()
+    {
+        _timerCounter = _limitTime;
+    }
 
     private void Start()
     {
@@ -62,6 +68,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private void OnLose()
     {
         SetOnUpdate(StartCount);
+        OnUpdate -= ControlTimerMode;
+        _timerCounter = _limitTime;
     }
 
     private void Update()
@@ -93,6 +101,19 @@ public class WorldStateController : MonoBehaviour, IPauseble
             if (_timeToWin > 0f)
                 AudioManager.Instance.StopSound();
             _timeToWin = 3;
+        }
+    }
+
+    public void ControlTimerMode()
+    {
+        if (_timerCounter > 0)
+        {
+            _timerCounter -= Time.deltaTime;
+            DunkLevelCanvas.Instance.ShowTimerText(_timerCounter + 1);
+        }
+        else if (_timerCounter <= 0)
+        {
+            GameManager.Instance.SetGetPlayer.Death();
         }
     }
 
@@ -145,6 +166,11 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _timeToStart = 0;
             SetOnUpdate();
             _playOnce = false;
+
+            if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
+            {
+                OnUpdate += ControlTimerMode;
+            }
         }
     }
 
