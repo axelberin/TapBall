@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -62,7 +60,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetCurrentModeIndex(int index)
+    public void SetCurrentModeByIndex(int index)
     {
         int last = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1;
 
