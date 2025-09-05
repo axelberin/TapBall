@@ -105,15 +105,12 @@ public class LevelManager : MonoBehaviour
         LevelData currentData = GetCurrentLevelData();
 
         float timeCount = GameManager.Instance.SetGetWorldState.GetLimitTime;
+        float remainingTime = GameManager.Instance.SetGetWorldState.GetRemainingTime;
         int level = GameManager.Instance.SetGetWorldState.GetLevel;
         bool hasCoins = _coinsObtained.Count > 0 || currentData.coinObtained;
         bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
+        bool underTimeLimit = remainingTime >= (timeCount * 0.1) || currentData.objectiveComplete;
 
-        // Para Time mode, el objetivo sería completar dentro del tiempo límite
-        // Aquí necesitarías obtener el tiempo actual y compararlo con el límite
-        bool underTimeLimit =  timeCount <= (timeCount * 0.1); // TODO: Implementar lógica de tiempo
-
-        // Guardar solo si hay cambios
         if (hasCoins != currentData.coinObtained ||
             withoutDeath != currentData.withoutDeath ||
             underTimeLimit != currentData.objectiveComplete)
@@ -131,6 +128,8 @@ public class LevelManager : MonoBehaviour
 
             Debug.Log($"Time Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
         }
+
+        //Debería parar el tiempo acá creo 
     }
 
     private void OneTouchOnWin()
@@ -197,6 +196,8 @@ public class LevelManager : MonoBehaviour
         {
             case GameModes.Dunk:
             case GameModes.Time:
+                GameManager.Instance.SetGetWorldState.ResetTimer();
+                break;
             case GameModes.OneTouch:
                 GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
                 break;

@@ -56,20 +56,23 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _movableObjectsInLevel = FindObjectsByType<MovableObjects>(FindObjectsSortMode.None).ToList();
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
-        SetOnUpdate(StartCount);
+        OnUpdate += StartCount;
     }
 
     private void OnDestroy()
     {
         if (LevelManager.Instance)
             LevelManager.Instance.OnLoseLevel -= OnLose;
+        OnUpdate = null;
     }
-
+    public void ResetTimer()
+    {
+        _timerCounter = _limitTime;
+    }
     private void OnLose()
     {
-        SetOnUpdate(StartCount);
+        OnUpdate += StartCount;
         OnUpdate -= ControlTimerMode;
-        _timerCounter = _limitTime;
     }
 
     private void Update()
@@ -84,7 +87,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     {
         if (collision.GetComponent<PlayerController>() && !_onPause)
         {
-            SetOnUpdate(WinCount);
+            OnUpdate += WinCount;
             if (_timeToWin >= 3f)
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.CountDownSound);
         }
@@ -104,15 +107,20 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
     }
 
-    public void ControlTimerMode()
+    private void ControlTimerMode()
     {
+        if (_onPause)
+            return;
+
         if (_timerCounter > 0)
         {
             _timerCounter -= Time.deltaTime;
-            DunkLevelCanvas.Instance.ShowTimerText(_timerCounter + 1);
+            DunkLevelCanvas.Instance.ShowTimerText(MathF.Max(0, MathF.Floor(_timerCounter)));
         }
         else if (_timerCounter <= 0)
         {
+            OnUpdate -= ControlTimerMode;
+            ResetTimer();
             GameManager.Instance.SetGetPlayer.Death();
         }
     }
@@ -133,7 +141,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
             _timeToWin = 0;
             LevelManager.Instance.OnWin();
-            SetOnUpdate();
+            OnUpdate -= ControlTimerMode;
         }
     }
 
@@ -141,6 +149,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
     {
         if (_onPause)
             return;
+        if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
+            DunkLevelCanvas.Instance.ShowTimerText(_limitTime);
 
         if (_timeToStart < 3)
         {
@@ -164,7 +174,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
                 DunkLevelCanvas.Instance.OnExitWinBase();
 
             _timeToStart = 0;
-            SetOnUpdate();
+            OnUpdate -= StartCount;
             _playOnce = false;
 
             if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
@@ -172,11 +182,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
                 OnUpdate += ControlTimerMode;
             }
         }
-    }
-
-    public void SetOnUpdate(Action action = null)
-    {
-        OnUpdate = action;
     }
 
     public void OnResume()
@@ -201,8 +206,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     public int GetLimitTouches => _limitTouches;
     public float GetLimitTime => _limitTime;
-
-
+    public float GetRemainingTime => _limitTime - _timerCounter;
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
 }

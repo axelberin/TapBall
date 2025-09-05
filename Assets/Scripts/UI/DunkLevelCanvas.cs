@@ -181,7 +181,7 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     public void ShowTimerText(float timer)
     {
-        UIManager.Instance.SetText(_countText, Mathf.Floor(timer));
+        UIManager.Instance.SetText(_countText, timer);
     }
 
     public void OnExitWinBase()
