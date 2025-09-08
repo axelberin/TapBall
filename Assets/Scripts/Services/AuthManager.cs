@@ -4,10 +4,6 @@ using TMPro;
 
 public class AuthManager : MonoBehaviour
 {
-    // Campos de entrada para el correo y la contraseña
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
-
     // Referencia al Auth de Firebase
     FirebaseAuth auth;
 
@@ -18,15 +14,15 @@ public class AuthManager : MonoBehaviour
     }
 
     // Método para registrar un nuevo usuario
-    public void RegisterUser()
+    public void RegisterUser(string email, string password)
     {
-        if (string.IsNullOrEmpty(emailInput.text) || string.IsNullOrEmpty(passwordInput.text))
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             Debug.LogWarning("Email y contraseña requeridos.");
             return;
         }
 
-        auth.CreateUserWithEmailAndPasswordAsync(emailInput.text, passwordInput.text).ContinueWith(task =>
+        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -40,9 +36,9 @@ public class AuthManager : MonoBehaviour
     }
 
     // Método para iniciar sesión
-    public void LoginUser()
+    public void LoginUser(string email, string password)
     {
-        auth.SignInWithEmailAndPasswordAsync(emailInput.text, passwordInput.text).ContinueWith(task =>
+        auth.SignInWithEmailAndPasswordAsync(email, email).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
