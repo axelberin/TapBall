@@ -1,71 +1,69 @@
-using Firebase.Auth;
 using UnityEngine;
-using TMPro;
+using Firebase.Auth;
 
-public class AuthManager : MonoBehaviour
+public class AutoAuthManager : MonoBehaviour
 {
-    // Referencia al Auth de Firebase
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
 
     void Start()
     {
-        // Inicializa la instancia de Auth
         auth = FirebaseAuth.DefaultInstance;
-    }
 
-    // Método para registrar un nuevo usuario
-    public void RegisterUser(string email, string password)
-    {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        if (auth.CurrentUser != null)
         {
-            Debug.LogWarning("Email y contraseña requeridos.");
+            Debug.Log("Ya hay sesión iniciada: " + auth.CurrentUser.DisplayName);
             return;
         }
 
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
-        {
-            if (task.IsCanceled || task.IsFaulted)
-            {
-                Debug.LogError("Error al registrar usuario: " + task.Exception);
-                return;
-            }
 
-            FirebaseUser newUser = task.Result.User;
-            Debug.LogFormat("Usuario registrado: {0} ({1})", newUser.DisplayName, newUser.UserId);
-        });
+#if UNITY_ANDROID
+        SignInWithGoogle();
+#elif UNITY_IOS
+        SignInWithApple();
+#else
+        Debug.Log("Plataforma no soportada para login automático.");
+#endif
     }
 
-    // Método para iniciar sesión
-    public void LoginUser(string email, string password)
+    private void SignInWithGoogle()
     {
-        auth.SignInWithEmailAndPasswordAsync(email, email).ContinueWith(task =>
-        {
-            if (task.IsCanceled || task.IsFaulted)
-            {
-                Debug.LogError("Error al iniciar sesión: " + task.Exception);
-                return;
-            }
+        Debug.Log("Intentando login automático con Google...");
 
-            FirebaseUser user = task.Result.User;
-            Debug.LogFormat("Sesión iniciada: {0} ({1})", user.DisplayName, user.UserId);
-        });
-    }
+        // Acá llamás al plugin de Google Sign-In para obtener el idToken
+        string idToken = "70505230779-dita4q8jooj19sdb4j8kta4tg44jne65.apps.googleusercontent.com";
 
-    public void SignInWithGoogle(string idToken)
-    {
         Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
-
         auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
-                Debug.LogError("Error en login con Google: " + task.Exception);
+                Debug.LogError("Error login Google: " + task.Exception);
                 return;
             }
 
             FirebaseUser user = task.Result;
-            Debug.Log("Usuario logueado con Google: " + user.DisplayName + " (" + user.UserId + ")");
+            Debug.Log("Login Google exitoso: " + user.DisplayName);
         });
     }
 
+    private void SignInWithApple()
+    {
+        Debug.Log("Intentando login automático con Apple...");
+
+        // Acá llamás al plugin de Sign in with Apple para obtener el idToken
+        string idToken = "";
+
+        Credential credential = OAuthProvider.GetCredential("apple.com", idToken, null, null);
+        auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+        {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                Debug.LogError("Error login Apple: " + task.Exception);
+                return;
+            }
+
+            FirebaseUser user = task.Result;
+            Debug.Log("Login Apple exitoso: " + user.DisplayName);
+        });
+    }
 }
