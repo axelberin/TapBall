@@ -1,17 +1,18 @@
 using UnityEngine;
 using Firebase.Auth;
+using System.Collections;
 
-public class AutoAuthManager : MonoBehaviour
+public class AutoAuthManager : ManagersManager
 {
-    private FirebaseAuth auth;
+    private FirebaseAuth _auth;
 
     void Start()
     {
-        auth = FirebaseAuth.DefaultInstance;
+        _auth = FirebaseAuth.DefaultInstance;
 
-        if (auth.CurrentUser != null)
+        if (_auth.CurrentUser != null)
         {
-            Debug.Log("Ya hay sesión iniciada: " + auth.CurrentUser.DisplayName);
+            Debug.Log("Ya hay sesión iniciada: " + _auth.CurrentUser.DisplayName);
             return;
         }
 
@@ -30,10 +31,10 @@ public class AutoAuthManager : MonoBehaviour
         Debug.Log("Intentando login automático con Google...");
 
         // Acá llamás al plugin de Google Sign-In para obtener el idToken
-        string idToken = "70505230779-dita4q8jooj19sdb4j8kta4tg44jne65.apps.googleusercontent.com";
+        string idToken = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com";
 
         Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
-        auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+        _auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -54,7 +55,7 @@ public class AutoAuthManager : MonoBehaviour
         string idToken = "";
 
         Credential credential = OAuthProvider.GetCredential("apple.com", idToken, null, null);
-        auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+        _auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -65,5 +66,11 @@ public class AutoAuthManager : MonoBehaviour
             FirebaseUser user = task.Result;
             Debug.Log("Login Apple exitoso: " + user.DisplayName);
         });
+    }
+
+    public override IEnumerator InizializeManagers()
+    {
+        while (!_isInitialized)
+            yield return null;
     }
 }
