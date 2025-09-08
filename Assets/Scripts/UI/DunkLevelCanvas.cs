@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UtilityAddressables;
 
 public class DunkLevelCanvas : CanvasElementLocator
 {
@@ -14,14 +16,15 @@ public class DunkLevelCanvas : CanvasElementLocator
     private GameObject _emptyhasCoinGoal;
     private GameObject _deathGoal;
     private GameObject _emptydeathGoal;
-    private GameObject _touchesGoal;
-    private GameObject _emptytouchesGoal;
+    private GameObject _achievementsGoal;
+    private GameObject _emptyAchievementsGoal;
     private Button _nextLevelButton;
     private Button _pauseButton;
     private GameObject _pauseUI;
     private TextMeshProUGUI _touchesInLevelText;
     private TextMeshProUGUI _limitTouchesText;
     private TextMeshProUGUI _nextLevelText;
+    private List<TextMeshProUGUI> _achievementTextList = new();
 
     private void Awake()
     {
@@ -103,8 +106,10 @@ public class DunkLevelCanvas : CanvasElementLocator
         _emptyhasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinEmpty");
         _deathGoal = FindAndValidateGameObjectComponent(transform, "DeathGoalFull");
         _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
-        _touchesGoal = FindAndValidateGameObjectComponent(transform, "ToachesGoalFull");
-        _emptytouchesGoal = FindAndValidateGameObjectComponent(transform, "TouchEmpty");
+        _achievementsGoal = FindAndValidateGameObjectComponent(transform, "ToachesGoalFull");
+        _emptyAchievementsGoal = FindAndValidateGameObjectComponent(transform, "TouchEmpty");
+
+        SetAchivementsByMode();
 
         _touchesInLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TouchesText");
         _limitTouchesText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LimitTouchesText");
@@ -116,6 +121,22 @@ public class DunkLevelCanvas : CanvasElementLocator
         {
             LevelManager.Instance.OnWinLevel += OnWin;
             LevelManager.Instance.OnLoseLevel += OnLose;
+        }
+    }
+
+    private void SetAchivementsByMode()
+    {
+        AddressablesUtility.LoadAsset<GameObject>(
+            $"{GameManager.Instance.GetCurrentGameMode} AchievementUI", imageGo => _achievementsGoal = imageGo);
+
+        AddressablesUtility.LoadAsset<GameObject>(
+            $"{GameManager.Instance.GetCurrentGameMode} AchievementEmptyUI", imageGo => _emptyAchievementsGoal = imageGo);
+
+
+        for (int i = 0; i <= _achievementsGoal.transform.childCount; i++)
+        {
+            TextMeshProUGUI Text = FindAndValidateComponent<TextMeshProUGUI>(_achievementsGoal.transform, $"Text{i}");
+            _achievementTextList.Add(Text);
         }
     }
 
@@ -203,7 +224,7 @@ public class DunkLevelCanvas : CanvasElementLocator
             _touchesInLevelText.color = Color.red;
         else
         {
-            StartCoroutine(ShowGoal(2.8f, _touchesGoal, _emptytouchesGoal));
+            StartCoroutine(ShowGoal(2.8f, _achievementsGoal, _emptyAchievementsGoal));
             _touchesInLevelText.color = isOverLimit ? Color.red : Color.green;
         }
     }
