@@ -294,8 +294,8 @@ public static class SaveAndLoadManager
 
     public static void SaveCloud()
     {
-        if (SaveAndLoadOnCloudManager.Instance != null && !isLoadingFromCloud)
-            SaveAndLoadOnCloudManager.Instance.SaveGameData(SerializeGameData());
+        //if (SaveAndLoadOnCloudManager.Instance != null && !isLoadingFromCloud)
+        //    SaveAndLoadOnCloudManager.Instance.SaveGameData(SerializeGameData());
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
@@ -436,8 +436,8 @@ public static class SaveAndLoadManager
     {
         PlayerPrefs.DeleteAll();
 
-        if (SaveAndLoadOnCloudManager.Instance != null)
-            SaveAndLoadOnCloudManager.Instance.SaveGameData("{}");
+        //if (SaveAndLoadOnCloudManager.Instance != null)
+        //    SaveAndLoadOnCloudManager.Instance.SaveGameData("{}");
     }
     #endregion
 

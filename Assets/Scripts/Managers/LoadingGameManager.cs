@@ -50,7 +50,7 @@ public class LoadingGameManager : CanvasElementLocator
             if (!manager.IsInitialized)
             {
                 yield return manager.InizializeManagers();
-                if (manager.IsInitialized && manager is SaveAndLoadOnCloudManager)
+                if (manager.IsInitialized /*&& manager is SaveAndLoadOnCloudManager*/)
                     _canShowTexts = true;
             }
 

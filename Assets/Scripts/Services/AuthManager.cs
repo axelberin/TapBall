@@ -1,12 +1,13 @@
 using UnityEngine;
 using Firebase.Auth;
 using System.Collections;
+using Google;
 
 public class AutoAuthManager : ManagersManager
 {
     private FirebaseAuth _auth;
 
-    void Start()
+    protected override void Start()
     {
         _auth = FirebaseAuth.DefaultInstance;
 
@@ -16,34 +17,50 @@ public class AutoAuthManager : ManagersManager
             return;
         }
 
-
-#if UNITY_ANDROID
-        SignInWithGoogle();
+#if UNITY_EDITOR
+        Debug.Log("Simulando login en Editor...");
+        var fakeUser = new { DisplayName = "EditorUser", UserId = "12345" };
+        Debug.Log("Login simulado: " + fakeUser.DisplayName);
+        _isInitialized = true;
 #elif UNITY_IOS
         SignInWithApple();
-#else
-        Debug.Log("Plataforma no soportada para login automático.");
+#elif UNITY_ANDROID
+        GoogleSignIn.Configuration = new GoogleSignInConfiguration
+        {
+            WebClientId = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com", // este sí va fijo
+            RequestIdToken = true
+        };
+
+        SignInWithGoogle();
 #endif
+        base.Start();
     }
 
     private void SignInWithGoogle()
     {
         Debug.Log("Intentando login automático con Google...");
 
-        // Acá llamás al plugin de Google Sign-In para obtener el idToken
-        string idToken = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com";
-
-        Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
-        _auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(task =>
         {
-            if (task.IsCanceled || task.IsFaulted)
+            if (task.IsFaulted)
             {
-                Debug.LogError("Error login Google: " + task.Exception);
+                Debug.LogError("Error en Google Sign-In: " + task.Exception);
                 return;
             }
 
-            FirebaseUser user = task.Result;
-            Debug.Log("Login Google exitoso: " + user.DisplayName);
+            Credential credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
+
+            _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
+            {
+                if (authTask.IsCanceled || authTask.IsFaulted)
+                {
+                    Debug.LogError("Error login Firebase: " + authTask.Exception);
+                    return;
+                }
+
+                FirebaseUser user = authTask.Result;
+                Debug.Log("Login Firebase exitoso: " + user.DisplayName);
+            });
         });
     }
 
