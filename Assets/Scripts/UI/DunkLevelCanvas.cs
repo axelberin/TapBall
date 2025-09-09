@@ -16,13 +16,12 @@ public class DunkLevelCanvas : CanvasElementLocator
     private GameObject _emptyhasCoinGoal;
     private GameObject _deathGoal;
     private GameObject _emptydeathGoal;
-    private GameObject _achievementsGoal;
+    private GameObject _achievementsGoalPrefab;
     private GameObject _emptyAchievementsGoal;
+    private GameObject _fullAchievementsGoal;
     private Button _nextLevelButton;
     private Button _pauseButton;
     private GameObject _pauseUI;
-    private TextMeshProUGUI _touchesInLevelText;
-    private TextMeshProUGUI _limitTouchesText;
     private TextMeshProUGUI _nextLevelText;
     private List<TextMeshProUGUI> _achievementTextList = new();
 
@@ -106,13 +105,9 @@ public class DunkLevelCanvas : CanvasElementLocator
         _emptyhasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinEmpty");
         _deathGoal = FindAndValidateGameObjectComponent(transform, "DeathGoalFull");
         _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
-        _achievementsGoal = FindAndValidateGameObjectComponent(transform, "ToachesGoalFull");
-        _emptyAchievementsGoal = FindAndValidateGameObjectComponent(transform, "TouchEmpty");
+        _achievementsGoalPrefab = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab");
 
         SetAchivementsByMode();
-
-        _touchesInLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TouchesText");
-        _limitTouchesText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LimitTouchesText");
 
         UIManager.Instance.AddCanvas(gameObject, true);
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
@@ -126,18 +121,29 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     private void SetAchivementsByMode()
     {
-        AddressablesUtility.LoadAsset<GameObject>(
-            $"{GameManager.Instance.GetCurrentGameMode} AchievementUI", imageGo => _achievementsGoal = imageGo);
+        RectTransform goalPrefabRectTransform = FindAndValidateComponent<RectTransform>(transform, "AchievementGoalPrefab");
 
         AddressablesUtility.LoadAsset<GameObject>(
-            $"{GameManager.Instance.GetCurrentGameMode} AchievementEmptyUI", imageGo => _emptyAchievementsGoal = imageGo);
+            $"{GameManager.Instance.GetCurrentGameMode}AchievementUI", imageGo =>
+            {
+                _achievementsGoalPrefab.SetActive(false);
+                _achievementsGoalPrefab = Instantiate(imageGo, _achievementsGoalPrefab.transform.parent, false);
+                _achievementsGoalPrefab.name = "AchievementGoalPrefab";
 
+                RectTransform newRectTransform = FindAndValidateComponent<RectTransform>(transform, "AchievementGoalPrefab");
+                newRectTransform.anchoredPosition = goalPrefabRectTransform.anchoredPosition;
+                newRectTransform.sizeDelta = goalPrefabRectTransform.sizeDelta;
 
-        for (int i = 0; i <= _achievementsGoal.transform.childCount; i++)
-        {
-            TextMeshProUGUI Text = FindAndValidateComponent<TextMeshProUGUI>(_achievementsGoal.transform, $"Text{i}");
-            _achievementTextList.Add(Text);
-        }
+                _emptyAchievementsGoal = FindAndValidateGameObjectComponent(_achievementsGoalPrefab.transform, "EmptyAchievement");
+                _fullAchievementsGoal = FindAndValidateGameObjectComponent(_achievementsGoalPrefab.transform, "FullAchievement");
+
+                //_fullAchievementsGoal.SetActive(false);
+
+                for (int i = 0; i < _achievementsGoalPrefab.transform.childCount; i++)
+                {
+                    _achievementTextList.Add(FindAndValidateComponent<TextMeshProUGUI>(_achievementsGoalPrefab.transform, $"Text{i}"));
+                }
+            });
     }
 
     private void OnDestroy()
@@ -217,17 +223,19 @@ public class DunkLevelCanvas : CanvasElementLocator
 
     public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit, bool isOverLimitEver)
     {
-        UIManager.Instance.SetText(_touchesInLevelText, touchesInLevel);
-        UIManager.Instance.SetText(_limitTouchesText, "/ " +
+        UIManager.Instance.SetText(_achievementTextList[0], touchesInLevel);
+        UIManager.Instance.SetText(_achievementTextList[1], "/ " +
             GameManager.Instance.SetGetWorldState.GetLimitTouches);
         if (isOverLimitEver)
-            _touchesInLevelText.color = Color.red;
+            _achievementTextList[0].color = Color.red;
         else
         {
-            StartCoroutine(ShowGoal(2.8f, _achievementsGoal, _emptyAchievementsGoal));
-            _touchesInLevelText.color = isOverLimit ? Color.red : Color.green;
+            StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
+            _achievementTextList[0].color = isOverLimit ? Color.red : Color.green;
         }
     }
+
+
 
     private IEnumerator ShowGoal(float time, GameObject goalObject, GameObject emptyGoal)
     {
