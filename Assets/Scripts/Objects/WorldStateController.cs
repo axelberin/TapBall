@@ -9,6 +9,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     [SerializeField] private int _limitTouches = 1;
     [SerializeField] private float _limitTime = 30f;
+    private float _timerDecimals;
     private float _timerCounter;
     private int _level;
     private float _timeToWin = 3;
@@ -115,7 +116,12 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_timerCounter > 0)
         {
             _timerCounter -= Time.deltaTime;
-            DunkLevelCanvas.Instance.ShowTimerText(MathF.Max(0, MathF.Floor(_timerCounter)));
+
+            int normalTime = (int)Mathf.Floor(_timerCounter);
+            float decimalPart = _timerCounter - normalTime;
+            //_timerDecimals = MathF.Round(MathF.Max(0, _timerCounter), 2);
+            int decimalInt = (int)(decimalPart * 100);
+            DunkLevelCanvas.Instance.ShowTimerText(normalTime, decimalInt);
         }
         else if (_timerCounter <= 0)
         {
@@ -150,8 +156,15 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_onPause)
             return;
 
+        //if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
+        //    DunkLevelCanvas.Instance.ShowTimerText(_limitTime);
+
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
-            DunkLevelCanvas.Instance.ShowTimerText(_limitTime);
+        {
+            int whole = (int)_limitTime;
+            int decimals = (int)((_limitTime - whole) * 100);
+            DunkLevelCanvas.Instance.ShowTimerText(whole, decimals);
+        }
 
         if (_timeToStart < 3)
         {
@@ -207,7 +220,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     public int GetLimitTouches => _limitTouches;
     public float GetLimitTime => _limitTime;
-    public float GetRemainingTime => _limitTime - _timerCounter;
+    public float GetRemainingTime => _timerCounter;
+    public float GetTimerDecimals => _timerDecimals;
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
 }

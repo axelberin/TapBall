@@ -206,9 +206,10 @@ public class DunkLevelCanvas : CanvasElementLocator
         UIManager.Instance.SetText(_countText, tapCount);
     }
 
-    public void ShowTimerText(float timer)
+    public void ShowTimerText(int timer, int decimals)
     {
-        UIManager.Instance.SetText(_countText, timer);
+        string completeTime = $"{timer},{decimals:00}";
+        UIManager.Instance.SetText(_countText, completeTime);
     }
 
     public void OnExitWinBase()
@@ -221,17 +222,12 @@ public class DunkLevelCanvas : CanvasElementLocator
         UIManager.Instance.SetText(_winTime, (int)time);
     }
 
-    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit, bool isOverLimitEver)
+    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit, bool isOverLimitEver, int limitOfMode)
     {
-        UIManager.Instance.SetText(_achievementTextList[0], touchesInLevel);
-        UIManager.Instance.SetText(_achievementTextList[1], "/ " +
-            GameManager.Instance.SetGetWorldState.GetLimitTouches);
+        UIManager.Instance.SetText(_achievementTextList[0], $"{touchesInLevel}s");
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}s");
         if (isOverLimitEver)
-        {
             _achievementTextList[0].color = Color.red;
-            _fullAchievementsGoal.SetActive(false);
-
-        }
         else
         {
             StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
@@ -239,7 +235,18 @@ public class DunkLevelCanvas : CanvasElementLocator
         }
     }
 
-
+    public void SetTimeInLievel(float timeInLevel,float timeDecimals ,bool isOverLimit, bool isOverLimitEver, float limitOfMode)
+    {
+        UIManager.Instance.SetText(_achievementTextList[0], $"{timeInLevel},{timeDecimals}s");
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}s");
+        if (isOverLimitEver)
+            _achievementTextList[0].color = Color.red;
+        else
+        {
+            StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
+            _achievementTextList[0].color = isOverLimit ? Color.red : Color.green;
+        }
+    }
 
     private IEnumerator ShowGoal(float time, GameObject goalObject, GameObject emptyGoal)
     {
