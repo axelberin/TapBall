@@ -127,17 +127,17 @@ public class DunkLevelCanvas : CanvasElementLocator
             $"{GameManager.Instance.GetCurrentGameMode}AchievementUI", imageGo =>
             {
                 _achievementsGoalPrefab.SetActive(false);
+
                 _achievementsGoalPrefab = Instantiate(imageGo, _achievementsGoalPrefab.transform.parent, false);
                 _achievementsGoalPrefab.name = "AchievementGoalPrefab";
 
-                RectTransform newRectTransform = FindAndValidateComponent<RectTransform>(transform, "AchievementGoalPrefab");
+                //var newRectTransform = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab").GetComponent<RectTransform>(); ;
+                RectTransform newRectTransform = _achievementsGoalPrefab.GetComponent<RectTransform>();
                 newRectTransform.anchoredPosition = goalPrefabRectTransform.anchoredPosition;
                 newRectTransform.sizeDelta = goalPrefabRectTransform.sizeDelta;
 
                 _emptyAchievementsGoal = FindAndValidateGameObjectComponent(_achievementsGoalPrefab.transform, "EmptyAchievement");
                 _fullAchievementsGoal = FindAndValidateGameObjectComponent(_achievementsGoalPrefab.transform, "FullAchievement");
-
-                //_fullAchievementsGoal.SetActive(false);
 
                 for (int i = 0; i < _achievementsGoalPrefab.transform.childCount; i++)
                 {
@@ -227,7 +227,11 @@ public class DunkLevelCanvas : CanvasElementLocator
         UIManager.Instance.SetText(_achievementTextList[1], "/ " +
             GameManager.Instance.SetGetWorldState.GetLimitTouches);
         if (isOverLimitEver)
+        {
             _achievementTextList[0].color = Color.red;
+            _fullAchievementsGoal.SetActive(false);
+
+        }
         else
         {
             StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
