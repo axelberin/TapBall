@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UtilityAddressables;
 
-public class DunkLevelCanvas : CanvasElementLocator
+public class LevelCanvas : CanvasElementLocator
 {
-    public static DunkLevelCanvas Instance;
+    public static LevelCanvas Instance;
 
     private TextMeshProUGUI _countText;
     private TextMeshProUGUI _winTime;

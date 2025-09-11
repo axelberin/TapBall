@@ -98,8 +98,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (collision.GetComponent<PlayerController>() && !_onPause)
         {
             OnUpdate -= WinCount;
-            if (DunkLevelCanvas.Instance)
-                DunkLevelCanvas.Instance.OnExitWinBase();
+            if (LevelCanvas.Instance)
+                LevelCanvas.Instance.OnExitWinBase();
 
             if (_timeToWin > 0f)
                 AudioManager.Instance.StopSound();
@@ -115,7 +115,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_timerCounter > 0)
         {
             _timerCounter -= Time.deltaTime;
-            DunkLevelCanvas.Instance.ShowTimerText(MathF.Round(_timerCounter * 100f) / 100f);
+            LevelCanvas.Instance.ShowTimerText(MathF.Round(_timerCounter * 100f) / 100f);
         }
         else if (_timerCounter <= 0)
         {
@@ -133,8 +133,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_timeToWin > 0)
         {
             _timeToWin -= Time.deltaTime;
-            if (DunkLevelCanvas.Instance)
-                DunkLevelCanvas.Instance.OnCountTime(MathF.Max(_timeToWin + 1, 0f));
+            if (LevelCanvas.Instance)
+                LevelCanvas.Instance.OnCountTime(MathF.Max(_timeToWin + 1, 0f));
         }
         else
         {
@@ -155,15 +155,15 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
         {
-            DunkLevelCanvas.Instance.ShowTimerText(MathF.Round(_timerCounter * 100f) / 100f);
+            LevelCanvas.Instance.ShowTimerText(MathF.Round(_timerCounter * 100f) / 100f);
         }
 
         if (_timeToStart < 3)
         {
             _timeToStart += Time.deltaTime;
 
-            if (DunkLevelCanvas.Instance)
-                DunkLevelCanvas.Instance.OnCountTime(MathF.Min(_timeToStart + 1, 3));
+            if (LevelCanvas.Instance)
+                LevelCanvas.Instance.OnCountTime(MathF.Min(_timeToStart + 1, 3));
 
             if (!_playOnce)
             {
@@ -176,8 +176,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
             _movableObjectsInLevel.ForEach(obj => obj.PlayMovement());
 
-            if (DunkLevelCanvas.Instance)
-                DunkLevelCanvas.Instance.OnExitWinBase();
+            if (LevelCanvas.Instance)
+                LevelCanvas.Instance.OnExitWinBase();
 
             _timeToStart = 0;
             OnUpdate -= StartCount;

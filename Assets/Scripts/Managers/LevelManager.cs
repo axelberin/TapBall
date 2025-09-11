@@ -97,7 +97,7 @@ public class LevelManager : MonoBehaviour
         }
 
         // Mostrar información en UI
-        DunkLevelCanvas.Instance.SetAchievementByDunkMode(tapCount, !isUnderTouchLimit, !isUnderTouchLimitEver, GameManager.Instance.SetGetWorldState.GetLimitTouches);
+        LevelCanvas.Instance.SetAchievementByDunkMode(tapCount, !isUnderTouchLimit, !isUnderTouchLimitEver, GameManager.Instance.SetGetWorldState.GetLimitTouches);
     }
 
     private void TimeOnWin()
@@ -130,7 +130,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log($"Time Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
         }
 
-        DunkLevelCanvas.Instance.SetAchievementByTimeMode(remainingTime,!underTimeLimit, !underTimeLimitEver, timeCount);
+        LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime,!underTimeLimit, !underTimeLimitEver, timeCount);
     }
 
     private void OneTouchOnWin()
