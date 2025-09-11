@@ -18,6 +18,7 @@ public class LanguageManager : ManagersManager
     private TMP_FontAsset _commonFont;
     private TMP_FontAsset _japaneseFont;
     private TMP_FontAsset _chineseFont;
+    private TMP_FontAsset _numbersFont;
 
     private Dictionary<string, Dictionary<string, string>> _localizedTexts = new();
     private string _currentLanguage = "en"; // Idioma por defecto
@@ -49,7 +50,7 @@ public class LanguageManager : ManagersManager
 
     private void ParseCSV(string csvText)
     {
-        StringReader reader = new StringReader(csvText);
+        StringReader reader = new(csvText);
 
         // Leer la primera línea para obtener los idiomas disponibles
         string headerLine = reader.ReadLine();
@@ -60,7 +61,7 @@ public class LanguageManager : ManagersManager
         {
             string language = headers[i].Trim('"');
             if (!_localizedTexts.ContainsKey(language))
-                _localizedTexts.Add(language, new Dictionary<string, string>()); // Agregamos un diccionario vacio
+                _localizedTexts.Add(language, new()); // Agregamos un diccionario vacio
         }
 
         // Iterar sobre cada línea del CSV
@@ -149,8 +150,11 @@ public class LanguageManager : ManagersManager
         return key;
     }
 
-    public TMP_FontAsset GetFontByLanguage()
+    public TMP_FontAsset GetFontByLanguage(bool isNumber = false)
     {
+        if (isNumber)
+            return _numbersFont;
+
         return _currentLanguage switch
         {
             "ch" => _chineseFont,
@@ -214,6 +218,7 @@ public class LanguageManager : ManagersManager
         AddressablesUtility.LoadAsset<TMP_FontAsset>("CommonFont", font => _commonFont = font);
         AddressablesUtility.LoadAsset<TMP_FontAsset>("JapaneseFont", font => _japaneseFont = font);
         AddressablesUtility.LoadAsset<TMP_FontAsset>("ChineseFont", font => _chineseFont = font);
+        AddressablesUtility.LoadAsset<TMP_FontAsset>("NumbersFont", font => _numbersFont = font);
 
         yield return StartCoroutine(DownloadAndParseCSV());
 
