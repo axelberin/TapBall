@@ -27,13 +27,13 @@ public class TapController : MonoBehaviour
 
     void OnTap(Vector3 pos)
     {
-        if (!GameManager.Instance.SetGetPlayer || !DunkLevelCanvas.Instance ||
+        if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance ||
             GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
             return;
 
         _tapCount++;
-        if (DunkLevelCanvas.Instance && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Dunk)
-            DunkLevelCanvas.Instance.OnTap(_tapCount);
+        if (LevelCanvas.Instance && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Dunk)
+            LevelCanvas.Instance.OnTap(_tapCount);
         if (GameManager.Instance)
             GameManager.Instance.SetGetPlayer.OnTap(Camera.main.ScreenToWorldPoint(pos));
     }

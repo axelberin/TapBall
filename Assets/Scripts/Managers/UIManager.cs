@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
             ActivateUI(text.gameObject, true);
 
         text.SetText("{0}", count);
+        SetFontByText(text, true);
     }
 
     public void SetText(TextMeshProUGUI text, float count)
@@ -49,6 +50,7 @@ public class UIManager : MonoBehaviour
             ActivateUI(text.gameObject, true);
 
         text.SetText("{0}", count);
+        SetFontByText(text, true);
     }
 
     public void SetText(TextMeshProUGUI text, string content)
@@ -59,10 +61,14 @@ public class UIManager : MonoBehaviour
             ActivateUI(text.gameObject, true);
 
         text.SetText(content);
+        SetFontByText(text, false);
+    }
 
+    private void SetFontByText(TextMeshProUGUI text, bool isNum)
+    {
         if (LanguageManager.Instance)
         {
-            var gameFont = LanguageManager.Instance.GetFontByLanguage();
+            var gameFont = LanguageManager.Instance.GetFontByLanguage(isNum);
             if (gameFont != text.font)
                 text.font = gameFont;
         }

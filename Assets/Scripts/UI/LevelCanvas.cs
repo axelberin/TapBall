@@ -1,11 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UtilityAddressables;
 
-public class DunkLevelCanvas : CanvasElementLocator
+public class LevelCanvas : CanvasElementLocator
 {
-    public static DunkLevelCanvas Instance;
+    public static LevelCanvas Instance;
 
     private TextMeshProUGUI _countText;
     private TextMeshProUGUI _winTime;
@@ -14,14 +16,14 @@ public class DunkLevelCanvas : CanvasElementLocator
     private GameObject _emptyhasCoinGoal;
     private GameObject _deathGoal;
     private GameObject _emptydeathGoal;
-    private GameObject _touchesGoal;
-    private GameObject _emptytouchesGoal;
+    private GameObject _achievementsGoalPrefab;
+    private GameObject _emptyAchievementsGoal;
+    private GameObject _fullAchievementsGoal;
     private Button _nextLevelButton;
     private Button _pauseButton;
     private GameObject _pauseUI;
-    private TextMeshProUGUI _touchesInLevelText;
-    private TextMeshProUGUI _limitTouchesText;
     private TextMeshProUGUI _nextLevelText;
+    private List<TextMeshProUGUI> _achievementTextList = new();
 
     private void Awake()
     {
@@ -103,11 +105,9 @@ public class DunkLevelCanvas : CanvasElementLocator
         _emptyhasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinEmpty");
         _deathGoal = FindAndValidateGameObjectComponent(transform, "DeathGoalFull");
         _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
-        _touchesGoal = FindAndValidateGameObjectComponent(transform, "ToachesGoalFull");
-        _emptytouchesGoal = FindAndValidateGameObjectComponent(transform, "TouchEmpty");
+        _achievementsGoalPrefab = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab");
 
-        _touchesInLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TouchesText");
-        _limitTouchesText = FindAndValidateComponent<TextMeshProUGUI>(transform, "LimitTouchesText");
+        SetAchivementsByMode();
 
         UIManager.Instance.AddCanvas(gameObject, true);
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
@@ -117,6 +117,33 @@ public class DunkLevelCanvas : CanvasElementLocator
             LevelManager.Instance.OnWinLevel += OnWin;
             LevelManager.Instance.OnLoseLevel += OnLose;
         }
+    }
+
+    private void SetAchivementsByMode()
+    {
+        RectTransform goalPrefabRectTransform = FindAndValidateComponent<RectTransform>(transform, "AchievementGoalPrefab");
+
+        AddressablesUtility.LoadAsset<GameObject>(
+            $"{GameManager.Instance.GetCurrentGameMode}AchievementUI", imageGo =>
+            {
+                _achievementsGoalPrefab.SetActive(false);
+
+                _achievementsGoalPrefab = Instantiate(imageGo, _achievementsGoalPrefab.transform.parent, false);
+                _achievementsGoalPrefab.name = "AchievementGoalPrefab";
+
+                //var newRectTransform = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab").GetComponent<RectTransform>(); ;
+                RectTransform newRectTransform = _achievementsGoalPrefab.GetComponent<RectTransform>();
+                newRectTransform.anchoredPosition = goalPrefabRectTransform.anchoredPosition;
+                newRectTransform.sizeDelta = goalPrefabRectTransform.sizeDelta;
+
+                _emptyAchievementsGoal = FindAndValidateGameObjectComponent(_achievementsGoalPrefab.transform, "EmptyAchievement");
+                _fullAchievementsGoal = FindAndValidateGameObjectComponent(_achievementsGoalPrefab.transform, "FullAchievement");
+
+                for (int i = 0; i < _achievementsGoalPrefab.transform.childCount; i++)
+                {
+                    _achievementTextList.Add(FindAndValidateComponent<TextMeshProUGUI>(_achievementsGoalPrefab.transform, $"Text{i}"));
+                }
+            });
     }
 
     private void OnDestroy()
@@ -194,17 +221,29 @@ public class DunkLevelCanvas : CanvasElementLocator
         UIManager.Instance.SetText(_winTime, (int)time);
     }
 
-    public void SetTouchesInLevel(int touchesInLevel, bool isOverLimit, bool isOverLimitEver)
+    public void SetAchievementByDunkMode(int touchesInLevel, bool isOverLimit, bool isOverLimitEver, int limitOfMode)
     {
-        UIManager.Instance.SetText(_touchesInLevelText, touchesInLevel);
-        UIManager.Instance.SetText(_limitTouchesText, "/ " +
-            GameManager.Instance.SetGetWorldState.GetLimitTouches);
+        UIManager.Instance.SetText(_achievementTextList[0], $"{touchesInLevel}");
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}");
         if (isOverLimitEver)
-            _touchesInLevelText.color = Color.red;
+            _achievementTextList[0].color = Color.red;
         else
         {
-            StartCoroutine(ShowGoal(2.8f, _touchesGoal, _emptytouchesGoal));
-            _touchesInLevelText.color = isOverLimit ? Color.red : Color.green;
+            StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
+            _achievementTextList[0].color = isOverLimit ? Color.red : Color.green;
+        }
+    }
+
+    public void SetAchievementByTimeMode(float timeInLevel, bool isOverLimit, bool isOverLimitEver, float limitOfMode)
+    {
+        UIManager.Instance.SetText(_achievementTextList[0], $"{timeInLevel}s");
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}s");
+        if (isOverLimitEver)
+            _achievementTextList[0].color = Color.red;
+        else
+        {
+            StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
+            _achievementTextList[0].color = isOverLimit ? Color.red : Color.green;
         }
     }
 
