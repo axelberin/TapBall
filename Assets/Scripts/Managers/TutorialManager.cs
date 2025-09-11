@@ -13,6 +13,12 @@ public class TutorialManager : CanvasElementLocator
 
     private void Awake()
     {
+        if (GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Dunk)
+        {
+            FinishTutorial();
+            return;
+        }
+
         if (Instance == null)
             Instance = this;
         else
