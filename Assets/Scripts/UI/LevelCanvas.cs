@@ -10,6 +10,8 @@ public class LevelCanvas : CanvasElementLocator
     public static LevelCanvas Instance;
 
     private TextMeshProUGUI _countText;
+    private TextMeshProUGUI _timerText;
+    private TextMeshProUGUI _timerDecimalsText;
     private TextMeshProUGUI _winTime;
     private GameObject _winUI;
     private GameObject _hasCoinGoal;
@@ -38,7 +40,7 @@ public class LevelCanvas : CanvasElementLocator
         PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);
         PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
 
-        _countText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
+        SetCounterByGameMode(GameManager.Instance.GetCurrentGameMode);
         _winTime = FindAndValidateComponent<TextMeshProUGUI>(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
 
@@ -131,7 +133,6 @@ public class LevelCanvas : CanvasElementLocator
                 _achievementsGoalPrefab = Instantiate(imageGo, _achievementsGoalPrefab.transform.parent, false);
                 _achievementsGoalPrefab.name = "AchievementGoalPrefab";
 
-                //var newRectTransform = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab").GetComponent<RectTransform>(); ;
                 RectTransform newRectTransform = _achievementsGoalPrefab.GetComponent<RectTransform>();
                 newRectTransform.anchoredPosition = goalPrefabRectTransform.anchoredPosition;
                 newRectTransform.sizeDelta = goalPrefabRectTransform.sizeDelta;
@@ -208,7 +209,10 @@ public class LevelCanvas : CanvasElementLocator
 
     public void ShowTimerText(float timer)
     {
-        UIManager.Instance.SetText(_countText, timer);
+        int seconds = (int)timer;
+        int decimals = (int)((timer - seconds) * 100);
+        UIManager.Instance.SetText(_timerText, seconds);
+        UIManager.Instance.SetText(_timerDecimalsText, $".{decimals}", true);
     }
 
     public void OnExitWinBase()
@@ -236,8 +240,8 @@ public class LevelCanvas : CanvasElementLocator
 
     public void SetAchievementByTimeMode(float timeInLevel, bool isOverLimit, bool isOverLimitEver, float limitOfMode)
     {
-        UIManager.Instance.SetText(_achievementTextList[0], $"{timeInLevel}s");
-        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}s");
+        UIManager.Instance.SetText(_achievementTextList[0], $"{timeInLevel}s", true);
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}s", true);
         if (isOverLimitEver)
             _achievementTextList[0].color = Color.red;
         else
@@ -254,5 +258,32 @@ public class LevelCanvas : CanvasElementLocator
         AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.AchivmentSound);
         yield return new WaitForSeconds(1f);
         UIManager.Instance.ActivateUI(emptyGoal, false);
+    }
+
+    private void SetCounterByGameMode(GameManager.GameModes gameModes)
+    {
+        FindAndValidateGameObjectComponent(transform, "TapsCount").SetActive(gameModes == GameManager.GameModes.Dunk);
+        FindAndValidateGameObjectComponent(transform, "TimeCount").SetActive(gameModes == GameManager.GameModes.Time);
+
+        switch (gameModes)
+        {
+            case GameManager.GameModes.Dunk:
+                _countText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
+                break;
+            case GameManager.GameModes.Time:
+                _timerText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TimeText");
+                _timerDecimalsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TimeDecimalsText");
+                break;
+            case GameManager.GameModes.Endless:
+                break;
+            case GameManager.GameModes.OneTouch:
+                break;
+            case GameManager.GameModes.Fall:
+                break;
+            case GameManager.GameModes.Null:
+            default:
+                Debug.LogError("Game mode not found");
+                break;
+        }
     }
 }
