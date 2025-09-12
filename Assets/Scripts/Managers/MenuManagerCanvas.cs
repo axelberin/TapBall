@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,6 +34,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             _dunkLevelsPanel.SetActive(true);
             _menuPanel.SetActive(false);
+            OnLevelSelectorClicked(false);
         });
 
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
@@ -108,7 +110,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
-        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15)  > 0;
+        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
 
         previousModeBtn.onClick.AddListener(() =>
         {
@@ -131,7 +133,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         LevelManager.Instance.ResetCoins();
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
-        OnLevelSelectorClicked();
+        OnLevelSelectorClicked(true);
     }
 
     private void OnEnable()
@@ -163,16 +165,21 @@ public class MenuManagerCanvas : CanvasElementLocator
 #endif
     }
 
-    #region LEVELSELECTOR
-    private void OnLevelSelectorClicked()
+    #region LEVEL SELECTOR
+
+    private void OnLevelSelectorClicked(bool firstTime)
     {
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
         int nextDunkLevel = 1;
-
+        var buttonsName = "DunkLevel";
+   
         for (int i = 1; i <= 50; i++)
         {
-            var button = FindAndValidateComponent<Button>(transform, $"DunkLevel");
+            if (!firstTime)
+                buttonsName = $"{_currentWorld}Level{i}";
+
+            var button = FindAndValidateComponent<Button>(transform, buttonsName);
 
             if (button == null)
                 break;
@@ -206,15 +213,15 @@ public class MenuManagerCanvas : CanvasElementLocator
             // Usar nuevo sistema para verificar monedas
             hasCoinImage.gameObject.SetActive(
                 SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
-                SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i));
+                SaveAndLoadManager.GetLevelCoinObtained(Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
-            #region BEST (Objetivo del modo - en Dunk son los toques)
+            #region HASA CHIEVEMENT
             var touchImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
             // Usar nuevo sistema para verificar objetivo completado
             touchImage.gameObject.SetActive(
                 SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
-                SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i));
+                SaveAndLoadManager.GetLevelObjectiveComplete(Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
             #region WITHOUT DEATH
