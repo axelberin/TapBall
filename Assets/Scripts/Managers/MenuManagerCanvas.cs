@@ -131,7 +131,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         LevelManager.Instance.ResetCoins();
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
-        OnDunkLevelsClicked();
+        OnLevelSelectorClicked();
     }
 
     private void OnEnable()
@@ -163,8 +163,8 @@ public class MenuManagerCanvas : CanvasElementLocator
 #endif
     }
 
-    #region DUNK
-    private void OnDunkLevelsClicked()
+    #region LEVELSELECTOR
+    private void OnLevelSelectorClicked()
     {
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
@@ -180,7 +180,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             button.name = $"{_currentWorld}Level{i}";
 
             // Usar nuevo sistema para determinar el siguiente nivel
-            if (SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) && nextDunkLevel <= 49)
+            if (SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) && nextDunkLevel <= 49)
                 nextDunkLevel = i + 1;
 
             #region UNLOCK LEVELS
@@ -198,14 +198,14 @@ public class MenuManagerCanvas : CanvasElementLocator
                 button.interactable = true;
             else
                 // Usar nuevo sistema para verificar si el nivel anterior está completado
-                button.interactable = SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i - 1);
+                button.interactable = SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i - 1);
             #endregion
 
             #region HAS COINS
             var hasCoinImage = FindAndValidateComponent<Image>(button.transform, $"DunkHasCoin");
             // Usar nuevo sistema para verificar monedas
             hasCoinImage.gameObject.SetActive(
-                SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) &&
+                SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
                 SaveAndLoadManager.GetLevelCoinObtained(GameModes.Dunk, _currentWorld, i));
             #endregion
 
@@ -213,7 +213,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             var touchImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
             // Usar nuevo sistema para verificar objetivo completado
             touchImage.gameObject.SetActive(
-                SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) &&
+                SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
                 SaveAndLoadManager.GetLevelObjectiveComplete(GameModes.Dunk, _currentWorld, i));
             #endregion
 
@@ -221,8 +221,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             var noDeathImage = FindAndValidateComponent<Image>(button.transform, $"DunkWithoutDeath");
             // Usar nuevo sistema para verificar sin muerte
             noDeathImage.gameObject.SetActive(
-                SaveAndLoadManager.HasLevelData(GameModes.Dunk, _currentWorld, i) &&
-                SaveAndLoadManager.GetLevelWithoutDeath(GameModes.Dunk, _currentWorld, i));
+                SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelWithoutDeath(Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
             #region LEVEL TEXT
@@ -297,7 +297,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     //    SaveAndLoadManager.SetStringValue(worldName, SaveAndLoadManager.CurrentWorldName, true, true);
 
     //    // Refrescar la UI de niveles
-    //    OnDunkLevelsClicked();
+    //    OnLevelSelectorClicked();
 
     //    Debug.Log($"World changed to: {worldName}");
     //}
