@@ -892,6 +892,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
+      propertyPath: _limitTime
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: _limitTouches
       value: 12
       objectReference: {fileID: 0}
