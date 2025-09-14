@@ -115,7 +115,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_timerCounter > 0)
         {
             _timerCounter -= Time.deltaTime;
-            LevelCanvas.Instance.ShowTimerText(MathF.Round(_timerCounter * 100f) / 100f);
+            LevelCanvas.Instance.ShowTimerText(_timerCounter);
         }
         else if (_timerCounter <= 0)
         {
@@ -150,12 +150,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_onPause)
             return;
 
-        //if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
-        //    DunkLevelCanvas.Instance.ShowTimerText(_limitTime);
-
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
         {
-            LevelCanvas.Instance.ShowTimerText(MathF.Round(_timerCounter * 100f) / 100f);
+            LevelCanvas.Instance.ShowTimerText(_timerCounter);
         }
 
         if (_timeToStart < 3)

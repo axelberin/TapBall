@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
         int level = GameManager.Instance.SetGetWorldState.GetLevel;
         bool hasCoins = _coinsObtained.Count > 0 || currentData.coinObtained;
         bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
-        float limitTime = GameManager.Instance.SetGetWorldState.GetLimitTime * 0.1f;
+        float limitTime = GameManager.Instance.SetGetWorldState.GetLimitTime * 0.2f;
         bool underTimeLimit = remainingTime >= limitTime;
         bool underTimeLimitEver = underTimeLimit || currentData.objectiveComplete;
 

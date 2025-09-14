@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
         SetFontByText(text, true);
     }
 
-    public void SetText(TextMeshProUGUI text, string content)
+    public void SetText(TextMeshProUGUI text, string content, bool hasNum = false)
     {
         if (!text)
             return;
@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
             ActivateUI(text.gameObject, true);
 
         text.SetText(content);
-        SetFontByText(text, false);
+        SetFontByText(text, hasNum);
     }
 
     private void SetFontByText(TextMeshProUGUI text, bool isNum)

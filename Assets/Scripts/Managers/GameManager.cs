@@ -45,14 +45,14 @@ public class GameManager : MonoBehaviour
                 _currentGameMode = GameModes.Time;
                 break;
             case 3:
+                break;
                 _currentGameMode = GameModes.Endless;
-                break;
             case 4:
+                break;
                 _currentGameMode = GameModes.OneTouch;
-                break;
             case 5:
-                _currentGameMode = GameModes.Fall;
                 break;
+                _currentGameMode = GameModes.Fall;
             default:
                 _currentGameMode = GameModes.Null;
                 Debug.LogWarning($"Game mode not found: " + gameModeIndex);
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         else
             SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName) + index);
 
-        SaveAndLoadManager.SetIntValue(((int)_currentGameMode), SaveAndLoadManager.CurrentModeName);
+        SaveAndLoadManager.SetIntValue((int)_currentGameMode, SaveAndLoadManager.CurrentModeName);
     }
 
     public void OnCompleteWorld(string currentWorldName)
