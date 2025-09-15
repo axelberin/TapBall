@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log($"Time Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
         }
 
-        LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime,!underTimeLimit, !underTimeLimitEver, limitTime);
+        LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime, !underTimeLimit, !underTimeLimitEver, limitTime);
     }
 
     private void OneTouchOnWin()
@@ -197,6 +197,8 @@ public class LevelManager : MonoBehaviour
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
+                GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
+                break;
             case GameModes.Time:
                 GameManager.Instance.SetGetWorldState.ResetTimer();
                 break;
