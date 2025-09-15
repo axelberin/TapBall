@@ -8,12 +8,13 @@ using static GameManager;
 public class MenuManagerCanvas : CanvasElementLocator
 {
     private GameObject _menuPanel;
-    private GameObject _dunkLevelsPanel;
+    private GameObject _levelsPanel;
 
     private TextMeshProUGUI _coinsText;
     private TextMeshProUGUI _orbsText;
     private TextMeshProUGUI _modeText;
     private PopUp _unlockSkinsPopUp;
+    private Button _levelsCloseButton;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
     private string _currentWorld = "Neon";
@@ -28,12 +29,12 @@ public class MenuManagerCanvas : CanvasElementLocator
         Instance.SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName));
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
-        _dunkLevelsPanel = FindAndValidateGameObjectComponent(transform, "DunkLevelsPanel");
+        _levelsPanel = FindAndValidateGameObjectComponent(transform, "LevelsPanel");
 
         var levelsSelectorButton = FindAndValidateComponent<Button>(transform, "LevelsSelectorButton");
         levelsSelectorButton.onClick.AddListener(() =>
         {
-            _dunkLevelsPanel.SetActive(true);
+            _levelsPanel.SetActive(true);
             _menuPanel.SetActive(false);
             OnLevelSelectorClicked(false);
         });
@@ -71,10 +72,10 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         StoreManager.Instance.UpdateSkinsState?.Invoke();
 
-        var dunkCloseButton = FindAndValidateComponent<Button>(transform, "DunkCloseButton");
-        dunkCloseButton.onClick.AddListener(() =>
+        _levelsCloseButton = FindAndValidateComponent<Button>(transform, "LevelsCloseButton");
+        _levelsCloseButton.onClick.AddListener(() =>
         {
-            _dunkLevelsPanel.SetActive(false);
+            _levelsPanel.SetActive(false);
             _menuPanel.SetActive(true);
         });
 
@@ -101,7 +102,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         _modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
 
         var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
-        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
+        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 15) > 0;
 
         nextModeBtn.onClick.AddListener(() =>
         {
@@ -111,7 +112,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
-        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
+        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 15) > 0;
         previousModeBtn.onClick.AddListener(() =>
         {
             Instance.SetCurrentModeByIndex(-1);
@@ -193,10 +194,12 @@ public class MenuManagerCanvas : CanvasElementLocator
                 nextDunkLevel = i + 1;
 
             #region UNLOCK LEVELS
+            button.onClick.RemoveAllListeners();
             int levelIndex = i; // Variable temporal para capturar el valor actual de 'i'
             button.onClick.AddListener(() =>
             {
                 button.interactable = false;
+                _levelsCloseButton.interactable = false;
                 UIManager.Instance.ClearCnavasesList();
                 ScenesManager.Instance.LoadSceneAsync($"{_currentWorld}Level{levelIndex}", fadeAnimator);
                 AudioManager.Instance.StopMusic();

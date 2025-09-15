@@ -191,7 +191,7 @@ public static class SaveAndLoadManager
             ContainsKey(GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix));
     }
 
-    public static int GetHighestLevelReached(GameModes gameMode, string world, int maxLevels = 50)
+    public static int GetHighestLevelReachedByGameModeAndWorld(GameModes gameMode, string world, int maxLevels = 50)
     {
         int highestLevel = 0;
 
