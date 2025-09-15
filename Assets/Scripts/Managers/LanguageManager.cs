@@ -133,9 +133,6 @@ public class LanguageManager : ManagersManager
         };
     }
 
-    public (string, TMP_FontAsset) GetlocalizatedTextAndFont(string key)
-        => (GetLocalizedText(key), GetFontByLanguage());
-
     public string GetLocalizedText(string key)
     {
         if (_localizedTexts.Count == 0 ||

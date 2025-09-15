@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void SetCurrentModeByIndex(int index)
     {
-        int last = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) + 1;
+        int last = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 15) + 1;
 
         if (_currentGameMode == GameModes.Dunk && index < 0)
             SelectGameMode(last);

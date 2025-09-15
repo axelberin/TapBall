@@ -73,7 +73,7 @@ public class LevelManager : MonoBehaviour
         int level = GameManager.Instance.SetGetWorldState.GetLevel;
         int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
         bool hasCoins = _coinsObtained.Count > 0 || currentData.coinObtained;
-        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || !currentData.withoutDeath;
+        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
         bool isUnderTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
         bool isUnderTouchLimitEver = isUnderTouchLimit || currentData.objectiveComplete;
 
@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log($"Time Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
         }
 
-        LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime,!underTimeLimit, !underTimeLimitEver, limitTime);
+        LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime, !underTimeLimit, !underTimeLimitEver, limitTime);
     }
 
     private void OneTouchOnWin()
@@ -197,6 +197,8 @@ public class LevelManager : MonoBehaviour
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
+                GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
+                break;
             case GameModes.Time:
                 GameManager.Instance.SetGetWorldState.ResetTimer();
                 break;
