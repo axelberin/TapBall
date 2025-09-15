@@ -73,7 +73,7 @@ public class LevelManager : MonoBehaviour
         int level = GameManager.Instance.SetGetWorldState.GetLevel;
         int tapCount = GameManager.Instance.SetGetTapController.SetGetTapCount;
         bool hasCoins = _coinsObtained.Count > 0 || currentData.coinObtained;
-        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || !currentData.withoutDeath;
+        bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
         bool isUnderTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
         bool isUnderTouchLimitEver = isUnderTouchLimit || currentData.objectiveComplete;
 
