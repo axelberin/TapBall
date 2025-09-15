@@ -12,6 +12,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private TextMeshProUGUI _coinsText;
     private TextMeshProUGUI _orbsText;
+    private TextMeshProUGUI _modeText;
     private PopUp _unlockSkinsPopUp;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
@@ -39,7 +40,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
         _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
-        UpdateCoinsAndOrbsTexts();
+        UpdateTexts();
 
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentBallSkinName))
         {
@@ -97,7 +98,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             noAdsPopUp.Show();
         });
 
-        var modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
+        _modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
 
         var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
         nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
@@ -105,20 +106,21 @@ public class MenuManagerCanvas : CanvasElementLocator
         nextModeBtn.onClick.AddListener(() =>
         {
             Instance.SetCurrentModeByIndex(1);
-            UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
-
+            UIManager.Instance.SetText(_modeText,
+                LanguageManager.Instance.GetLocalizedText(Instance.GetCurrentGameMode.ToString()));
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
         previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReached(GameModes.Dunk, "Neon") / 15) > 0;
-
         previousModeBtn.onClick.AddListener(() =>
         {
             Instance.SetCurrentModeByIndex(-1);
-            UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+            UIManager.Instance.SetText(_modeText,
+                LanguageManager.Instance.GetLocalizedText(Instance.GetCurrentGameMode.ToString()));
         });
 
-        UIManager.Instance.SetText(modeText, Instance.GetCurrentGameMode.ToString());
+        UIManager.Instance.SetText(_modeText,
+            LanguageManager.Instance.GetLocalizedText(Instance.GetCurrentGameMode.ToString()));
 
         UpdateNotificationsOnNoAds();
 
@@ -138,10 +140,10 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void OnEnable()
     {
-        UpdateCoinsAndOrbsTexts();
+        UpdateTexts();
         if (IAPManager.Instance)
         {
-            IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase += UpdateTexts;
             IAPManager.Instance.OnCompletePurchase += ActivatePopUpAfterBuy;
             IAPManager.Instance.OnCompletePurchase += UpdateNotificationsOnNoAds;
         }
@@ -151,7 +153,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         if (IAPManager.Instance)
         {
-            IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase -= UpdateTexts;
             IAPManager.Instance.OnCompletePurchase -= ActivatePopUpAfterBuy;
             IAPManager.Instance.OnCompletePurchase -= UpdateNotificationsOnNoAds;
         }
@@ -173,7 +175,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         int nextDunkLevel = 1;
         var buttonsName = "DunkLevel";
-   
+
         for (int i = 1; i <= 50; i++)
         {
             if (!firstTime)
@@ -280,12 +282,15 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     #region Utility Methods
 
-    public void UpdateCoinsAndOrbsTexts()
+    public void UpdateTexts()
     {
         if (_coinsText != null)
             UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
         if (_orbsText != null)
             UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
+        if (_modeText != null)
+            UIManager.Instance.SetText(_modeText,
+                LanguageManager.Instance.GetLocalizedText(Instance.GetCurrentGameMode.ToString()));
     }
 
     public void UpdateNotificationsOnNoAds()

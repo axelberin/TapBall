@@ -76,9 +76,7 @@ public class LoadingGameManager : CanvasElementLocator
             return;
 
         int randomIndex = UnityEngine.Random.Range(1, 5);
-        var (text, font) = LanguageManager.Instance.GetlocalizatedTextAndFont("loadingText" + randomIndex);
-        _loadingText.font = font;
-        UIManager.Instance.SetText(_loadingText, text);
+        UIManager.Instance.SetText(_loadingText, LanguageManager.Instance.GetLocalizedText("loadingText" + randomIndex));
     }
 
     public void AddManager(ManagersManager manager, int index = -1)
