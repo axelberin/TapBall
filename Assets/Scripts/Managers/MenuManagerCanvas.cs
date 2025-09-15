@@ -218,7 +218,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 SaveAndLoadManager.GetLevelCoinObtained(Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
-            #region HASA CHIEVEMENT
+            #region HAS ACHIEVEMENT
             var touchImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
             // Usar nuevo sistema para verificar objetivo completado
             touchImage.gameObject.SetActive(
