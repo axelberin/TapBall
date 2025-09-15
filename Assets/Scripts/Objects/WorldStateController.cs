@@ -71,8 +71,8 @@ public class WorldStateController : MonoBehaviour, IPauseble
     }
     private void OnLose()
     {
+        OnUpdate = null;
         OnUpdate += StartCount;
-        OnUpdate -= ControlTimerMode;
     }
 
     private void Update()
