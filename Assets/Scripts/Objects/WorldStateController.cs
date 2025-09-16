@@ -150,10 +150,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_onPause)
             return;
 
-        if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
-        {
-            LevelCanvas.Instance.ShowTimerText(_timerCounter);
-        }
 
         if (_timeToStart < 3)
         {

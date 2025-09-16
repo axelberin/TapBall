@@ -45,11 +45,11 @@ public class GameManager : MonoBehaviour
                 _currentGameMode = GameModes.Time;
                 break;
             case 3:
+                _currentGameMode = GameModes.OneTouch;
                 break;
-                _currentGameMode = GameModes.Endless;
             case 4:
                 break;
-                _currentGameMode = GameModes.OneTouch;
+                _currentGameMode = GameModes.Endless;
             case 5:
                 break;
                 _currentGameMode = GameModes.Fall;
