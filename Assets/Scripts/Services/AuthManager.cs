@@ -30,12 +30,6 @@ public class AutoAuthManager : ManagersManager
 #elif UNITY_IOS
         SignInWithApple();
 #elif UNITY_ANDROID
-        GoogleSignIn.Configuration = new GoogleSignInConfiguration
-        {
-            WebClientId = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com", // este sí va fijo
-            RequestIdToken = true
-        };
-
         SignInWithGoogle();
 #endif
         base.Start();
@@ -54,12 +48,6 @@ public class AutoAuthManager : ManagersManager
 
             _isGoogleSignInInitialized = true;
         }
-        GoogleSignIn.Configuration = new GoogleSignInConfiguration
-        {
-            RequestIdToken = true,
-            WebClientId = GoogleAPI
-        };
-        GoogleSignIn.Configuration.RequestEmail = true;
 
         Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignIn();
 
@@ -89,7 +77,7 @@ public class AutoAuthManager : ManagersManager
                     else if (authTask.IsFaulted)
                     {
                         signInCompleted.SetException(authTask.Exception);
-                        Debug.Log("Faulted In Auth " + task.Exception);
+                        Debug.Log("Faulted In Auth " + authTask.Exception);
                     }
                     else
                     {
@@ -97,11 +85,10 @@ public class AutoAuthManager : ManagersManager
                         Debug.Log("Success");
                         _user = _auth.CurrentUser;
                         //TODO: Setear UI.
+                        _isInitialized = true;
                     }
                 });
             }
-
-            _isInitialized = true;
         });
     }
 
