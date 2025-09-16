@@ -171,13 +171,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7848003866043775532, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-      propertyPath: _priorityIndex
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8691777251021452362, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-    - {fileID: 3635840336483846097, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -395,10 +389,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4162962011407482861, guid: 484320671e34af349828c974b1204631, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7601294525842380321, guid: 484320671e34af349828c974b1204631, type: 3}
       propertyPath: m_Name
       value: LoadingGameCanvas
@@ -406,29 +396,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7601294525842380321, guid: 484320671e34af349828c974b1204631, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9100367358153914542}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 484320671e34af349828c974b1204631, type: 3}
---- !u!1 &9100367358153914541 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7601294525842380321, guid: 484320671e34af349828c974b1204631, type: 3}
-  m_PrefabInstance: {fileID: 9100367358153914540}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9100367358153914542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9100367358153914541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 844212e7f42a3454d8d39a97794dbe78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _priorityIndex: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

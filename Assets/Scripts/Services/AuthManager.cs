@@ -4,7 +4,7 @@ using System.Collections;
 using Google;
 using System.Threading.Tasks;
 
-public class AutoAuthManager : ManagersManager
+public class AuthManager : ManagersManager
 {
     public const string GoogleAPI = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com";
     FirebaseAuth _auth;
@@ -51,46 +51,52 @@ public class AutoAuthManager : ManagersManager
             _isGoogleSignInInitialized = true;
         }
 
-        Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignIn();
+        Task<GoogleSignInUser> signIn = GoogleSignIn.DefaultInstance.SignInSilently();
 
-        TaskCompletionSource<FirebaseUser> signInCompleted = new();
         signIn.ContinueWith(task =>
         {
-            if (task.IsCanceled)
+            if (task.IsFaulted || task.IsCanceled || task.Result == null)
             {
-                signInCompleted.SetCanceled();
-                Debug.Log("Cancelled");
-            }
-            else if (task.IsFaulted)
-            {
-                signInCompleted.SetException(task.Exception);
-
-                Debug.Log("Faulted " + task.Exception);
+                // Si falla o no hay sesión previa, mostrar chooser normal
+                GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnGoogleAuthFinished);
             }
             else
             {
-                Credential credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
-                _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
-                {
-                    if (authTask.IsCanceled)
-                    {
-                        signInCompleted.SetCanceled();
-                    }
-                    else if (authTask.IsFaulted)
-                    {
-                        signInCompleted.SetException(authTask.Exception);
-                        Debug.Log("Faulted In Auth " + authTask.Exception);
-                    }
-                    else
-                    {
-                        signInCompleted.SetResult(authTask.Result);
-                        Debug.Log("Success");
-                        _user = _auth.CurrentUser;
-                        //TODO: Setear UI.
-                        _isInitialized = true;
-                    }
-                });
+                OnGoogleAuthFinished(task);
             }
+        });
+    }
+
+    private void OnGoogleAuthFinished(Task<GoogleSignInUser> task)
+    {
+        TaskCompletionSource<FirebaseUser> signInCompleted = new();
+        if (task.IsFaulted)
+        {
+            signInCompleted.SetCanceled();
+            Debug.LogError("Google Sign-In error: " + task.Exception);
+            return;
+        }
+        if (task.IsCanceled)
+        {
+            signInCompleted.SetException(task.Exception);
+            Debug.LogWarning("Google Sign-In cancelado");
+            return;
+        }
+
+        Credential credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
+        _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
+        {
+            if (authTask.IsFaulted || authTask.IsCanceled)
+            {
+                signInCompleted.SetCanceled();
+                Debug.LogError("Error en Firebase: " + authTask.Exception);
+                return;
+            }
+
+            signInCompleted.SetResult(authTask.Result);
+            _user = authTask.Result;
+            Debug.Log("Login exitoso en Firebase: " + _user.DisplayName);
+            _isInitialized = true;
         });
     }
 
