@@ -195,9 +195,9 @@ public static class SaveAndLoadManager
     {
         int highestLevel = 0;
 
-        for(int level = 1; level <= maxLevels; level++)
+        for (int level = 1; level <= maxLevels; level++)
         {
-            if(HasLevelData(gameMode, world,level))
+            if (HasLevelData(gameMode, world, level))
             {
                 highestLevel = level;
             }
@@ -294,8 +294,8 @@ public static class SaveAndLoadManager
 
     public static void SaveCloud()
     {
-        //if (SaveAndLoadOnCloudManager.Instance != null && !isLoadingFromCloud)
-        //    SaveAndLoadOnCloudManager.Instance.SaveGameData(SerializeGameData());
+        if (SaveAndLoadOnCloudManager.Instance)
+            SaveAndLoadOnCloudManager.Instance.SaveGameData();
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
