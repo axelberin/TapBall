@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class AutoAuthManager : ManagersManager
 {
-    public string GoogleAPI = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com";
+    public const string GoogleAPI = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com";
     FirebaseAuth _auth;
     FirebaseUser _user;
 
@@ -15,10 +15,13 @@ public class AutoAuthManager : ManagersManager
     protected override void Start()
     {
         _auth = FirebaseAuth.DefaultInstance;
+        _user = _auth.CurrentUser;
 
-        if (_auth.CurrentUser != null)
+        base.Start();
+
+        if (_user != null)
         {
-            Debug.Log("Ya hay sesión iniciada: " + _auth.CurrentUser.DisplayName);
+            Debug.Log("Ya hay sesión iniciada: " + _user.DisplayName);
             return;
         }
 
@@ -32,7 +35,6 @@ public class AutoAuthManager : ManagersManager
 #elif UNITY_ANDROID
         SignInWithGoogle();
 #endif
-        base.Start();
     }
 
     public void SignInWithGoogle()
