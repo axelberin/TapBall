@@ -22,14 +22,18 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     protected override void Start()
     {
-        _dataBase = FirebaseFirestore.DefaultInstance;
-        _userId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
         base.Start();
+        _dataBase = FirebaseFirestore.DefaultInstance;
+#if UNITY_EDITOR
+        _userId = "EditorTestUser";
+#else
+        _userId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
+#endif
     }
 
     public void SaveGameData()
     {
-        DocumentReference docRef = _dataBase.Collection("players").Document(_userId);
+        DocumentReference docRef = _dataBase.Document($"PlayersData/{_userId}");
 
         Dictionary<string, object> playerData = new Dictionary<string, object>
         {
@@ -48,9 +52,23 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     public void LoadGameData(string userId)
     {
-        DocumentReference docRef = _dataBase.Collection("players").Document(userId);
+        DocumentReference docRef = _dataBase.Document($"PlayersData/{userId}");
         docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Error al obtener datos: " + task.Exception);
+                OnLoadDataFailed();
+                return;
+            }
+
+            if (task.IsCanceled)
+            {
+                Debug.LogWarning("La solicitud fue cancelada.");
+                OnLoadDataFailed();
+                return;
+            }
+
             if (task.Result.Exists)
             {
                 var snapshot = task.Result;
@@ -58,10 +76,12 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 int coins = snapshot.GetValue<int>("coins");
 
                 Debug.Log($"Jugador: Nivel {level}, Monedas {coins}");
+                _isInitialized = true;
             }
             else
             {
                 Debug.Log("No existe el usuario.");
+                OnLoadDataFailed();
             }
         });
     }

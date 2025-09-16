@@ -27,8 +27,6 @@ public class AuthManager : ManagersManager
 
 #if UNITY_EDITOR
         Debug.Log("Simulando login en Editor...");
-        var fakeUser = new { DisplayName = "EditorUser", UserId = "12345" };
-        Debug.Log("Login simulado: " + fakeUser.DisplayName);
         _isInitialized = true;
 #elif UNITY_IOS
         SignInWithApple();

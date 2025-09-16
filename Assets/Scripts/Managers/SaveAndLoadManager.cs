@@ -294,8 +294,10 @@ public static class SaveAndLoadManager
 
     public static void SaveCloud()
     {
+#if !UNITY_EDITOR
         if (SaveAndLoadOnCloudManager.Instance)
             SaveAndLoadOnCloudManager.Instance.SaveGameData();
+#endif
     }
 
     public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
