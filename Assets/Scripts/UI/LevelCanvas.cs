@@ -199,7 +199,20 @@ public class LevelCanvas : CanvasElementLocator
 
     public void OnLose()
     {
-        UIManager.Instance.SetText(_countText, 0);
+        switch (GameManager.Instance.GetCurrentGameMode)
+        {
+            case GameManager.GameModes.Dunk:
+                UIManager.Instance.SetText(_countText, 0);
+                break;
+            case GameManager.GameModes.OneTouch:
+                UIManager.Instance.SetText(_countText,
+                    GameManager.Instance.SetGetWorldState.GetLimitTouches);
+                    break;
+            case GameManager.GameModes.Time:
+                ShowTimerText(GameManager.Instance.SetGetWorldState.GetLimitTime);
+                break;
+        }
+
     }
 
     public void OnTap(int tapCount)
@@ -250,6 +263,18 @@ public class LevelCanvas : CanvasElementLocator
             _achievementTextList[0].color = isOverLimit ? Color.red : Color.green;
         }
     }
+    public void SetAchievementByOneTouchMode(float remainingTouchesInLevel, bool isOverLimit, bool isOverLimitEver, float limitOfMode)
+    {
+        UIManager.Instance.SetText(_achievementTextList[0], $"{remainingTouchesInLevel}");
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}");
+        if (isOverLimitEver)
+            _achievementTextList[0].color = Color.red;
+        else
+        {
+            StartCoroutine(ShowGoal(2.8f, _fullAchievementsGoal, _emptyAchievementsGoal));
+            _achievementTextList[0].color = isOverLimit ? Color.red : Color.green;
+        }
+    }
 
     private IEnumerator ShowGoal(float time, GameObject goalObject, GameObject emptyGoal)
     {
@@ -262,8 +287,9 @@ public class LevelCanvas : CanvasElementLocator
 
     private void SetCounterByGameMode(GameManager.GameModes gameModes)
     {
-        FindAndValidateGameObjectComponent(transform, "TapsCount").SetActive(gameModes == GameManager.GameModes.Dunk);
+        FindAndValidateGameObjectComponent(transform, "TapsCount").SetActive(gameModes == GameManager.GameModes.Dunk || gameModes == GameManager.GameModes.OneTouch);
         FindAndValidateGameObjectComponent(transform, "TimeCount").SetActive(gameModes == GameManager.GameModes.Time);
+
 
         switch (gameModes)
         {
@@ -273,10 +299,13 @@ public class LevelCanvas : CanvasElementLocator
             case GameManager.GameModes.Time:
                 _timerText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TimeText");
                 _timerDecimalsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TimeDecimalsText");
+                ShowTimerText(GameManager.Instance.SetGetWorldState.GetRemainingTime);
                 break;
             case GameManager.GameModes.Endless:
                 break;
             case GameManager.GameModes.OneTouch:
+                _countText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
+                OnTap(GameManager.Instance.SetGetWorldState.GetLimitTouches);
                 break;
             case GameManager.GameModes.Fall:
                 break;

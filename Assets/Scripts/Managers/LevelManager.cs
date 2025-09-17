@@ -144,12 +144,13 @@ public class LevelManager : MonoBehaviour
         bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
 
         // Para OneTouch, el objetivo es usar exactamente 1 toque o menos del límite
-        bool underTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
+        bool isUnderTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
+        bool isUnderTouchLimitEver = isUnderTouchLimit || currentData.objectiveComplete;
 
         // Guardar solo si hay cambios
         if (hasCoins != currentData.coinObtained ||
             withoutDeath != currentData.withoutDeath ||
-            underTouchLimit != currentData.objectiveComplete)
+            isUnderTouchLimit != currentData.objectiveComplete)
         {
             SaveAndLoadManager.SetLevelData(
                 GameModes.OneTouch,
@@ -157,13 +158,16 @@ public class LevelManager : MonoBehaviour
                 level,
                 hasCoins,
                 withoutDeath,
-                underTouchLimit,
+                isUnderTouchLimitEver,
                 true,
                 true
             );
 
-            Debug.Log($"OneTouch Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{underTouchLimit}");
+            Debug.Log($"OneTouch Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{isUnderTouchLimit}");
         }
+
+        LevelCanvas.Instance.SetAchievementByOneTouchMode(tapCount, isUnderTouchLimit, isUnderTouchLimitEver,
+            GameManager.Instance.SetGetWorldState.GetLimitTouches);
     }
 
     private void EndlessOnWin()
