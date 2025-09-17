@@ -8,6 +8,11 @@ public class TapController : MonoBehaviour
     {
         if (GameManager.Instance)
             GameManager.Instance.SetGetTapController = this;
+
+        if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch)
+        {
+            _tapCount = GameManager.Instance.SetGetWorldState.GetLimitTouches;
+        }
     }
 
     void Update()
@@ -25,22 +30,32 @@ public class TapController : MonoBehaviour
 #endif
     }
 
+    private void TapsBehaviourByMode(GameManager.GameModes gameModes)
+    {
+        switch (gameModes)
+        {
+            case GameManager.GameModes.Dunk:
+                _tapCount++;
+                LevelCanvas.Instance.OnTap(_tapCount);
+                break;
+            case GameManager.GameModes.OneTouch:
+                if (_tapCount > 0)
+                {
+                    _tapCount--;
+                    LevelCanvas.Instance.OnTap(_tapCount);
+                    if (_tapCount == 0)
+                        GameManager.Instance.SetGetPlayer.Death();
+                }
+                break;
+        }
+    }
+
     void OnTap(Vector3 pos)
     {
         if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance ||
             GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
             return;
-
-        if (LevelCanvas.Instance && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Dunk)
-        {
-            _tapCount++;
-            LevelCanvas.Instance.OnTap(_tapCount);
-        }
-        else if (LevelCanvas.Instance && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch)
-        {
-            _tapCount--;
-            LevelCanvas.Instance.OnTap(_tapCount);
-        }
+        TapsBehaviourByMode(GameManager.Instance.GetCurrentGameMode);
         if (GameManager.Instance)
             GameManager.Instance.SetGetPlayer.OnTap(Camera.main.ScreenToWorldPoint(pos));
     }

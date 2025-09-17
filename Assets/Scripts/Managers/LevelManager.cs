@@ -207,7 +207,7 @@ public class LevelManager : MonoBehaviour
                 GameManager.Instance.SetGetWorldState.ResetTimer();
                 break;
             case GameModes.OneTouch:
-                GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
+                GameManager.Instance.SetGetTapController.SetGetTapCount = GameManager.Instance.SetGetWorldState.GetLimitTouches;
                 break;
             default:
                 break;

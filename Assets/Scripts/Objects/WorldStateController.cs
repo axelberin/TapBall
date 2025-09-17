@@ -22,12 +22,13 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     private void Awake()
     {
+        GameManager.Instance.SetGetWorldState = this;
         _timerCounter = _limitTime;
     }
 
     private void Start()
     {
-        GameManager.Instance.SetGetWorldState = this;
+       
 
         if (PauseAndResumeManager.Instance)
         {

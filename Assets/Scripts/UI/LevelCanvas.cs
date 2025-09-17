@@ -207,14 +207,12 @@ public class LevelCanvas : CanvasElementLocator
             case GameManager.GameModes.OneTouch:
                 UIManager.Instance.SetText(_countText,
                     GameManager.Instance.SetGetWorldState.GetLimitTouches);
-                    break;
+                break;
             case GameManager.GameModes.Time:
                 ShowTimerText(GameManager.Instance.SetGetWorldState.GetLimitTime);
                 break;
         }
-
     }
-
     public void OnTap(int tapCount)
     {
         UIManager.Instance.SetText(_countText, tapCount);
@@ -305,7 +303,7 @@ public class LevelCanvas : CanvasElementLocator
                 break;
             case GameManager.GameModes.OneTouch:
                 _countText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
-                OnTap(GameManager.Instance.SetGetWorldState.GetLimitTouches);
+                UIManager.Instance.SetText(_countText, GameManager.Instance.SetGetWorldState.GetLimitTouches);
                 break;
             case GameManager.GameModes.Fall:
                 break;
