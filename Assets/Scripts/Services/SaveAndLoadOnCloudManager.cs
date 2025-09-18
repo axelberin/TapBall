@@ -52,6 +52,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     public void LoadGameData(string userId)
     {
+        _isInitialized = true;
         DocumentReference docRef = _dataBase.Document($"PlayersData/{userId}");
         docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {

@@ -45,6 +45,9 @@ public class LoadingGameManager : CanvasElementLocator
         yield return new WaitForSeconds(1f);
         foreach (var manager in _managers)
         {
+            if (manager == null)
+                continue;
+
             StartCoroutine(SmoothFill((_managers.IndexOf(manager) + 1) / (float)_managers.Count));
 
             if (!manager.IsInitialized)
