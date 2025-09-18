@@ -9,6 +9,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     [SerializeField] private int _limitTouches = 1;
     [SerializeField] private float _limitTime = 30f;
+    [SerializeField] private int _limitTapsOneTouch = 10;
     private float _timerCounter;
     private int _level;
     private float _timeToWin = 3;
@@ -208,6 +209,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     public int GetLimitTouches => _limitTouches;
     public float GetLimitTime => _limitTime;
+    public int GetLimitTapsOneTouch => _limitTapsOneTouch;
     public float GetRemainingTime => MathF.Round(_timerCounter * 100f) / 100f;
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;

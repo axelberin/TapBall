@@ -11,7 +11,7 @@ public class TapController : MonoBehaviour
 
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch)
         {
-            _tapCount = GameManager.Instance.SetGetWorldState.GetLimitTouches;
+            _tapCount = GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch;
         }
     }
 
