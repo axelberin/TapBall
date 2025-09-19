@@ -25,13 +25,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43d1570aa88ea8242932bb472a977d6f
+    m_Address: DunkAchievementLevelSelector
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5dbe7fc847381e1499ace162fde2f9f1
     m_Address: TimeAchievementUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7227074b2d54aa042ae58b16ea71ae7a
+    m_Address: OneTouchAchievementLevelSelector
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ce466b4b7f848c47882ab24565e0837
     m_Address: ComingSoonNotifyText
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aafebf52c52880b40b1f5ef222da09c4
+    m_Address: TimeAchievementLevelSelector
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
