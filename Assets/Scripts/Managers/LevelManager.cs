@@ -144,12 +144,14 @@ public class LevelManager : MonoBehaviour
         bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
 
         // Para OneTouch, el objetivo es usar exactamente 1 toque o menos del límite
-        bool underTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
+        float levelTouchesPercentage = GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch * 0.2f;
+        bool isUnderTouchLimit = tapCount >= levelTouchesPercentage;
+        bool isUnderTouchLimitEver = isUnderTouchLimit || currentData.objectiveComplete;
 
         // Guardar solo si hay cambios
         if (hasCoins != currentData.coinObtained ||
             withoutDeath != currentData.withoutDeath ||
-            underTouchLimit != currentData.objectiveComplete)
+            isUnderTouchLimit != currentData.objectiveComplete)
         {
             SaveAndLoadManager.SetLevelData(
                 GameModes.OneTouch,
@@ -157,13 +159,16 @@ public class LevelManager : MonoBehaviour
                 level,
                 hasCoins,
                 withoutDeath,
-                underTouchLimit,
+                isUnderTouchLimitEver,
                 true,
                 true
             );
 
-            Debug.Log($"OneTouch Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{underTouchLimit}");
+            Debug.Log($"OneTouch Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{isUnderTouchLimit}");
         }
+
+        LevelCanvas.Instance.SetAchievementByOneTouchMode(tapCount, !isUnderTouchLimit, !isUnderTouchLimitEver,
+            levelTouchesPercentage);
     }
 
     private void EndlessOnWin()
@@ -203,7 +208,7 @@ public class LevelManager : MonoBehaviour
                 GameManager.Instance.SetGetWorldState.ResetTimer();
                 break;
             case GameModes.OneTouch:
-                GameManager.Instance.SetGetTapController.SetGetTapCount = 0;
+                GameManager.Instance.SetGetTapController.SetGetTapCount = GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch;
                 break;
             default:
                 break;
