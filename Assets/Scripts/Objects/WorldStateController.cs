@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 public class WorldStateController : MonoBehaviour, IPauseble
 {
@@ -127,6 +128,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         else if (_timerCounter <= 0)
         {
             OnUpdate -= ControlTimerMode;
+            AudioManager.Instance.OnPause();
             _playOnce = false;
             ResetTimer();
             GameManager.Instance.SetGetPlayer.Death();
@@ -157,7 +159,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
     {
         if (_onPause)
             return;
-
 
         if (_timeToStart < 3)
         {

@@ -144,7 +144,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private IEnumerator DelayToLose()
     {
         AudioManager.Instance.StopMusic();
-        AudioManager.Instance.StopSound();
         if (_audioSource && _deathClip)
             _audioSource.PlayOneShot(_deathClip);
 
