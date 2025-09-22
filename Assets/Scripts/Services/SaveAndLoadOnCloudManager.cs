@@ -52,38 +52,41 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     public void LoadGameData(string userId)
     {
-        _isInitialized = true;
         DocumentReference docRef = _dataBase.Document($"PlayersData/{userId}");
         docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
-            if (task.IsFaulted)
+            if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.LogError("Error al obtener datos: " + task.Exception);
-                OnLoadDataFailed();
+                OnLoadDataFailed(); // El OK del popup pone _isInitialized = true
                 return;
             }
 
-            if (task.IsCanceled)
+            var snapshot = task.Result;
+            if (!snapshot.Exists)
             {
-                Debug.LogWarning("La solicitud fue cancelada.");
-                OnLoadDataFailed();
+                // Primera vez: crear documento con defaults
+                var defaults = new Dictionary<string, object>
+            {
+                { "name", FirebaseAuth.DefaultInstance.CurrentUser.DisplayName },
+                { "level", 1 },
+                { "coins", 0 },
+                { "lastUpdate", Timestamp.GetCurrentTimestamp() }
+            };
+
+                docRef.SetAsync(defaults, SetOptions.MergeAll).ContinueWithOnMainThread(_ =>
+                {
+                    Debug.Log("Documento creado con valores por defecto.");
+                    _isInitialized = true; // ahora sí seguimos
+                });
                 return;
             }
 
-            if (task.Result.Exists)
-            {
-                var snapshot = task.Result;
-                int level = snapshot.GetValue<int>("level");
-                int coins = snapshot.GetValue<int>("coins");
+            int level = snapshot.ContainsField("level") ? snapshot.GetValue<int>("level") : 1;
+            int coins = snapshot.ContainsField("coins") ? snapshot.GetValue<int>("coins") : 0;
 
-                Debug.Log($"Jugador: Nivel {level}, Monedas {coins}");
-                _isInitialized = true;
-            }
-            else
-            {
-                Debug.Log("No existe el usuario.");
-                OnLoadDataFailed();
-            }
+            Debug.Log($"Jugador: Nivel {level}, Monedas {coins}");
+            _isInitialized = true; 
         });
     }
 
