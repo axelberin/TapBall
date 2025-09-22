@@ -10,6 +10,7 @@ public class LoadingGameManager : CanvasElementLocator
 {
     public static LoadingGameManager Instance;
 
+    public TextMeshProUGUI TestingText;
     private bool _canShowTexts = false;
     private List<ManagersManager> _managers = new();
 
@@ -45,9 +46,11 @@ public class LoadingGameManager : CanvasElementLocator
         yield return new WaitForSeconds(1f);
         foreach (var manager in _managers)
         {
+            TestingText.text = (manager != null).ToString();
             if (manager == null)
                 continue;
 
+            TestingText.text = manager.name;
             StartCoroutine(SmoothFill((_managers.IndexOf(manager) + 1) / (float)_managers.Count));
 
             if (!manager.IsInitialized)

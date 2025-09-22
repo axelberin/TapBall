@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class AuthManager : ManagersManager
 {
-    public const string GoogleAPI = "1067990701779-7ruheridq1uesrkoa4f7uqhhjodur2v3.apps.googleusercontent.com";
+    public const string GoogleAPI = "70505230779-dcec4ure6uki7ertg47imreu6o07lhrf.apps.googleusercontent.com";
     private const string kSignedOnceKey = "GOOGLE_SIGNED_ONCE";
 
     FirebaseAuth _auth;
@@ -84,13 +84,7 @@ public class AuthManager : ManagersManager
             //      que el usuario pulse un botón "Reintentar".
             bool signedOnce = PlayerPrefs.GetInt(kSignedOnceKey, 0) == 1;
             if (!silentOnly || !signedOnce)
-            {
                 GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnGoogleAuthFinished);
-            }
-            else
-            {
-                Debug.Log("Silent falló pero ya había login previo. No forzamos chooser.");
-            }
         });
     }
 
@@ -99,11 +93,13 @@ public class AuthManager : ManagersManager
         if (task.IsFaulted)
         {
             Debug.LogError("Google Sign-In error: " + task.Exception);
+            OnFailSignIn();
             return;
         }
         if (task.IsCanceled)
         {
             Debug.LogWarning("Google Sign-In cancelado");
+            OnFailSignIn();
             return;
         }
 
@@ -113,6 +109,7 @@ public class AuthManager : ManagersManager
             if (authTask.IsFaulted || authTask.IsCanceled)
             {
                 Debug.LogError("Error en Firebase: " + authTask.Exception);
+                OnFailSignIn();
                 return;
             }
 
@@ -135,6 +132,7 @@ public class AuthManager : ManagersManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.LogError("Error login Apple: " + task.Exception);
+                OnFailSignIn();
                 return;
             }
             FirebaseUser user = task.Result;
@@ -153,5 +151,10 @@ public class AuthManager : ManagersManager
         GoogleSignIn.DefaultInstance.SignOut(); // esto borra caché de Google
         _auth.SignOut(); // también Firebase
         PlayerPrefs.DeleteKey(kSignedOnceKey);
+    }
+
+    private void OnFailSignIn()
+    {
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect", () => _isInitialized = true, Application.Quit);
     }
 }
