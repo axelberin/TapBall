@@ -182,7 +182,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                                       SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) : "";
 
             gameData["currentMode"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName) ?
-                                     SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentModeName) : "";
+                                     SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName) : 1;
 
             // Serializar datos de niveles
             var levelDataDict = new Dictionary<string, object>();
@@ -276,7 +276,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 SaveAndLoadManager.SetStringValue(cloudGameData["currentWorld"].ToString(), SaveAndLoadManager.CurrentWorldName);
 
             if (cloudGameData.ContainsKey("currentMode"))
-                SaveAndLoadManager.SetStringValue(cloudGameData["currentMode"].ToString(), SaveAndLoadManager.CurrentModeName);
+                SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["currentMode"]), SaveAndLoadManager.CurrentModeName);
 
             // Aplicar datos de niveles
             if (cloudGameData.ContainsKey("levelData"))
