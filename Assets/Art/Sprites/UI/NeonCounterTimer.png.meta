@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 57c3567a837e2634ab02dcd2a6ee4a77
+guid: c1baeed689e15b344bdb955595d5d48b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3362454541278851020
-    second: Timer win_0
+      213: 1292852652123118414
+    second: NeonCounterTimer_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Timer win_0
+      name: NeonCounterTimer_0
       rect:
         serializedVersion: 2
-        x: 138
-        y: 121
-        width: 80
-        height: 113
+        x: 0
+        y: 0
+        width: 267
+        height: 82
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 430dca5e8692651d0800000000000000
-      internalID: -3362454541278851020
+      spriteID: e4b58b423a221f110800000000000000
+      internalID: 1292852652123118414
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Timer win_0: -3362454541278851020
+      NeonCounterTimer_0: 1292852652123118414
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
