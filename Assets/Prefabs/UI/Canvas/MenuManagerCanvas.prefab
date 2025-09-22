@@ -3348,7 +3348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClipType: 5
+  _audioClipType: 0
   _isActive: 1
   _textParentTransform: {fileID: 0}
 --- !u!1 &5534015949752772335
@@ -4421,7 +4421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec1272bec7959a4f9ac7e472db27e31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioClipType: 5
+  _audioClipType: 0
   _isActive: 1
   _textParentTransform: {fileID: 0}
 --- !u!1 &6929874532775062877
