@@ -40,7 +40,7 @@ public class AuthManager : ManagersManager
 
     private void OnDestroy()
     {
-        if (_auth != null) 
+        if (_auth != null)
             _auth.StateChanged -= OnAuthStateChanged;
     }
 
@@ -155,6 +155,7 @@ public class AuthManager : ManagersManager
 
     private void OnFailSignIn()
     {
-        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect", () => _isInitialized = true, Application.Quit);
+        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
+            () => _isInitialized = true, () => SignInWithGoogle(silentOnly: true));
     }
 }
