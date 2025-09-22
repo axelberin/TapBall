@@ -10,7 +10,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     [SerializeField] private int _limitTouches = 1;
     [SerializeField] private float _limitTime = 30f;
-    [SerializeField] private int _limitTapsOneTouch = 10;
+    [SerializeField] private int _limitTapsOneTouch = 30;
     private float _timerCounter;
     private int _level;
     private float _timeToWin = 3;
