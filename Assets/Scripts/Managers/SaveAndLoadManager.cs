@@ -294,152 +294,159 @@ public static class SaveAndLoadManager
 
     public static void SaveCloud()
     {
+        if (isLoadingFromCloud)
+        {
+            Debug.Log("Evitando guardado en nube durante carga desde nube");
+            return;
+        }
+
 #if !UNITY_EDITOR
-        if (SaveAndLoadOnCloudManager.Instance)
+        if (SaveAndLoadOnCloudManager.Instance != null)
             SaveAndLoadOnCloudManager.Instance.SaveGameData();
+        else
+            Debug.LogWarning("SaveAndLoadOnCloudManager.Instance es null, no se puede guardar en la nube");
+#else
+        Debug.Log("Guardado en nube omitido en editor");
 #endif
     }
 
-    public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
-    {
-        isLoadingFromCloud = true;
+    //public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
+    //{
+    //    isLoadingFromCloud = true;
 
-        try
-        {
-            GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
+    //    try
+    //    {
+    //        GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
 
-            // Aplicar datos básicos
-            SetIntValue(data.coins, CoinsName);
-            if (!string.IsNullOrEmpty(data.currentBallSkin))
-                SetStringValue(data.currentBallSkin, CurrentBallSkinName);
+    //        // Aplicar datos básicos
+    //        SetIntValue(data.coins, CoinsName);
+    //        if (!string.IsNullOrEmpty(data.currentBallSkin))
+    //            SetStringValue(data.currentBallSkin, CurrentBallSkinName);
 
-            SetFloatValue(data.soundsVolume, SoundsVolumeName);
-            SetFloatValue(data.musicVolume, MusicVolumeName);
+    //        SetFloatValue(data.soundsVolume, SoundsVolumeName);
+    //        SetFloatValue(data.musicVolume, MusicVolumeName);
 
-            if (!string.IsNullOrEmpty(data.language))
-            {
-                SetStringValue(data.language, LanguageName);
-            }
+    //        if (!string.IsNullOrEmpty(data.language))
+    //        {
+    //            SetStringValue(data.language, LanguageName);
+    //        }
 
-            if (!string.IsNullOrEmpty(data.currentModeName))
-                SetStringValue(data.currentModeName, CurrentModeName);
+    //        if (!string.IsNullOrEmpty(data.currentModeName))
+    //            SetStringValue(data.currentModeName, CurrentModeName);
 
-            if (!string.IsNullOrEmpty(data.currentWorldName))
-                SetStringValue(data.currentWorldName, CurrentWorldName);
+    //        if (!string.IsNullOrEmpty(data.currentWorldName))
+    //            SetStringValue(data.currentWorldName, CurrentWorldName);
 
-            SetIntValue(data.reviewSowed, ReviewSowedName);
+    //        SetIntValue(data.reviewSowed, ReviewSowedName);
 
-            // Aplicar datos de niveles con nueva estructura
-            foreach (var modeData in data.gameModeData)
-            {
-                if (Enum.TryParse(modeData.Key, out GameModes gameMode))
-                {
-                    foreach (var worldData in modeData.Value)
-                    {
-                        string world = worldData.Key;
+    //        // Aplicar datos de niveles con nueva estructura
+    //        foreach (var modeData in data.gameModeData)
+    //        {
+    //            if (Enum.TryParse(modeData.Key, out GameModes gameMode))
+    //            {
+    //                foreach (var worldData in modeData.Value)
+    //                {
+    //                    string world = worldData.Key;
 
-                        foreach (var levelData in worldData.Value)
-                        {
-                            if (int.TryParse(levelData.Key, out int level))
-                            {
-                                LevelData levelInfo = levelData.Value;
-                                SetLevelData(gameMode, world, level,
-                                           levelInfo.coinObtained,
-                                           levelInfo.withoutDeath,
-                                           levelInfo.objectiveComplete);
-                            }
-                        }
-                    }
-                }
-            }
+    //                    foreach (var levelData in worldData.Value)
+    //                    {
+    //                        if (int.TryParse(levelData.Key, out int level))
+    //                        {
+    //                            LevelData levelInfo = levelData.Value;
+    //                            SetLevelData(gameMode, world, level,
+    //                                       levelInfo.coinObtained,
+    //                                       levelInfo.withoutDeath,
+    //                                       levelInfo.objectiveComplete);
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
 
-            // Aplicar skins obtenidas
-            foreach (var skinData in data.obtainedSkins)
-                SetIntValue(skinData.Value ? 1 : 0, ObtainedBallSkins + skinData.Key);
+    //        // Aplicar skins obtenidas
+    //        foreach (var skinData in data.obtainedSkins)
+    //            SetIntValue(skinData.Value ? 1 : 0, ObtainedBallSkins + skinData.Key);
 
-            PlayerPrefs.Save();
-            Debug.Log("Cloud data successfully applied to local save.");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Error applying cloud data: " + e.Message);
-            onFail?.Invoke();
-        }
-        finally
-        {
-            isLoadingFromCloud = false;
-            onComplete?.Invoke();
-            LanguageManager.Instance?.LoadSavedOrDetectLanguage();
-        }
-    }
+    //        PlayerPrefs.Save();
+    //        Debug.Log("Cloud data successfully applied to local save.");
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.LogError("Error applying cloud data: " + e.Message);
+    //        onFail?.Invoke();
+    //    }
+    //    finally
+    //    {
+    //        isLoadingFromCloud = false;
+    //        onComplete?.Invoke();
+    //        LanguageManager.Instance?.LoadSavedOrDetectLanguage();
+    //    }
+    //}
 
-    private static string[] _skinNames = new string[] {
-        "BallBasicSkin","BallBasicRedSkin","BallBasicBlueSkin","BallBasicGreenSkin","BallBasicVioletSkin","BallBasicWhiteSkin","BallBasicBlackSkin",
-        "CatBallSkin","DogBallSkin","CarpinchoBallSkin","PandaBallSkin","GrizzlyBallSkin",
-        "FutbolBallSkin","BasketBallSkin","TennisBallSkin","BaseBallSkin",
-        "MagmaBallSkin","WaterBallSkin",
-        "NeonBallSkin"
-    };
+    //private static string[] _skinNames = new string[] {
+    //    "BallBasicSkin","BallBasicRedSkin","BallBasicBlueSkin","BallBasicGreenSkin","BallBasicVioletSkin","BallBasicWhiteSkin","BallBasicBlackSkin",
+    //    "CatBallSkin","DogBallSkin","CarpinchoBallSkin","PandaBallSkin","GrizzlyBallSkin",
+    //    "FutbolBallSkin","BasketBallSkin","TennisBallSkin","BaseBallSkin",
+    //    "MagmaBallSkin","WaterBallSkin",
+    //    "NeonBallSkin"
+    //};
 
-    private static string SerializeGameData()
-    {
-        GameData data = new();
+    //private static string SerializeGameData()
+    //{
+    //    GameData data = new();
 
-        // Datos básicos
-        data.coins = GetIntValue(CoinsName);
-        data.currentBallSkin = GetStringValue(CurrentBallSkinName);
-        data.soundsVolume = GetFloatValue(SoundsVolumeName);
-        data.musicVolume = GetFloatValue(MusicVolumeName);
-        data.language = GetStringValue(LanguageName);
-        data.reviewSowed = GetIntValue(ReviewSowedName);
-        data.currentModeName = GetStringValue(CurrentModeName);
-        data.currentWorldName = GetStringValue(CurrentWorldName);
+    //    // Datos básicos
+    //    data.coins = GetIntValue(CoinsName);
+    //    data.currentBallSkin = GetStringValue(CurrentBallSkinName);
+    //    data.soundsVolume = GetFloatValue(SoundsVolumeName);
+    //    data.musicVolume = GetFloatValue(MusicVolumeName);
+    //    data.language = GetStringValue(LanguageName);
+    //    data.reviewSowed = GetIntValue(ReviewSowedName);
+    //    data.currentModeName = GetStringValue(CurrentModeName);
+    //    data.currentWorldName = GetStringValue(CurrentWorldName);
 
-        // Serializar datos de niveles con nueva estructura
-        foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
-        {
-            if (mode == GameModes.Null)
-                continue;
+    //    // Serializar datos de niveles con nueva estructura
+    //    foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
+    //    {
+    //        if (mode == GameModes.Null)
+    //            continue;
 
-            foreach (string world in _availableWorlds)
-            {
-                for (int level = 1; level <= 50; level++)
-                {
-                    if (HasLevelData(mode, world, level))
-                    {
-                        // Asegurar que existe la estructura anidada
-                        if (!data.gameModeData.ContainsKey(mode.ToString()))
-                            data.gameModeData[mode.ToString()] = new Dictionary<string, Dictionary<string, LevelData>>();
+    //        foreach (string world in _availableWorlds)
+    //        {
+    //            for (int level = 1; level <= 50; level++)
+    //            {
+    //                if (HasLevelData(mode, world, level))
+    //                {
+    //                    // Asegurar que existe la estructura anidada
+    //                    if (!data.gameModeData.ContainsKey(mode.ToString()))
+    //                        data.gameModeData[mode.ToString()] = new Dictionary<string, Dictionary<string, LevelData>>();
 
-                        if (!data.gameModeData[mode.ToString()].ContainsKey(world))
-                            data.gameModeData[mode.ToString()][world] = new Dictionary<string, LevelData>();
+    //                    if (!data.gameModeData[mode.ToString()].ContainsKey(world))
+    //                        data.gameModeData[mode.ToString()][world] = new Dictionary<string, LevelData>();
 
-                        // Agregar los datos del nivel
-                        data.gameModeData[mode.ToString()][world][level.ToString()] = GetLevelData(mode, world, level);
-                    }
-                }
-            }
-        }
+    //                    // Agregar los datos del nivel
+    //                    data.gameModeData[mode.ToString()][world][level.ToString()] = GetLevelData(mode, world, level);
+    //                }
+    //            }
+    //        }
+    //    }
 
-        // Serializar skins
-        foreach (string skinName in _skinNames)
-        {
-            string skinPrefKey = ObtainedBallSkins + skinName;
-            if (PlayerPrefs.HasKey(skinPrefKey))
-            {
-                data.obtainedSkins[skinName] = GetIntValue(skinPrefKey) == 1;
-            }
-        }
+    //    // Serializar skins
+    //    foreach (string skinName in _skinNames)
+    //    {
+    //        string skinPrefKey = ObtainedBallSkins + skinName;
+    //        if (PlayerPrefs.HasKey(skinPrefKey))
+    //        {
+    //            data.obtainedSkins[skinName] = GetIntValue(skinPrefKey) == 1;
+    //        }
+    //    }
 
-        return Newtonsoft.Json.JsonConvert.SerializeObject(data);
-    }
+    //    return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+    //}
 
     public static void DeleteData()
     {
         PlayerPrefs.DeleteAll();
-
-        //if (SaveAndLoadOnCloudManager.Instance != null)
-        //    SaveAndLoadOnCloudManager.Instance.SaveGameData("{}");
     }
     #endregion
 
