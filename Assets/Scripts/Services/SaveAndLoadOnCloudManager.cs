@@ -26,8 +26,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         _dataBase = FirebaseFirestore.DefaultInstance;
 #if UNITY_EDITOR
         _userId = "EditorTestUser";
-#else
-        _userId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
+        _isInitialized = true;
 #endif
     }
 
@@ -52,32 +51,53 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     public void LoadGameData(string userId)
     {
-        DocumentReference docRef = _dataBase.Document($"PlayersData/{userId}");
+        if (string.IsNullOrEmpty(userId))
+        {
+            Debug.LogError("userId vacío no se puede leer Firestore");
+            OnLoadDataFailed();
+            return;
+        }
+
+        DocumentReference docRef;
+        try
+        {
+            docRef = _dataBase.Document($"PlayersData/{userId}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Ruta inválida a Firestore: " + e);
+            OnLoadDataFailed();
+            return;
+        }
+
         docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.LogError("Error al obtener datos: " + task.Exception);
-                OnLoadDataFailed(); // El OK del popup pone _isInitialized = true
+                OnLoadDataFailed();
                 return;
             }
 
             var snapshot = task.Result;
             if (!snapshot.Exists)
             {
-                // Primera vez: crear documento con defaults
-                var defaults = new Dictionary<string, object>
-            {
+                var defaults = new Dictionary<string, object> {
                 { "name", FirebaseAuth.DefaultInstance.CurrentUser.DisplayName },
-                { "level", 1 },
-                { "coins", 0 },
+                { "level", 1 }, { "coins", 0 },
                 { "lastUpdate", Timestamp.GetCurrentTimestamp() }
-            };
+                };
 
-                docRef.SetAsync(defaults, SetOptions.MergeAll).ContinueWithOnMainThread(_ =>
+                docRef.SetAsync(defaults, SetOptions.MergeAll).ContinueWithOnMainThread(setTask =>
                 {
+                    if (setTask.IsFaulted || setTask.IsCanceled)
+                    {
+                        Debug.LogError("No se pudo crear doc inicial: " + setTask.Exception);
+                        OnLoadDataFailed();
+                        return;
+                    }
                     Debug.Log("Documento creado con valores por defecto.");
-                    _isInitialized = true; // ahora sí seguimos
+                    _isInitialized = true;
                 });
                 return;
             }
@@ -85,10 +105,10 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             int level = snapshot.ContainsField("level") ? snapshot.GetValue<int>("level") : 1;
             int coins = snapshot.ContainsField("coins") ? snapshot.GetValue<int>("coins") : 0;
 
-            Debug.Log($"Jugador: Nivel {level}, Monedas {coins}");
-            _isInitialized = true; 
+            _isInitialized = true;
         });
     }
+
 
     private void OnLoadDataFailed()
     {
@@ -97,9 +117,22 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     public override IEnumerator InizializeManagers()
     {
-        LoadGameData(_userId);
+        var auth = FirebaseAuth.DefaultInstance;
 
-        // Esperar hasta que se complete la carga
+        // Esperar a que haya usuario (o vencer por timeout)
+        float deadline = Time.realtimeSinceStartup + 15f;
+        while (auth.CurrentUser == null && Time.realtimeSinceStartup < deadline)
+            yield return null;
+
+        if (auth.CurrentUser == null)
+        {
+            Debug.LogWarning("Auth no listo en tiempo: continuando sin nube");
+            OnLoadDataFailed();      // el OK del pop-up pone _isInitialized = true
+            yield break;
+        }
+
+        _userId = auth.CurrentUser.UserId; // ahora sí existe
+        LoadGameData(_userId);
         while (!_isInitialized)
             yield return null;
     }
