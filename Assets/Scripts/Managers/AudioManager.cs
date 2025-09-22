@@ -18,7 +18,8 @@ public class AudioManager : ManagersManager, IPauseble
         EquipSound,
         RejectionSound,
         AchivmentSound,
-        CountDownSound
+        CountDownSound,
+        TimeAlertSound
     };
 
     public enum MusicClipType
@@ -161,6 +162,8 @@ public class AudioManager : ManagersManager, IPauseble
             , clip => _musicClipsByEnum.Add(MusicClipType.MenuMusic, clip));
         AddressablesUtility.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),
             clip => _musicClipsByEnum.Add(MusicClipType.DunkMusic, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeAlertSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.TimeAlertSound, clip));
 
         yield return new WaitForSeconds(0.5f);
 

@@ -15,6 +15,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private TextMeshProUGUI _modeText;
     private PopUp _unlockSkinsPopUp;
     private Button _levelsCloseButton;
+    private Image _achievementImageInLevelsSelector = null;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
     private string _currentWorld = "Neon";
@@ -108,6 +109,12 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             Instance.SetCurrentModeByIndex(1);
             UpdateModeTexts(_modeText, nextLevelText);
+
+            AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+            {
+                _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
+                OnLevelSelectorClicked(false);
+            });
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
@@ -116,6 +123,12 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             Instance.SetCurrentModeByIndex(-1);
             UpdateModeTexts(_modeText, nextLevelText);
+
+            AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+            {
+                _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
+                OnLevelSelectorClicked(false);
+            });
         });
 
         UpdateModeTexts(_modeText, nextLevelText);
@@ -132,7 +145,11 @@ public class MenuManagerCanvas : CanvasElementLocator
         LevelManager.Instance.ResetCoins();
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
-        OnLevelSelectorClicked(true);
+        AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+        {
+            _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
+            OnLevelSelectorClicked(true);
+        });
     }
 
     private void OnEnable()
@@ -216,9 +233,12 @@ public class MenuManagerCanvas : CanvasElementLocator
             #endregion
 
             #region HAS ACHIEVEMENT
-            var touchImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
+            var achievementImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
+            achievementImage.sprite = _achievementImageInLevelsSelector.sprite;
+
+
             // Usar nuevo sistema para verificar objetivo completado
-            touchImage.gameObject.SetActive(
+            achievementImage.gameObject.SetActive(
                 SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
                 SaveAndLoadManager.GetLevelObjectiveComplete(Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion

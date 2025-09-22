@@ -29,7 +29,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     private void Start()
     {
-       
+
 
         if (PauseAndResumeManager.Instance)
         {
@@ -117,11 +117,17 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_timerCounter > 0)
         {
             _timerCounter -= Time.deltaTime;
+            if (_timerCounter <= 3 && !_playOnce)
+            {
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeAlertSound);
+                _playOnce = true;
+            }
             LevelCanvas.Instance.ShowTimerText(_timerCounter);
         }
         else if (_timerCounter <= 0)
         {
             OnUpdate -= ControlTimerMode;
+            _playOnce = false;
             ResetTimer();
             GameManager.Instance.SetGetPlayer.Death();
         }
