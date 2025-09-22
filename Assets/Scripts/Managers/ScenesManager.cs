@@ -115,6 +115,7 @@ public class ScenesManager : MonoBehaviour
         {
             case GameManager.GameModes.Dunk:
             case GameManager.GameModes.Time:
+            case GameManager.GameModes.OneTouch:
                 PauseAndResumeManager.Instance.RestartResumeAction();
                 PauseAndResumeManager.Instance.RestartPauseAction();
                 PauseAndResumeManager.Instance.AddPauseAction(AudioManager.Instance.OnPause);

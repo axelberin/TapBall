@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
         Null,
         Dunk,               // Obstacle mode. Less touches. A lot of levels.
         Time,               // Time mode. Less Time. A lot of levels.
-        Endless,            // Endless. More time. One procedural level.
         OneTouch,            // Limit touches. Less touches than limit. A lot of levels.
+        Endless,            // Endless. More time. One procedural level.
         Fall,               // Fall mode. More time. One procedural level.
     }
 

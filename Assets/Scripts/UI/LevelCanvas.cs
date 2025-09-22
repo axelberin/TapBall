@@ -206,15 +206,13 @@ public class LevelCanvas : CanvasElementLocator
                 break;
             case GameManager.GameModes.OneTouch:
                 UIManager.Instance.SetText(_countText,
-                    GameManager.Instance.SetGetWorldState.GetLimitTouches);
-                    break;
+                    GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch);
+                break;
             case GameManager.GameModes.Time:
                 ShowTimerText(GameManager.Instance.SetGetWorldState.GetLimitTime);
                 break;
         }
-
     }
-
     public void OnTap(int tapCount)
     {
         UIManager.Instance.SetText(_countText, tapCount);
@@ -240,8 +238,8 @@ public class LevelCanvas : CanvasElementLocator
 
     public void SetAchievementByDunkMode(int touchesInLevel, bool isOverLimit, bool isOverLimitEver, int limitOfMode)
     {
-        UIManager.Instance.SetText(_achievementTextList[0], $"{touchesInLevel}");
-        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}");
+        UIManager.Instance.SetText(_achievementTextList[0], $"{touchesInLevel}", true);
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}",true);
         if (isOverLimitEver)
             _achievementTextList[0].color = Color.red;
         else
@@ -265,8 +263,8 @@ public class LevelCanvas : CanvasElementLocator
     }
     public void SetAchievementByOneTouchMode(float remainingTouchesInLevel, bool isOverLimit, bool isOverLimitEver, float limitOfMode)
     {
-        UIManager.Instance.SetText(_achievementTextList[0], $"{remainingTouchesInLevel}");
-        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}");
+        UIManager.Instance.SetText(_achievementTextList[0], $"{remainingTouchesInLevel}",true);
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}",true);
         if (isOverLimitEver)
             _achievementTextList[0].color = Color.red;
         else
@@ -305,7 +303,7 @@ public class LevelCanvas : CanvasElementLocator
                 break;
             case GameManager.GameModes.OneTouch:
                 _countText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PointsText");
-                OnTap(GameManager.Instance.SetGetWorldState.GetLimitTouches);
+                UIManager.Instance.SetText(_countText, GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch);
                 break;
             case GameManager.GameModes.Fall:
                 break;
