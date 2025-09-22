@@ -204,7 +204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &131197562
 Transform:
   m_ObjectHideFlags: 0
@@ -903,18 +903,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
-      propertyPath: _level
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
-      propertyPath: _limitTime
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
-      propertyPath: _limitTouches
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 2933221586683428456, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: m_Name
       value: WinBase (1)
@@ -1966,18 +1954,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2473641581691667611, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.04296875
-      objectReference: {fileID: 0}
-    - target: {fileID: 2527442013822713494, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.19921875
-      objectReference: {fileID: 0}
-    - target: {fileID: 8540548283357153117, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.9001465
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2145,10 +2121,6 @@ PrefabInstance:
     - target: {fileID: 1917831010871328576, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
       propertyPath: m_Name
       value: Managers
-      objectReference: {fileID: 0}
-    - target: {fileID: 2008930129043412940, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
-      propertyPath: _worldStateController
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3208022160245464938, guid: 04d88f6134550b44f8fc70225cdd3d79, type: 3}
       propertyPath: m_LocalPosition.x
