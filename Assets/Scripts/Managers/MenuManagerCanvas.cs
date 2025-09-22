@@ -24,12 +24,6 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         Application.targetFrameRate = 60;
 
-        AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
-        {
-            _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
-            OnLevelSelectorClicked(true);
-        });
-
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName))
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CurrentModeName, true, true);
 
@@ -113,28 +107,28 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         nextModeBtn.onClick.AddListener(() =>
         {
+            Instance.SetCurrentModeByIndex(1);
+            UpdateModeTexts(_modeText, nextLevelText);
+
             AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
             {
                 _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
-                OnLevelSelectorClicked(true);
+                OnLevelSelectorClicked(false);
             });
-
-            Instance.SetCurrentModeByIndex(1);
-            UpdateModeTexts(_modeText, nextLevelText);
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
         previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 15) > 0;
         previousModeBtn.onClick.AddListener(() =>
         {
+            Instance.SetCurrentModeByIndex(-1);
+            UpdateModeTexts(_modeText, nextLevelText);
+
             AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
             {
                 _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
-                OnLevelSelectorClicked(true);
+                OnLevelSelectorClicked(false);
             });
-
-            Instance.SetCurrentModeByIndex(-1);
-            UpdateModeTexts(_modeText, nextLevelText);
         });
 
         UpdateModeTexts(_modeText, nextLevelText);
@@ -151,7 +145,11 @@ public class MenuManagerCanvas : CanvasElementLocator
         LevelManager.Instance.ResetCoins();
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
-        OnLevelSelectorClicked(true);
+        AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+        {
+            _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
+            OnLevelSelectorClicked(true);
+        });
     }
 
     private void OnEnable()
@@ -237,6 +235,7 @@ public class MenuManagerCanvas : CanvasElementLocator
             #region HAS ACHIEVEMENT
             var achievementImage = FindAndValidateComponent<Image>(button.transform, $"DunkRecord");
             achievementImage.sprite = _achievementImageInLevelsSelector.sprite;
+
 
             // Usar nuevo sistema para verificar objetivo completado
             achievementImage.gameObject.SetActive(
