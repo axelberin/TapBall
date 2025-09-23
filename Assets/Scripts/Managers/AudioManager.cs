@@ -37,6 +37,7 @@ public class AudioManager : ManagersManager, IPauseble
     private string _mixerUI = "UIVolume";
 
     private AudioSource _soundsAudioSource;
+    private AudioSource _auxSoundsAudioSource;
     private AudioSource _musicAudioSource;
 
     private void Awake()
@@ -50,7 +51,8 @@ public class AudioManager : ManagersManager, IPauseble
         {
             _soundsAudioSource = GetComponentsInChildren<AudioSource>().
                 FirstOrDefault(a => a.gameObject.name == "SoundsAudioSource");
-
+            _auxSoundsAudioSource = GetComponentsInChildren<AudioSource>().
+                FirstOrDefault(a => a.gameObject.name == "AuxSoundsAudioSource");
             _musicAudioSource = GetComponentsInChildren<AudioSource>().
                 FirstOrDefault(a => a.gameObject.name == "MusicAudioSource");
         }
@@ -85,7 +87,7 @@ public class AudioManager : ManagersManager, IPauseble
         SaveAndLoadManager.SetFloatValue(value, SaveAndLoadManager.MusicVolumeName, true);
     }
 
-    public void PlaySoundByType(AudioClipType clipType)
+    public void PlaySoundByType(AudioClipType clipType, bool overlapSoud = false)
     {
         if (_soundClipsByEnum == null || !_soundClipsByEnum.ContainsKey(clipType)
             || _soundClipsByEnum[clipType] == null)
@@ -94,7 +96,15 @@ public class AudioManager : ManagersManager, IPauseble
         var clip = _soundClipsByEnum[clipType];
 
         if (clip != null && _soundsAudioSource != null)
-            _soundsAudioSource.PlayOneShot(clip);
+        {
+            if (!overlapSoud)
+                _soundsAudioSource.PlayOneShot(clip);
+            else if (_auxSoundsAudioSource != null)
+            {
+                _auxSoundsAudioSource.clip = clip;
+                _auxSoundsAudioSource.Play();
+            }
+        }
         else
             Debug.LogError("Audio source or audio clip not found.");
     }
@@ -116,10 +126,12 @@ public class AudioManager : ManagersManager, IPauseble
             Debug.LogError("Audio source or audio clip not found.");
     }
 
-    public void StopSound()
+    public void StopSound(bool stopSound = true, bool stopOvelapedSound = true)
     {
-        if (_soundsAudioSource != null)
+        if (_soundsAudioSource != null && stopSound)
             _soundsAudioSource.Stop();
+        if (_auxSoundsAudioSource != null && stopOvelapedSound)
+            _auxSoundsAudioSource.Stop();
     }
 
     public void StopMusic()

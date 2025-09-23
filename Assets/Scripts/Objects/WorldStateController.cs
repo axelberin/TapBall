@@ -66,12 +66,15 @@ public class WorldStateController : MonoBehaviour, IPauseble
             LevelManager.Instance.OnLoseLevel -= OnLose;
         OnUpdate = null;
     }
+
     public void ResetTimer()
     {
         _timerCounter = _limitTime;
     }
+
     private void OnLose()
     {
+        _playOnce = false;
         OnUpdate = null;
         OnUpdate += StartCount;
     }
@@ -103,7 +106,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
                 LevelCanvas.Instance.OnExitWinBase();
 
             if (_timeToWin > 0f)
-                AudioManager.Instance.StopSound();
+                AudioManager.Instance.StopSound(true, false);
             _timeToWin = 3;
         }
     }
@@ -118,15 +121,15 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _timerCounter -= Time.deltaTime;
             if (_timerCounter <= 3 && !_playOnce)
             {
-                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeAlertSound);
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeAlertSound, true);
                 _playOnce = true;
             }
             LevelCanvas.Instance.ShowTimerText(_timerCounter);
         }
-        else if (_timerCounter <= 0)
+        else
         {
+            _timerCounter = 0;
             OnUpdate -= ControlTimerMode;
-            AudioManager.Instance.OnPause();
             _playOnce = false;
             ResetTimer();
             GameManager.Instance.SetGetPlayer.Death();
