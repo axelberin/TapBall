@@ -1369,6 +1369,10 @@ PrefabInstance:
       propertyPath: _limitTouches
       value: 34
       objectReference: {fileID: 0}
+    - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
+      propertyPath: _limitTapsOneTouch
+      value: 49
+      objectReference: {fileID: 0}
     - target: {fileID: 2349363725683394702, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: _move
       value: 0

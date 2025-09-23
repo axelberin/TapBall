@@ -30,8 +30,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     private void Start()
     {
-
-
         if (PauseAndResumeManager.Instance)
         {
             PauseAndResumeManager.Instance.AddResumeAction(OnResume);
@@ -191,7 +189,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
             }
         }
     }
-
 
     public void OnResume()
     {
