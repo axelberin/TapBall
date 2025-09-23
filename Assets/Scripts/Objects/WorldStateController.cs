@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
-using System.Collections;
 
 public class WorldStateController : MonoBehaviour, IPauseble
 {
