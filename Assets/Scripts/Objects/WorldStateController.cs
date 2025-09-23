@@ -151,7 +151,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
             _timeToWin = 0;
             LevelManager.Instance.OnWin();
-            OnUpdate -= ControlTimerMode;
+            OnUpdate = null;
         }
     }
 

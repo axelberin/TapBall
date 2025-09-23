@@ -97,6 +97,7 @@ public class LevelManager : MonoBehaviour
 
     private void TimeOnWin()
     {
+        AudioManager.Instance.StopSound(false, true);
         LevelData currentData = GetCurrentLevelData();
 
         float remainingTime = GameManager.Instance.SetGetWorldState.GetRemainingTime;

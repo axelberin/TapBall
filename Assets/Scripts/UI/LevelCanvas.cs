@@ -223,7 +223,7 @@ public class LevelCanvas : CanvasElementLocator
         int seconds = (int)timer;
         int decimals = (int)((timer - seconds) * 100);
         UIManager.Instance.SetText(_timerText, seconds);
-        UIManager.Instance.SetText(_timerDecimalsText, $".{decimals}", true);
+        UIManager.Instance.SetText(_timerDecimalsText, $".{decimals:00}", true);
     }
 
     public void OnExitWinBase()
@@ -239,7 +239,7 @@ public class LevelCanvas : CanvasElementLocator
     public void SetAchievementByDunkMode(int touchesInLevel, bool isOverLimit, bool isOverLimitEver, int limitOfMode)
     {
         UIManager.Instance.SetText(_achievementTextList[0], $"{touchesInLevel}", true);
-        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}",true);
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}", true);
         if (isOverLimitEver)
             _achievementTextList[0].color = Color.red;
         else
@@ -263,8 +263,8 @@ public class LevelCanvas : CanvasElementLocator
     }
     public void SetAchievementByOneTouchMode(float remainingTouchesInLevel, bool isOverLimit, bool isOverLimitEver, float limitOfMode)
     {
-        UIManager.Instance.SetText(_achievementTextList[0], $"{remainingTouchesInLevel}",true);
-        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}",true);
+        UIManager.Instance.SetText(_achievementTextList[0], $"{remainingTouchesInLevel}", true);
+        UIManager.Instance.SetText(_achievementTextList[1], $"/{limitOfMode}", true);
         if (isOverLimitEver)
             _achievementTextList[0].color = Color.red;
         else

@@ -144,12 +144,16 @@ public class AudioManager : ManagersManager, IPauseble
     {
         if (_soundsAudioSource != null)
             _soundsAudioSource.UnPause();
+        if (_auxSoundsAudioSource != null)
+            _auxSoundsAudioSource.UnPause();
     }
 
     public void OnPause()
     {
         if (_soundsAudioSource != null)
             _soundsAudioSource.Pause();
+        if (_auxSoundsAudioSource != null)
+            _auxSoundsAudioSource.Pause();
     }
 
     public override IEnumerator InizializeManagers()
