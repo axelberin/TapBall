@@ -129,9 +129,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
         var defaults = new Dictionary<string, object>
         {
-            { "name", FirebaseAuth.DefaultInstance.CurrentUser?.DisplayName ?? "New Player" },
+            { "gameData", defaultGameData },
             { "lastUpdate", Timestamp.GetCurrentTimestamp() },
-            { "gameData", defaultGameData }
+            { "name", FirebaseAuth.DefaultInstance.CurrentUser?.DisplayName ?? "New Player" }
         };
 
         docRef.SetAsync(defaults, SetOptions.MergeAll).ContinueWithOnMainThread(setTask =>

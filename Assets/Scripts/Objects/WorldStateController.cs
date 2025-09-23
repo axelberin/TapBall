@@ -19,7 +19,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     private bool _playOnce;
 
     private PlayerController _playerController;
-    private List<MovableObjects> _movableObjectsInLevel = new List<MovableObjects>();
+    private List<MovableObjects> _movableObjectsInLevel = new();
 
     private void Awake()
     {
@@ -75,7 +75,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     {
         _playOnce = false;
         OnUpdate = null;
-        OnUpdate += StartCount;
+        OnUpdate = StartCount;
     }
 
     private void Update()
@@ -186,9 +186,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _playOnce = false;
 
             if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
-            {
                 OnUpdate += ControlTimerMode;
-            }
         }
     }
 
