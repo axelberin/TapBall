@@ -77,24 +77,18 @@ public class LevelManager : MonoBehaviour
         bool isUnderTouchLimit = tapCount <= GameManager.Instance.SetGetWorldState.GetLimitTouches;
         bool isUnderTouchLimitEver = isUnderTouchLimit || currentData.objectiveComplete;
 
-        // Guardar datos usando el nuevo sistema solo si hay cambios
-        if (hasCoins != currentData.coinObtained ||
-            withoutDeath != currentData.withoutDeath ||
-            isUnderTouchLimitEver != currentData.objectiveComplete)
-        {
-            SaveAndLoadManager.SetLevelData(
-                GameModes.Dunk,
-                _currentWorld,
-                level,
-                hasCoins,
-                withoutDeath,
-                isUnderTouchLimitEver,
-                true,
-                true
-            );
+        SaveAndLoadManager.CompleteLevel(
+            GameModes.Dunk,
+            _currentWorld,
+            level,
+            hasCoins,
+            withoutDeath,
+            isUnderTouchLimitEver,
+            true,
+            true
+        );
 
-            Debug.Log($"Dunk Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Under Touch Limit: {isUnderTouchLimitEver}");
-        }
+        Debug.Log($"Dunk Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Under Touch Limit: {isUnderTouchLimitEver}");
 
         // Mostrar información en UI
         LevelCanvas.Instance.SetAchievementByDunkMode(tapCount, !isUnderTouchLimit,
@@ -113,23 +107,18 @@ public class LevelManager : MonoBehaviour
         bool underTimeLimit = remainingTime >= limitTime;
         bool underTimeLimitEver = underTimeLimit || currentData.objectiveComplete;
 
-        if (hasCoins != currentData.coinObtained ||
-            withoutDeath != currentData.withoutDeath ||
-            underTimeLimit != currentData.objectiveComplete)
-        {
-            SaveAndLoadManager.SetLevelData(
-                GameModes.Time,
-                _currentWorld,
-                level,
-                hasCoins,
-                withoutDeath,
-                underTimeLimitEver,
-                true,
-                true
-            );
+        SaveAndLoadManager.CompleteLevel(
+            GameModes.Time,
+            _currentWorld,
+            level,
+            hasCoins,
+            withoutDeath,
+            underTimeLimitEver,
+            true,
+            true
+        );
 
-            Debug.Log($"Time Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
-        }
+        Debug.Log($"Time Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
 
         LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime, !underTimeLimit, !underTimeLimitEver, limitTime);
     }
@@ -143,29 +132,22 @@ public class LevelManager : MonoBehaviour
         bool hasCoins = _coinsObtained.Count > 0 || currentData.coinObtained;
         bool withoutDeath = !GameManager.Instance.SetGetPlayer.HasDeath || currentData.withoutDeath;
 
-        // Para OneTouch, el objetivo es usar exactamente 1 toque o menos del límite
         int levelTouchesPercentage = (int)MathF.Max(1, GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch * 0.18f);
         bool isUnderTouchLimit = tapCount >= levelTouchesPercentage;
         bool isUnderTouchLimitEver = isUnderTouchLimit || currentData.objectiveComplete;
 
-        // Guardar solo si hay cambios
-        if (hasCoins != currentData.coinObtained ||
-            withoutDeath != currentData.withoutDeath ||
-            isUnderTouchLimit != currentData.objectiveComplete)
-        {
-            SaveAndLoadManager.SetLevelData(
-                GameModes.OneTouch,
-                _currentWorld,
-                level,
-                hasCoins,
-                withoutDeath,
-                isUnderTouchLimitEver,
-                true,
-                true
-            );
+        SaveAndLoadManager.CompleteLevel(
+            GameModes.OneTouch,
+            _currentWorld,
+            level,
+            hasCoins,
+            withoutDeath,
+            isUnderTouchLimitEver,
+            true,
+            true
+        );
 
-            Debug.Log($"OneTouch Level {level} data updated - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{isUnderTouchLimit}");
-        }
+        Debug.Log($"OneTouch Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Touches: {tapCount}/{isUnderTouchLimit}");
 
         LevelCanvas.Instance.SetAchievementByOneTouchMode(tapCount, !isUnderTouchLimit, !isUnderTouchLimitEver,
             levelTouchesPercentage);
@@ -252,35 +234,5 @@ public class LevelManager : MonoBehaviour
             _currentWorld,
             GameManager.Instance.SetGetWorldState.GetLevel
         );
-    }
-
-    /// <summary>
-    /// Verifica si el nivel actual está completado
-    /// </summary>
-    public bool IsCurrentLevelCompleted()
-    {
-        return SaveAndLoadManager.HasLevelData(
-            GameManager.Instance.GetCurrentGameMode,
-            _currentWorld,
-            GameManager.Instance.SetGetWorldState.GetLevel
-        );
-    }
-
-    /// <summary>
-    /// Establece el mundo actual
-    /// Usar cuando implementes el sistema de mundos
-    /// </summary>
-    public void SetCurrentWorld(string world)
-    {
-        _currentWorld = world;
-        Debug.Log($"Current world set to: {world}");
-    }
-
-    /// <summary>
-    /// Obtiene el mundo actual
-    /// </summary>
-    public string GetCurrentWorld()
-    {
-        return _currentWorld;
     }
 }

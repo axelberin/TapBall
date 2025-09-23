@@ -26,6 +26,7 @@ public static class SaveAndLoadManager
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";
+    private static string CompletedSuffix = "_Completed";
     private static string CoinSuffix = "_Coin";
     private static string WithoutDeathSuffix = "_WithoutDeath";
     private static string ObjectiveCompleteSuffix = "_ObjectiveComplete";
@@ -110,6 +111,22 @@ public static class SaveAndLoadManager
     }
 
     /// <summary>
+    /// Esto se debe marcar siempre que el jugador termine un nivel, sin importar objetivos secundarios
+    /// </summary>
+    public static void SetLevelCompleted(GameModes gameMode, string world, int level, bool completed, bool withSave = false, bool saveCloud = false)
+    {
+        SetIntValue(completed ? 1 : 0, GenerateLevelDataKey(gameMode, world, level, CompletedSuffix), withSave, saveCloud);
+    }
+
+    /// <summary>
+    /// Obtiene si el jugador completó el nivel (independiente de objetivos)
+    /// </summary>
+    public static bool GetLevelCompleted(GameModes gameMode, string world, int level)
+    {
+        return GetIntValue(GenerateLevelDataKey(gameMode, world, level, CompletedSuffix)) == 1;
+    }
+
+    /// <summary>
     /// Guarda si el jugador obtuvo la moneda en un nivel específico
     /// </summary>
     public static void SetLevelCoinObtained(GameModes gameMode, string world, int level, bool obtained, bool withSave = false, bool saveCloud = false)
@@ -159,13 +176,23 @@ public static class SaveAndLoadManager
     }
 
     /// <summary>
-    /// Guarda todos los datos de un nivel de una vez
+    /// Guarda todos los datos de un nivel de una vez, incluyendo completion status
     /// </summary>
-    public static void SetLevelData(GameModes gameMode, string world, int level, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
+    public static void SetLevelData(GameModes gameMode, string world, int level, bool levelCompleted, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
     {
+        SetLevelCompleted(gameMode, world, level, levelCompleted, false);
         SetLevelCoinObtained(gameMode, world, level, coinObtained, false);
         SetLevelWithoutDeath(gameMode, world, level, withoutDeath, false);
         SetLevelObjectiveComplete(gameMode, world, level, objectiveComplete, withSave, saveCloud);
+    }
+
+    /// <summary>
+    /// Método de conveniencia para cuando el jugador simplemente completa un nivel
+    /// Esto debería ser llamado SIEMPRE que el jugador termine un nivel
+    /// </summary>
+    public static void CompleteLevel(GameModes gameMode, string world, int level, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
+    {
+        SetLevelData(gameMode, world, level, true, coinObtained, withoutDeath, objectiveComplete, withSave, saveCloud);
     }
 
     /// <summary>
@@ -175,6 +202,7 @@ public static class SaveAndLoadManager
     {
         return new LevelData
         {
+            levelCompleted = GetLevelCompleted(gameMode, world, level),
             coinObtained = GetLevelCoinObtained(gameMode, world, level),
             withoutDeath = GetLevelWithoutDeath(gameMode, world, level),
             objectiveComplete = GetLevelObjectiveComplete(gameMode, world, level)
@@ -186,9 +214,43 @@ public static class SaveAndLoadManager
     /// </summary>
     public static bool HasLevelData(GameModes gameMode, string world, int level)
     {
-        return ContainsKey(GenerateLevelDataKey(gameMode, world, level, CoinSuffix)) ||
+        return ContainsKey(GenerateLevelDataKey(gameMode, world, level, CompletedSuffix)) ||
+            ContainsKey(GenerateLevelDataKey(gameMode, world, level, CoinSuffix)) ||
             ContainsKey(GenerateLevelDataKey(gameMode, world, level, WithoutDeathSuffix)) ||
             ContainsKey(GenerateLevelDataKey(gameMode, world, level, ObjectiveCompleteSuffix));
+    }
+
+    /// <summary>
+    /// Obtiene el nivel más alto completado (no solo con datos)
+    /// </summary>
+    public static int GetHighestLevelCompleted(GameModes gameMode, string world, int maxLevels = 50)
+    {
+        int highestLevel = 0;
+
+        for (int level = 1; level <= maxLevels; level++)
+        {
+            if (GetLevelCompleted(gameMode, world, level))
+            {
+                highestLevel = level;
+            }
+        }
+        return highestLevel;
+    }
+
+    /// <summary>
+    /// Obtiene el próximo nivel disponible para jugar
+    /// </summary>
+    public static int GetNextAvailableLevel(GameModes gameMode, string world, int maxLevels = 50)
+    {
+        int highestCompleted = GetHighestLevelCompleted(gameMode, world, maxLevels);
+        int nextLevel = highestCompleted + 1;
+
+        // Si el siguiente nivel está dentro del rango, devolverlo
+        if (nextLevel <= maxLevels)
+            return nextLevel;
+
+        // Si ya completó todos los niveles, devolver el último
+        return maxLevels;
     }
 
     public static int GetHighestLevelReachedByGameModeAndWorld(GameModes gameMode, string world, int maxLevels = 50)
@@ -232,9 +294,11 @@ public static class SaveAndLoadManager
 
             // Migrar nivel completado
             string oldLevelKey = DunkLevelName + level;
+            bool levelCompleted = false;
             if (ContainsKey(oldLevelKey))
             {
                 // En el formato viejo, si existe la key significa que se completó
+                levelCompleted = true;
                 hasAnyData = true;
             }
 
@@ -268,7 +332,7 @@ public static class SaveAndLoadManager
             // Si hay datos para este nivel, migrarlos al nuevo formato
             if (hasAnyData)
             {
-                SetLevelData(GameModes.Dunk, "Neon", level, coinObtained, withoutDeath, touchesComplete);
+                SetLevelData(GameModes.Dunk, "Neon", level, levelCompleted, coinObtained, withoutDeath, touchesComplete);
                 migratedLevels++;
                 Debug.Log($"Migrated level {level} data to new format");
             }
@@ -309,140 +373,6 @@ public static class SaveAndLoadManager
         Debug.Log("Guardado en nube omitido en editor");
 #endif
     }
-
-    //public static void ApplyCloudData(string cloudData, Action onComplete, Action onFail)
-    //{
-    //    isLoadingFromCloud = true;
-
-    //    try
-    //    {
-    //        GameData data = Newtonsoft.Json.JsonConvert.DeserializeObject<GameData>(cloudData);
-
-    //        // Aplicar datos básicos
-    //        SetIntValue(data.coins, CoinsName);
-    //        if (!string.IsNullOrEmpty(data.currentBallSkin))
-    //            SetStringValue(data.currentBallSkin, CurrentBallSkinName);
-
-    //        SetFloatValue(data.soundsVolume, SoundsVolumeName);
-    //        SetFloatValue(data.musicVolume, MusicVolumeName);
-
-    //        if (!string.IsNullOrEmpty(data.language))
-    //        {
-    //            SetStringValue(data.language, LanguageName);
-    //        }
-
-    //        if (!string.IsNullOrEmpty(data.currentModeName))
-    //            SetStringValue(data.currentModeName, CurrentModeName);
-
-    //        if (!string.IsNullOrEmpty(data.currentWorldName))
-    //            SetStringValue(data.currentWorldName, CurrentWorldName);
-
-    //        SetIntValue(data.reviewSowed, ReviewSowedName);
-
-    //        // Aplicar datos de niveles con nueva estructura
-    //        foreach (var modeData in data.gameModeData)
-    //        {
-    //            if (Enum.TryParse(modeData.Key, out GameModes gameMode))
-    //            {
-    //                foreach (var worldData in modeData.Value)
-    //                {
-    //                    string world = worldData.Key;
-
-    //                    foreach (var levelData in worldData.Value)
-    //                    {
-    //                        if (int.TryParse(levelData.Key, out int level))
-    //                        {
-    //                            LevelData levelInfo = levelData.Value;
-    //                            SetLevelData(gameMode, world, level,
-    //                                       levelInfo.coinObtained,
-    //                                       levelInfo.withoutDeath,
-    //                                       levelInfo.objectiveComplete);
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-
-    //        // Aplicar skins obtenidas
-    //        foreach (var skinData in data.obtainedSkins)
-    //            SetIntValue(skinData.Value ? 1 : 0, ObtainedBallSkins + skinData.Key);
-
-    //        PlayerPrefs.Save();
-    //        Debug.Log("Cloud data successfully applied to local save.");
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Debug.LogError("Error applying cloud data: " + e.Message);
-    //        onFail?.Invoke();
-    //    }
-    //    finally
-    //    {
-    //        isLoadingFromCloud = false;
-    //        onComplete?.Invoke();
-    //        LanguageManager.Instance?.LoadSavedOrDetectLanguage();
-    //    }
-    //}
-
-    //private static string[] _skinNames = new string[] {
-    //    "BallBasicSkin","BallBasicRedSkin","BallBasicBlueSkin","BallBasicGreenSkin","BallBasicVioletSkin","BallBasicWhiteSkin","BallBasicBlackSkin",
-    //    "CatBallSkin","DogBallSkin","CarpinchoBallSkin","PandaBallSkin","GrizzlyBallSkin",
-    //    "FutbolBallSkin","BasketBallSkin","TennisBallSkin","BaseBallSkin",
-    //    "MagmaBallSkin","WaterBallSkin",
-    //    "NeonBallSkin"
-    //};
-
-    //private static string SerializeGameData()
-    //{
-    //    GameData data = new();
-
-    //    // Datos básicos
-    //    data.coins = GetIntValue(CoinsName);
-    //    data.currentBallSkin = GetStringValue(CurrentBallSkinName);
-    //    data.soundsVolume = GetFloatValue(SoundsVolumeName);
-    //    data.musicVolume = GetFloatValue(MusicVolumeName);
-    //    data.language = GetStringValue(LanguageName);
-    //    data.reviewSowed = GetIntValue(ReviewSowedName);
-    //    data.currentModeName = GetStringValue(CurrentModeName);
-    //    data.currentWorldName = GetStringValue(CurrentWorldName);
-
-    //    // Serializar datos de niveles con nueva estructura
-    //    foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
-    //    {
-    //        if (mode == GameModes.Null)
-    //            continue;
-
-    //        foreach (string world in _availableWorlds)
-    //        {
-    //            for (int level = 1; level <= 50; level++)
-    //            {
-    //                if (HasLevelData(mode, world, level))
-    //                {
-    //                    // Asegurar que existe la estructura anidada
-    //                    if (!data.gameModeData.ContainsKey(mode.ToString()))
-    //                        data.gameModeData[mode.ToString()] = new Dictionary<string, Dictionary<string, LevelData>>();
-
-    //                    if (!data.gameModeData[mode.ToString()].ContainsKey(world))
-    //                        data.gameModeData[mode.ToString()][world] = new Dictionary<string, LevelData>();
-
-    //                    // Agregar los datos del nivel
-    //                    data.gameModeData[mode.ToString()][world][level.ToString()] = GetLevelData(mode, world, level);
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    // Serializar skins
-    //    foreach (string skinName in _skinNames)
-    //    {
-    //        string skinPrefKey = ObtainedBallSkins + skinName;
-    //        if (PlayerPrefs.HasKey(skinPrefKey))
-    //        {
-    //            data.obtainedSkins[skinName] = GetIntValue(skinPrefKey) == 1;
-    //        }
-    //    }
-
-    //    return Newtonsoft.Json.JsonConvert.SerializeObject(data);
-    //}
 
     public static void DeleteData()
     {
@@ -497,7 +427,8 @@ public class GameData
 [Serializable]
 public class LevelData
 {
-    public bool coinObtained;
-    public bool withoutDeath;
-    public bool objectiveComplete; // Dunk: toques máximos, Time: tiempo límite, etc.
+    public bool levelCompleted; // Si el nivel fue completado básicamente
+    public bool coinObtained;   // Objetivo secundario: moneda
+    public bool withoutDeath;   // Objetivo secundario: sin morir
+    public bool objectiveComplete; // Objetivo secundario: objetivo específico del modo (Dunk: toques máximos, Time: tiempo límite, etc.)
 }

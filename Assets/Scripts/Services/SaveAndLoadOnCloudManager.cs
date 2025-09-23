@@ -203,6 +203,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
                             levelDataDict[levelKey] = new Dictionary<string, object>
                             {
+                                ["levelCompleted"] = levelData.levelCompleted,
                                 ["coinObtained"] = levelData.coinObtained,
                                 ["withoutDeath"] = levelData.withoutDeath,
                                 ["objectiveComplete"] = levelData.objectiveComplete
@@ -297,6 +298,12 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
                                 if (levelDataObj != null)
                                 {
+                                    bool levelCompleted = levelDataObj.ContainsKey("levelCompleted") ?
+                                                        Convert.ToBoolean(levelDataObj["levelCompleted"]) :
+                                                        (levelDataObj.ContainsKey("coinObtained") ||
+                                                         levelDataObj.ContainsKey("withoutDeath") ||
+                                                         levelDataObj.ContainsKey("objectiveComplete"));
+
                                     bool coinObtained = levelDataObj.ContainsKey("coinObtained") &&
                                                        Convert.ToBoolean(levelDataObj["coinObtained"]);
                                     bool withoutDeath = levelDataObj.ContainsKey("withoutDeath") &&
@@ -305,6 +312,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                                                             Convert.ToBoolean(levelDataObj["objectiveComplete"]);
 
                                     SaveAndLoadManager.SetLevelData(gameMode, world, level,
+                                                                   levelCompleted,
                                                                    coinObtained, withoutDeath, objectiveComplete);
                                 }
                             }
@@ -341,7 +349,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
     private void OnLoadDataFailed()
     {
-        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
+        if (LoadingGameManager.Instance)
+            LoadingGameManager.Instance.ShowCantSignInPopUp(
+                "conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
     }
 
     public override IEnumerator InizializeManagers()

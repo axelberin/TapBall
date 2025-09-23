@@ -221,7 +221,7 @@ public class MenuManagerCanvas : CanvasElementLocator
                 button.interactable = true;
             else
                 // Usar nuevo sistema para verificar si el nivel anterior está completado
-                button.interactable = SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i - 1);
+                button.interactable = SaveAndLoadManager.GetLevelCompleted(Instance.GetCurrentGameMode, _currentWorld, i - 1);
             #endregion
 
             #region HAS COINS
