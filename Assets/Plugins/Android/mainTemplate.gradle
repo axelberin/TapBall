@@ -25,6 +25,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:24.0.1' // Assets/Firebase/Editor/AuthDependencies.xml:13
     implementation 'com.google.firebase:firebase-auth-unity:13.2.0' // Assets/Firebase/Editor/AuthDependencies.xml:20
     implementation 'com.google.firebase:firebase-common:22.0.0' // Assets/Firebase/Editor/AppDependencies.xml:13
+    implementation 'com.google.firebase:firebase-crashlytics-ndk:20.0.1' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:13
+    implementation 'com.google.firebase:firebase-crashlytics-unity:13.2.0' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:20
     implementation 'com.google.firebase:firebase-firestore:26.0.0' // Assets/Firebase/Editor/FirestoreDependencies.xml:13
     implementation 'com.google.firebase:firebase-firestore-unity:13.2.0' // Assets/Firebase/Editor/FirestoreDependencies.xml:20
     implementation 'com.google.signin:google-signin-support:1.0.4' // Assets/GoogleSignIn/Editor/GoogleSignInSupportDependencies.xml:9

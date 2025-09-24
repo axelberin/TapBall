@@ -93,13 +93,17 @@ public class AuthManager : ManagersManager
         if (task.IsFaulted)
         {
             Debug.LogError("Google Sign-In error: " + task.Exception);
-            OnFailSignIn();
+            OnFailSignIn("FailSignIn", "OnGoogleAuthFinished task = IsFaulted",
+                ("exception", task.Exception?.Message),
+                ("inner", task.Exception?.InnerException?.Message));
             return;
         }
         if (task.IsCanceled)
         {
             Debug.LogWarning("Google Sign-In cancelado");
-            OnFailSignIn();
+            OnFailSignIn("CancelSignIn", "OnGoogleAuthFinished task = IsCanceled",
+                ("exception", task.Exception?.Message),
+                ("inner", task.Exception?.InnerException?.Message));
             return;
         }
 
@@ -109,7 +113,9 @@ public class AuthManager : ManagersManager
             if (authTask.IsFaulted || authTask.IsCanceled)
             {
                 Debug.LogError("Error en Firebase: " + authTask.Exception);
-                OnFailSignIn();
+                OnFailSignIn("AuthCredentialFail", "SignInWithCredentialAsync task fail",
+                ("exception", authTask.Exception?.Message),
+                ("inner", authTask.Exception?.InnerException?.Message));
                 return;
             }
 
@@ -132,7 +138,7 @@ public class AuthManager : ManagersManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.LogError("Error login Apple: " + task.Exception);
-                OnFailSignIn();
+                //OnFailSignIn();
                 return;
             }
             FirebaseUser user = task.Result;
@@ -153,8 +159,9 @@ public class AuthManager : ManagersManager
         PlayerPrefs.DeleteKey(kSignedOnceKey);
     }
 
-    private void OnFailSignIn()
+    private void OnFailSignIn(string tag, string msg, params (string key, object val)[] keys)
     {
+        GameLog.NonFatal(tag, msg, keys);
         LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
             () => _isInitialized = true, () => SignInWithGoogle(silentOnly: true));
     }

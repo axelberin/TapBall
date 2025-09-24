@@ -11,7 +11,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     public static SaveAndLoadOnCloudManager Instance;
 
     private FirebaseFirestore _dataBase;
-    private string _userId;
+    private string _userName;
 
     private void Awake()
     {
@@ -26,20 +26,20 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         base.Start();
         _dataBase = FirebaseFirestore.DefaultInstance;
 #if UNITY_EDITOR
-        _userId = "EditorTestUser";
+        _userName = "EditorTestUser";
         _isInitialized = true;
 #endif
     }
 
     public void SaveGameData()
     {
-        if (string.IsNullOrEmpty(_userId))
+        if (string.IsNullOrEmpty(_userName))
         {
             Debug.LogWarning("No hay userId disponible para guardar en la nube");
             return;
         }
 
-        DocumentReference docRef = _dataBase.Document($"PlayersData/{_userId}");
+        DocumentReference docRef = _dataBase.Document($"PlayersData/{_userName}");
 
         // Obtener todos los datos del sistema local
         var gameData = SerializeLocalGameData();
@@ -60,24 +60,25 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         });
     }
 
-    public void LoadGameData(string userId)
+    public void LoadGameData(string userName)
     {
-        if (string.IsNullOrEmpty(userId))
+        if (string.IsNullOrEmpty(userName))
         {
-            Debug.LogError("userId vacío no se puede leer Firestore");
-            OnLoadDataFailed();
+            Debug.LogError("userName vacío no se puede leer Firestore");
+            OnLoadDataFailed("UserNameNull", "User Name is Null on load");
             return;
         }
 
         DocumentReference docRef;
         try
         {
-            docRef = _dataBase.Document($"PlayersData/{userId}");
+            docRef = _dataBase.Document($"PlayersData/{userName}");
         }
         catch (Exception e)
         {
             Debug.LogError("Ruta inválida a Firestore: " + e);
-            OnLoadDataFailed();
+            OnLoadDataFailed("InvalidPath", "Firebase Path not found",
+                ("exep", e?.Message));
             return;
         }
 
@@ -86,7 +87,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.LogError("Error al obtener datos: " + task.Exception);
-                OnLoadDataFailed();
+                OnLoadDataFailed("GetSnapshotAsyncFail", "GetSnapshotAsyncFail task Fail",
+                ("exception", task.Exception?.Message),
+                ("inner", task.Exception?.InnerException?.Message));
                 return;
             }
 
@@ -117,7 +120,8 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             catch (Exception e)
             {
                 Debug.LogError("Error al procesar datos de la nube: " + e.Message);
-                OnLoadDataFailed();
+                OnLoadDataFailed("LoadSnapshotFail", "Fail on Load Snapshot",
+                ("exception", e?.Message));
             }
         });
     }
@@ -139,7 +143,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             if (setTask.IsFaulted || setTask.IsCanceled)
             {
                 Debug.LogError("No se pudo crear documento inicial: " + setTask.Exception);
-                OnLoadDataFailed();
+                OnLoadDataFailed("ContinueWithOnMainThreadFail", "Fail creating document",
+                ("exception", setTask.Exception?.Message),
+                ("inner", setTask.Exception?.InnerException?.Message));
                 return;
             }
             Debug.Log("Documento creado con valores por defecto.");
@@ -347,8 +353,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
     }
 
-    private void OnLoadDataFailed()
+    private void OnLoadDataFailed(string tag, string msg, params (string key, object val)[] keys)
     {
+        GameLog.NonFatal(tag, msg, keys);
         if (LoadingGameManager.Instance)
             LoadingGameManager.Instance.ShowCantSignInPopUp(
                 "conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
@@ -366,12 +373,12 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         if (auth.CurrentUser == null)
         {
             Debug.LogWarning("Auth no listo en tiempo: continuando sin nube");
-            OnLoadDataFailed();      // el OK del pop-up pone _isInitialized = true
+            OnLoadDataFailed("AuthNull", "auth.CurrentUser = Null");      // el OK del pop-up pone _isInitialized = true
             yield break;
         }
 
-        _userId = auth.CurrentUser.UserId; // ahora sí existe
-        LoadGameData(_userId);
+        _userName = auth.CurrentUser.DisplayName; // ahora sí existe
+        LoadGameData(_userName);
         while (!_isInitialized)
             yield return null;
     }
