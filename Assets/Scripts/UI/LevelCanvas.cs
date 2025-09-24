@@ -118,6 +118,7 @@ public class LevelCanvas : CanvasElementLocator
         {
             LevelManager.Instance.OnWinLevel += OnWin;
             LevelManager.Instance.OnLoseLevel += OnLose;
+            LevelManager.Instance.OnPreLoseLevel += OnPreLose;
         }
     }
 
@@ -153,6 +154,7 @@ public class LevelCanvas : CanvasElementLocator
         {
             LevelManager.Instance.OnWinLevel -= OnWin;
             LevelManager.Instance.OnLoseLevel -= OnLose;
+            LevelManager.Instance.OnPreLoseLevel -= OnPreLose;
         }
     }
 
@@ -212,7 +214,15 @@ public class LevelCanvas : CanvasElementLocator
                 ShowTimerText(GameManager.Instance.SetGetWorldState.GetLimitTime);
                 break;
         }
+
+        _pauseButton.interactable = true;
     }
+
+    private void OnPreLose()
+    {
+        _pauseButton.interactable = false;
+    }
+
     public void OnTap(int tapCount)
     {
         UIManager.Instance.SetText(_countText, tapCount);

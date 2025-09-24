@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         transform.position = new Vector3(100, 0);
         GameManager.Instance.SetGetCameraController.StartShake();
+        LevelManager.Instance.OnPreLoseLevel?.Invoke();
         StartCoroutine(DelayToLose());
     }
 
