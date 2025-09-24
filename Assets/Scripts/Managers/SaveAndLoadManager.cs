@@ -188,7 +188,6 @@ public static class SaveAndLoadManager
 
     /// <summary>
     /// Método de conveniencia para cuando el jugador simplemente completa un nivel
-    /// Esto debería ser llamado SIEMPRE que el jugador termine un nivel
     /// </summary>
     public static void CompleteLevel(GameModes gameMode, string world, int level, bool coinObtained, bool withoutDeath, bool objectiveComplete, bool withSave = false, bool saveCloud = false)
     {
