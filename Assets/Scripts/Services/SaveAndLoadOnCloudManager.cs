@@ -11,7 +11,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     public static SaveAndLoadOnCloudManager Instance;
 
     private FirebaseFirestore _dataBase;
-    private string _userName;
+    private string _userId;
 
     private void Awake()
     {
@@ -26,25 +26,25 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         base.Start();
         _dataBase = FirebaseFirestore.DefaultInstance;
 #if UNITY_EDITOR
-        _userName = "EditorTestUser";
+        _userId = "EditorTestUser";
         _isInitialized = true;
 #endif
     }
 
     public void SaveGameData()
     {
-        if (string.IsNullOrEmpty(_userName))
+        if (string.IsNullOrEmpty(_userId))
         {
             Debug.LogWarning("No hay userId disponible para guardar en la nube");
             return;
         }
 
-        DocumentReference docRef = _dataBase.Document($"PlayersData/{_userName}");
+        DocumentReference docRef = _dataBase.Document($"PlayersData/{_userId}");
 
         // Obtener todos los datos del sistema local
         var gameData = SerializeLocalGameData();
 
-        Dictionary<string, object> playerData = new Dictionary<string, object>
+        Dictionary<string, object> playerData = new()
         {
             { "name", FirebaseAuth.DefaultInstance.CurrentUser?.DisplayName ?? "Unknown Player"},
             { "lastUpdate", Timestamp.GetCurrentTimestamp() },
@@ -360,6 +360,8 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         if (LoadingGameManager.Instance)
             LoadingGameManager.Instance.ShowCantSignInPopUp(
                 "conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
+        else
+            _isInitialized = true;
     }
 
     public override IEnumerator InizializeManagers()
@@ -378,9 +380,23 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             yield break;
         }
 
-        _userName = auth.CurrentUser.DisplayName; // ahora sí existe
-        LoadGameData(_userName);
-        while (!_isInitialized)
+        _userId = auth.CurrentUser.UserId; // ahora sí existe
+        LoadGameData(_userId);
+
+        const float LOAD_TIMEOUT = 12f;
+        float elapsed = 0f;
+        while (!_isInitialized && elapsed < LOAD_TIMEOUT)
+        {
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
+        }
+
+        if (!_isInitialized)
+        {
+            Debug.LogWarning("Timeout cargando datos en la nube, mostrando pop-up/fallback.");
+            OnLoadDataFailed("CloudLoadTimeout", "Firestore load timed out");
+            while (!_isInitialized) 
+                yield return null;
+        }
     }
 }

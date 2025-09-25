@@ -3,6 +3,7 @@ using Firebase.Auth;
 using System.Collections;
 using Google;
 using System.Threading.Tasks;
+using Firebase.Extensions;
 
 public class AuthManager : ManagersManager
 {
@@ -69,7 +70,7 @@ public class AuthManager : ManagersManager
         }
 
         // 1) Intento silencioso
-        GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(task =>
+        GoogleSignIn.DefaultInstance.SignInSilently().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled && task.Result != null)
             {
@@ -83,8 +84,10 @@ public class AuthManager : ManagersManager
             //      NO abrimos chooser automático -> dejamos que el juego inicie y
             //      que el usuario pulse un botón "Reintentar".
             bool signedOnce = PlayerPrefs.GetInt(kSignedOnceKey, 0) == 1;
-            if (!silentOnly || !signedOnce)
-                GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnGoogleAuthFinished);
+            if (silentOnly && signedOnce)
+                OnFailSignIn("SilentNoChooser", "Silent GoogleSignIn failed and chooser disabled");
+            else
+                GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(OnGoogleAuthFinished);
         });
     }
 
@@ -108,7 +111,7 @@ public class AuthManager : ManagersManager
         }
 
         Credential credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
-        _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
+        _auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(authTask =>
         {
             if (authTask.IsFaulted || authTask.IsCanceled)
             {
@@ -148,8 +151,25 @@ public class AuthManager : ManagersManager
 
     public override IEnumerator InizializeManagers()
     {
+        // Timeout del watchdog (podés ajustarlo)
+        const float AUTH_TIMEOUT_SECONDS = 12f;
+        float elapsed = 0f;
+        bool watchdogShown = false;
+
         while (!_isInitialized)
+        {
+            // usar unscaled por si la carga pone timeScale=0
+            elapsed += Time.unscaledDeltaTime;
+
+            if (!watchdogShown && elapsed >= AUTH_TIMEOUT_SECONDS)
+            {
+                watchdogShown = true;
+                OnFailSignIn("AuthTimeout", "Auth took too long",
+                    ("timeout_seconds", AUTH_TIMEOUT_SECONDS));
+            }
+
             yield return null;
+        }
     }
 
     public void SignOutGoogle()
@@ -163,7 +183,10 @@ public class AuthManager : ManagersManager
     {
         GameLog.NonFatal(tag, msg, keys);
         GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
-        LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
-            () => _isInitialized = true, () => SignInWithGoogle(silentOnly: true));
+        if (LoadingGameManager.Instance)
+            LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
+                () => _isInitialized = true, () => SignInWithGoogle(silentOnly: true));
+        else
+            _isInitialized = true;
     }
 }
