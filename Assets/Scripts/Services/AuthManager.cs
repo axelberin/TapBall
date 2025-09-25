@@ -162,6 +162,7 @@ public class AuthManager : ManagersManager
     private void OnFailSignIn(string tag, string msg, params (string key, object val)[] keys)
     {
         GameLog.NonFatal(tag, msg, keys);
+        GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
         LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
             () => _isInitialized = true, () => SignInWithGoogle(silentOnly: true));
     }

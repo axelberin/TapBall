@@ -356,6 +356,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     private void OnLoadDataFailed(string tag, string msg, params (string key, object val)[] keys)
     {
         GameLog.NonFatal(tag, msg, keys);
+        GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
         if (LoadingGameManager.Instance)
             LoadingGameManager.Instance.ShowCantSignInPopUp(
                 "conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
