@@ -31,7 +31,7 @@ public class ConfigsCanvas : CanvasElementLocator
             resetDataButton.onClick.AddListener(() =>
             {
                 SaveAndLoadManager.DeleteData();
-                ScenesManager.Instance.LoadScene(ScenesManager.Instance.GetCurrentSceneName);
+                ScenesManager.Instance.RestartScene();
             });
 #else
         resetDataButton.gameObject.SetActive(false);

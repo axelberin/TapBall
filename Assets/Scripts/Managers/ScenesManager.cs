@@ -24,6 +24,11 @@ public class ScenesManager : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
+    public void RestartScene()
+    {
+        LoadScene(GetCurrentSceneName);
+    }
+
     public void LoadSceneAsync(string name, Animator fadeAnimator)
     {
         if (_isLoadingScene)

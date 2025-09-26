@@ -372,7 +372,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
         if (LoadingGameManager.Instance)
             LoadingGameManager.Instance.ShowCantSignInPopUp(
-                "conectionfail", "cantloadcloud", () => _isInitialized = true, Application.Quit);
+                "conectionfail", "cantloadcloud", () => _isInitialized = true, ScenesManager.Instance.RestartScene);
         else
             _isInitialized = true;
     }
@@ -408,7 +408,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         {
             Debug.LogWarning("Timeout cargando datos en la nube, mostrando pop-up/fallback.");
             OnLoadDataFailed("CloudLoadTimeout", "Firestore load timed out");
-            while (!_isInitialized) 
+            while (!_isInitialized)
                 yield return null;
         }
     }

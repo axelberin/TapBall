@@ -185,7 +185,7 @@ public class AuthManager : ManagersManager
         GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
         if (LoadingGameManager.Instance)
             LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
-                () => _isInitialized = true, () => SignInWithGoogle(silentOnly: true));
+                () => _isInitialized = true, () => SignInWithGoogle(silentOnly: false));
         else
             _isInitialized = true;
     }

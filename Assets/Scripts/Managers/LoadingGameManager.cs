@@ -36,13 +36,12 @@ public class LoadingGameManager : CanvasElementLocator
         _popUp = FindAndValidateComponent<PopUp>(transform, "ErrorConectingPopUp");
         _popUp.Initialize("conectionfail", "cantconnect");
 
-        SaveAndLoadManager.MigrateLegacyData();
         StartCoroutine(InitializeManagers());
     }
 
     private IEnumerator InitializeManagers()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         foreach (var manager in _managers)
         {
             if (manager == null)
@@ -63,7 +62,7 @@ public class LoadingGameManager : CanvasElementLocator
         yield return new WaitForSeconds(0.5f);
         ShowRandomLoadingText();
 
-        if (_managers.Any(m => !m.IsInitialized))
+        if (_managers.Where(m => m).Any(m => !m.IsInitialized))
             StartCoroutine(InitializeManagers());
         else
         {
