@@ -24,12 +24,18 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     protected override void Start()
     {
         base.Start();
-        _dataBase = FirebaseFirestore.DefaultInstance;
 #if UNITY_EDITOR
         _userId = "EditorTestUser";
         _isInitialized = true;
 #endif
     }
+
+    private bool EnsureFirestoreReady()
+    {
+        _dataBase ??= FirebaseFirestore.DefaultInstance;
+        return _dataBase != null;
+    }
+
 
     public void SaveGameData()
     {
@@ -60,19 +66,26 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         });
     }
 
-    public void LoadGameData(string userName)
+    public void LoadGameData(string userId)
     {
-        if (string.IsNullOrEmpty(userName))
+        if (string.IsNullOrEmpty(userId))
         {
-            Debug.LogError("userName vacío no se puede leer Firestore");
-            OnLoadDataFailed("UserNameNull", "User Name is Null on load");
+            Debug.LogError("userId vacío no se puede leer Firestore");
+            OnLoadDataFailed("UserIDNull", "User ID is Null on load");
+            return;
+        }
+
+        if (!EnsureFirestoreReady())
+        {
+            Debug.LogError("Firestore DefaultInstance aún no está listo");
+            OnLoadDataFailed("FirestoreNull", "DefaultInstance is null");
             return;
         }
 
         DocumentReference docRef;
         try
         {
-            docRef = _dataBase.Document($"PlayersData/{userName}");
+            docRef = _dataBase.Document($"PlayersData/{userId}");
         }
         catch (Exception e)
         {
