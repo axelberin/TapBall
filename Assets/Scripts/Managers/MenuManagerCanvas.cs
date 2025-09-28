@@ -21,8 +21,6 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     void Start()
     {
-        Application.targetFrameRate = 60;
-
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName))
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CurrentModeName, true, true);
 
