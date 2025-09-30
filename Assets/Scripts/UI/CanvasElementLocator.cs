@@ -7,7 +7,7 @@ public class CanvasElementLocator : MonoBehaviour
     protected T FindAndValidateComponent<T>(Transform parent, string childName, bool alert = false)
     {
         var childTransform = parent.FindDeepChild(childName);
-        if (childTransform == null)
+        if (childTransform == null && alert)
         {
             Debug.LogError("No hemos encontrado " + childName);
             return default;
