@@ -447,6 +447,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ConfigsCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5281491332670631439, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1003,6 +1007,10 @@ PrefabInstance:
     - target: {fileID: 8553704589306315094, guid: f8fad977e4f5ab74e91c7a37dcaff0ef, type: 3}
       propertyPath: m_Name
       value: StoreCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553704589306315094, guid: f8fad977e4f5ab74e91c7a37dcaff0ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8678811337347540267, guid: f8fad977e4f5ab74e91c7a37dcaff0ef, type: 3}
       propertyPath: m_AnchorMax.y
