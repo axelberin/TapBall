@@ -39,14 +39,24 @@ public class DailyMissionsManager : MonoBehaviour
     [SerializeField] public int dailyMissionsCount = 2;
 
 
-    public static event Action<List<MissionData>> OnMissionReady;
-    public static event Action<MissionData> OnMissionCompleted;
-    public static event Action<MissionData, float> OnMissionProgressUpdated; //Hacer con object en vez de float directo para hacerlo genérico
+    public static event Action<MissionType, object> OnMissionActionPerformed; //Ésta es la que llaman las acciones, por ejemplo, los toques, pasar niveles, etc
+
+    public static event Action<MissionData, float> OnMissionProgressUpdated; //Éste es para UI
+    public static event Action<MissionData> OnMissionCompleted;//Éste es para UI
+    public static event Action<List<MissionData>> OnMissionReady;//Éste es para UI
 
 
     private Dictionary<string, float> _missionProgress = new();
     public static DailyMissionsManager Instance { get; private set; }
 
+    private void OnEnable()
+    {
+        OnMissionActionPerformed += UpdateMissionProgress;
+    }
+    private void OnDisable()
+    {
+        OnMissionActionPerformed -= UpdateMissionProgress;
+    }
     private void Awake()
     {
         if (!Instance)
@@ -121,6 +131,7 @@ public class DailyMissionsManager : MonoBehaviour
     private void InitializeDailyMissions()
     {
         SelectRandomMissions(dailyMissionsCount);
+        OnMissionReady?.Invoke(_todayMissions);
     }
 
     private void CompleteMission(MissionData mission)
@@ -134,18 +145,25 @@ public class DailyMissionsManager : MonoBehaviour
 
     }
 
-    private void GrantReward(RewardType rewardType, int amount)//probar con object como un generic de variables(INvestigar xd)
+    private void GrantReward(RewardType rewardType, object rewardValue)//probar con object como un generic de variables(INvestigar xd)
     {
         switch (rewardType)
         {
             case RewardType.Coins:
-                SaveAndLoadManager.SetIntValue(amount, SaveAndLoadManager.CoinsName, true, true);
+                if (rewardValue is int coins)
+                    SaveAndLoadManager.SetIntValue(coins, SaveAndLoadManager.CoinsName, true, true);
                 break;
             case RewardType.Orbs:
-                SaveAndLoadManager.SetIntValue(amount, SaveAndLoadManager.OrbsName, true, true);
+                if (rewardValue is int orbs)
+                    SaveAndLoadManager.SetIntValue(orbs, SaveAndLoadManager.OrbsName, true, true);
                 break;
             case RewardType.BattlePassXP:
-                Debug.Log($"Se ha otorgado {(float)amount} de XP al battlepass");
+                if (rewardValue is float xP)
+                    Debug.Log($"Se ha otorgado {xP} de XP al battlepass");
+                break;
+            case RewardType.Skin:
+                if (rewardValue is string skin)
+                    Debug.Log($"{skin}: {rewardValue}");
                 break;
         }
     }
@@ -192,21 +210,52 @@ public class DailyMissionsManager : MonoBehaviour
         return selectedMissions;
     }
 
-    private void UpdateMissionProgress(MissionType type, float amount)//Posiblemente también tenga que usar object
+    private void UpdateMissionProgress(MissionType type, object value)//Posiblemente también tenga que usar object
     {
         if (_todayMissions.Count == 0)
             return;
 
-        bool updated = false;
+        float amount = 0;
+
+        if (value is int intValue)
+            amount = intValue;
+        else if (value is float floatValue)
+            amount = floatValue;
 
         foreach (var mission in _todayMissions)
         {
             if (mission.missionType == type && !mission.completed)
             {
-                float newProgress = _missionProgress[mission.missionID] + amount;
-                _missionProgress[mission.missionID] = Mathf.Min(newProgress, mission.objectiveAmount);
+                if (!_missionProgress.ContainsKey(mission.missionID))
+                    _missionProgress[mission.missionID] = 0;
 
-                //Terminar el progreso de la misión
+                switch (mission.missionType)
+                {
+                    case MissionType.TouchesRemaining:
+                    case MissionType.TimeLimit:
+                        if (amount <= mission.objectiveAmount)
+                        {
+                            mission.currentProgress = mission.objectiveAmount;
+                            _missionProgress[mission.missionID] = mission.objectiveAmount;
+                            OnMissionProgressUpdated?.Invoke(mission, 1f);
+                            CompleteMission(mission);
+                        }
+                        break;
+                    case MissionType.Touches:
+                    case MissionType.CoinsCollected:
+                    case MissionType.LevelsPassed:
+                    default:
+                        float newProgress = _missionProgress[mission.missionID] + amount;
+                        _missionProgress[mission.missionID] = Mathf.Min(newProgress, mission.objectiveAmount);
+                        mission.currentProgress = _missionProgress[mission.missionID];
+                        float progressPercentage = _missionProgress[mission.missionID] / mission.objectiveAmount;
+
+                        OnMissionProgressUpdated?.Invoke(mission, progressPercentage);
+
+                        if (_missionProgress[mission.missionID] >= mission.objectiveAmount)
+                            CompleteMission(mission);
+                        break;
+                }
             }
         }
     }
@@ -285,6 +334,7 @@ public class DailyMissionsManager : MonoBehaviour
 public enum MissionType
 {
     Touches,
+    TouchesRemaining,
     TimeLimit,
     CoinsCollected,
     LevelsPassed
@@ -294,6 +344,7 @@ public enum RewardType
 {
     Coins,
     Orbs,
-    BattlePassXP
+    BattlePassXP,
+    Skin
 }
 #endregion
