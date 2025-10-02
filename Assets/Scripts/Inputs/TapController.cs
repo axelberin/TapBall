@@ -37,12 +37,14 @@ public class TapController : MonoBehaviour
             case GameManager.GameModes.Dunk:
                 _tapCount++;
                 LevelCanvas.Instance.OnTap(_tapCount);
+                DailyMissionsManager.ReportAction(MissionType.Touches, _tapCount);  
                 break;
             case GameManager.GameModes.OneTouch:
                 if (_tapCount > 0)
                 {
                     _tapCount--;
                     LevelCanvas.Instance.OnTap(_tapCount);
+                    DailyMissionsManager.ReportAction(MissionType.Touches, _tapCount);
                     if (_tapCount == 0)
                         GameManager.Instance.SetGetPlayer.Death();
                 }

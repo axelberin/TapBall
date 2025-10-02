@@ -39,7 +39,7 @@ public class DailyMissionsManager : MonoBehaviour
     [SerializeField] public int dailyMissionsCount = 2;
 
 
-    public static event Action<MissionType, object> OnMissionActionPerformed; //Ésta es la que llaman las acciones, por ejemplo, los toques, pasar niveles, etc
+    public static Action<MissionType, object> OnMissionActionPerformed; //Ésta es la que llaman las acciones, por ejemplo, los toques, pasar niveles, etc
 
     public static event Action<MissionData, float> OnMissionProgressUpdated; //Éste es para UI
     public static event Action<MissionData> OnMissionCompleted;//Éste es para UI
@@ -49,6 +49,14 @@ public class DailyMissionsManager : MonoBehaviour
     private Dictionary<string, float> _missionProgress = new();
     public static DailyMissionsManager Instance { get; private set; }
 
+    private void Awake()
+    {
+        if (!Instance)
+            Instance = this;
+        else
+            Destroy(this);
+    }
+
     private void OnEnable()
     {
         OnMissionActionPerformed += UpdateMissionProgress;
@@ -56,13 +64,6 @@ public class DailyMissionsManager : MonoBehaviour
     private void OnDisable()
     {
         OnMissionActionPerformed -= UpdateMissionProgress;
-    }
-    private void Awake()
-    {
-        if (!Instance)
-            Instance = this;
-        else
-            Destroy(this);
     }
 
     private void Start()
@@ -196,15 +197,15 @@ public class DailyMissionsManager : MonoBehaviour
 
             selectedMissions.Add(missionCopy);
             availableMissions.RemoveAt(randomIndex);
-            // Debug.Log(missionCopy.missionID);
-            // Debug.Log(missionCopy.gameMode);
-            // Debug.Log(missionCopy.missionName);
-            // Debug.Log(missionCopy.missionDescription);
-            // Debug.Log(missionCopy.missionType);
-            // Debug.Log(missionCopy.objectiveAmount);
-            // Debug.Log(missionCopy.missionDifficulty);
-            // Debug.Log(missionCopy.rewardType);
-            // Debug.Log(missionCopy.rewardAmount);
+            Debug.Log(missionCopy.missionID);
+            Debug.Log(missionCopy.gameMode);
+            Debug.Log(missionCopy.missionName);
+            Debug.Log(missionCopy.missionDescription);
+            Debug.Log(missionCopy.missionType);
+            Debug.Log(missionCopy.objectiveAmount);
+            Debug.Log(missionCopy.missionDifficulty);
+            Debug.Log(missionCopy.rewardType);
+            Debug.Log(missionCopy.rewardAmount);
         }
 
         return selectedMissions;
@@ -212,6 +213,7 @@ public class DailyMissionsManager : MonoBehaviour
 
     private void UpdateMissionProgress(MissionType type, object value)//Posiblemente también tenga que usar object
     {
+
         if (_todayMissions.Count == 0)
             return;
 
@@ -237,7 +239,7 @@ public class DailyMissionsManager : MonoBehaviour
                         {
                             mission.currentProgress = mission.objectiveAmount;
                             _missionProgress[mission.missionID] = mission.objectiveAmount;
-                            OnMissionProgressUpdated?.Invoke(mission, 1f);
+                           // OnMissionProgressUpdated?.Invoke(mission, 1f);
                             CompleteMission(mission);
                         }
                         break;
@@ -250,7 +252,7 @@ public class DailyMissionsManager : MonoBehaviour
                         mission.currentProgress = _missionProgress[mission.missionID];
                         float progressPercentage = _missionProgress[mission.missionID] / mission.objectiveAmount;
 
-                        OnMissionProgressUpdated?.Invoke(mission, progressPercentage);
+                       // OnMissionProgressUpdated?.Invoke(mission, progressPercentage);
 
                         if (_missionProgress[mission.missionID] >= mission.objectiveAmount)
                             CompleteMission(mission);
@@ -329,6 +331,12 @@ public class DailyMissionsManager : MonoBehaviour
     //     return (RewardType)Enum.Parse(typeof(RewardType), rewardString, true);
     // }
     #endregion
+
+    public static void ReportAction(MissionType type, object value)
+    {
+        Debug.Log($"Report Action llamado tipo {type}, valor {value}");
+        OnMissionActionPerformed?.Invoke(type, value);
+    }
 }
 #region ENUMS
 public enum MissionType
