@@ -59,6 +59,7 @@ public class DailyMissionsManager : MonoBehaviour
 
     private void OnEnable()
     {
+        OnMissionActionPerformed -= UpdateMissionProgress;
         OnMissionActionPerformed += UpdateMissionProgress;
     }
     private void OnDisable()
@@ -121,7 +122,7 @@ public class DailyMissionsManager : MonoBehaviour
             gameMode = GameManager.GameModes.OneTouch,
             missionName = "Close call",
             missionDescription = "Win a OneTouch mode level with 5 or less touches left",
-            missionType = MissionType.Touches,
+            missionType = MissionType.TouchesRemaining,
             objectiveAmount = 5,
             missionDifficulty = 2,
             rewardType = RewardType.Coins,
@@ -131,7 +132,7 @@ public class DailyMissionsManager : MonoBehaviour
 
     private void InitializeDailyMissions()
     {
-        SelectRandomMissions(dailyMissionsCount);
+        _todayMissions = SelectRandomMissions(dailyMissionsCount);
         OnMissionReady?.Invoke(_todayMissions);
     }
 
@@ -148,15 +149,16 @@ public class DailyMissionsManager : MonoBehaviour
 
     private void GrantReward(RewardType rewardType, object rewardValue)//probar con object como un generic de variables(INvestigar xd)
     {
+
         switch (rewardType)
         {
             case RewardType.Coins:
                 if (rewardValue is int coins)
-                    SaveAndLoadManager.SetIntValue(coins, SaveAndLoadManager.CoinsName, true, true);
+                    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + coins, SaveAndLoadManager.CoinsName);
                 break;
             case RewardType.Orbs:
                 if (rewardValue is int orbs)
-                    SaveAndLoadManager.SetIntValue(orbs, SaveAndLoadManager.OrbsName, true, true);
+                    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + orbs, SaveAndLoadManager.OrbsName);
                 break;
             case RewardType.BattlePassXP:
                 if (rewardValue is float xP)
@@ -171,10 +173,12 @@ public class DailyMissionsManager : MonoBehaviour
 
     private List<MissionData> SelectRandomMissions(int count)
     {
+        _todayMissions.Clear();
+
         if (_allAvailableMissions.Count == 0)
             return new List<MissionData>();
 
-        List<MissionData> selectedMissions = new();
+        List<MissionData> selectedMissions = new List<MissionData>(_todayMissions);
         List<MissionData> availableMissions = new List<MissionData>(_allAvailableMissions);
 
         for (int i = 0; i < count && availableMissions.Count > 0; i++)
@@ -213,7 +217,6 @@ public class DailyMissionsManager : MonoBehaviour
 
     private void UpdateMissionProgress(MissionType type, object value)//Posiblemente también tenga que usar object
     {
-
         if (_todayMissions.Count == 0)
             return;
 
@@ -226,7 +229,8 @@ public class DailyMissionsManager : MonoBehaviour
 
         foreach (var mission in _todayMissions)
         {
-            if (mission.missionType == type && !mission.completed)
+
+            if (mission.missionType == type && mission.gameMode == GameManager.Instance.GetCurrentGameMode && !mission.completed)
             {
                 if (!_missionProgress.ContainsKey(mission.missionID))
                     _missionProgress[mission.missionID] = 0;
@@ -239,7 +243,7 @@ public class DailyMissionsManager : MonoBehaviour
                         {
                             mission.currentProgress = mission.objectiveAmount;
                             _missionProgress[mission.missionID] = mission.objectiveAmount;
-                           // OnMissionProgressUpdated?.Invoke(mission, 1f);
+                            // OnMissionProgressUpdated?.Invoke(mission, 1f);
                             CompleteMission(mission);
                         }
                         break;
@@ -252,7 +256,7 @@ public class DailyMissionsManager : MonoBehaviour
                         mission.currentProgress = _missionProgress[mission.missionID];
                         float progressPercentage = _missionProgress[mission.missionID] / mission.objectiveAmount;
 
-                       // OnMissionProgressUpdated?.Invoke(mission, progressPercentage);
+                        // OnMissionProgressUpdated?.Invoke(mission, progressPercentage);
 
                         if (_missionProgress[mission.missionID] >= mission.objectiveAmount)
                             CompleteMission(mission);
@@ -331,12 +335,6 @@ public class DailyMissionsManager : MonoBehaviour
     //     return (RewardType)Enum.Parse(typeof(RewardType), rewardString, true);
     // }
     #endregion
-
-    public static void ReportAction(MissionType type, object value)
-    {
-        Debug.Log($"Report Action llamado tipo {type}, valor {value}");
-        OnMissionActionPerformed?.Invoke(type, value);
-    }
 }
 #region ENUMS
 public enum MissionType
