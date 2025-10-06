@@ -31,7 +31,6 @@ public class LevelManager : MonoBehaviour
     public void OnWin()
     {
         OnWinLevel?.Invoke();
-        DailyMissionsManager.OnMissionActionPerformed(MissionType.TouchesRemaining, GameManager.Instance.SetGetTapController.SetGetTapCount);
         DailyMissionsManager.OnMissionActionPerformed(MissionType.LevelsPassed, 1);
 
         int savedCoins = 0;
@@ -50,9 +49,11 @@ public class LevelManager : MonoBehaviour
                 DunkOnWin();
                 break;
             case GameModes.Time:
+                DailyMissionsManager.OnMissionActionPerformed(MissionType.TimeLimit, GameManager.Instance.SetGetWorldState.GetElapsedTime);
                 TimeOnWin();
                 break;
             case GameModes.OneTouch:
+                DailyMissionsManager.OnMissionActionPerformed(MissionType.TouchesRemaining, GameManager.Instance.SetGetTapController.SetGetTapCount);
                 OneTouchOnWin();
                 break;
             case GameModes.Endless:

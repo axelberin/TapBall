@@ -222,7 +222,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
     }
 
-
+    public float GetElapsedTime => _limitTime - _timerCounter;
     public int GetLimitTouches => _limitTouches;
     public float GetLimitTime => _limitTime;
     public int GetLimitTapsOneTouch => _limitTapsOneTouch;

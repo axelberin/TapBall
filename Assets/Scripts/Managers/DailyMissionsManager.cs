@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System;
+using System.Collections;
+using UnityEngine.Networking;
 public class MissionData
 {
     [Header("ID")]
@@ -29,9 +31,9 @@ public class MissionData
         completed = false;
     }
 }
-public class DailyMissionsManager : MonoBehaviour
+public class DailyMissionsManager : ManagersManager
 {
-    //private string _spreadSheetURL = "https://docs.google.com/spreadsheets/d/10vebWCUT7AbVgmcj5rOvFOdGKgiyTMoxyDSwXNgbW_U/edit?gid=0#gid=0";
+    private string _spreadSheetURL = "https://docs.google.com/spreadsheets/d/10vebWCUT7AbVgmcj5rOvFOdGKgiyTMoxyDSwXNgbW_U/edit?gid=0#gid=0";
 
     private List<MissionData> _allAvailableMissions = new();
     private List<MissionData> _todayMissions = new();
@@ -40,11 +42,6 @@ public class DailyMissionsManager : MonoBehaviour
 
 
     public static Action<MissionType, object> OnMissionActionPerformed; //Ésta es la que llaman las acciones, por ejemplo, los toques, pasar niveles, etc
-
-    public static event Action<MissionData, float> OnMissionProgressUpdated; //Éste es para UI
-    public static event Action<MissionData> OnMissionCompleted;//Éste es para UI
-    public static event Action<List<MissionData>> OnMissionReady;//Éste es para UI
-
 
     private Dictionary<string, float> _missionProgress = new();
     public static DailyMissionsManager Instance { get; private set; }
@@ -55,6 +52,9 @@ public class DailyMissionsManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
+
+        StartCoroutine(DownloadAndParseCSV());
+        InitializeDailyMissions();
     }
 
     private void OnEnable()
@@ -67,73 +67,145 @@ public class DailyMissionsManager : MonoBehaviour
         OnMissionActionPerformed -= UpdateMissionProgress;
     }
 
-    private void Start()
-    {
-        CreateTestMissions();
-        InitializeDailyMissions();
-    }
+    //private void Start()
+    //{
+    //     StartCoroutine(DownloadAndParseCSV());
+    //    //CreateTestMissions();
+    //    InitializeDailyMissions();
+    //}
 
-    private void CreateTestMissions()
+    #region CSV
+    private IEnumerator DownloadAndParseCSV()
     {
+        using (UnityWebRequest request = UnityWebRequest.Get(_spreadSheetURL))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+                ParseCSV(request.downloadHandler.text);
+            else
+                Debug.LogError("Error al descargar el archivo CSV: " + request.error);
+        }
+    }
+    private void ParseCSV(string csvContent)
+    {
+        csvContent = csvContent.Replace("\"", "");
+        string[] lines = csvContent.Split('\n');
+
         _allAvailableMissions.Clear();
 
-        _allAvailableMissions.Add(new MissionData
+        for (int i = 1; i < lines.Length; i++)
         {
-            missionID = "TEST001",
-            gameMode = GameManager.GameModes.Dunk,
-            missionName = "Tapping genius",
-            missionDescription = "Tap 10 times",
-            missionType = MissionType.Touches,
-            objectiveAmount = 10,
-            missionDifficulty = 2,
-            rewardType = RewardType.Coins,
-            rewardAmount = 3
-        });
+            if (string.IsNullOrEmpty(lines[i].Trim()))
+                continue;
+            string[] values = lines[i].Split(",");
 
-        _allAvailableMissions.Add(new MissionData
-        {
-            missionID = "TEST002",
-            gameMode = GameManager.GameModes.Dunk,
-            missionName = "Level Madness",
-            missionDescription = "Finish 3 levels",
-            missionType = MissionType.LevelsPassed,
-            objectiveAmount = 3,
-            missionDifficulty = 1,
-            rewardType = RewardType.Coins,
-            rewardAmount = 2
-        });
+            if (values.Length < 9)
+                continue;
 
-        _allAvailableMissions.Add(new MissionData
-        {
-            missionID = "TEST004",
-            gameMode = GameManager.GameModes.Time,
-            missionName = "Flash",
-            missionDescription = "Complete a Timer level under 8 seconds",
-            missionType = MissionType.TimeLimit,
-            objectiveAmount = 8,
-            missionDifficulty = 3,
-            rewardType = RewardType.Coins,
-            rewardAmount = 5
-        });
+            MissionData mission = new MissionData();
+            mission.missionID = values[0].Trim();
+            mission.gameMode = ParseGameMode(values[1].Trim());
+            mission.missionName = values[2].Trim();
+            mission.missionDescription = values[3].Trim();
+            mission.missionType = ParseMissionType(values[4].Trim());
+            if (int.TryParse(values[5].Trim(), out int objective))
+            {
+                mission.objectiveAmount = objective;
+            }
+            else mission.objectiveAmount = 0;
 
-        _allAvailableMissions.Add(new MissionData
-        {
-            missionID = "TEST005",
-            gameMode = GameManager.GameModes.OneTouch,
-            missionName = "Close call",
-            missionDescription = "Win a OneTouch mode level with 5 or less touches left",
-            missionType = MissionType.TouchesRemaining,
-            objectiveAmount = 5,
-            missionDifficulty = 2,
-            rewardType = RewardType.Coins,
-            rewardAmount = 4
-        });
+            if (int.TryParse(values[6].Trim(), out int difficulty))
+            {
+                mission.missionDifficulty = difficulty;
+            }
+            else mission.missionDifficulty = 1;
+            mission.rewardType = ParseRewardType(values[7].Trim());
+
+            if (int.TryParse(values[8].Trim(), out int reward))
+            {
+                mission.rewardAmount = reward;
+            }
+            else mission.rewardAmount = 0;
+
+            _allAvailableMissions.Add(mission);
+        }
+        _isInitialized = true;
     }
+
+    private GameManager.GameModes ParseGameMode(string gameModeString)
+    {
+        return (GameManager.GameModes)Enum.Parse(typeof(GameManager.GameModes), gameModeString, true);
+    }
+    private MissionType ParseMissionType(string missionTypeString)
+    {
+        return (MissionType)Enum.Parse(typeof(MissionType), missionTypeString, true);
+    }
+    private RewardType ParseRewardType(string rewardString)
+    {
+        return (RewardType)Enum.Parse(typeof(RewardType), rewardString, true);
+    }
+    #endregion
+    //private void CreateTestMissions()
+    //{
+    //    _allAvailableMissions.Clear();
+
+    //    _allAvailableMissions.Add(new MissionData
+    //    {
+    //        missionID = "TEST001",
+    //        gameMode = GameManager.GameModes.Dunk,
+    //        missionName = "Tapping genius",
+    //        missionDescription = "Tap 10 times",
+    //        missionType = MissionType.Touches,
+    //        objectiveAmount = 10,
+    //        missionDifficulty = 2,
+    //        rewardType = RewardType.Coins,
+    //        rewardAmount = 3
+    //    });
+
+    //    _allAvailableMissions.Add(new MissionData
+    //    {
+    //        missionID = "TEST002",
+    //        gameMode = GameManager.GameModes.Dunk,
+    //        missionName = "Level Madness",
+    //        missionDescription = "Finish 3 levels",
+    //        missionType = MissionType.LevelsPassed,
+    //        objectiveAmount = 3,
+    //        missionDifficulty = 1,
+    //        rewardType = RewardType.Coins,
+    //        rewardAmount = 2
+    //    });
+
+    //    _allAvailableMissions.Add(new MissionData
+    //    {
+    //        missionID = "TEST004",
+    //        gameMode = GameManager.GameModes.Time,
+    //        missionName = "Flash",
+    //        missionDescription = "Complete a Timer level under 8 seconds",
+    //        missionType = MissionType.TimeLimit,
+    //        objectiveAmount = 8,
+    //        missionDifficulty = 3,
+    //        rewardType = RewardType.Coins,
+    //        rewardAmount = 5
+    //    });
+
+    //    _allAvailableMissions.Add(new MissionData
+    //    {
+    //        missionID = "TEST005",
+    //        gameMode = GameManager.GameModes.OneTouch,
+    //        missionName = "Close call",
+    //        missionDescription = "Win a OneTouch mode level with 5 or less touches left",
+    //        missionType = MissionType.TouchesRemaining,
+    //        objectiveAmount = 5,
+    //        missionDifficulty = 2,
+    //        rewardType = RewardType.Coins,
+    //        rewardAmount = 4
+    //    });
+    //}
 
     private void InitializeDailyMissions()
     {
         _todayMissions = SelectRandomMissions(dailyMissionsCount);
-        OnMissionReady?.Invoke(_todayMissions);
     }
 
     private void CompleteMission(MissionData mission)
@@ -143,7 +215,6 @@ public class DailyMissionsManager : MonoBehaviour
         GrantReward(mission.rewardType, mission.rewardAmount);
 
         mission.completed = true;
-        OnMissionCompleted?.Invoke(mission);
 
     }
 
@@ -238,12 +309,18 @@ public class DailyMissionsManager : MonoBehaviour
                 switch (mission.missionType)
                 {
                     case MissionType.TouchesRemaining:
+                        if (amount <= mission.objectiveAmount)
+                        {
+                            mission.currentProgress = mission.objectiveAmount;
+                            _missionProgress[mission.missionID] = mission.objectiveAmount;
+                            CompleteMission(mission);
+                        }
+                        break;
                     case MissionType.TimeLimit:
                         if (amount <= mission.objectiveAmount)
                         {
                             mission.currentProgress = mission.objectiveAmount;
                             _missionProgress[mission.missionID] = mission.objectiveAmount;
-                            // OnMissionProgressUpdated?.Invoke(mission, 1f);
                             CompleteMission(mission);
                         }
                         break;
@@ -256,8 +333,6 @@ public class DailyMissionsManager : MonoBehaviour
                         mission.currentProgress = _missionProgress[mission.missionID];
                         float progressPercentage = _missionProgress[mission.missionID] / mission.objectiveAmount;
 
-                        // OnMissionProgressUpdated?.Invoke(mission, progressPercentage);
-
                         if (_missionProgress[mission.missionID] >= mission.objectiveAmount)
                             CompleteMission(mission);
                         break;
@@ -265,76 +340,14 @@ public class DailyMissionsManager : MonoBehaviour
             }
         }
     }
-    #region CSV
-    // private IEnumerator DownloadAndParseCSV()
-    // {
-    //     using (UnityWebRequest request = UnityWebRequest.Get(_spreadSheetURL))
-    //     {
-    //         yield return request.SendWebRequest();
-    //
-    //         if (request.result == UnityWebRequest.Result.Success)
-    //             ParseCSV(request.downloadHandler.text);
-    //         else
-    //             Debug.LogError("Error al descargar el archivo CSV: " + request.error);
-    //     }
-    // }
-    // private void ParseCSV(string csvContent)
-    // {
-    //     csvContent = csvContent.Replace("\"", "");
-    //     string[] lines = csvContent.Split('\n');
-    //
-    //     for (int i = 1; i < lines.Length; i++)
-    //     {
-    //         if (string.IsNullOrEmpty(lines[i].Trim()))
-    //             continue;
-    //         string[] values = lines[i].Split(",");
-    //
-    //         if (values.Length < 9)
-    //             continue;
-    //
-    //         MissionData quest = new MissionData();
-    //         quest.missionID = values[0].Trim();
-    //         quest.gameMode = ParseGameMode(values[1].Trim());
-    //         quest.missionName = values[2].Trim();
-    //         quest.missionDescription = values[3].Trim();
-    //         quest.missionType = ParseMissionType(values[4].Trim());
-    //         if (int.TryParse(values[5].Trim(), out int objective))
-    //         {
-    //             quest.objectiveAmount = objective;
-    //         }
-    //         else quest.objectiveAmount = 0;
-    //
-    //         if (int.TryParse(values[6].Trim(), out int difficulty))
-    //         {
-    //             quest.missionDifficulty = difficulty;
-    //         }
-    //         else quest.missionDifficulty = 1;
-    //         quest.rewardType = ParseRewardType(values[7].Trim());
-    //
-    //         if (int.TryParse(values[8].Trim(), out int reward))
-    //         {
-    //             quest.rewardAmount = reward;
-    //         }
-    //         else quest.rewardAmount = 0;
-    //
-    //         _allAvailableMissions.Add(quest);
-    //
-    //     }
-    // }
-    //
-    // private GameManager.GameModes ParseGameMode(string gameModeString)
-    // {
-    //     return (GameManager.GameModes)Enum.Parse(typeof(GameManager.GameModes), gameModeString, true);
-    // }
-    // private MissionType ParseMissionType(string missionTypeString)
-    // {
-    //     return (MissionType)Enum.Parse(typeof(MissionType), missionTypeString, true);
-    // }
-    // private RewardType ParseRewardType(string rewardString)
-    // {
-    //     return (RewardType)Enum.Parse(typeof(RewardType), rewardString, true);
-    // }
-    #endregion
+
+    public override IEnumerator InizializeManagers()
+    {
+        yield return null;
+        while (_isInitialized)
+            yield return null;
+    }
+
 }
 #region ENUMS
 public enum MissionType

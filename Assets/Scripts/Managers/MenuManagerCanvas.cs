@@ -8,6 +8,8 @@ public class MenuManagerCanvas : CanvasElementLocator
 {
     private GameObject _menuPanel;
     private GameObject _levelsPanel;
+    private GameObject _dailyMissionsPanel;
+    private GameObject _downPanel;
 
     private TextMeshProUGUI _coinsText;
     private TextMeshProUGUI _orbsText;
@@ -28,6 +30,8 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _levelsPanel = FindAndValidateGameObjectComponent(transform, "LevelsPanel");
+        _dailyMissionsPanel = FindAndValidateGameObjectComponent(transform, "DailyQuestsPanel");
+        _downPanel = FindAndValidateGameObjectComponent(transform, "DownPanel");
 
         var levelsSelectorButton = FindAndValidateComponent<Button>(transform, "LevelsSelectorButton");
         levelsSelectorButton.onClick.AddListener(() =>
@@ -35,6 +39,19 @@ public class MenuManagerCanvas : CanvasElementLocator
             _levelsPanel.SetActive(true);
             _menuPanel.SetActive(false);
             OnLevelSelectorClicked(false);
+        });
+
+        var dailyQuestBTN = FindAndValidateComponent<Button>(transform, "DialyQuestBTN");
+        dailyQuestBTN.onClick.AddListener(() =>
+        {
+            _dailyMissionsPanel.SetActive(true);
+            _downPanel.SetActive(false);
+        });
+        var dailyQuestsBackButton = FindAndValidateComponent<Button>(transform, "DailyQuestsBackButton");
+        dailyQuestsBackButton.onClick.AddListener(() =>
+        {
+            _dailyMissionsPanel.SetActive(false);
+            _downPanel.SetActive(true);
         });
 
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
