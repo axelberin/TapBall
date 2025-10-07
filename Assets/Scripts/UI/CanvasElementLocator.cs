@@ -4,7 +4,7 @@ public class CanvasElementLocator : MonoBehaviour
 {
     #region FindAndValidate
 
-    protected T FindAndValidateComponent<T>(Transform parent, string childName, bool alert = false)
+    protected T FindAndValidateComponent<T>(Transform parent, string childName, bool alert = true)
     {
         var childTransform = parent.FindDeepChild(childName);
         if (childTransform == null && alert)
