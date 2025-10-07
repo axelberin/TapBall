@@ -351,6 +351,7 @@ public class DailyMissionsManager : ManagersManager
     }
 
     public List<MissionData> GetTodayMissions => _todayMissions;
+    public MissionData GetMissionData { get; private set; }
 }
 #region ENUMS
 public enum MissionType
