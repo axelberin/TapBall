@@ -33,7 +33,7 @@ public class MissionData
 }
 public class DailyMissionsManager : ManagersManager
 {
-    private string _spreadSheetURL = "https://docs.google.com/spreadsheets/d/10vebWCUT7AbVgmcj5rOvFOdGKgiyTMoxyDSwXNgbW_U/edit?gid=0#gid=0";
+    private string _spreadSheetURL = "https://docs.google.com/spreadsheets/d/10vebWCUT7AbVgmcj5rOvFOdGKgiyTMoxyDSwXNgbW_U/export?format=csv&gid=0";
 
     private List<MissionData> _allAvailableMissions = new();
     private List<MissionData> _todayMissions = new();
@@ -54,7 +54,6 @@ public class DailyMissionsManager : ManagersManager
             Destroy(this);
 
         StartCoroutine(DownloadAndParseCSV());
-        InitializeDailyMissions();
     }
 
     private void OnEnable()
@@ -131,6 +130,7 @@ public class DailyMissionsManager : ManagersManager
             _allAvailableMissions.Add(mission);
         }
         _isInitialized = true;
+        InitializeDailyMissions();
     }
 
     private GameManager.GameModes ParseGameMode(string gameModeString)
@@ -339,6 +339,8 @@ public class DailyMissionsManager : ManagersManager
                 }
             }
         }
+
+
     }
 
     public override IEnumerator InizializeManagers()
@@ -348,6 +350,7 @@ public class DailyMissionsManager : ManagersManager
             yield return null;
     }
 
+    public List<MissionData> GetTodayMissions => _todayMissions;
 }
 #region ENUMS
 public enum MissionType

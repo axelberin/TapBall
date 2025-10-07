@@ -1,11 +1,17 @@
+using Unity.Android.Gradle;
 using UnityEngine;
 
-public class DailyMissionsCanvasController : MonoBehaviour
+public class DailyMissionsCanvasController : CanvasElementLocator
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private GameObject _contentScroll;
     void Start()
     {
-        
+        _contentScroll = FindAndValidateGameObjectComponent(transform, "QuestsContent");
+
+        for(int i = 1; i < DailyMissionsManager.Instance.GetTodayMissions.Count; i++)
+        {
+           // Instantiate()
+        }
     }
 
     // Update is called once per frame
