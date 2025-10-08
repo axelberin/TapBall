@@ -9,13 +9,6 @@ public class DailyMissionsCanvasController : CanvasElementLocator
     private GameObject _contentScroll;
     private GameObject _missionRowObjectPrefab;
 
-    //private Image _rewardImage = null;
-    //private Image _progressBar = null;
-    //private TextMeshProUGUI _missionDescription;
-    //private TextMeshProUGUI _missionProgressPercentage;
-    //private Button _grantRewardButton;
-
-
     void Start()
     {
         _contentScroll = FindAndValidateGameObjectComponent(transform, "QuestsContent");
@@ -26,22 +19,56 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
             for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
             {
-                Instantiate(_missionRowObjectPrefab, _contentScroll.transform);
-                UpdateUI();
+                GameObject newRow = Instantiate(_missionRowObjectPrefab, _contentScroll.transform);
 
+                UpdateUI(newRow.transform, i);
             }
         });
-
     }
 
-    private void UpdateUI()
+    private void OnEnable()
     {
-        var _rewardImage = FindAndValidateComponent<Image>(transform, "RewardImg");
-        var _progressBar = FindAndValidateComponent<Image>(transform, "ProgressBarImage");
-        var _missionDescription = FindAndValidateComponent<TextMeshProUGUI>(transform, "QuestText");
-        var _missionProgressPercentage = FindAndValidateComponent<TextMeshProUGUI>(transform, "ProgressText");
-        var _grantRewardButton = FindAndValidateComponent<Button>(transform, "RewardButton");
+        if (_contentScroll != null && Instance.GetTodayMissions.Count > 0)
+        {
+            for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
+            {
+                Transform rowTransform = _contentScroll.transform.GetChild(i);
+                UpdateUI(rowTransform, i);
+            }
+        }
+    }
 
-        _missionDescription.text = Instance.GetMissionData.missionDescription;
+    private void OnDisable()
+    {
+        
+    }
+
+    private void UpdateUI(Transform rowTransform, int missionIndex)
+    {
+        var mission = Instance.GetTodayMissions[missionIndex];
+
+        var rewardImage = FindAndValidateComponent<Image>(rowTransform, "RewardImg");
+        var progressBar = FindAndValidateComponent<Image>(rowTransform, "ProgressBarImage");
+        var missionDescription = FindAndValidateComponent<TextMeshProUGUI>(rowTransform, "QuestText");
+        var missionProgressPercentage = FindAndValidateComponent<TextMeshProUGUI>(rowTransform, "ProgressText");
+        var grantRewardButton = FindAndValidateComponent<Button>(rowTransform, "RewardButton");
+
+        var missionPercentage = mission.currentProgress / mission.objectiveAmount;
+
+        missionDescription.text = mission.missionDescription;
+        progressBar.fillAmount = missionPercentage;
+        missionProgressPercentage.text = (missionPercentage * 100).ToString() + "%";
+
+        grantRewardButton.interactable = mission.completed;
+        grantRewardButton.onClick.RemoveAllListeners();
+        grantRewardButton.onClick.AddListener(() =>
+        {
+            Instance.CompleteMission(mission);
+        });
+
+        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>
+        {
+            rewardImage = rewardImageAddressable.GetComponent<Image>();
+        });
     }
 }

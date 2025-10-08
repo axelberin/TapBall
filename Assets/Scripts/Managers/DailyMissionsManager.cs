@@ -58,21 +58,12 @@ public class DailyMissionsManager : ManagersManager
 
     private void OnEnable()
     {
-        OnMissionActionPerformed -= UpdateMissionProgress;
         OnMissionActionPerformed += UpdateMissionProgress;
     }
     private void OnDisable()
     {
         OnMissionActionPerformed -= UpdateMissionProgress;
     }
-
-    //private void Start()
-    //{
-    //     StartCoroutine(DownloadAndParseCSV());
-    //    //CreateTestMissions();
-    //    InitializeDailyMissions();
-    //}
-
     #region CSV
     private IEnumerator DownloadAndParseCSV()
     {
@@ -208,7 +199,7 @@ public class DailyMissionsManager : ManagersManager
         _todayMissions = SelectRandomMissions(dailyMissionsCount);
     }
 
-    private void CompleteMission(MissionData mission)
+    public void CompleteMission(MissionData mission)
     {
         Debug.Log($"Mission completed: {mission.missionName}");
 
@@ -272,15 +263,15 @@ public class DailyMissionsManager : ManagersManager
 
             selectedMissions.Add(missionCopy);
             availableMissions.RemoveAt(randomIndex);
-            Debug.Log(missionCopy.missionID);
-            Debug.Log(missionCopy.gameMode);
-            Debug.Log(missionCopy.missionName);
-            Debug.Log(missionCopy.missionDescription);
-            Debug.Log(missionCopy.missionType);
-            Debug.Log(missionCopy.objectiveAmount);
-            Debug.Log(missionCopy.missionDifficulty);
-            Debug.Log(missionCopy.rewardType);
-            Debug.Log(missionCopy.rewardAmount);
+           //Debug.Log(missionCopy.missionID);
+           //Debug.Log(missionCopy.gameMode);
+           //Debug.Log(missionCopy.missionName);
+           //Debug.Log(missionCopy.missionDescription);
+           //Debug.Log(missionCopy.missionType);
+           //Debug.Log(missionCopy.objectiveAmount);
+           //Debug.Log(missionCopy.missionDifficulty);
+           //Debug.Log(missionCopy.rewardType);
+           //Debug.Log(missionCopy.rewardAmount);
         }
 
         return selectedMissions;
@@ -300,6 +291,7 @@ public class DailyMissionsManager : ManagersManager
 
         foreach (var mission in _todayMissions)
         {
+            mission.completed = false;
 
             if (mission.missionType == type && mission.gameMode == GameManager.Instance.GetCurrentGameMode && !mission.completed)
             {
@@ -313,7 +305,7 @@ public class DailyMissionsManager : ManagersManager
                         {
                             mission.currentProgress = mission.objectiveAmount;
                             _missionProgress[mission.missionID] = mission.objectiveAmount;
-                            CompleteMission(mission);
+                            mission.completed = true;
                         }
                         break;
                     case MissionType.TimeLimit:
@@ -321,7 +313,7 @@ public class DailyMissionsManager : ManagersManager
                         {
                             mission.currentProgress = mission.objectiveAmount;
                             _missionProgress[mission.missionID] = mission.objectiveAmount;
-                            CompleteMission(mission);
+                            mission.completed = true;
                         }
                         break;
                     case MissionType.Touches:
@@ -334,7 +326,7 @@ public class DailyMissionsManager : ManagersManager
                         float progressPercentage = _missionProgress[mission.missionID] / mission.objectiveAmount;
 
                         if (_missionProgress[mission.missionID] >= mission.objectiveAmount)
-                            CompleteMission(mission);
+                            mission.completed = true;
                         break;
                 }
             }
@@ -351,7 +343,6 @@ public class DailyMissionsManager : ManagersManager
     }
 
     public List<MissionData> GetTodayMissions => _todayMissions;
-    public MissionData GetMissionData { get; private set; }
 }
 #region ENUMS
 public enum MissionType
