@@ -33,8 +33,6 @@ public class StoreManager : MonoBehaviour
     private void UpdateCoins()
     {
         _coins = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName);
-        Debug.Log(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
-        Debug.Log(_coins);
     }
 
     public void Buy(int cost)

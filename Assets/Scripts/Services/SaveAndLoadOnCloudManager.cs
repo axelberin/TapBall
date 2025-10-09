@@ -203,6 +203,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             gameData["currentMode"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName) ?
                                      SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName) : 1;
 
+            gameData["isFirstTimePlaying"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTime) ?
+                                            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTime) : 0;
+
             // Serializar datos de niveles
             var levelDataDict = new Dictionary<string, object>();
             var availableWorlds = SaveAndLoadManager.GetAvailableWorlds();
@@ -297,6 +300,9 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
             if (cloudGameData.ContainsKey("currentMode"))
                 SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["currentMode"]), SaveAndLoadManager.CurrentModeName);
+
+            if (cloudGameData.ContainsKey("isFirstTimePlaying"))
+                SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["isFirstTimePlaying"]), SaveAndLoadManager.IsPlayingFirstTime);
 
             // Aplicar datos de niveles
             if (cloudGameData.ContainsKey("levelData"))

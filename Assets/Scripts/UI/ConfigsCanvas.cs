@@ -84,6 +84,9 @@ public class ConfigsCanvas : CanvasElementLocator
                 creditsPanel.SetActive(false);
             });
 
+        configsPanel.SetActive(true);
+        creditsPanel.SetActive(false);
+
         UIManager.Instance.AddCanvas(gameObject, false);
     }
 }

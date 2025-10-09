@@ -15,6 +15,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private TextMeshProUGUI _orbsText;
     private TextMeshProUGUI _modeText;
     private PopUp _unlockSkinsPopUp;
+    private PopUp _thanksForBuyPopUp;
     private Button _levelsCloseButton;
     private Image _achievementImageInLevelsSelector = null;
 
@@ -151,6 +152,16 @@ public class MenuManagerCanvas : CanvasElementLocator
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
         if (!string.IsNullOrEmpty(UnlokedSkin))
             OnUnlockSkin();
+        else
+            _unlockSkinsPopUp.gameObject.SetActive(true);
+
+        var fadeController = FindAndValidateGameObjectComponent(transform, "FadeController");
+        _thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
+        fadeController.SetActive(true);
+        _thanksForBuyPopUp.gameObject.SetActive(true);
+        noAdsPopUp.gameObject.SetActive(true);
+        _menuPanel.SetActive(true);
+        _levelsPanel.SetActive(false);
 
         PauseAndResumeManager.Instance.RestartResumeAction();
         PauseAndResumeManager.Instance.RestartPauseAction();
@@ -300,12 +311,11 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void ActivatePopUpAfterBuy()
     {
-        var thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
-        if (thanksForBuyPopUp == null)
+        if (_thanksForBuyPopUp == null)
             return;
 
-        thanksForBuyPopUp.Initialize("tnksforbuytittle", "tnksforbuydescription");
-        thanksForBuyPopUp.Show();
+        _thanksForBuyPopUp.Initialize("tnksforbuytittle", "tnksforbuydescription");
+        _thanksForBuyPopUp.Show();
     }
 
     #region Utility Methods

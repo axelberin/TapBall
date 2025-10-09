@@ -17,12 +17,7 @@ public static class SaveAndLoadManager
     public static string NoAdsBougthName = "NoAdsBougth";
     public static string CurrentWorldName = "CurrentWorld";
     public static string CurrentModeName = "CurrentMode";
-
-    // DEPRECATED - Mantener para compatibilidad hacia atrás
-    public static string CoinNameByLevel = "Coin_";
-    public static string DunkLevelName = "DunkLevel_";
-    public static string DunkWithoutDeathName = "DunkWithoutDeath_";
-    public static string DunkTouchesCompleteName = "DunkTouchesComplete_";
+    public static string IsPlayingFirstTime = "IsPlayingFirstTime";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";
@@ -264,88 +259,6 @@ public static class SaveAndLoadManager
             }
         }
         return highestLevel;
-    }
-    #endregion
-
-    #region Compatibility Methods - Para migrar del sistema viejo
-    /// <summary>
-    /// Genera el nombre de moneda por nivel como lo hacías antes
-    /// DEPRECATED - Usar SetLevelCoinObtained en su lugar
-    /// </summary>
-    public static string GenerateCoinNameByLevel(string gameMode, int level)
-    {
-        return CoinNameByLevel + gameMode + level;
-    }
-
-    /// <summary>
-    /// Migra datos del formato viejo al nuevo
-    /// Llamar una sola vez para migrar datos existentes
-    /// </summary>
-    public static void MigrateLegacyData()
-    {
-        Debug.Log("Starting legacy data migration...");
-        int migratedLevels = 0;
-
-        // Migrar datos de Dunk (formato viejo)
-        for (int level = 1; level <= 50; level++)
-        {
-            bool hasAnyData = false;
-
-            // Migrar nivel completado
-            string oldLevelKey = DunkLevelName + level;
-            bool levelCompleted = false;
-            if (ContainsKey(oldLevelKey))
-            {
-                // En el formato viejo, si existe la key significa que se completó
-                levelCompleted = true;
-                hasAnyData = true;
-            }
-
-            // Migrar sin muerte
-            string oldWithoutDeathKey = DunkWithoutDeathName + level;
-            bool withoutDeath = false;
-            if (ContainsKey(oldWithoutDeathKey))
-            {
-                withoutDeath = GetIntValue(oldWithoutDeathKey) == 1;
-                hasAnyData = true;
-            }
-
-            // Migrar toques completos (objetivo de Dunk)
-            string oldTouchesKey = DunkTouchesCompleteName + level;
-            bool touchesComplete = false;
-            if (ContainsKey(oldTouchesKey))
-            {
-                touchesComplete = GetIntValue(oldTouchesKey) == 1;
-                hasAnyData = true;
-            }
-
-            // Migrar moneda
-            string oldCoinKey = GenerateCoinNameByLevel(GameModes.Dunk.ToString(), level);
-            bool coinObtained = false;
-            if (ContainsKey(oldCoinKey))
-            {
-                coinObtained = GetIntValue(oldCoinKey) == 1;
-                hasAnyData = true;
-            }
-
-            // Si hay datos para este nivel, migrarlos al nuevo formato
-            if (hasAnyData)
-            {
-                SetLevelData(GameModes.Dunk, "Neon", level, levelCompleted, coinObtained, withoutDeath, touchesComplete);
-                migratedLevels++;
-                Debug.Log($"Migrated level {level} data to new format");
-            }
-        }
-
-        if (migratedLevels > 0)
-        {
-            Save();
-            Debug.Log($"Migration completed. {migratedLevels} levels migrated to new format.");
-        }
-        else
-        {
-            Debug.Log("No legacy data found to migrate.");
-        }
     }
     #endregion
 

@@ -12,6 +12,8 @@ public class CanvasElementLocator : MonoBehaviour
             Debug.LogError("No hemos encontrado " + childName);
             return default;
         }
+        else if (childTransform == null && !alert)
+            return default;
 
         var component = childTransform.GetComponent<T>();
         if (component.Equals(default))
