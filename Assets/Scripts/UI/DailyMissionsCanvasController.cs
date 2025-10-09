@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,11 +39,6 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         }
     }
 
-    private void OnDisable()
-    {
-        
-    }
-
     private void UpdateUI(Transform rowTransform, int missionIndex)
     {
         var mission = Instance.GetTodayMissions[missionIndex];
@@ -57,16 +53,17 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
         missionDescription.text = mission.missionDescription;
         progressBar.fillAmount = missionPercentage;
-        missionProgressPercentage.text = (missionPercentage * 100).ToString() + "%";
+        missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
 
         grantRewardButton.interactable = mission.completed;
         grantRewardButton.onClick.RemoveAllListeners();
         grantRewardButton.onClick.AddListener(() =>
         {
             Instance.CompleteMission(mission);
+            grantRewardButton.interactable = false;
         });
 
-        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>
+        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>//Subir después el addressable
         {
             rewardImage = rewardImageAddressable.GetComponent<Image>();
         });

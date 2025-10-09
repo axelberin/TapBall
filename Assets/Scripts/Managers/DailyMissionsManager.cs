@@ -42,9 +42,11 @@ public class DailyMissionsManager : ManagersManager
 
 
     public static Action<MissionType, object> OnMissionActionPerformed; //Ésta es la que llaman las acciones, por ejemplo, los toques, pasar niveles, etc
+    public Action OnCompleteMission = delegate { };
 
     private Dictionary<string, float> _missionProgress = new();
     public static DailyMissionsManager Instance { get; private set; }
+
 
     private void Awake()
     {
@@ -204,12 +206,10 @@ public class DailyMissionsManager : ManagersManager
         Debug.Log($"Mission completed: {mission.missionName}");
 
         GrantReward(mission.rewardType, mission.rewardAmount);
-
-        mission.completed = true;
-
+        OnCompleteMission?.Invoke();
     }
 
-    private void GrantReward(RewardType rewardType, object rewardValue)//probar con object como un generic de variables(INvestigar xd)
+    private void GrantReward(RewardType rewardType, object rewardValue)
     {
 
         switch (rewardType)
@@ -277,7 +277,7 @@ public class DailyMissionsManager : ManagersManager
         return selectedMissions;
     }
 
-    private void UpdateMissionProgress(MissionType type, object value)//Posiblemente también tenga que usar object
+    private void UpdateMissionProgress(MissionType type, object value)
     {
         if (_todayMissions.Count == 0)
             return;
@@ -291,8 +291,6 @@ public class DailyMissionsManager : ManagersManager
 
         foreach (var mission in _todayMissions)
         {
-            mission.completed = false;
-
             if (mission.missionType == type && mission.gameMode == GameManager.Instance.GetCurrentGameMode && !mission.completed)
             {
                 if (!_missionProgress.ContainsKey(mission.missionID))
@@ -301,13 +299,6 @@ public class DailyMissionsManager : ManagersManager
                 switch (mission.missionType)
                 {
                     case MissionType.TouchesRemaining:
-                        if (amount <= mission.objectiveAmount)
-                        {
-                            mission.currentProgress = mission.objectiveAmount;
-                            _missionProgress[mission.missionID] = mission.objectiveAmount;
-                            mission.completed = true;
-                        }
-                        break;
                     case MissionType.TimeLimit:
                         if (amount <= mission.objectiveAmount)
                         {

@@ -44,7 +44,7 @@ public class TapController : MonoBehaviour
                 {
                     _tapCount--;
                     LevelCanvas.Instance.OnTap(_tapCount);
-                    DailyMissionsManager.OnMissionActionPerformed?.Invoke(MissionType.Touches, 1);
+                    //DailyMissionsManager.OnMissionActionPerformed?.Invoke(MissionType.Touches, _tapCount);
                     if (_tapCount == 0)
                         GameManager.Instance.SetGetPlayer.Death();
                 }

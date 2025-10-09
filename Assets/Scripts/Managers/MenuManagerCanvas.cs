@@ -190,6 +190,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             IAPManager.Instance.OnCompletePurchase += ActivatePopUpAfterBuy;
             IAPManager.Instance.OnCompletePurchase += UpdateNotificationsOnNoAds;
         }
+
+        DailyMissionsManager.Instance.OnCompleteMission += UpdateTexts;
     }
 
     private void OnDisable()
@@ -200,6 +202,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             IAPManager.Instance.OnCompletePurchase -= ActivatePopUpAfterBuy;
             IAPManager.Instance.OnCompletePurchase -= UpdateNotificationsOnNoAds;
         }
+
+        DailyMissionsManager.Instance.OnCompleteMission -= UpdateTexts;
     }
 
     private void Update()
