@@ -68,6 +68,8 @@ public class LoadingGameManager : CanvasElementLocator
         {
             StartCoroutine(SmoothFill(1f));
             yield return new WaitForSeconds(1f);
+
+
             ScenesManager.Instance.LoadSceneAsync("Menu", _fadeAnimator);
         }
     }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Coins : ObstaclesManager
 {
-    private string _coinName; // Mantener para compatibilidad
     private string _currentWorld = "Neon"; // Temporal hasta que implementes mundos
 
     private Animator _animator;
@@ -31,34 +30,11 @@ public class Coins : ObstaclesManager
     {
         yield return new WaitForSeconds(0.05f);
 
-        // Generar el nombre de moneda para compatibilidad hacia atrás
-        _coinName = SaveAndLoadManager.GenerateCoinNameByLevel(
-            GameManager.Instance.GetCurrentGameMode.ToString(),
-            GameManager.Instance.SetGetWorldState.GetLevel);
-
         // Verificar si ya se obtuvo la moneda usando el nuevo sistema
         bool hasCoin = SaveAndLoadManager.GetLevelCoinObtained(
             GameManager.Instance.GetCurrentGameMode,
             _currentWorld,
             GameManager.Instance.SetGetWorldState.GetLevel);
-
-        // Si no hay datos en el nuevo sistema, verificar el sistema viejo para migración
-        if (!hasCoin && SaveAndLoadManager.ContainsKey(_coinName))
-        {
-            hasCoin = SaveAndLoadManager.GetIntValue(_coinName) == 1;
-
-            // Si había datos en el sistema viejo, migrar al nuevo
-            if (hasCoin)
-            {
-                SaveAndLoadManager.SetLevelCoinObtained(
-                    GameManager.Instance.GetCurrentGameMode,
-                    _currentWorld,
-                    GameManager.Instance.SetGetWorldState.GetLevel,
-                    true,
-                    true,
-                    true);
-            }
-        }
 
         // Activar o desactivar la moneda según si ya se obtuvo
         gameObject.SetActive(!hasCoin);
@@ -90,24 +66,5 @@ public class Coins : ObstaclesManager
         gameObject.SetActive(true);
         _animator.SetTrigger("Lose");
         _circleCollider.enabled = true;
-    }
-
-    public string GetCoinName => _coinName;
-
-    /// <summary>
-    /// Establece el mundo actual para la moneda
-    /// Usar cuando implementes el sistema de mundos
-    /// </summary>
-    public void SetCurrentWorld(string world)
-    {
-        _currentWorld = world;
-    }
-
-    /// <summary>
-    /// Obtiene el mundo actual de la moneda
-    /// </summary>
-    public string GetCurrentWorld()
-    {
-        return _currentWorld;
     }
 }
