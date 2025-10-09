@@ -17,6 +17,7 @@ public static class SaveAndLoadManager
     public static string NoAdsBougthName = "NoAdsBougth";
     public static string CurrentWorldName = "CurrentWorld";
     public static string CurrentModeName = "CurrentMode";
+    public static string IsPlayingFirstTime = "IsPlayingFirstTime";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";

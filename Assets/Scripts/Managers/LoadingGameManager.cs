@@ -69,8 +69,7 @@ public class LoadingGameManager : CanvasElementLocator
             StartCoroutine(SmoothFill(1f));
             yield return new WaitForSeconds(1f);
 
-
-            ScenesManager.Instance.LoadSceneAsync("Menu", _fadeAnimator);
+            SetAndLoadFirstScene();
         }
     }
 
@@ -123,5 +122,20 @@ public class LoadingGameManager : CanvasElementLocator
     public void ShowCantSignInPopUp(string titleKey, string messageKey, Action okAction = null, Action cancelAction = null)
     {
         _popUp.SetElements(titleKey, messageKey, okAction, cancelAction);
+    }
+
+    private void SetAndLoadFirstScene()
+    {
+        string levelToLoad = "";
+
+        if ((SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTime) &&
+            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTime) == 1) ||
+            SaveAndLoadManager.GetLevelCompleted(GameManager.GameModes.Dunk, "Neon", 1))
+            levelToLoad = "Menu";
+        else
+            levelToLoad = "NeonLevel1";
+
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.IsPlayingFirstTime);
+        ScenesManager.Instance.LoadSceneAsync(levelToLoad, _fadeAnimator);
     }
 }
