@@ -143,7 +143,8 @@ public class LevelCanvas : CanvasElementLocator
 
                 for (int i = 0; i < _achievementsGoalPrefab.transform.childCount; i++)
                 {
-                    _achievementTextList.Add(FindAndValidateComponent<TextMeshProUGUI>(_achievementsGoalPrefab.transform, $"Text{i}"));
+                    _achievementTextList.Add(FindAndValidateComponent<TextMeshProUGUI>(
+                        _achievementsGoalPrefab.transform, $"Text{i}", false));
                 }
             });
     }
