@@ -24,11 +24,13 @@ public class MissionData
     [Header("Rewards")]
     public RewardType rewardType;
     public int rewardAmount;
+    public bool rewardGranted = false;
 
     public MissionData()
     {
         currentProgress = 0;
         completed = false;
+        rewardGranted = false;
     }
 }
 public class DailyMissionsManager : ManagersManager
@@ -206,6 +208,7 @@ public class DailyMissionsManager : ManagersManager
         Debug.Log($"Mission completed: {mission.missionName}");
 
         GrantReward(mission.rewardType, mission.rewardAmount);
+        mission.rewardGranted = true;
         OnCompleteMission?.Invoke();
     }
 
@@ -263,15 +266,15 @@ public class DailyMissionsManager : ManagersManager
 
             selectedMissions.Add(missionCopy);
             availableMissions.RemoveAt(randomIndex);
-           //Debug.Log(missionCopy.missionID);
-           //Debug.Log(missionCopy.gameMode);
-           //Debug.Log(missionCopy.missionName);
-           //Debug.Log(missionCopy.missionDescription);
-           //Debug.Log(missionCopy.missionType);
-           //Debug.Log(missionCopy.objectiveAmount);
-           //Debug.Log(missionCopy.missionDifficulty);
-           //Debug.Log(missionCopy.rewardType);
-           //Debug.Log(missionCopy.rewardAmount);
+            //Debug.Log(missionCopy.missionID);
+            //Debug.Log(missionCopy.gameMode);
+            //Debug.Log(missionCopy.missionName);
+            //Debug.Log(missionCopy.missionDescription);
+            //Debug.Log(missionCopy.missionType);
+            //Debug.Log(missionCopy.objectiveAmount);
+            //Debug.Log(missionCopy.missionDifficulty);
+            //Debug.Log(missionCopy.rewardType);
+            //Debug.Log(missionCopy.rewardAmount);
         }
 
         return selectedMissions;
@@ -307,14 +310,13 @@ public class DailyMissionsManager : ManagersManager
                             mission.completed = true;
                         }
                         break;
+                    case MissionType.LevelsPassed:
                     case MissionType.Touches:
                     case MissionType.CoinsCollected:
-                    case MissionType.LevelsPassed:
                     default:
                         float newProgress = _missionProgress[mission.missionID] + amount;
                         _missionProgress[mission.missionID] = Mathf.Min(newProgress, mission.objectiveAmount);
                         mission.currentProgress = _missionProgress[mission.missionID];
-                        float progressPercentage = _missionProgress[mission.missionID] / mission.objectiveAmount;
 
                         if (_missionProgress[mission.missionID] >= mission.objectiveAmount)
                             mission.completed = true;

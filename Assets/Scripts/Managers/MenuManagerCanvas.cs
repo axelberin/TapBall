@@ -157,6 +157,7 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         var fadeController = FindAndValidateGameObjectComponent(transform, "FadeController");
         _thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
+        _dailyMissionsPanel.SetActive(false);
         fadeController.SetActive(true);
         _thanksForBuyPopUp.gameObject.SetActive(true);
         noAdsPopUp.gameObject.SetActive(true);

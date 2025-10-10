@@ -55,17 +55,25 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         progressBar.fillAmount = missionPercentage;
         missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
 
-        grantRewardButton.interactable = mission.completed;
+        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>//Subir después el addressable
+        {
+            rewardImage = rewardImageAddressable.GetComponent<Image>();
+        });
+
+        if (mission.rewardGranted == false)
+        {
+            grantRewardButton.interactable = mission.completed;
+        }
+        else
+        {
+            grantRewardButton.interactable = false;
+            return;
+        }
         grantRewardButton.onClick.RemoveAllListeners();
         grantRewardButton.onClick.AddListener(() =>
         {
             Instance.CompleteMission(mission);
             grantRewardButton.interactable = false;
-        });
-
-        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>//Subir después el addressable
-        {
-            rewardImage = rewardImageAddressable.GetComponent<Image>();
         });
     }
 }

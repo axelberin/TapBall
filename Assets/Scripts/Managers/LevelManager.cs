@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
     public void OnWin()
     {
         OnWinLevel?.Invoke();
-        DailyMissionsManager.OnMissionActionPerformed(MissionType.LevelsPassed, 1);
+        DailyMissionsManager.OnMissionActionPerformed(MissionType.LevelsPassed, GetCurrentLevelData().levelCompleted ? 0 : 1);
 
         int savedCoins = 0;
         if (SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName))
