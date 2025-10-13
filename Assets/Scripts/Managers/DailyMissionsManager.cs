@@ -1,9 +1,11 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Random = UnityEngine.Random;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using UnityEngine;
 using UnityEngine.Networking;
+using Random = UnityEngine.Random;
 public class MissionData
 {
     [Header("ID")]
@@ -40,16 +42,20 @@ public class DailyMissionsManager : ManagersManager
     private List<MissionData> _allAvailableMissions = new();
     private List<MissionData> _todayMissions = new();
 
-    [SerializeField] public int dailyMissionsCount = 2;
+    [SerializeField] public int dailyMissionsCount = 5;
 
 
     public static Action<MissionType, object> OnMissionActionPerformed; //Ésta es la que llaman las acciones, por ejemplo, los toques, pasar niveles, etc
     public Action OnCompleteMission = delegate { };
+    public Action OnDailyMissionsReset = delegate { };
 
     private Dictionary<string, float> _missionProgress = new();
     public static DailyMissionsManager Instance { get; private set; }
 
+    private MissionData _constantMission;
 
+    // private string _currentDay;
+    // private const string LAST_DAY_KEY = "LastMissionDay";
     private void Awake()
     {
         if (!Instance)
@@ -59,7 +65,13 @@ public class DailyMissionsManager : ManagersManager
 
         StartCoroutine(DownloadAndParseCSV());
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            RegenerateDailyMissions();
+        }
+    }
     private void OnEnable()
     {
         OnMissionActionPerformed += UpdateMissionProgress;
@@ -198,11 +210,91 @@ public class DailyMissionsManager : ManagersManager
     //    });
     //}
 
+    #region DAY CHANGE LOGIC
+    // private void CheckForDayChange()
+    // {
+    //     DateTime today = DateTime.Now;
+    //     DateTime yesterday = today.AddDays(-1);
+    //
+    //     string todayString = today.ToString("yyyy-MM-dd");
+    //     string lastDay = GetLastDay();
+    //
+    //     if (todayString != lastDay)
+    //     {
+    //         ResetDailyMissions();
+    //         SaveLastDay(todayString);
+    //     }
+    //     else _currentDay = todayString;
+    // }
+    //
+    // private void GetLastDay()
+    // {
+    //     return Pla
+    // }
+    #endregion
+
+    private void RegenerateDailyMissions()
+    {
+        _missionProgress.Clear();
+        _todayMissions.Clear();
+
+        _todayMissions = SelectRandomMissions(dailyMissionsCount);
+
+        AddConstantMissionToTodayMissions();
+
+        OnDailyMissionsReset?.Invoke();
+    }
+
+    #region DAILY CONNECTION MISSION
+    private void CreateConnectionMission()
+    {
+        _constantMission = new MissionData
+        {
+            missionID = "DAILY_LOGIN",
+            gameMode = GameManager.GameModes.Dunk,
+            missionName = "Daily Login",
+            missionDescription = "Connect daily",
+            missionType = MissionType.DailyLogin,
+            objectiveAmount = 1,
+            missionDifficulty = 1,
+            rewardType = RewardType.Coins,
+            rewardAmount = 5,
+            completed = false,
+            rewardGranted = false
+        };
+
+    }
+
+    public void CompletConstantMission()
+    {
+        if(!_constantMission.completed && !_constantMission.rewardGranted)
+        {
+            _constantMission.completed = true;
+            _constantMission.currentProgress = 1;
+
+            //Guardar después en firebase
+        }
+    }
+
+    public void ResetConstantMission()
+    {
+        _constantMission.completed = false;
+        _constantMission.currentProgress = 0;
+        _constantMission.rewardGranted = false;
+        //Resetear eb Firebase también
+    }
+
+    #endregion
     private void InitializeDailyMissions()
     {
         _todayMissions = SelectRandomMissions(dailyMissionsCount);
+        AddConstantMissionToTodayMissions();
     }
 
+    private void AddConstantMissionToTodayMissions()
+    {
+        _todayMissions.Insert(0, _constantMission);
+    }
     public void CompleteMission(MissionData mission)
     {
         Debug.Log($"Mission completed: {mission.missionName}");
@@ -242,41 +334,58 @@ public class DailyMissionsManager : ManagersManager
 
         if (_allAvailableMissions.Count == 0)
             return new List<MissionData>();
-
-        List<MissionData> selectedMissions = new List<MissionData>(_todayMissions);
-        List<MissionData> availableMissions = new List<MissionData>(_allAvailableMissions);
-
-        for (int i = 0; i < count && availableMissions.Count > 0; i++)
+        var selectedMissions = _allAvailableMissions
+        .GroupBy(m => m.missionType)
+        .OrderBy(x => Random.value)
+        .Take(count - 1)
+        .Select(group => group.OrderBy(x => Random.value).First())
+        .Select(selected => new MissionData
         {
-            int randomIndex = Random.Range(0, availableMissions.Count);
-            MissionData selectedMission = availableMissions[randomIndex];
+            missionID = selected.missionID,
+            gameMode = selected.gameMode,
+            missionName = selected.missionName,
+            missionDescription = selected.missionDescription,
+            missionType = selected.missionType,
+            objectiveAmount = selected.objectiveAmount,
+            missionDifficulty = selected.missionDifficulty,
+            rewardType = selected.rewardType,
+            rewardAmount = selected.rewardAmount
+        }).ToList();
+        #region OLD SELECTING SYSTEM
+        //List<MissionData> selectedMissions = new List<MissionData>(_todayMissions);
+        //List<MissionData> availableMissions = new List<MissionData>(_allAvailableMissions);
 
-            MissionData missionCopy = new MissionData
-            {
-                missionID = selectedMission.missionID,
-                gameMode = selectedMission.gameMode,
-                missionName = selectedMission.missionName,
-                missionDescription = selectedMission.missionDescription,
-                missionType = selectedMission.missionType,
-                objectiveAmount = selectedMission.objectiveAmount,
-                missionDifficulty = selectedMission.missionDifficulty,
-                rewardType = selectedMission.rewardType,
-                rewardAmount = selectedMission.rewardAmount
-            };
+        //for (int i = 0; i < count && availableMissions.Count > 0; i++)
+        //{
+        //    int randomIndex = Random.Range(0, availableMissions.Count);
+        //    MissionData selectedMission = availableMissions[randomIndex];
 
-            selectedMissions.Add(missionCopy);
-            availableMissions.RemoveAt(randomIndex);
-            //Debug.Log(missionCopy.missionID);
-            //Debug.Log(missionCopy.gameMode);
-            //Debug.Log(missionCopy.missionName);
-            //Debug.Log(missionCopy.missionDescription);
-            //Debug.Log(missionCopy.missionType);
-            //Debug.Log(missionCopy.objectiveAmount);
-            //Debug.Log(missionCopy.missionDifficulty);
-            //Debug.Log(missionCopy.rewardType);
-            //Debug.Log(missionCopy.rewardAmount);
-        }
+        //    MissionData missionCopy = new MissionData
+        //    {
+        //        missionID = selectedMission.missionID,
+        //        gameMode = selectedMission.gameMode,
+        //        missionName = selectedMission.missionName,
+        //        missionDescription = selectedMission.missionDescription,
+        //        missionType = selectedMission.missionType,
+        //        objectiveAmount = selectedMission.objectiveAmount,
+        //        missionDifficulty = selectedMission.missionDifficulty,
+        //        rewardType = selectedMission.rewardType,
+        //        rewardAmount = selectedMission.rewardAmount
+        //    };
 
+        //    selectedMissions.Add(missionCopy);
+        //    availableMissions.RemoveAt(randomIndex);
+        //    //Debug.Log(missionCopy.missionID);
+        //    //Debug.Log(missionCopy.gameMode);
+        //    //Debug.Log(missionCopy.missionName);
+        //    //Debug.Log(missionCopy.missionDescription);
+        //    //Debug.Log(missionCopy.missionType);
+        //    //Debug.Log(missionCopy.objectiveAmount);
+        //    //Debug.Log(missionCopy.missionDifficulty);
+        //    //Debug.Log(missionCopy.rewardType);
+        //    //Debug.Log(missionCopy.rewardAmount);
+        //}
+        #endregion
         return selectedMissions;
     }
 
@@ -344,7 +453,8 @@ public enum MissionType
     TouchesRemaining,
     TimeLimit,
     CoinsCollected,
-    LevelsPassed
+    LevelsPassed,
+    DailyLogin
 }
 
 public enum RewardType

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ public class DailyMissionsCanvasController : CanvasElementLocator
                 GameObject newRow = Instantiate(_missionRowObjectPrefab, _contentScroll.transform);
 
                 UpdateUI(newRow.transform, i);
+
+                CheckAndCompleteConstantMission();
             }
         });
     }
@@ -37,9 +40,25 @@ public class DailyMissionsCanvasController : CanvasElementLocator
                 UpdateUI(rowTransform, i);
             }
         }
+        DailyMissionsManager.Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
     }
 
-    private void UpdateUI(Transform rowTransform, int missionIndex)
+    private void OnDisable()
+    {
+        DailyMissionsManager.Instance.OnDailyMissionsReset -= RefreshAllMissionsUI;
+    }
+
+    private void RefreshAllMissionsUI()
+    {
+        if (_contentScroll == null) return;
+
+        for (int i = 0; i < _contentScroll.transform.childCount; i++)
+        {
+            Transform rowTransform = _contentScroll.transform.GetChild(i);
+            UpdateUI(rowTransform, i);
+        }
+    }
+    public void UpdateUI(Transform rowTransform, int missionIndex)
     {
         var mission = Instance.GetTodayMissions[missionIndex];
 
@@ -75,5 +94,17 @@ public class DailyMissionsCanvasController : CanvasElementLocator
             Instance.CompleteMission(mission);
             grantRewardButton.interactable = false;
         });
+    }
+
+    private void CheckAndCompleteConstantMission()
+    {
+        var constanMission = DailyMissionsManager.Instance.GetTodayMissions
+            .FirstOrDefault(m => m.missionID == "DAILY_LOGIN");
+
+        if(constanMission != null && !constanMission.completed && !constanMission.rewardGranted)
+        {
+            DailyMissionsManager.Instance.CompletConstantMission();
+            RefreshAllMissionsUI();
+        }
     }
 }
