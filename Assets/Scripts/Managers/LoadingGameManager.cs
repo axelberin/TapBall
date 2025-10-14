@@ -1,10 +1,11 @@
+using Firebase.Firestore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class LoadingGameManager : CanvasElementLocator
 {
@@ -128,14 +129,14 @@ public class LoadingGameManager : CanvasElementLocator
     {
         string levelToLoad = "";
 
-        if ((SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTime) &&
-            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTime) == 1) ||
+        if ((SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTimeName) &&
+            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTimeName) == 1) ||
             SaveAndLoadManager.GetLevelCompleted(GameManager.GameModes.Dunk, "Neon", 1))
             levelToLoad = "Menu";
         else
             levelToLoad = "NeonLevel1";
 
-        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.IsPlayingFirstTime);
+        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.IsPlayingFirstTimeName);
         ScenesManager.Instance.LoadSceneAsync(levelToLoad, _fadeAnimator);
     }
 }

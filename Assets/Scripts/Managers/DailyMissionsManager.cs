@@ -42,6 +42,9 @@ public class DailyMissionsManager : ManagersManager
     private List<MissionData> _allAvailableMissions = new();
     private List<MissionData> _todayMissions = new();
 
+    private const string missions_ID_KEY = "DailyMissionsIDs";
+    private const string missions_PROGRESS_KEY = "DailyMissionsProgress";
+
     [SerializeField] public int dailyMissionsCount = 5;
 
 
@@ -63,15 +66,23 @@ public class DailyMissionsManager : ManagersManager
         else
             Destroy(this);
 
+        CreateConnectionMission();
         StartCoroutine(DownloadAndParseCSV());
     }
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
             RegenerateDailyMissions();
         }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            string fakeYesterDay = DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
+            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.LastDayUpdateName, fakeYesterDay);
+        }
     }
+#endif
     private void OnEnable()
     {
         OnMissionActionPerformed += UpdateMissionProgress;
@@ -137,7 +148,19 @@ public class DailyMissionsManager : ManagersManager
             _allAvailableMissions.Add(mission);
         }
         _isInitialized = true;
-        InitializeDailyMissions();
+
+        if (CheckForDayChange())
+        {
+            RegenerateDailyMissions();
+            SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
+            SaveAndLoadManager.Save();
+        }
+        else
+        {
+            InitializeDailyMissions();
+            SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
+            SaveAndLoadManager.Save();
+        }
     }
 
     private GameManager.GameModes ParseGameMode(string gameModeString)
@@ -211,26 +234,14 @@ public class DailyMissionsManager : ManagersManager
     //}
 
     #region DAY CHANGE LOGIC
-    // private void CheckForDayChange()
-    // {
-    //     DateTime today = DateTime.Now;
-    //     DateTime yesterday = today.AddDays(-1);
-    //
-    //     string todayString = today.ToString("yyyy-MM-dd");
-    //     string lastDay = GetLastDay();
-    //
-    //     if (todayString != lastDay)
-    //     {
-    //         ResetDailyMissions();
-    //         SaveLastDay(todayString);
-    //     }
-    //     else _currentDay = todayString;
-    // }
-    //
-    // private void GetLastDay()
-    // {
-    //     return Pla
-    // }
+    private bool CheckForDayChange()
+    {
+        //Hacerlo string también no int
+        string lastSavedDay = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LastDayUpdateName);
+        string currentDay = DateTime.Today.ToString("yyyyMMdd");
+
+        return lastSavedDay != currentDay;
+    }
     #endregion
 
     private void RegenerateDailyMissions()
@@ -243,6 +254,9 @@ public class DailyMissionsManager : ManagersManager
         AddConstantMissionToTodayMissions();
 
         OnDailyMissionsReset?.Invoke();
+
+        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
+        SaveAndLoadManager.Save();
     }
 
     #region DAILY CONNECTION MISSION
@@ -267,7 +281,7 @@ public class DailyMissionsManager : ManagersManager
 
     public void CompletConstantMission()
     {
-        if(!_constantMission.completed && !_constantMission.rewardGranted)
+        if (!_constantMission.completed && !_constantMission.rewardGranted)
         {
             _constantMission.completed = true;
             _constantMission.currentProgress = 1;
@@ -289,6 +303,9 @@ public class DailyMissionsManager : ManagersManager
     {
         _todayMissions = SelectRandomMissions(dailyMissionsCount);
         AddConstantMissionToTodayMissions();
+
+        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
+        SaveAndLoadManager.Save();
     }
 
     private void AddConstantMissionToTodayMissions()

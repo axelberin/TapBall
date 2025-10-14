@@ -36,7 +36,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         return _dataBase != null;
     }
 
-
     public void SaveGameData()
     {
         if (string.IsNullOrEmpty(_userId))
@@ -203,8 +202,11 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             gameData["currentMode"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName) ?
                                      SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName) : 1;
 
-            gameData["isFirstTimePlaying"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTime) ?
-                                            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTime) : 0;
+            gameData["isFirstTimePlaying"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTimeName) ?
+                                            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTimeName) : 0;
+
+            gameData["LastDayUpdate"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.LastDayUpdateName) ?
+                                        SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LastDayUpdateName) : "";
 
             // Serializar datos de niveles
             var levelDataDict = new Dictionary<string, object>();
@@ -302,7 +304,10 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["currentMode"]), SaveAndLoadManager.CurrentModeName);
 
             if (cloudGameData.ContainsKey("isFirstTimePlaying"))
-                SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["isFirstTimePlaying"]), SaveAndLoadManager.IsPlayingFirstTime);
+                SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["isFirstTimePlaying"]), SaveAndLoadManager.IsPlayingFirstTimeName);
+
+            if (cloudGameData.ContainsKey("LastDayUpdate"))
+                SaveAndLoadManager.SetStringValue(cloudGameData["LastDayUpdate"].ToString(), SaveAndLoadManager.LastDayUpdateName);
 
             // Aplicar datos de niveles
             if (cloudGameData.ContainsKey("levelData"))
