@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System;
 using static GameManager;
 
@@ -263,6 +262,17 @@ public static class SaveAndLoadManager
     }
     #endregion
 
+    #region Missions Data region
+    public static void SetDailyMissionProgressByMissionID(string missionID, float progress)
+    {
+       // new MissionProgressData
+       // {
+       //     missionID = DailyMissionsManager.Instance.miss
+       // };
+    }
+
+    #endregion
+
     #region Save/Load/Cloud Methods
     public static void Save()
     {
@@ -314,28 +324,6 @@ public static class SaveAndLoadManager
 }
 
 // Clases para la serialización
-[Serializable]
-public class GameData
-{
-    public int coins;
-    public string currentBallSkin;
-    public float soundsVolume;
-    public float musicVolume;
-    public string language;
-    public int reviewSowed;
-    public string currentWorldName;
-    public string currentModeName;
-
-    // Estructura: GameMode -> World -> Level -> LevelData
-    public Dictionary<string, Dictionary<string, Dictionary<string, LevelData>>> gameModeData;
-    public Dictionary<string, bool> obtainedSkins;
-
-    public GameData()
-    {
-        gameModeData = new Dictionary<string, Dictionary<string, Dictionary<string, LevelData>>>();
-        obtainedSkins = new Dictionary<string, bool>();
-    }
-}
 
 [Serializable]
 public class LevelData
@@ -344,4 +332,12 @@ public class LevelData
     public bool coinObtained;   // Objetivo secundario: moneda
     public bool withoutDeath;   // Objetivo secundario: sin morir
     public bool objectiveComplete; // Objetivo secundario: objetivo específico del modo (Dunk: toques máximos, Time: tiempo límite, etc.)
+}
+
+[Serializable]
+public class MissionProgressData
+{
+    public string missionID;
+    public float progress;
+    public string lastUpdateDate;
 }

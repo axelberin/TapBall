@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
@@ -79,7 +78,13 @@ public class DailyMissionsManager : ManagersManager
         else if (Input.GetKeyDown(KeyCode.R))
         {
             string fakeYesterDay = DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
-            SaveAndLoadManager.SetStringValue(SaveAndLoadManager.LastDayUpdateName, fakeYesterDay);
+            SaveAndLoadManager.SetStringValue(fakeYesterDay, SaveAndLoadManager.LastDayUpdateName);
+            SaveAndLoadManager.Save();
+
+            if(CheckForDayChange())
+            {
+                RegenerateDailyMissions();
+            }
         }
     }
 #endif
@@ -152,15 +157,13 @@ public class DailyMissionsManager : ManagersManager
         if (CheckForDayChange())
         {
             RegenerateDailyMissions();
-            SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
-            SaveAndLoadManager.Save();
         }
         else
         {
             InitializeDailyMissions();
-            SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
-            SaveAndLoadManager.Save();
         }
+        SaveAndLoadManager.SetStringValue(SaveAndLoadManager.LastDayUpdateName, DateTime.Today.ToString("yyyyMMdd"));
+        SaveAndLoadManager.Save();
     }
 
     private GameManager.GameModes ParseGameMode(string gameModeString)
