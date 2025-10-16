@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b2f0fa8efdb90b849867c89574a639cd
+guid: 5970559f6cfa38e4cb08b39296bf40a7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7644585048156099014
-    second: SlotBackgroundPandaBall_0
+      213: -3302889577268869405
+    second: SlotBackgroundTennisBallSkin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundPandaBall_0
+      name: SlotBackgroundTennisBallSkin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c15b9a3995071a60800000000000000
-      internalID: 7644585048156099014
+      spriteID: 3e68c8ecd67c922d0800000000000000
+      internalID: -3302889577268869405
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundPandaBall_0: 7644585048156099014
+      SlotBackgroundTennisBallSkin_0: -3302889577268869405
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

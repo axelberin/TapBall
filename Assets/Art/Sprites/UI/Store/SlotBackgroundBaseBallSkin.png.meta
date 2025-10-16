@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 60fa2100192edb34c883c2c8f8b297ca
+guid: 0502bd2bce3f47d4ca8ad09fba2ca2f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5718921987300428946
-    second: SlotBackgroundCarpinchoBall_0
+      213: -9180152722413275783
+    second: SlotBackgroundBaseBallSkin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundCarpinchoBall_0
+      name: SlotBackgroundBaseBallSkin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 29c863f4f31bd5f40800000000000000
-      internalID: 5718921987300428946
+      spriteID: 975b8bcccbb899080800000000000000
+      internalID: -9180152722413275783
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundCarpinchoBall_0: 5718921987300428946
+      SlotBackgroundBaseBallSkin_0: -9180152722413275783
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

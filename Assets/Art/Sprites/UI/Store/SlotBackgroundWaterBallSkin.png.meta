@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1bd42aa41f0844f4093fd6323ed2b190
+guid: 4df26d736c1e88c43aa727b533a3876c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5430590785136978800
-    second: SlotBackgroundPardoBall_0
+      213: 2030653059947348572
+    second: SlotBackgroundWaterBallSkin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundPardoBall_0
+      name: SlotBackgroundWaterBallSkin_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 428
-        height: 620
+        width: 1284
+        height: 1240
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07b699ceb855d5b40800000000000000
-      internalID: 5430590785136978800
+      spriteID: c52c83cf2345e2c10800000000000000
+      internalID: 2030653059947348572
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundPardoBall_0: 5430590785136978800
+      SlotBackgroundWaterBallSkin_0: 2030653059947348572
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

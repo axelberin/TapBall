@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 531d8ccf84f6473438e90f7770087ee0
+guid: d4b39302b578de14ab13678f4100ead3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5235426161429255272
-    second: SlotBackgroundLavaBallSpritesheet_0
+      213: 5715602377347569267
+    second: SlotBackgroundMagmaBallSkin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundLavaBallSpritesheet_0
+      name: SlotBackgroundMagmaBallSkin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 86417c7fa58f7a840800000000000000
-      internalID: 5235426161429255272
+      spriteID: 3761e236416e15f40800000000000000
+      internalID: 5715602377347569267
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundLavaBallSpritesheet_0: 5235426161429255272
+      SlotBackgroundMagmaBallSkin_0: 5715602377347569267
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

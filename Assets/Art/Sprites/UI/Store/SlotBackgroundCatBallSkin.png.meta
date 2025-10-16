@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e796146d30731ea4a98eaeeee2cb9e08
+guid: 1ae6042c61de2e84eb26c7f15a558eff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1456918811703055073
-    second: SlotBackgroundAguaBallSpritesheet_0
+      213: 7197869470041611849
+    second: SlotBackgroundCatBallSkin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundAguaBallSpritesheet_0
+      name: SlotBackgroundCatBallSkin_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1284
-        height: 1240
+        width: 428
+        height: 620
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f1dead15f0cf7cbe0800000000000000
-      internalID: -1456918811703055073
+      spriteID: 94e9575a528f3e360800000000000000
+      internalID: 7197869470041611849
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundAguaBallSpritesheet_0: -1456918811703055073
+      SlotBackgroundCatBallSkin_0: 7197869470041611849
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

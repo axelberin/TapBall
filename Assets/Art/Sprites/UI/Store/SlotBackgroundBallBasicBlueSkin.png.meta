@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 794f957897eb3cb4c9d8290f7fb06a72
+guid: 21c0e4aee3b9c614eaf767a7354ae8a1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5259838581492175671
-    second: SlotBackgroundBeisBall_0
+      213: 3034049100028887061
+    second: SlotBackgroundBallBasicBlueSkin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundBeisBall_0
+      name: SlotBackgroundBallBasicBlueSkin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9cca34e8dac4107b0800000000000000
-      internalID: -5259838581492175671
+      spriteID: 510c056d49b1b1a20800000000000000
+      internalID: 3034049100028887061
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundBeisBall_0: -5259838581492175671
+      SlotBackgroundBallBasicBlueSkin_0: 3034049100028887061
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
