@@ -293,6 +293,19 @@ public static class SaveAndLoadManager
             lastUpdateDate = date
         };
     }
+
+    public static bool HasTodayDataKey(DateTime dateToCompare)
+    {
+        foreach (var mission in DailyMissionsManager.Instance.GetTodayMissions)
+        {
+            if (GetDailyMissionProgressDataByID(mission.missionID).lastUpdateDate == dateToCompare.ToString("yyyyMMdd"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     #endregion
 
     #region Save/Load/Cloud Methods

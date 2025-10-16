@@ -56,8 +56,6 @@ public class DailyMissionsManager : ManagersManager
 
     private MissionData _constantMission;
 
-    // private string _currentDay;
-    // private const string LAST_DAY_KEY = "LastMissionDay";
     private void Awake()
     {
         if (!Instance)
@@ -81,7 +79,7 @@ public class DailyMissionsManager : ManagersManager
             SaveAndLoadManager.SetStringValue(fakeYesterDay, SaveAndLoadManager.LastDayUpdateName);
             SaveAndLoadManager.Save();
 
-            if(CheckForDayChange())
+            if (CheckForDayChange())
             {
                 RegenerateDailyMissions();
             }
@@ -154,16 +152,9 @@ public class DailyMissionsManager : ManagersManager
         }
         _isInitialized = true;
 
-        if (CheckForDayChange())
-        {
-            RegenerateDailyMissions();
-        }
-        else
-        {
-            InitializeDailyMissions();
-        }
         SaveAndLoadManager.SetStringValue(SaveAndLoadManager.LastDayUpdateName, DateTime.Today.ToString("yyyyMMdd"));
         SaveAndLoadManager.Save();
+        InitializeDailyMissions();
     }
 
     private GameManager.GameModes ParseGameMode(string gameModeString)
@@ -239,7 +230,6 @@ public class DailyMissionsManager : ManagersManager
     #region DAY CHANGE LOGIC
     private bool CheckForDayChange()
     {
-        //Hacerlo string también no int
         string lastSavedDay = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LastDayUpdateName);
         string currentDay = DateTime.Today.ToString("yyyyMMdd");
 
@@ -253,9 +243,14 @@ public class DailyMissionsManager : ManagersManager
         _todayMissions.Clear();
 
         _todayMissions = SelectRandomMissions(dailyMissionsCount);
-
         AddConstantMissionToTodayMissions();
 
+        foreach(var mission  in _todayMissions)
+        {
+            SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, 0, true, true);
+        }
+
+        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName, true);
 
         OnDailyMissionsReset?.Invoke();
     }
@@ -302,11 +297,33 @@ public class DailyMissionsManager : ManagersManager
     #endregion
     private void InitializeDailyMissions()
     {
-        _todayMissions = SelectRandomMissions(dailyMissionsCount);
-        AddConstantMissionToTodayMissions();
+        // _todayMissions = SelectRandomMissions(dailyMissionsCount);
+        // AddConstantMissionToTodayMissions();
+        //
+        // SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
+        // SaveAndLoadManager.Save();
+        if (CheckForDayChange())
+        {
+            RegenerateDailyMissions();
+        }
+        else
+        {
+            LoadSavedMissions();
+        }
+    }
 
-        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
-        SaveAndLoadManager.Save();
+    private void LoadSavedMissions()
+    {
+        Debug.Log("Entré al LoadSavedMissions");
+        foreach (var mission in _todayMissions)
+        {
+            var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(mission.missionID);
+
+            mission.currentProgress = savedData.progress;
+            mission.completed = mission.currentProgress >= mission.objectiveAmount;
+
+            _missionProgress[mission.missionID] = savedData.progress;
+        }
     }
 
     private void AddConstantMissionToTodayMissions()
@@ -319,6 +336,9 @@ public class DailyMissionsManager : ManagersManager
 
         GrantReward(mission.rewardType, mission.rewardAmount);
         mission.rewardGranted = true;
+
+        _missionProgress[mission.missionID] = mission.currentProgress;
+        SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress, true, true);
         OnCompleteMission?.Invoke();
     }
 
@@ -454,26 +474,7 @@ public class DailyMissionsManager : ManagersManager
             SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress);
         }
 
-
-    }
-
-    private void LoadSavedMissions()
-    {
-        _todayMissions = SelectRandomMissions(dailyMissionsCount);
-        AddConstantMissionToTodayMissions();
-
-        foreach(var mission in _todayMissions)
-        {
-            var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(mission.missionID);
-
-            if (savedData.lastUpdateDate == DateTime.Today.ToString("yyyyMMdd"))
-            {
-                mission.currentProgress = savedData.progress;
-                mission.completed = mission.currentProgress >= mission.objectiveAmount;
-
-                _missionProgress[mission.missionID] = savedData.progress;
-            }
-        }
+        SaveAndLoadManager.Save();
     }
 
     public override IEnumerator InizializeManagers()
