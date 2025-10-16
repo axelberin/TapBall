@@ -130,9 +130,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1284
-        height: 1240
+        y: 620
+        width: 428
+        height: 620
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,11 +147,121 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_1
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 620
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2ab2fa78f3750b4db73b9defd947890
+      internalID: -1219496912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_2
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 620
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06786216144195e438fd7c2ffeb74716
+      internalID: 1229584825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e9f55203cc5a064eb6d46fc04f9ed3c
+      internalID: -444842267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_4
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07efac6535e96744cac22d1c85cb13d5
+      internalID: 1893750391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_5
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f6219c84dc49048a52d30b35c8d5b0
+      internalID: 1022592009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 770d689d959f0ae49a1279855117e710
     internalID: 0
     vertices: []
     indices: 
@@ -162,6 +272,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       SlotBackgroundWaterBallSkin_0: 2030653059947348572
+      SlotBackgroundWaterBallSkin_1: -1219496912
+      SlotBackgroundWaterBallSkin_2: 1229584825
+      SlotBackgroundWaterBallSkin_3: -444842267
+      SlotBackgroundWaterBallSkin_4: 1893750391
+      SlotBackgroundWaterBallSkin_5: 1022592009
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

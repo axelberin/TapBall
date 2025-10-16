@@ -63,7 +63,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
+            //Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
         return PlayerPrefs.GetInt(parameterName);
@@ -73,7 +73,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
+            //Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
         return PlayerPrefs.GetFloat(parameterName);
@@ -83,7 +83,7 @@ public static class SaveAndLoadManager
     {
         if (!ContainsKey(parameterName))
         {
-            Debug.LogWarning($"Doesn´t exist '{parameterName}'");
+            //Debug.LogWarning($"Doesn´t exist '{parameterName}'");
             return default;
         }
         return PlayerPrefs.GetString(parameterName);

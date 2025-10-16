@@ -9,5 +9,5 @@ public class UISkins : ScriptableObject
     public Vector2 spriteSize;
     public bool unlockeable;
     public Sprite backgroundSprite;
-    public Animator backgroundAnimator;
+    public RuntimeAnimatorController backgroundAnimator;
 }

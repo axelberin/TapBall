@@ -10,6 +10,7 @@ public class StoreObject : CanvasElementLocator
     private Button _buyButton;
     private Button _equipButton;
     private TextMeshProUGUI _equipText;
+    private Animator _backgroundAnimator;
 
 
     private void Awake()
@@ -33,8 +34,14 @@ public class StoreObject : CanvasElementLocator
             UIManager.Instance.SetText(priceText, _skinSC.price);
 
         var backgroundImage = FindAndValidateComponent<Image>(transform, "BackgroundImage");
-        if (_skinSC.backgroundAnimator == null && _skinSC.backgroundSprite != null)
+        if (_skinSC.backgroundSprite != null)
             backgroundImage.sprite = _skinSC.backgroundSprite;
+        else if (_skinSC.backgroundAnimator != null)
+        {
+            _backgroundAnimator = backgroundImage.gameObject.AddComponent<Animator>();
+            _backgroundAnimator.runtimeAnimatorController = _skinSC.backgroundAnimator;
+            _backgroundAnimator.enabled = true;
+        }
 
         _buyButton.onClick.AddListener(() =>
         {
