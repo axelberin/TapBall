@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ad51a189b519ddd45bddb940ccc616ab
+guid: aea945cb2ac4dc940b10d8804430a306
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3968517375901530224
-    second: SlotBackgroundNeonBallSkin_0
+      213: 1748040745640214946
+    second: Solapa off_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotBackgroundNeonBallSkin_0
+      name: Solapa off_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 428
-        height: 620
+        width: 204
+        height: 83
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 078739bf681031730800000000000000
-      internalID: 3968517375901530224
+      spriteID: 2a14bc0fbc9424810800000000000000
+      internalID: 1748040745640214946
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotBackgroundNeonBallSkin_0: 3968517375901530224
+      Solapa off_0: 1748040745640214946
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

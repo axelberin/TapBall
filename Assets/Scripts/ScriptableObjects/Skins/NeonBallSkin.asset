@@ -15,5 +15,7 @@ MonoBehaviour:
   skinName: NeonBallSkin
   sprite: {fileID: 9144035915632765464, guid: fb16d4136136d0d4bb763607817a3fec, type: 3}
   price: 0
-  spriteSize: {x: 100, y: 100}
+  spriteSize: {x: 200, y: 200}
   unlockeable: 1
+  backgroundSprite: {fileID: 3968517375901530224, guid: ad51a189b519ddd45bddb940ccc616ab, type: 3}
+  backgroundAnimator: {fileID: 0}

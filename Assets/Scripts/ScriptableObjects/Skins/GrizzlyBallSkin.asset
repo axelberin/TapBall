@@ -15,5 +15,7 @@ MonoBehaviour:
   skinName: GrizzlyBallSkin
   sprite: {fileID: 21300000, guid: 6577a52d91d640441b7177596bed61d3, type: 3}
   price: 5
-  spriteSize: {x: 185, y: 185}
+  spriteSize: {x: 200, y: 200}
   unlockeable: 0
+  backgroundSprite: {fileID: 6008721234952090481, guid: 3e2919e437091fb4a81fe5211037498f, type: 3}
+  backgroundAnimator: {fileID: 0}

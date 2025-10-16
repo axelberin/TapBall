@@ -32,6 +32,10 @@ public class StoreObject : CanvasElementLocator
         if (UIManager.Instance != null)
             UIManager.Instance.SetText(priceText, _skinSC.price);
 
+        var backgroundImage = FindAndValidateComponent<Image>(transform, "BackgroundImage");
+        if (_skinSC.backgroundAnimator == null && _skinSC.backgroundSprite != null)
+            backgroundImage.sprite = _skinSC.backgroundSprite;
+
         _buyButton.onClick.AddListener(() =>
         {
             if (StoreManager.Instance.CanBuy(_skinSC.price, false))

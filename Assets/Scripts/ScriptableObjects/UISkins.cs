@@ -8,4 +8,6 @@ public class UISkins : ScriptableObject
     public int price;
     public Vector2 spriteSize;
     public bool unlockeable;
+    public Sprite backgroundSprite;
+    public Animator backgroundAnimator;
 }
