@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using static GameManager;
+using System.Collections.Generic;
 
 public static class SaveAndLoadManager
 {
@@ -25,6 +26,11 @@ public static class SaveAndLoadManager
     private static string CoinSuffix = "_Coin";
     private static string WithoutDeathSuffix = "_WithoutDeath";
     private static string ObjectiveCompleteSuffix = "_ObjectiveComplete";
+
+    // Misiones diarias
+    private static string MissionPrefix = "Mission_";
+    private static string ProgressSuffix = "_Progress";
+    private static string DateSuffix = "_Date";
 
     private static bool isLoadingFromCloud = false;
 
@@ -263,14 +269,30 @@ public static class SaveAndLoadManager
     #endregion
 
     #region Missions Data region
-    public static void SetDailyMissionProgressByMissionID(string missionID, float progress)
+    public static void SetDailyMissionProgressByMissionID(string missionID, float progress, bool withSave = false, bool cloudSave = false)
     {
-       // new MissionProgressData
-       // {
-       //     missionID = DailyMissionsManager.Instance.miss
-       // };
+        string progressKey = MissionPrefix + missionID + ProgressSuffix;
+        string dateKey = MissionPrefix + missionID + DateSuffix;
+
+        SetFloatValue(progress, progressKey, withSave, cloudSave);
+        SetStringValue(DateTime.Now.ToString("yyyyMMdd"), dateKey, withSave, cloudSave);
     }
 
+    public static MissionProgressData GetDailyMissionProgressDataByID(string missionID)
+    {
+        string progressKey = MissionPrefix + missionID + ProgressSuffix;
+        string dateKey = MissionPrefix + missionID + DateSuffix;
+
+        float progress = GetFloatValue(progressKey);
+        string date = GetStringValue(dateKey);
+
+        return new MissionProgressData
+        {
+            missionID = missionID,
+            progress = progress,
+            lastUpdateDate = date
+        };
+    }
     #endregion
 
     #region Save/Load/Cloud Methods

@@ -256,10 +256,8 @@ public class DailyMissionsManager : ManagersManager
 
         AddConstantMissionToTodayMissions();
 
-        OnDailyMissionsReset?.Invoke();
 
-        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
-        SaveAndLoadManager.Save();
+        OnDailyMissionsReset?.Invoke();
     }
 
     #region DAILY CONNECTION MISSION
@@ -452,9 +450,30 @@ public class DailyMissionsManager : ManagersManager
                         break;
                 }
             }
+
+            SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress);
         }
 
 
+    }
+
+    private void LoadSavedMissions()
+    {
+        _todayMissions = SelectRandomMissions(dailyMissionsCount);
+        AddConstantMissionToTodayMissions();
+
+        foreach(var mission in _todayMissions)
+        {
+            var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(mission.missionID);
+
+            if (savedData.lastUpdateDate == DateTime.Today.ToString("yyyyMMdd"))
+            {
+                mission.currentProgress = savedData.progress;
+                mission.completed = mission.currentProgress >= mission.objectiveAmount;
+
+                _missionProgress[mission.missionID] = savedData.progress;
+            }
+        }
     }
 
     public override IEnumerator InizializeManagers()
