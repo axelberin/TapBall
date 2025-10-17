@@ -62,8 +62,6 @@ public class DailyMissionsManager : ManagersManager
             Instance = this;
         else
             Destroy(this);
-
-        CreateConnectionMission();
         StartCoroutine(DownloadAndParseCSV());
     }
 #if UNITY_EDITOR
@@ -151,9 +149,6 @@ public class DailyMissionsManager : ManagersManager
             _allAvailableMissions.Add(mission);
         }
         _isInitialized = true;
-
-        SaveAndLoadManager.SetStringValue(SaveAndLoadManager.LastDayUpdateName, DateTime.Today.ToString("yyyyMMdd"));
-        SaveAndLoadManager.Save();
         InitializeDailyMissions();
     }
 
@@ -170,62 +165,6 @@ public class DailyMissionsManager : ManagersManager
         return (RewardType)Enum.Parse(typeof(RewardType), rewardString, true);
     }
     #endregion
-    //private void CreateTestMissions()
-    //{
-    //    _allAvailableMissions.Clear();
-
-    //    _allAvailableMissions.Add(new MissionData
-    //    {
-    //        missionID = "TEST001",
-    //        gameMode = GameManager.GameModes.Dunk,
-    //        missionName = "Tapping genius",
-    //        missionDescription = "Tap 10 times",
-    //        missionType = MissionType.Touches,
-    //        objectiveAmount = 10,
-    //        missionDifficulty = 2,
-    //        rewardType = RewardType.Coins,
-    //        rewardAmount = 3
-    //    });
-
-    //    _allAvailableMissions.Add(new MissionData
-    //    {
-    //        missionID = "TEST002",
-    //        gameMode = GameManager.GameModes.Dunk,
-    //        missionName = "Level Madness",
-    //        missionDescription = "Finish 3 levels",
-    //        missionType = MissionType.LevelsPassed,
-    //        objectiveAmount = 3,
-    //        missionDifficulty = 1,
-    //        rewardType = RewardType.Coins,
-    //        rewardAmount = 2
-    //    });
-
-    //    _allAvailableMissions.Add(new MissionData
-    //    {
-    //        missionID = "TEST004",
-    //        gameMode = GameManager.GameModes.Time,
-    //        missionName = "Flash",
-    //        missionDescription = "Complete a Timer level under 8 seconds",
-    //        missionType = MissionType.TimeLimit,
-    //        objectiveAmount = 8,
-    //        missionDifficulty = 3,
-    //        rewardType = RewardType.Coins,
-    //        rewardAmount = 5
-    //    });
-
-    //    _allAvailableMissions.Add(new MissionData
-    //    {
-    //        missionID = "TEST005",
-    //        gameMode = GameManager.GameModes.OneTouch,
-    //        missionName = "Close call",
-    //        missionDescription = "Win a OneTouch mode level with 5 or less touches left",
-    //        missionType = MissionType.TouchesRemaining,
-    //        objectiveAmount = 5,
-    //        missionDifficulty = 2,
-    //        rewardType = RewardType.Coins,
-    //        rewardAmount = 4
-    //    });
-    //}
 
     #region DAY CHANGE LOGIC
     private bool CheckForDayChange()
@@ -233,7 +172,7 @@ public class DailyMissionsManager : ManagersManager
         string lastSavedDay = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LastDayUpdateName);
         string currentDay = DateTime.Today.ToString("yyyyMMdd");
 
-        return lastSavedDay != currentDay;
+        return string.IsNullOrEmpty(lastSavedDay) || lastSavedDay != currentDay;
     }
     #endregion
 
@@ -243,65 +182,35 @@ public class DailyMissionsManager : ManagersManager
         _todayMissions.Clear();
 
         _todayMissions = SelectRandomMissions(dailyMissionsCount);
-        AddConstantMissionToTodayMissions();
 
-        foreach(var mission  in _todayMissions)
+        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
+
+        foreach (var mission in _todayMissions)
         {
             SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, 0, true, true);
         }
 
-        SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName, true);
+        SaveAndLoadManager.Save();
 
         OnDailyMissionsReset?.Invoke();
     }
 
     #region DAILY CONNECTION MISSION
-    private void CreateConnectionMission()
-    {
-        _constantMission = new MissionData
-        {
-            missionID = "DAILY_LOGIN",
-            gameMode = GameManager.GameModes.Dunk,
-            missionName = "Daily Login",
-            missionDescription = "Connect daily",
-            missionType = MissionType.DailyLogin,
-            objectiveAmount = 1,
-            missionDifficulty = 1,
-            rewardType = RewardType.Coins,
-            rewardAmount = 5,
-            completed = false,
-            rewardGranted = false
-        };
-
-    }
-
     public void CompletConstantMission()
     {
-        if (!_constantMission.completed && !_constantMission.rewardGranted)
-        {
-            _constantMission.completed = true;
-            _constantMission.currentProgress = 1;
+        var dailyMission = _todayMissions.FirstOrDefault(m => m.missionType == MissionType.DailyLogin);
 
-            //Guardar después en firebase
+        if (dailyMission != null && dailyMission.completed && dailyMission.rewardGranted)
+        {
+            dailyMission.completed = true;
+            dailyMission.currentProgress = dailyMission.objectiveAmount;
+            _missionProgress[dailyMission.missionID] = dailyMission.objectiveAmount;
+            SaveAndLoadManager.SetDailyMissionProgressByMissionID(dailyMission.missionID, dailyMission.currentProgress, true, true);
         }
     }
-
-    public void ResetConstantMission()
-    {
-        _constantMission.completed = false;
-        _constantMission.currentProgress = 0;
-        _constantMission.rewardGranted = false;
-        //Resetear eb Firebase también
-    }
-
     #endregion
     private void InitializeDailyMissions()
     {
-        // _todayMissions = SelectRandomMissions(dailyMissionsCount);
-        // AddConstantMissionToTodayMissions();
-        //
-        // SaveAndLoadManager.SetStringValue(DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
-        // SaveAndLoadManager.Save();
         if (CheckForDayChange())
         {
             RegenerateDailyMissions();
@@ -314,22 +223,41 @@ public class DailyMissionsManager : ManagersManager
 
     private void LoadSavedMissions()
     {
-        Debug.Log("Entré al LoadSavedMissions");
-        foreach (var mission in _todayMissions)
+        foreach (var missionCopy in _allAvailableMissions)
         {
-            var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(mission.missionID);
+            var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(missionCopy.missionID);
 
-            mission.currentProgress = savedData.progress;
-            mission.completed = mission.currentProgress >= mission.objectiveAmount;
+            if (string.IsNullOrEmpty(savedData.lastUpdateDate)) 
+                continue;
+
+            if(savedData.lastUpdateDate != DateTime.Today.ToString("yyyyMMdd"))
+            {
+                SaveAndLoadManager.DeleteMissionDataByID(missionCopy.missionID, true, true);
+                continue;
+            }
+
+            MissionData mission = new MissionData
+            {
+                missionID = missionCopy.missionID,
+                gameMode = missionCopy.gameMode,
+                missionName = missionCopy.missionName,
+                missionDescription = missionCopy.missionDescription,
+                missionType = missionCopy.missionType,
+                objectiveAmount = missionCopy.objectiveAmount,
+                missionDifficulty = missionCopy.missionDifficulty,
+                rewardType = missionCopy.rewardType,
+                rewardAmount = missionCopy.rewardAmount,
+                currentProgress = savedData.progress,
+                completed = savedData.progress >= missionCopy.objectiveAmount,
+                rewardGranted = savedData.progress >= missionCopy.objectiveAmount
+            };
 
             _missionProgress[mission.missionID] = savedData.progress;
+            _todayMissions.Add(mission);
         }
+
     }
 
-    private void AddConstantMissionToTodayMissions()
-    {
-        _todayMissions.Insert(0, _constantMission);
-    }
     public void CompleteMission(MissionData mission)
     {
         Debug.Log($"Mission completed: {mission.missionName}");
@@ -375,8 +303,9 @@ public class DailyMissionsManager : ManagersManager
         var selectedMissions = _allAvailableMissions
         .GroupBy(m => m.missionType)
         .OrderBy(x => Random.value)
-        .Take(count - 1)
+        .Take(count)
         .Select(group => group.OrderBy(x => Random.value).First())
+        .Union(_allAvailableMissions.Where(m => m.missionType == MissionType.DailyLogin))
         .Select(selected => new MissionData
         {
             missionID = selected.missionID,
@@ -389,41 +318,6 @@ public class DailyMissionsManager : ManagersManager
             rewardType = selected.rewardType,
             rewardAmount = selected.rewardAmount
         }).ToList();
-        #region OLD SELECTING SYSTEM
-        //List<MissionData> selectedMissions = new List<MissionData>(_todayMissions);
-        //List<MissionData> availableMissions = new List<MissionData>(_allAvailableMissions);
-
-        //for (int i = 0; i < count && availableMissions.Count > 0; i++)
-        //{
-        //    int randomIndex = Random.Range(0, availableMissions.Count);
-        //    MissionData selectedMission = availableMissions[randomIndex];
-
-        //    MissionData missionCopy = new MissionData
-        //    {
-        //        missionID = selectedMission.missionID,
-        //        gameMode = selectedMission.gameMode,
-        //        missionName = selectedMission.missionName,
-        //        missionDescription = selectedMission.missionDescription,
-        //        missionType = selectedMission.missionType,
-        //        objectiveAmount = selectedMission.objectiveAmount,
-        //        missionDifficulty = selectedMission.missionDifficulty,
-        //        rewardType = selectedMission.rewardType,
-        //        rewardAmount = selectedMission.rewardAmount
-        //    };
-
-        //    selectedMissions.Add(missionCopy);
-        //    availableMissions.RemoveAt(randomIndex);
-        //    //Debug.Log(missionCopy.missionID);
-        //    //Debug.Log(missionCopy.gameMode);
-        //    //Debug.Log(missionCopy.missionName);
-        //    //Debug.Log(missionCopy.missionDescription);
-        //    //Debug.Log(missionCopy.missionType);
-        //    //Debug.Log(missionCopy.objectiveAmount);
-        //    //Debug.Log(missionCopy.missionDifficulty);
-        //    //Debug.Log(missionCopy.rewardType);
-        //    //Debug.Log(missionCopy.rewardAmount);
-        //}
-        #endregion
         return selectedMissions;
     }
 
@@ -469,11 +363,9 @@ public class DailyMissionsManager : ManagersManager
                             mission.completed = true;
                         break;
                 }
+                SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress);
             }
-
-            SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress);
         }
-
         SaveAndLoadManager.Save();
     }
 

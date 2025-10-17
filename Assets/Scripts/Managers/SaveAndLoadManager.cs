@@ -271,20 +271,14 @@ public static class SaveAndLoadManager
     #region Missions Data region
     public static void SetDailyMissionProgressByMissionID(string missionID, float progress, bool withSave = false, bool cloudSave = false)
     {
-        string progressKey = MissionPrefix + missionID + ProgressSuffix;
-        string dateKey = MissionPrefix + missionID + DateSuffix;
-
-        SetFloatValue(progress, progressKey, withSave, cloudSave);
-        SetStringValue(DateTime.Now.ToString("yyyyMMdd"), dateKey, withSave, cloudSave);
+        SetFloatValue(progress, GetMissionProgressKey(missionID), withSave, cloudSave);
+        SetStringValue(DateTime.Now.ToString("yyyyMMdd"), GetMissionDateKey(missionID), withSave, cloudSave);
     }
 
     public static MissionProgressData GetDailyMissionProgressDataByID(string missionID)
     {
-        string progressKey = MissionPrefix + missionID + ProgressSuffix;
-        string dateKey = MissionPrefix + missionID + DateSuffix;
-
-        float progress = GetFloatValue(progressKey);
-        string date = GetStringValue(dateKey);
+        float progress = GetFloatValue(GetMissionProgressKey(missionID));
+        string date = GetStringValue(GetMissionDateKey(missionID));
 
         return new MissionProgressData
         {
@@ -294,18 +288,14 @@ public static class SaveAndLoadManager
         };
     }
 
-    public static bool HasTodayDataKey(DateTime dateToCompare)
+    public static void DeleteMissionDataByID(string missionID, bool withSave = false, bool cloudSave = false)
     {
-        foreach (var mission in DailyMissionsManager.Instance.GetTodayMissions)
-        {
-            if (GetDailyMissionProgressDataByID(mission.missionID).lastUpdateDate == dateToCompare.ToString("yyyyMMdd"))
-            {
-                return true;
-            }
-        }
-        return false;
+        DeleteKey(GetMissionProgressKey(missionID), withSave, cloudSave);
+        DeleteKey(GetMissionDateKey(missionID), withSave, cloudSave);
     }
 
+    private static string GetMissionProgressKey(string missionID) => MissionPrefix + missionID + ProgressSuffix;
+    private static string GetMissionDateKey(string missionID) => MissionPrefix + missionID + DateSuffix;
     #endregion
 
     #region Save/Load/Cloud Methods
@@ -330,6 +320,18 @@ public static class SaveAndLoadManager
 #else
         Debug.Log("Guardado en nube omitido en editor");
 #endif
+    }
+
+    public static void DeleteKey(string parameterName, bool withSave = false, bool saveCloud = false)
+    {
+        if (!ContainsKey(parameterName))
+            return;
+
+        PlayerPrefs.DeleteKey(parameterName);
+        if (withSave) 
+            Save();
+        if (saveCloud)
+            SaveCloud();
     }
 
     public static void DeleteData()
