@@ -2461,6 +2461,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WinBase (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2933221586683428456, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6958972286708432112, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
