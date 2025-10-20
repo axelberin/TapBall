@@ -178,6 +178,10 @@ public class DailyMissionsManager : ManagersManager
 
     private void RegenerateDailyMissions()
     {
+        foreach(var missionToDeleteData in _allAvailableMissions)
+        {
+            SaveAndLoadManager.DeleteMissionDataByID(missionToDeleteData.missionID);
+        }
         _missionProgress.Clear();
         _todayMissions.Clear();
 
@@ -189,7 +193,7 @@ public class DailyMissionsManager : ManagersManager
         {
             SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, 0, true, true);
         }
-
+        CompletConstantMission();
         SaveAndLoadManager.Save();
 
         OnDailyMissionsReset?.Invoke();
@@ -200,12 +204,13 @@ public class DailyMissionsManager : ManagersManager
     {
         var dailyMission = _todayMissions.FirstOrDefault(m => m.missionType == MissionType.DailyLogin);
 
-        if (dailyMission != null && dailyMission.completed && dailyMission.rewardGranted)
+        if (!dailyMission.completed)
         {
             dailyMission.completed = true;
             dailyMission.currentProgress = dailyMission.objectiveAmount;
             _missionProgress[dailyMission.missionID] = dailyMission.objectiveAmount;
             SaveAndLoadManager.SetDailyMissionProgressByMissionID(dailyMission.missionID, dailyMission.currentProgress, true, true);
+            SaveAndLoadManager.Save();
         }
     }
     #endregion
@@ -255,7 +260,7 @@ public class DailyMissionsManager : ManagersManager
             _missionProgress[mission.missionID] = savedData.progress;
             _todayMissions.Add(mission);
         }
-
+        _todayMissions = _todayMissions.OrderByDescending(m => m.missionType == MissionType.DailyLogin).ToList();
     }
 
     public void CompleteMission(MissionData mission)
@@ -317,7 +322,8 @@ public class DailyMissionsManager : ManagersManager
             missionDifficulty = selected.missionDifficulty,
             rewardType = selected.rewardType,
             rewardAmount = selected.rewardAmount
-        }).ToList();
+        }).OrderByDescending(m => m.missionType == MissionType.DailyLogin)
+        .ToList();
         return selectedMissions;
     }
 

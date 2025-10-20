@@ -74,9 +74,13 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         progressBar.fillAmount = missionPercentage;
         missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
 
-        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>//Subir después el addressable
-        {
-            rewardImage = rewardImageAddressable.GetComponent<Image>();
+        AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>
+        { 
+            rewardImage.sprite = rewardImageAddressable.GetComponent<Image>().sprite;
+            if(mission.rewardType == RewardType.Coins)
+            {
+                rewardImage.transform.localScale = new Vector3(2.74f, 2.74f);
+            }
         });
 
         if (mission.rewardGranted == false)

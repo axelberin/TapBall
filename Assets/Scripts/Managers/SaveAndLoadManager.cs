@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using static GameManager;
-using System.Collections.Generic;
 
 public static class SaveAndLoadManager
 {

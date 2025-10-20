@@ -211,6 +211,7 @@ public class LevelManager : MonoBehaviour
         if (!HasGetedCoins)
         {
             _coinsObtained.Add(coinName);
+            DailyMissionsManager.OnMissionActionPerformed(MissionType.CoinsCollected, 1);
         }
     }
 
