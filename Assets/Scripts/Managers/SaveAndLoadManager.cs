@@ -268,10 +268,10 @@ public static class SaveAndLoadManager
     #endregion
 
     #region Missions Data region
-    public static void SetDailyMissionProgressByMissionID(string missionID, float progress, bool withSave = false, bool cloudSave = false)
+    public static void SetDailyMissionProgressByMissionID(string missionID, float progress,string day, bool withSave = false, bool cloudSave = false)
     {
         SetFloatValue(progress, GetMissionProgressKey(missionID), withSave, cloudSave);
-        SetStringValue(DateTime.Now.ToString("yyyyMMdd"), GetMissionDateKey(missionID), withSave, cloudSave);
+        SetStringValue(day, GetMissionDateKey(missionID), withSave, cloudSave);
     }
 
     public static MissionProgressData GetDailyMissionProgressDataByID(string missionID)
@@ -285,6 +285,11 @@ public static class SaveAndLoadManager
             progress = progress,
             lastUpdateDate = date
         };
+    }
+
+    public static MissionData[] GetDailyMissions()
+    {
+        return DailyMissionsManager.Instance.GetTodayMissions.ToArray();
     }
 
     public static void DeleteMissionDataByID(string missionID, bool withSave = false, bool cloudSave = false)

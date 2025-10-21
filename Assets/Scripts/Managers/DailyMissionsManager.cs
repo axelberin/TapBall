@@ -178,7 +178,7 @@ public class DailyMissionsManager : ManagersManager
 
     private void RegenerateDailyMissions()
     {
-        foreach(var missionToDeleteData in _allAvailableMissions)
+        foreach (var missionToDeleteData in _allAvailableMissions)
         {
             SaveAndLoadManager.DeleteMissionDataByID(missionToDeleteData.missionID);
         }
@@ -191,7 +191,8 @@ public class DailyMissionsManager : ManagersManager
 
         foreach (var mission in _todayMissions)
         {
-            SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, 0, true, true);
+            SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, 0,
+                DateTime.Today.ToString("yyyyMMdd"), true, true);
         }
         CompletConstantMission();
         SaveAndLoadManager.Save();
@@ -209,7 +210,8 @@ public class DailyMissionsManager : ManagersManager
             dailyMission.completed = true;
             dailyMission.currentProgress = dailyMission.objectiveAmount;
             _missionProgress[dailyMission.missionID] = dailyMission.objectiveAmount;
-            SaveAndLoadManager.SetDailyMissionProgressByMissionID(dailyMission.missionID, dailyMission.currentProgress, true, true);
+            SaveAndLoadManager.SetDailyMissionProgressByMissionID(dailyMission.missionID, dailyMission.currentProgress,
+                DateTime.Today.ToString("yyyyMMdd"), true, true);
             SaveAndLoadManager.Save();
         }
     }
@@ -232,10 +234,10 @@ public class DailyMissionsManager : ManagersManager
         {
             var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(missionCopy.missionID);
 
-            if (string.IsNullOrEmpty(savedData.lastUpdateDate)) 
+            if (string.IsNullOrEmpty(savedData.lastUpdateDate))
                 continue;
 
-            if(savedData.lastUpdateDate != DateTime.Today.ToString("yyyyMMdd"))
+            if (savedData.lastUpdateDate != DateTime.Today.ToString("yyyyMMdd"))
             {
                 SaveAndLoadManager.DeleteMissionDataByID(missionCopy.missionID, true, true);
                 continue;
@@ -271,7 +273,8 @@ public class DailyMissionsManager : ManagersManager
         mission.rewardGranted = true;
 
         _missionProgress[mission.missionID] = mission.currentProgress;
-        SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress, true, true);
+        SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress,
+            DateTime.Today.ToString("yyyyMMdd"), true, true);
         OnCompleteMission?.Invoke();
     }
 
@@ -282,11 +285,13 @@ public class DailyMissionsManager : ManagersManager
         {
             case RewardType.Coins:
                 if (rewardValue is int coins)
-                    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + coins, SaveAndLoadManager.CoinsName);
+                    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName)
+                        + coins, SaveAndLoadManager.CoinsName);
                 break;
             case RewardType.Orbs:
                 if (rewardValue is int orbs)
-                    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + orbs, SaveAndLoadManager.OrbsName);
+                    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
+                        + orbs, SaveAndLoadManager.OrbsName);
                 break;
             case RewardType.BattlePassXP:
                 if (rewardValue is float xP)
@@ -369,7 +374,8 @@ public class DailyMissionsManager : ManagersManager
                             mission.completed = true;
                         break;
                 }
-                SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress);
+                SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress,
+                    DateTime.Today.ToString("yyyyMMdd"));
             }
         }
         SaveAndLoadManager.Save();

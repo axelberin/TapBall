@@ -258,6 +258,16 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             }
             gameData["obtainedSkins"] = skinsDict;
 
+            //Serializar datos de misiones diarias
+            var missionsDict = new Dictionary<MissionData, object>();
+            var availableMissions = SaveAndLoadManager.GetDailyMissions();
+
+            foreach (var mission in availableMissions)
+            {
+                missionsDict.Add(mission, DateTime.Today);
+            }
+            gameData["DailyMissionsData"] = missionsDict;
+
             Debug.Log("Datos locales serializados exitosamente para la nube");
         }
         catch (Exception e)
@@ -362,6 +372,20 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                         string skinKey = SaveAndLoadManager.ObtainedBallSkins + skinEntry.Key;
                         bool isObtained = Convert.ToBoolean(skinEntry.Value);
                         SaveAndLoadManager.SetIntValue(isObtained ? 1 : 0, skinKey);
+                    }
+                }
+            }
+
+            //Aplicar datos de misión obtenidos
+            if(cloudGameData.ContainsKey("DailyMissionsData"))
+            {
+                var missionsDict = cloudGameData["DailyMissionsData"] as Dictionary<MissionData, object>;
+                if (missionsDict != null)
+                {
+                    foreach (var missionDataWithDate in missionsDict)
+                    {
+                        //SaveAndLoadManager.SetDailyMissionProgressByMissionID(missionDataWithDate.Key.missionID,
+                        //    missionDataWithDate.Key.currentProgress, missionDataWithDate.Value as DateTime.Today);
                     }
                 }
             }

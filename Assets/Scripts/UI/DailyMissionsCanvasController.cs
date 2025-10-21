@@ -40,12 +40,12 @@ public class DailyMissionsCanvasController : CanvasElementLocator
                 UpdateUI(rowTransform, i);
             }
         }
-        DailyMissionsManager.Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
+        Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
     }
 
     private void OnDisable()
     {
-        DailyMissionsManager.Instance.OnDailyMissionsReset -= RefreshAllMissionsUI;
+        Instance.OnDailyMissionsReset -= RefreshAllMissionsUI;
     }
 
     private void RefreshAllMissionsUI()
@@ -102,12 +102,12 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
     private void CheckAndCompleteConstantMission()
     {
-        var constanMission = DailyMissionsManager.Instance.GetTodayMissions
+        var constanMission = Instance.GetTodayMissions
             .FirstOrDefault(m => m.missionID == "DAILY_LOGIN");
 
         if(constanMission != null && !constanMission.completed && !constanMission.rewardGranted)
         {
-            DailyMissionsManager.Instance.CompletConstantMission();
+            Instance.CompletConstantMission();
             RefreshAllMissionsUI();
         }
     }
