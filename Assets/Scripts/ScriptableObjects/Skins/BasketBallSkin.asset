@@ -15,5 +15,7 @@ MonoBehaviour:
   skinName: BasketBallSkin
   sprite: {fileID: 21300000, guid: e5b40bde8a91b1c48a207c97f112d7d4, type: 3}
   price: 4
-  spriteSize: {x: 185, y: 185}
+  spriteSize: {x: 200, y: 200}
   unlockeable: 0
+  backgroundSprite: {fileID: 7300258600517969458, guid: bcbc3611200bb004e9295a2f005dd384, type: 3}
+  backgroundAnimator: {fileID: 0}

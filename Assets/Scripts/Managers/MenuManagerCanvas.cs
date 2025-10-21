@@ -18,6 +18,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private PopUp _thanksForBuyPopUp;
     private Button _levelsCloseButton;
     private Image _achievementImageInLevelsSelector = null;
+    private GameObject _levelsSelectorHasNotifications;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
     private string _currentWorld = "Neon";
@@ -145,6 +146,9 @@ public class MenuManagerCanvas : CanvasElementLocator
                 OnLevelSelectorClicked(false);
             });
         });
+
+        _levelsSelectorHasNotifications = FindAndValidateGameObjectComponent(transform, "HasNotificationsLevelsSelector");
+        _levelsSelectorHasNotifications.SetActive(false);
 
         UpdateModeTexts(_modeText, nextLevelText);
         UpdateNotificationsOnNoAds();
@@ -284,6 +288,10 @@ public class MenuManagerCanvas : CanvasElementLocator
             var levelNumText = FindAndValidateComponent<TextMeshProUGUI>(button.transform, $"DunkLevelNumText");
             UIManager.Instance.SetText(levelNumText, i);
             #endregion
+
+            if (_levelsSelectorHasNotifications.activeInHierarchy || !hasCoinImage.isActiveAndEnabled ||
+                !achievementImage.isActiveAndEnabled || !noDeathImage.isActiveAndEnabled)
+                _levelsSelectorHasNotifications.SetActive(true);
         }
 
         var playButton = FindAndValidateComponent<Button>(transform, "PlayBTN");

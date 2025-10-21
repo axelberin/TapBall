@@ -15,5 +15,7 @@ MonoBehaviour:
   skinName: BaseBallSkin
   sprite: {fileID: 21300000, guid: 6b73f7c7fd12772499f16506fff7d465, type: 3}
   price: 4
-  spriteSize: {x: 185, y: 185}
+  spriteSize: {x: 200, y: 200}
   unlockeable: 0
+  backgroundSprite: {fileID: -9180152722413275783, guid: 0502bd2bce3f47d4ca8ad09fba2ca2f9, type: 3}
+  backgroundAnimator: {fileID: 0}

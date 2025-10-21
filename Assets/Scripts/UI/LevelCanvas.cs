@@ -25,6 +25,7 @@ public class LevelCanvas : CanvasElementLocator
     private Button _pauseButton;
     private GameObject _pauseUI;
     private TextMeshProUGUI _nextLevelText;
+    private TextMeshProUGUI _currentLevelText;
     private List<TextMeshProUGUI> _achievementTextList = new();
 
     private void Awake()
@@ -103,12 +104,15 @@ public class LevelCanvas : CanvasElementLocator
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("DunkCanvas", "ConfigsCanvas"));
 
+        _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
+
         _hasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinGoalFull");
         _emptyhasCoinGoal = FindAndValidateGameObjectComponent(transform, "CoinEmpty");
         _deathGoal = FindAndValidateGameObjectComponent(transform, "DeathGoalFull");
         _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
         _achievementsGoalPrefab = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab");
 
+        StartCoroutine(UpdateTextsDelay());
         SetAchivementsByMode();
 
         UIManager.Instance.AddCanvas(gameObject, true);
@@ -149,6 +153,11 @@ public class LevelCanvas : CanvasElementLocator
             });
     }
 
+    private void OnEnable()
+    {
+        UpdateTexts();
+    }
+
     private void OnDestroy()
     {
         if (LevelManager.Instance)
@@ -157,6 +166,19 @@ public class LevelCanvas : CanvasElementLocator
             LevelManager.Instance.OnLoseLevel -= OnLose;
             LevelManager.Instance.OnPreLoseLevel -= OnPreLose;
         }
+    }
+
+    private IEnumerator UpdateTextsDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UpdateTexts();
+    }
+
+    private void UpdateTexts()
+    {
+        if (_currentLevelText != null)
+            _currentLevelText.text =
+                $"{LanguageManager.Instance.GetLocalizedText("level")} {GameManager.Instance.SetGetWorldState.GetLevel}";
     }
 
     private void OnResumeClicked()

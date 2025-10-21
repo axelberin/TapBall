@@ -98,7 +98,7 @@ public class ScenesManager : MonoBehaviour
 
     public int GetLevelByCurrentScene()
     {
-        string numbers = new string(GetCurrentSceneName.Where(
+        string numbers = new(GetCurrentSceneName.Where(
             char.IsDigit).ToArray());
         int.TryParse(numbers, out int level);
         return level;

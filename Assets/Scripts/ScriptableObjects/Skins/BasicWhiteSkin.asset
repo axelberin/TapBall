@@ -15,5 +15,7 @@ MonoBehaviour:
   skinName: BallBasicWhiteSkin
   sprite: {fileID: 21300000, guid: 2269863c3cad55e45bdf60e5859a3b6f, type: 3}
   price: 2
-  spriteSize: {x: 185, y: 185}
+  spriteSize: {x: 200, y: 200}
   unlockeable: 0
+  backgroundSprite: {fileID: -3709857131387986672, guid: 28f14aef8788a0b4a9a1265cf0d89588, type: 3}
+  backgroundAnimator: {fileID: 0}
