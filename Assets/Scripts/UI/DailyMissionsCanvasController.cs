@@ -67,9 +67,11 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         var missionDescription = FindAndValidateComponent<TextMeshProUGUI>(rowTransform, "QuestText");
         var missionProgressPercentage = FindAndValidateComponent<TextMeshProUGUI>(rowTransform, "ProgressText");
         var grantRewardButton = FindAndValidateComponent<Button>(rowTransform, "RewardButton");
+        var rewardAmountText = FindAndValidateComponent<TextMeshProUGUI>(rowTransform, "RewardAmountText");
 
         var missionPercentage = mission.currentProgress / mission.objectiveAmount;
 
+        rewardAmountText.text = $"x{mission.rewardAmount}";
         missionDescription.text = mission.missionDescription;
         progressBar.fillAmount = missionPercentage;
         missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
