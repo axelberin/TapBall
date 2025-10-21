@@ -2258,7 +2258,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.113000005, y: 0}
   m_AnchorMax: {x: 0.21140482, y: 0}
-  m_AnchoredPosition: {x: -2.4158325, y: -100.04993}
+  m_AnchoredPosition: {x: -2.4158936, y: -100.04993}
   m_SizeDelta: {x: -18.18747, y: 75.54462}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7336854124419461876
@@ -5246,7 +5246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.06752383, y: 0}
   m_AnchorMax: {x: 0.9294763, y: 1}
-  m_AnchoredPosition: {x: 0.43048096, y: -0.5022583}
+  m_AnchoredPosition: {x: 0.430542, y: -0.50219727}
   m_SizeDelta: {x: -7.713623, y: -0.099975586}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8463481157299820740
@@ -5522,7 +5522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2172730052626151457}
-  - component: {fileID: 880728464533820139}
+  - component: {fileID: 992994158406989686}
   m_Layer: 5
   m_Name: DailyQuestsPanel
   m_TagString: Untagged
@@ -5550,10 +5550,10 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.50115967, y: -153.03651}
+  m_AnchoredPosition: {x: -0.5012207, y: -153.0365}
   m_SizeDelta: {x: 0.41, y: 662.5308}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &880728464533820139
+--- !u!114 &992994158406989686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5562,10 +5562,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8222344316370570040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36bb89cae7816b14aa983c58808ddb8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f582163c23444d4cb95b657cbcd2d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dailyMissionsCount: 0
 --- !u!1 &8630072623845514245
 GameObject:
   m_ObjectHideFlags: 0
