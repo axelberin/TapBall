@@ -41,9 +41,6 @@ public class DailyMissionsManager : ManagersManager
     private List<MissionData> _allAvailableMissions = new();
     private List<MissionData> _todayMissions = new();
 
-    private const string missions_ID_KEY = "DailyMissionsIDs";
-    private const string missions_PROGRESS_KEY = "DailyMissionsProgress";
-
     [SerializeField] public int dailyMissionsCount = 5;
 
 
@@ -53,8 +50,6 @@ public class DailyMissionsManager : ManagersManager
 
     private Dictionary<string, float> _missionProgress = new();
     public static DailyMissionsManager Instance { get; private set; }
-
-    private MissionData _constantMission;
 
     private void Awake()
     {

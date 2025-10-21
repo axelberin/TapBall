@@ -264,7 +264,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
             foreach (var mission in availableMissions)
             {
-                missionsDict.Add(mission, DateTime.Today);
+                missionsDict.Add(mission, DateTime.Today.ToString("yyyyMMdd"));
             }
             gameData["DailyMissionsData"] = missionsDict;
 
@@ -384,8 +384,8 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 {
                     foreach (var missionDataWithDate in missionsDict)
                     {
-                        //SaveAndLoadManager.SetDailyMissionProgressByMissionID(missionDataWithDate.Key.missionID,
-                        //    missionDataWithDate.Key.currentProgress, missionDataWithDate.Value as DateTime.Today);
+                        SaveAndLoadManager.SetDailyMissionProgressByMissionID(missionDataWithDate.Key.missionID,
+                            missionDataWithDate.Key.currentProgress,missionDataWithDate.Value.ToString());
                     }
                 }
             }
