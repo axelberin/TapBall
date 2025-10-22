@@ -391,7 +391,7 @@ public class DailyMissionsManager : ManagersManager
 
     public int GetAlMissionsCompletedCount()
     {
-        return _todayMissions.Count(m => !m.completed);
+        return _todayMissions.Count(m => !m.rewardGranted);
     }
 
     public List<MissionData> GetTodayMissions => _todayMissions;

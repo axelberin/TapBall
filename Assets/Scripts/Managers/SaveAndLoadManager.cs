@@ -18,6 +18,7 @@ public static class SaveAndLoadManager
     public static string CurrentModeName = "CurrentMode";
     public static string IsPlayingFirstTimeName = "IsPlayingFirstTimeName";
     public static string LastDayUpdateName = "LastDayUpdate";
+    public static string ObtainedGameMode= "ObtainedGameMode_";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";

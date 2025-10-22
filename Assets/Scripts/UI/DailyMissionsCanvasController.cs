@@ -40,12 +40,15 @@ public class DailyMissionsCanvasController : CanvasElementLocator
                 UpdateUI(rowTransform, i);
             }
         }
-        Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
+
+        if (Instance)
+            Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
     }
 
     private void OnDisable()
     {
-        Instance.OnDailyMissionsReset -= RefreshAllMissionsUI;
+        if (Instance)
+            Instance.OnDailyMissionsReset -= RefreshAllMissionsUI;
     }
 
     private void RefreshAllMissionsUI()
@@ -77,9 +80,9 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
 
         AddressablesUtility.LoadAsset<GameObject>($"{mission.rewardType}Image", rewardImageAddressable =>
-        { 
+        {
             rewardImage.sprite = rewardImageAddressable.GetComponent<Image>().sprite;
-            if(mission.rewardType == RewardType.Coins)
+            if (mission.rewardType == RewardType.Coins)
             {
                 rewardImage.transform.localScale = new Vector3(2.74f, 2.74f);
             }
@@ -107,7 +110,7 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         var constanMission = Instance.GetTodayMissions
             .FirstOrDefault(m => m.missionID == "DAILY_LOGIN");
 
-        if(constanMission != null && !constanMission.completed && !constanMission.rewardGranted)
+        if (constanMission != null && !constanMission.completed && !constanMission.rewardGranted)
         {
             Instance.CompletConstantMission();
             RefreshAllMissionsUI();

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -169,6 +170,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         else
             _unlockSkinsPopUp.gameObject.SetActive(true);
 
+        CheckForUnlokedModes();
+
         var fadeController = FindAndValidateGameObjectComponent(transform, "FadeController");
         _thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
         _dailyMissionsPanel.SetActive(false);
@@ -206,8 +209,11 @@ public class MenuManagerCanvas : CanvasElementLocator
             IAPManager.Instance.OnCompletePurchase += UpdateNotificationsOnNoAds;
         }
 
-        DailyMissionsManager.Instance.OnCompleteMission += UpdateTexts;
-        DailyMissionsManager.Instance.OnDailyMissionsReset += UpdateTexts;
+        if (DailyMissionsManager.Instance)
+        {
+            DailyMissionsManager.Instance.OnCompleteMission += UpdateTexts;
+            DailyMissionsManager.Instance.OnDailyMissionsReset += UpdateTexts;
+        }
     }
 
     private void OnDisable()
@@ -219,8 +225,11 @@ public class MenuManagerCanvas : CanvasElementLocator
             IAPManager.Instance.OnCompletePurchase -= UpdateNotificationsOnNoAds;
         }
 
-        DailyMissionsManager.Instance.OnCompleteMission -= UpdateTexts;
-        DailyMissionsManager.Instance.OnDailyMissionsReset -= UpdateTexts;
+        if (DailyMissionsManager.Instance)
+        {
+            DailyMissionsManager.Instance.OnCompleteMission -= UpdateTexts;
+            DailyMissionsManager.Instance.OnDailyMissionsReset -= UpdateTexts;
+        }
     }
 
     private void Update()
@@ -332,6 +341,18 @@ public class MenuManagerCanvas : CanvasElementLocator
                 _unlockSkinsPopUp.Show();
                 UnlokedSkin = null;
             });
+    }
+
+    private void CheckForUnlokedModes()
+    {
+        foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
+        {
+            if (!Instance.IsModeUnlocked(mode) || mode == GameModes.Dunk || mode == GameModes.Null)
+                continue;
+
+            Debug.Log(mode.ToString());
+            SaveAndLoadManager.SetIntValue(2, SaveAndLoadManager.ObtainedGameMode + mode, true, true);
+        }
     }
 
     private void ActivatePopUpAfterBuy()

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -36,24 +37,12 @@ public class GameManager : MonoBehaviour
     {
         switch (gameModeIndex)
         {
-            case 0:
-                _currentGameMode = GameModes.Null;
-                break;
-            case 1:
-                _currentGameMode = GameModes.Dunk;
-                break;
-            case 2:
-                _currentGameMode = GameModes.Time;
-                break;
-            case 3:
-                _currentGameMode = GameModes.OneTouch;
-                break;
-            case 4:
-                break;
-                _currentGameMode = GameModes.Endless;
+            case 0: _currentGameMode = GameModes.Null; break;
+            case 1: _currentGameMode = GameModes.Dunk; break;
+            case 2: _currentGameMode = GameModes.Time; break;
+            case 3: _currentGameMode = GameModes.OneTouch; break;
+            case 4: break;
             case 5:
-                break;
-                _currentGameMode = GameModes.Fall;
             default:
                 _currentGameMode = GameModes.Null;
                 Debug.LogWarning($"Game mode not found: " + gameModeIndex);
@@ -75,6 +64,20 @@ public class GameManager : MonoBehaviour
         SaveAndLoadManager.SetIntValue((int)_currentGameMode, SaveAndLoadManager.CurrentModeName);
     }
 
+    public bool IsModeUnlocked(GameModes mode)
+        => SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedGameMode + mode) == 1;
+
+    public void UnlockMode(int level)
+    {
+        GameModes mode = GetGameModeTUnlockByLevel(level);
+
+        if (mode == GameModes.Null || IsModeUnlocked(mode))
+            return;
+
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedGameMode + mode) == 0)
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedGameMode + mode, true, true);
+    }
+
     public void OnCompleteWorld(string currentWorldName)
     {
         if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)
@@ -82,6 +85,16 @@ public class GameManager : MonoBehaviour
 
         SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true, true);
         UnlokedSkin = currentWorldName;
+    }
+
+    private GameModes GetGameModeTUnlockByLevel(int level)
+    {
+        return level switch
+        {
+            15 => GameModes.Time,
+            30 => GameModes.OneTouch,
+            _ => GameModes.Null,
+        };
     }
 
     public PlayerController SetGetPlayer { set; get; }

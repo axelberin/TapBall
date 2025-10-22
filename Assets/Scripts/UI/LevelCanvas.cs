@@ -215,6 +215,8 @@ public class LevelCanvas : CanvasElementLocator
         UIManager.Instance.ActivateUI(_winUI, true);
         _pauseButton.interactable = false;
 
+        GameManager.Instance.UnlockMode(GameManager.Instance.SetGetWorldState.GetLevel);
+
         if (LevelManager.Instance.HasGetedCoins)
             StartCoroutine(ShowGoal(0.6f, _hasCoinGoal, _emptyhasCoinGoal));
 
