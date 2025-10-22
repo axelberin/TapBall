@@ -19,6 +19,8 @@ public class MenuManagerCanvas : CanvasElementLocator
     private Button _levelsCloseButton;
     private Image _achievementImageInLevelsSelector = null;
     private GameObject _levelsSelectorHasNotifications;
+    private GameObject _missionsButtonHasNotifications;
+    private TextMeshProUGUI _missionsButtonsTextNotification;
 
     // Mundo actual - temporal hasta que implementes el sistema completo
     private string _currentWorld = "Neon";
@@ -149,6 +151,12 @@ public class MenuManagerCanvas : CanvasElementLocator
 
         _levelsSelectorHasNotifications = FindAndValidateGameObjectComponent(transform, "HasNotificationsLevelsSelector");
         _levelsSelectorHasNotifications.SetActive(false);
+
+        _missionsButtonHasNotifications = FindAndValidateGameObjectComponent(transform, "HasNotificationsMissions");
+        _missionsButtonHasNotifications.SetActive(DailyMissionsManager.Instance.GetAllMissionsCompletedStatus());
+
+        _missionsButtonsTextNotification = FindAndValidateComponent<TextMeshProUGUI>(transform, "MissionsNotificationsCountText");
+        _missionsButtonsTextNotification.text = DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString();
 
         UpdateModeTexts(_modeText, nextLevelText);
         UpdateNotificationsOnNoAds();

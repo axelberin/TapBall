@@ -263,7 +263,6 @@ public class DailyMissionsManager : ManagersManager
     public void CompleteMission(MissionData mission)
     {
         Debug.Log($"Mission completed: {mission.missionName}");
-
         GrantReward(mission.rewardType, mission.rewardAmount);
         mission.rewardGranted = true;
 
@@ -381,6 +380,16 @@ public class DailyMissionsManager : ManagersManager
         yield return null;
         while (_isInitialized)
             yield return null;
+    }
+
+    public bool GetAllMissionsCompletedStatus()
+    {
+        return _todayMissions.Any(m => !m.completed);
+    }
+
+    public int GetAlMissionsCompletedCount()
+    {
+        return _todayMissions.Count(m => !m.completed);
     }
 
     public List<MissionData> GetTodayMissions => _todayMissions;
