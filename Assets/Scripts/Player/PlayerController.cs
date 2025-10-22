@@ -62,8 +62,11 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             LevelManager.Instance.OnLoseLevel += OnLose;
         }
 
-        Addressables.LoadAssetAsync<GameObject>(SaveAndLoadManager.GetStringValue(
-            SaveAndLoadManager.CurrentBallSkinName)).Completed += OnPrefabLoaded;
+        string key = SaveAndLoadManager.GetStringValue(
+            SaveAndLoadManager.CurrentBallSkinName);
+
+        if (!string.IsNullOrEmpty(key))
+            Addressables.LoadAssetAsync<GameObject>(key).Completed += OnPrefabLoaded;
     }
 
     private void OnDestroy()
