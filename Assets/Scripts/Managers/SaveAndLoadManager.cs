@@ -94,6 +94,20 @@ public static class SaveAndLoadManager
         return PlayerPrefs.GetString(parameterName);
     }
 
+    public static void SetBoolValue(bool value, string parameterName, bool withSave = false, bool saveCloud = false)
+    {
+        PlayerPrefs.SetInt(parameterName, value ? 1 : 0);
+        if (withSave) Save();
+        if (saveCloud) SaveCloud();
+    }
+
+    public static bool GetBoolValue(string parameterName)
+    {
+        if (!PlayerPrefs.HasKey(parameterName))
+            return false;
+        return PlayerPrefs.GetInt(parameterName) == 1;
+    }
+
     public static bool ContainsKey(string parameterName)
     {
         return PlayerPrefs.HasKey(parameterName);

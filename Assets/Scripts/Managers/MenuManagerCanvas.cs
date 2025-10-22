@@ -49,12 +49,14 @@ public class MenuManagerCanvas : CanvasElementLocator
         dailyQuestBTN.onClick.AddListener(() =>
         {
             _dailyMissionsPanel.SetActive(true);
+            UIManager.Instance.SetText(_missionsButtonsTextNotification, DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString());
             _downPanel.SetActive(false);
         });
         var dailyQuestsBackButton = FindAndValidateComponent<Button>(transform, "DailyQuestsBackButton");
         dailyQuestsBackButton.onClick.AddListener(() =>
         {
             _dailyMissionsPanel.SetActive(false);
+            UIManager.Instance.SetText(_missionsButtonsTextNotification, DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString());
             _downPanel.SetActive(true);
         });
 
@@ -205,6 +207,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         }
 
         DailyMissionsManager.Instance.OnCompleteMission += UpdateTexts;
+        DailyMissionsManager.Instance.OnDailyMissionsReset += UpdateTexts;
     }
 
     private void OnDisable()
@@ -217,6 +220,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         }
 
         DailyMissionsManager.Instance.OnCompleteMission -= UpdateTexts;
+        DailyMissionsManager.Instance.OnDailyMissionsReset -= UpdateTexts;
     }
 
     private void Update()
@@ -347,6 +351,8 @@ public class MenuManagerCanvas : CanvasElementLocator
             UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
         if (_orbsText != null)
             UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
+        if (_missionsButtonsTextNotification != null)
+            UIManager.Instance.SetText(_missionsButtonsTextNotification, DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString());
     }
 
     private void UpdateModeTexts(TextMeshProUGUI modeText, TextMeshProUGUI nextLevelText)

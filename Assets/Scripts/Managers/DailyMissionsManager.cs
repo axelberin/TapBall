@@ -227,6 +227,7 @@ public class DailyMissionsManager : ManagersManager
     {
         foreach (var missionCopy in _allAvailableMissions)
         {
+
             var savedData = SaveAndLoadManager.GetDailyMissionProgressDataByID(missionCopy.missionID);
 
             if (string.IsNullOrEmpty(savedData.lastUpdateDate))
@@ -251,7 +252,7 @@ public class DailyMissionsManager : ManagersManager
                 rewardAmount = missionCopy.rewardAmount,
                 currentProgress = savedData.progress,
                 completed = savedData.progress >= missionCopy.objectiveAmount,
-                rewardGranted = savedData.progress >= missionCopy.objectiveAmount
+                rewardGranted = SaveAndLoadManager.GetBoolValue($"{missionCopy.missionID}_RewardGranted")
             };
 
             _missionProgress[mission.missionID] = savedData.progress;
@@ -269,6 +270,7 @@ public class DailyMissionsManager : ManagersManager
         _missionProgress[mission.missionID] = mission.currentProgress;
         SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress,
             DateTime.Today.ToString("yyyyMMdd"), true, true);
+        SaveAndLoadManager.SetBoolValue(true, $"{mission.missionID}_RewardGranted");
         OnCompleteMission?.Invoke();
     }
 
