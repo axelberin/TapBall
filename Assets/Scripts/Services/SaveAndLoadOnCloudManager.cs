@@ -260,15 +260,20 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             gameData["obtainedSkins"] = skinsDict;
 
             //Serializar datos de misiones diarias
-            var missionsTupleList = new List<Tuple<string, object, object>>();
+            var missionsList = new List<Dictionary<string, object>>();
             var availableMissions = SaveAndLoadManager.GetDailyMissions();
 
             foreach (var mission in availableMissions)
             {
-                missionsTupleList.Add(Tuple.Create<string, object, object>
-                    (mission.missionID, mission.currentProgress, DateTime.Today.ToString("yyyyMMdd")));
+                var missionData = new Dictionary<string, object>
+                {
+                    { "missionID", mission.missionID },
+                    { "currentProgress", mission.currentProgress },
+                    { "date", DateTime.Today.ToString("yyyyMMdd") }
+                };
+                missionsList.Add(missionData);
             }
-            gameData["DailyMissionsData"] = missionsTupleList;
+            gameData["DailyMissionsData"] = missionsList;
 
             Debug.Log("Datos locales serializados exitosamente para la nube");
         }
@@ -381,13 +386,23 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             //Aplicar datos de misión obtenidos
             if (cloudGameData.ContainsKey("DailyMissionsData"))
             {
-                var missionsDict = cloudGameData["DailyMissionsData"] as List<Tuple<string, object, object>>;
-                if (missionsDict != null)
+                var missionsList = cloudGameData["DailyMissionsData"] as List<object>;
+                if (missionsList != null)
                 {
-                    foreach (var missionDataWithDate in missionsDict)
+                    foreach (var missionObj in missionsList)
                     {
-                        SaveAndLoadManager.SetDailyMissionProgressByMissionID(missionDataWithDate.
-                            Item1, Convert.ToInt32(missionDataWithDate.Item2), missionDataWithDate.Item3.ToString());
+                        var missionData = missionObj as Dictionary<string, object>;
+                        if (missionData != null &&
+                            missionData.ContainsKey("missionID") &&
+                            missionData.ContainsKey("currentProgress") &&
+                            missionData.ContainsKey("date"))
+                        {
+                            string missionID = missionData["missionID"].ToString();
+                            int progress = Convert.ToInt32(missionData["currentProgress"]);
+                            string date = missionData["date"].ToString();
+
+                            SaveAndLoadManager.SetDailyMissionProgressByMissionID(missionID, progress, date);
+                        }
                     }
                 }
             }
