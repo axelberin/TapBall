@@ -74,8 +74,8 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
         var missionPercentage = mission.currentProgress / mission.objectiveAmount;
 
-        rewardAmountText.text = $"x{mission.rewardAmount}";
-        missionDescription.text = mission.missionDescription;
+        UIManager.Instance.SetText(rewardAmountText, mission.rewardAmount);
+        UIManager.Instance.SetText(missionDescription, LanguageManager.Instance.GetLocalizedText(mission.missionID));
         progressBar.fillAmount = missionPercentage;
         missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
 

@@ -12,7 +12,6 @@ public class MissionData
 
     [Header("Mission Config")]
     public GameManager.GameModes gameMode;
-    public string missionName;
     public string missionDescription;
     public int missionDifficulty;
     public MissionType missionType;
@@ -113,29 +112,28 @@ public class DailyMissionsManager : ManagersManager
                 continue;
             string[] values = lines[i].Split(",");
 
-            if (values.Length < 9)
+            if (values.Length < 7)
                 continue;
 
             MissionData mission = new MissionData();
             mission.missionID = values[0].Trim();
             mission.gameMode = ParseGameMode(values[1].Trim());
-            mission.missionName = values[2].Trim();
-            mission.missionDescription = values[3].Trim();
-            mission.missionType = ParseMissionType(values[4].Trim());
-            if (int.TryParse(values[5].Trim(), out int objective))
+            mission.missionDescription = LanguageManager.Instance.GetLocalizedText(mission.missionID);
+            mission.missionType = ParseMissionType(values[2].Trim());
+            if (int.TryParse(values[3].Trim(), out int objective))
             {
                 mission.objectiveAmount = objective;
             }
             else mission.objectiveAmount = 0;
 
-            if (int.TryParse(values[6].Trim(), out int difficulty))
+            if (int.TryParse(values[4].Trim(), out int difficulty))
             {
                 mission.missionDifficulty = difficulty;
             }
             else mission.missionDifficulty = 1;
-            mission.rewardType = ParseRewardType(values[7].Trim());
+            mission.rewardType = ParseRewardType(values[5].Trim());
 
-            if (int.TryParse(values[8].Trim(), out int reward))
+            if (int.TryParse(values[6].Trim(), out int reward))
             {
                 mission.rewardAmount = reward;
             }
@@ -243,7 +241,6 @@ public class DailyMissionsManager : ManagersManager
             {
                 missionID = missionCopy.missionID,
                 gameMode = missionCopy.gameMode,
-                missionName = missionCopy.missionName,
                 missionDescription = missionCopy.missionDescription,
                 missionType = missionCopy.missionType,
                 objectiveAmount = missionCopy.objectiveAmount,
@@ -263,7 +260,6 @@ public class DailyMissionsManager : ManagersManager
 
     public void CompleteMission(MissionData mission)
     {
-        Debug.Log($"Mission completed: {mission.missionName}");
         GrantReward(mission.rewardType, mission.rewardAmount);
         mission.rewardGranted = true;
 
@@ -316,7 +312,6 @@ public class DailyMissionsManager : ManagersManager
         {
             missionID = selected.missionID,
             gameMode = selected.gameMode,
-            missionName = selected.missionName,
             missionDescription = selected.missionDescription,
             missionType = selected.missionType,
             objectiveAmount = selected.objectiveAmount,
