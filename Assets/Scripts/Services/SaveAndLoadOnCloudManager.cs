@@ -386,7 +386,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             //Aplicar datos de misión obtenidos
             if (cloudGameData.ContainsKey("DailyMissionsData"))
             {
-                var missionsList = cloudGameData["DailyMissionsData"] as List<object>;
+                var missionsList = cloudGameData["DailyMissionsData"] as List<Dictionary<string, object>>;
                 if (missionsList != null)
                 {
                     foreach (var missionObj in missionsList)
