@@ -168,7 +168,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         if (!string.IsNullOrEmpty(UnlokedSkin))
             OnUnlockSkin();
         else
-            _unlockSkinsPopUp.gameObject.SetActive(true);
+            _unlockSkinsPopUp.gameObject.SetActive(false);
 
         CheckForUnlokedModes();
 
