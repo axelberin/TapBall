@@ -127,7 +127,9 @@ public class LoadingGameManager : CanvasElementLocator
     private void SetAndLoadFirstScene()
     {
         string levelToLoad = "";
-
+#if UNITY_EDITOR
+        levelToLoad = "Menu";
+#else
         if ((SaveAndLoadManager.ContainsKey(SaveAndLoadManager.IsPlayingFirstTimeName) &&
             SaveAndLoadManager.GetIntValue(SaveAndLoadManager.IsPlayingFirstTimeName) == 1) ||
             SaveAndLoadManager.GetLevelCompleted(GameManager.GameModes.Dunk, "Neon", 1))
@@ -136,6 +138,7 @@ public class LoadingGameManager : CanvasElementLocator
             levelToLoad = "NeonLevel1";
 
         SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.IsPlayingFirstTimeName);
+#endif
         ScenesManager.Instance.LoadSceneAsync(levelToLoad, _fadeAnimator);
     }
 }

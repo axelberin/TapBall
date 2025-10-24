@@ -50,14 +50,16 @@ public class MenuManagerCanvas : CanvasElementLocator
         dailyQuestBTN.onClick.AddListener(() =>
         {
             _dailyMissionsPanel.SetActive(true);
-            UIManager.Instance.SetText(_missionsButtonsTextNotification, DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString());
+            UIManager.Instance.SetText(_missionsButtonsTextNotification,
+                DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString(), true);
             _downPanel.SetActive(false);
         });
         var dailyQuestsBackButton = FindAndValidateComponent<Button>(transform, "DailyQuestsBackButton");
         dailyQuestsBackButton.onClick.AddListener(() =>
         {
             _dailyMissionsPanel.SetActive(false);
-            UIManager.Instance.SetText(_missionsButtonsTextNotification, DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString());
+            UIManager.Instance.SetText(_missionsButtonsTextNotification,
+                DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString(), true);
             _downPanel.SetActive(true);
         });
 
