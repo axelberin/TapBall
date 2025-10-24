@@ -174,6 +174,7 @@ public class DailyMissionsManager : ManagersManager
         foreach (var missionToDeleteData in _allAvailableMissions)
         {
             SaveAndLoadManager.DeleteMissionDataByID(missionToDeleteData.missionID);
+            SaveAndLoadManager.DeleteKey($"{missionToDeleteData.missionID}_RewardGranted", false, true);
         }
         _missionProgress.Clear();
         _todayMissions.Clear();
@@ -235,6 +236,11 @@ public class DailyMissionsManager : ManagersManager
                 continue;
             }
 
+            bool rewardGranted = SaveAndLoadManager.GetBoolValue($"{missionCopy.missionID}_RewardGranted");
+
+            if (rewardGranted)
+                continue;
+
             MissionData mission = new MissionData
             {
                 missionID = missionCopy.missionID,
@@ -247,7 +253,7 @@ public class DailyMissionsManager : ManagersManager
                 rewardAmount = missionCopy.rewardAmount,
                 currentProgress = savedData.progress,
                 completed = savedData.progress >= missionCopy.objectiveAmount,
-                rewardGranted = SaveAndLoadManager.GetBoolValue($"{missionCopy.missionID}_RewardGranted")
+                rewardGranted = rewardGranted
             };
 
             _missionProgress[mission.missionID] = savedData.progress;
@@ -265,6 +271,7 @@ public class DailyMissionsManager : ManagersManager
         SaveAndLoadManager.SetDailyMissionProgressByMissionID(mission.missionID, mission.currentProgress,
             DateTime.Today.ToString("yyyyMMdd"), true, true);
         SaveAndLoadManager.SetBoolValue(true, $"{mission.missionID}_RewardGranted");
+        _todayMissions.Remove(mission);
         OnCompleteMission?.Invoke();
     }
 

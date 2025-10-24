@@ -32,15 +32,16 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
     private void OnEnable()
     {
-        if (_contentScroll != null && Instance.GetTodayMissions.Count > 0)
-        {
-            for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
-            {
-                Transform rowTransform = _contentScroll.transform.GetChild(i);
-                UpdateUI(rowTransform, i);
-            }
-        }
+       //if (_contentScroll != null && Instance.GetTodayMissions.Count > 0)
+       //{
+       //    for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
+       //    {
+       //        Transform rowTransform = _contentScroll.transform.GetChild(i);
+       //        UpdateUI(rowTransform, i);
+       //    }
+       //}
 
+        RefreshAllMissionsUI();
         if (Instance)
             Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
     }
@@ -58,11 +59,34 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         for (int i = 0; i < _contentScroll.transform.childCount; i++)
         {
             Transform rowTransform = _contentScroll.transform.GetChild(i);
-            UpdateUI(rowTransform, i);
+
+            if (i < Instance.GetTodayMissions.Count)
+            {
+                UpdateUI(rowTransform, i);
+                rowTransform.gameObject.SetActive(true);
+            }
+            else
+            {
+                rowTransform.gameObject.SetActive(false);
+            }
+        }
+        if(_missionRowObjectPrefab != null)
+        {
+            for(int i = _contentScroll.transform.childCount; i < Instance.GetTodayMissions.Count; i++)
+            {
+                GameObject newRow = Instantiate(_missionRowObjectPrefab, _contentScroll.transform);
+                UpdateUI(newRow.transform, i);
+            }
         }
     }
     public void UpdateUI(Transform rowTransform, int missionIndex)
     {
+        if (missionIndex >= Instance.GetTodayMissions.Count)
+        {
+            rowTransform.gameObject.SetActive(false);
+            return;
+        }
+
         var mission = Instance.GetTodayMissions[missionIndex];
 
         var rewardImage = FindAndValidateComponent<Image>(rowTransform, "RewardImg");
@@ -102,6 +126,7 @@ public class DailyMissionsCanvasController : CanvasElementLocator
         {
             Instance.CompleteMission(mission);
             grantRewardButton.interactable = false;
+            rowTransform.gameObject.SetActive(false);
         });
     }
 
