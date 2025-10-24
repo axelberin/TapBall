@@ -373,7 +373,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         if (_orbsText != null)
             UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
         if (_missionsButtonsTextNotification != null)
-            UIManager.Instance.SetText(_missionsButtonsTextNotification, DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString());
+            UIManager.Instance.SetText(_missionsButtonsTextNotification,
+                DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString(), true);
     }
 
     private void UpdateModeTexts(TextMeshProUGUI modeText, TextMeshProUGUI nextLevelText)

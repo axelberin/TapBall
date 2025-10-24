@@ -32,14 +32,14 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
     private void OnEnable()
     {
-       //if (_contentScroll != null && Instance.GetTodayMissions.Count > 0)
-       //{
-       //    for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
-       //    {
-       //        Transform rowTransform = _contentScroll.transform.GetChild(i);
-       //        UpdateUI(rowTransform, i);
-       //    }
-       //}
+        //if (_contentScroll != null && Instance.GetTodayMissions.Count > 0)
+        //{
+        //    for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
+        //    {
+        //        Transform rowTransform = _contentScroll.transform.GetChild(i);
+        //        UpdateUI(rowTransform, i);
+        //    }
+        //}
 
         RefreshAllMissionsUI();
         if (Instance)
@@ -70,9 +70,9 @@ public class DailyMissionsCanvasController : CanvasElementLocator
                 rowTransform.gameObject.SetActive(false);
             }
         }
-        if(_missionRowObjectPrefab != null)
+        if (_missionRowObjectPrefab != null)
         {
-            for(int i = _contentScroll.transform.childCount; i < Instance.GetTodayMissions.Count; i++)
+            for (int i = _contentScroll.transform.childCount; i < Instance.GetTodayMissions.Count; i++)
             {
                 GameObject newRow = Instantiate(_missionRowObjectPrefab, _contentScroll.transform);
                 UpdateUI(newRow.transform, i);
@@ -98,7 +98,7 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
         var missionPercentage = mission.currentProgress / mission.objectiveAmount;
 
-        UIManager.Instance.SetText(rewardAmountText, mission.rewardAmount);
+        UIManager.Instance.SetText(rewardAmountText, $"x{mission.rewardAmount}", true);
         UIManager.Instance.SetText(missionDescription, LanguageManager.Instance.GetLocalizedText(mission.missionID));
         progressBar.fillAmount = missionPercentage;
         missionProgressPercentage.text = MathF.Truncate(missionPercentage * 100).ToString() + "%";
