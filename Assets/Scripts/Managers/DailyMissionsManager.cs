@@ -211,13 +211,11 @@ public class DailyMissionsManager : ManagersManager
     #endregion
     private void InitializeDailyMissions()
     {
-        if (CheckForDayChange())
+        LoadSavedMissions();
+
+        if (_todayMissions.Count == 0 && CheckForDayChange())
         {
             RegenerateDailyMissions();
-        }
-        else
-        {
-            LoadSavedMissions();
         }
     }
 
