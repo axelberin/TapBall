@@ -31,7 +31,7 @@ public class StoreObject : CanvasElementLocator
 
         var priceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PriceText");
         if (UIManager.Instance != null)
-            UIManager.Instance.SetText(priceText, _skinSC.price);
+            UIManager.Instance.SetText(priceText, _skinSC.GetPrice);
 
         var backgroundImage = FindAndValidateComponent<Image>(transform, "BackgroundImage");
         if (_skinSC.backgroundSprite != null)
@@ -45,9 +45,9 @@ public class StoreObject : CanvasElementLocator
 
         _buyButton.onClick.AddListener(() =>
         {
-            if (StoreManager.Instance.CanBuy(_skinSC.price, false))
+            if (StoreManager.Instance.CanBuy(_skinSC.GetPrice, false))
             {
-                StoreManager.Instance.Buy(_skinSC.price);
+                StoreManager.Instance.Buy(_skinSC.GetPrice);
                 StoreCanvas.Instance.UpdateCoinsAndOrbsTexts();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
                 SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true, true);

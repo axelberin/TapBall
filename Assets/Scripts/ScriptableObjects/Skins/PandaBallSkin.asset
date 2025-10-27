@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: PandaBallSkin
   sprite: {fileID: 21300000, guid: 003954f556c67d64b908d30dbe927bbb, type: 3}
-  price: 5
+  groupPrice: {fileID: 11400000, guid: 06a34ba00bc538d4b86335f4b8d996fd, type: 2}
+  skinAddPrice: 0
   spriteSize: {x: 200, y: 200}
   unlockeable: 0
   backgroundSprite: {fileID: -7513680129355513438, guid: a3c09696e1b7ac044a720b4c6a67bd38, type: 3}
