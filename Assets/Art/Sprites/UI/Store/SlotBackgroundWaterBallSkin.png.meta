@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -195,8 +195,8 @@ TextureImporter:
       name: SlotBackgroundWaterBallSkin_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 1284
+        y: 620
         width: 428
         height: 620
       alignment: 0
@@ -217,7 +217,7 @@ TextureImporter:
       name: SlotBackgroundWaterBallSkin_4
       rect:
         serializedVersion: 2
-        x: 428
+        x: 0
         y: 0
         width: 428
         height: 620
@@ -239,7 +239,7 @@ TextureImporter:
       name: SlotBackgroundWaterBallSkin_5
       rect:
         serializedVersion: 2
-        x: 856
+        x: 428
         y: 0
         width: 428
         height: 620
@@ -253,6 +253,50 @@ TextureImporter:
       bones: []
       spriteID: 24f6219c84dc49048a52d30b35c8d5b0
       internalID: 1022592009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_6
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef539496201b20348ad8fc9fd5c7ba3a
+      internalID: 1217186385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundWaterBallSkin_7
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3b639740fb3ada4896fbb289f3eff0e
+      internalID: -924751130
       vertices: []
       indices: 
       edges: []
@@ -277,6 +321,8 @@ TextureImporter:
       SlotBackgroundWaterBallSkin_3: -444842267
       SlotBackgroundWaterBallSkin_4: 1893750391
       SlotBackgroundWaterBallSkin_5: 1022592009
+      SlotBackgroundWaterBallSkin_6: 1217186385
+      SlotBackgroundWaterBallSkin_7: -924751130
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

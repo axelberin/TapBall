@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -195,8 +195,8 @@ TextureImporter:
       name: SlotBackgroundMagmaBallSkin_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 1284
+        y: 620
         width: 428
         height: 620
       alignment: 0
@@ -217,7 +217,7 @@ TextureImporter:
       name: SlotBackgroundMagmaBallSkin_4
       rect:
         serializedVersion: 2
-        x: 428
+        x: 0
         y: 0
         width: 428
         height: 620
@@ -239,7 +239,7 @@ TextureImporter:
       name: SlotBackgroundMagmaBallSkin_5
       rect:
         serializedVersion: 2
-        x: 856
+        x: 428
         y: 0
         width: 428
         height: 620
@@ -253,6 +253,50 @@ TextureImporter:
       bones: []
       spriteID: f8741829afb23bf43bc2ddf404e635b9
       internalID: -212108130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundMagmaBallSkin_6
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bd1c49158a1eb547a4ff18bea64e7d4
+      internalID: 1550229703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotBackgroundMagmaBallSkin_7
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 0
+        width: 428
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ba7ce665050b6b45b6d17cdf0b787b8
+      internalID: 1035144119
       vertices: []
       indices: 
       edges: []
@@ -277,6 +321,8 @@ TextureImporter:
       SlotBackgroundMagmaBallSkin_3: -1320514296
       SlotBackgroundMagmaBallSkin_4: -963353801
       SlotBackgroundMagmaBallSkin_5: -212108130
+      SlotBackgroundMagmaBallSkin_6: 1550229703
+      SlotBackgroundMagmaBallSkin_7: 1035144119
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
