@@ -110,6 +110,10 @@ public class DailyMissionsCanvasController : CanvasElementLocator
             {
                 rewardImage.transform.localScale = new Vector3(2.74f, 2.74f);
             }
+            else
+            {
+                rewardImage.transform.localScale = Vector3.one;
+            }
         });
 
         if (mission.rewardGranted == false)

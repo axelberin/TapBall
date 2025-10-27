@@ -307,7 +307,10 @@ public class DailyMissionsManager : ManagersManager
 
         if (_allAvailableMissions.Count == 0)
             return new List<MissionData>();
+
         var selectedMissions = _allAvailableMissions
+        .Where(x => SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedGameMode + x.gameMode) != 0 ||
+        x.gameMode == GameManager.GameModes.Null || x.gameMode == GameManager.GameModes.Dunk)
         .GroupBy(m => m.missionType)
         .OrderBy(x => Random.value)
         .Take(count)
