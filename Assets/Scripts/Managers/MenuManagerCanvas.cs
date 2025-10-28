@@ -17,6 +17,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private TextMeshProUGUI _modeText;
     private PopUp _unlockSkinsPopUp;
     private PopUp _thanksForBuyPopUp;
+    private PopUp _unlockModePopUp;
     private Button _levelsCloseButton;
     private Image _achievementImageInLevelsSelector = null;
     private GameObject _levelsSelectorHasNotifications;
@@ -347,12 +348,15 @@ public class MenuManagerCanvas : CanvasElementLocator
 
     private void CheckForUnlokedModes()
     {
+        _unlockModePopUp = FindAndValidateComponent<PopUp>(transform, "UnlockModePopUp");
+
         foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
         {
             if (!Instance.IsModeUnlocked(mode) || mode == GameModes.Dunk || mode == GameModes.Null)
                 continue;
 
-            Debug.Log(mode.ToString());
+            _unlockModePopUp.Initialize($"unlock{mode}Tittle");
+            _unlockModePopUp.Show();
             SaveAndLoadManager.SetIntValue(2, SaveAndLoadManager.ObtainedGameMode + mode, true, true);
         }
     }
