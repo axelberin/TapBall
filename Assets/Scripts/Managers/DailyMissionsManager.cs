@@ -388,7 +388,7 @@ public class DailyMissionsManager : ManagersManager
             yield return null;
     }
 
-    public bool GetAllMissionsCompletedStatus()
+   public bool GetAllMissionsCompletedStatus()
     {
         return _todayMissions.Any(m => !m.completed);
     }

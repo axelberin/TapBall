@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreCanvas : CanvasElementLocator
@@ -57,7 +58,12 @@ public class StoreCanvas : CanvasElementLocator
 
     public void ShowReview()
     {
-        _reviewPopUp.Initialize("rateus", "reviewdescription", ReviewManagerController.Instance.RequestReview);
+        _reviewPopUp.Initialize("rateus", "reviewdescription", OpenReviewFromLink);
         _reviewPopUp.Show();
+    }
+
+    private void OpenReviewFromLink()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/details?id=" + Application.identifier);
     }
 }
