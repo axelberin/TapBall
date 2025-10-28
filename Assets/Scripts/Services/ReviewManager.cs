@@ -4,6 +4,7 @@ using System.Collections;
 
 public class ReviewManagerController : MonoBehaviour
 {
+#if !UNITY_IOS
     public static ReviewManagerController Instance { get; private set; }
 
     private ReviewManager _reviewManager;
@@ -52,4 +53,5 @@ public class ReviewManagerController : MonoBehaviour
     {
         Application.OpenURL("https://play.google.com/store/apps/details?id=" + Application.identifier);
     }
+#endif
 }

@@ -22,6 +22,7 @@ namespace Google.Play.Review
     /// </summary>
     public class ReviewManager
     {
+#if !UNITY_IOS
         /// <summary>
         /// Translation of Java ReviewErrorCode from:
         /// <a
@@ -113,6 +114,7 @@ namespace Google.Play.Review
             });
             return operation;
         }
+#endif
 #endif
     }
 }
