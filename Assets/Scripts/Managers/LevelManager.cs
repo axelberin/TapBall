@@ -101,6 +101,7 @@ public class LevelManager : MonoBehaviour
 
     private void TimeOnWin()
     {
+        GameManager.Instance.SetGetWorldState.StopCountTimerMode();
         AudioManager.Instance.StopSound(false, true);
         LevelData currentData = GetCurrentLevelData();
 
