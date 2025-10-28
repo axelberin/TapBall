@@ -345,7 +345,8 @@ public class DailyMissionsManager : ManagersManager
 
         foreach (var mission in _todayMissions)
         {
-            if (mission.missionType == type && mission.gameMode == GameManager.Instance.GetCurrentGameMode && !mission.completed)
+            if (mission.missionType == type && (mission.gameMode == GameManager.Instance.GetCurrentGameMode ||
+                mission.gameMode == GameManager.GameModes.Null) && !mission.completed)
             {
                 if (!_missionProgress.ContainsKey(mission.missionID))
                     _missionProgress[mission.missionID] = 0;
