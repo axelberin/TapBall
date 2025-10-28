@@ -3,6 +3,7 @@ using UnityEngine;
 public class TapController : MonoBehaviour
 {
     int _tapCount;
+    private bool _tapEnabled = true;
 
     private void Start()
     {
@@ -54,6 +55,8 @@ public class TapController : MonoBehaviour
 
     void OnTap(Vector3 pos)
     {
+        if (!_tapEnabled)
+            return;
         if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance ||
             GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
             return;
@@ -66,5 +69,11 @@ public class TapController : MonoBehaviour
     {
         set => _tapCount = value;
         get => _tapCount;
+    }
+
+    public bool SetGetTapEnabled
+    {
+        set => _tapEnabled = value;
+        get => _tapEnabled;
     }
 }
