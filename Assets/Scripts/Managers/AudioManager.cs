@@ -19,7 +19,7 @@ public class AudioManager : ManagersManager, IPauseble
         RejectionSound,
         AchivmentSound,
         CountDownSound,
-        TimeAlertSound
+        TimeAlertSound,
     };
 
     public enum MusicClipType

@@ -147,6 +147,15 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
     }
 
+    public void StopCountTimerMode()
+    {
+        OnUpdate -= ControlTimerMode;
+        if (LevelCanvas.Instance)
+            LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
+
+        _playOnce = false;
+    }
+
     private void WinCount()
     {
         if (_onPause)
