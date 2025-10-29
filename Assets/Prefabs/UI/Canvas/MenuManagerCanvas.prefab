@@ -37,10 +37,10 @@ RectTransform:
   - {fileID: 2172730052626151457}
   m_Father: {fileID: 2234517936420489889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.34018016}
+  m_AnchorMin: {x: 0, y: 0.37627155}
   m_AnchorMax: {x: 1, y: 0.71300006}
-  m_AnchoredPosition: {x: 0.0010986328, y: 3.2070312}
-  m_SizeDelta: {x: 0.710022, y: 5.1799927}
+  m_AnchoredPosition: {x: 0.0010986328, y: 43}
+  m_SizeDelta: {x: 0.710022, y: 86.17999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &368268512489117838
 GameObject:
@@ -967,10 +967,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 273378857322016325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.78554, y: 0.44725052}
-  m_AnchorMax: {x: 0.8908801, y: 0.61612535}
-  m_AnchoredPosition: {x: 0.2000122, y: 0.17391968}
-  m_SizeDelta: {x: 0.9990845, y: 1.6065674}
+  m_AnchorMin: {x: 0.78435993, y: 0.40612528}
+  m_AnchorMax: {x: 0.89182013, y: 0.5782916}
+  m_AnchoredPosition: {x: -0.2999878, y: 0.5}
+  m_SizeDelta: {x: -0.00091552734, y: -0.39343262}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1023869004018856279
 CanvasRenderer:
@@ -3185,10 +3185,10 @@ RectTransform:
   - {fileID: 2838629110605873106}
   m_Father: {fileID: 2234517936420489889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.1275538}
-  m_AnchorMax: {x: 1, y: 0.34018016}
-  m_AnchoredPosition: {x: 0.0021972656, y: -0.41723633}
-  m_SizeDelta: {x: -1.289978, y: 2.0732117}
+  m_AnchorMin: {x: 0, y: 0.16100001}
+  m_AnchorMax: {x: 1, y: 0.37627155}
+  m_AnchoredPosition: {x: 0.0021972656, y: 0.39990234}
+  m_SizeDelta: {x: -1.289978, y: -3.9267578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5196911376630836799
 GameObject:
@@ -9688,7 +9688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 867485572037763699, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.5499878
+      value: -0.5499573
       objectReference: {fileID: 0}
     - target: {fileID: 867485572037763699, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14601,6 +14601,10 @@ PrefabInstance:
     - target: {fileID: 1659485997005106862, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_Name
       value: BattlePassBTN
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659485997005106862, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2360218567627597901, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_AnchorMax.x

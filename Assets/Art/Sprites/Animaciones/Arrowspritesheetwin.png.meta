@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: 8228adcc826c28c48bde37e783224338
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5316290089860916701
+    second: Arrowspritesheetwin_0
+  - first:
+      213: -2140642191377428279
+    second: Arrowspritesheetwin_1
+  - first:
+      213: 7301722996614684588
+    second: Arrowspritesheetwin_2
+  - first:
+      213: -2340076352307352869
+    second: Arrowspritesheetwin_3
+  - first:
+      213: -8157183094073210565
+    second: Arrowspritesheetwin_4
+  - first:
+      213: 2653622406679655701
+    second: Arrowspritesheetwin_5
+  - first:
+      213: -734958743379767142
+    second: Arrowspritesheetwin_6
+  - first:
+      213: -7238056481716435318
+    second: Arrowspritesheetwin_7
+  - first:
+      213: 5575896481200196655
+    second: Arrowspritesheetwin_8
+  - first:
+      213: 5627451486157644970
+    second: Arrowspritesheetwin_9
+  - first:
+      213: -4380338279188360090
+    second: Arrowspritesheetwin_10
+  - first:
+      213: 5041058988404743701
+    second: Arrowspritesheetwin_11
+  - first:
+      213: -5236066037174094856
+    second: Arrowspritesheetwin_12
+  - first:
+      213: 9207404908046334789
+    second: Arrowspritesheetwin_13
+  - first:
+      213: 220134671263675062
+    second: Arrowspritesheetwin_14
+  - first:
+      213: -5795686002158953578
+    second: Arrowspritesheetwin_15
+  - first:
+      213: -2818297875353904249
+    second: Arrowspritesheetwin_16
+  - first:
+      213: -3192811520510061397
+    second: Arrowspritesheetwin_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 438
+        width: 153
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5e6197ba147c940800000000000000
+      internalID: 5316290089860916701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_1
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 438
+        width: 132
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c01cbfb449ea42e0800000000000000
+      internalID: -2140642191377428279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_2
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 438
+        width: 131
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cafd485116ee45560800000000000000
+      internalID: 7301722996614684588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_3
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 438
+        width: 153
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdaad61b4f0668fd0800000000000000
+      internalID: -2340076352307352869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_4
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 438
+        width: 132
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b39c1fdc13ddbce80800000000000000
+      internalID: -8157183094073210565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_5
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 438
+        width: 131
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5157826f48f83d420800000000000000
+      internalID: 2653622406679655701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_6
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 438
+        width: 153
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a901848bae6ecc5f0800000000000000
+      internalID: -734958743379767142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_7
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 438
+        width: 132
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a86041f8af14d8b90800000000000000
+      internalID: -7238056481716435318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_8
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 438
+        width: 131
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2cc94aae40916d40800000000000000
+      internalID: 5575896481200196655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_9
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 84
+        width: 153
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa4ab27af49b81e40800000000000000
+      internalID: 5627451486157644970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_10
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 84
+        width: 132
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6649ee80b89e533c0800000000000000
+      internalID: -4380338279188360090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_11
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 84
+        width: 131
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51e97a7f07075f540800000000000000
+      internalID: 5041058988404743701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_12
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 84
+        width: 153
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f330c95ea1c557b0800000000000000
+      internalID: -5236066037174094856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_13
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 84
+        width: 132
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54b3a4f1bf547cf70800000000000000
+      internalID: 9207404908046334789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_14
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 84
+        width: 131
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b23b6331531e0300800000000000000
+      internalID: 220134671263675062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_15
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 84
+        width: 153
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69b9c93b946919fa0800000000000000
+      internalID: -5795686002158953578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_16
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 84
+        width: 132
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78bda4ca30563e8d0800000000000000
+      internalID: -2818297875353904249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrowspritesheetwin_17
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 84
+        width: 131
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba4193d96dad0b3d0800000000000000
+      internalID: -3192811520510061397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Arrowspritesheetwin_0: 5316290089860916701
+      Arrowspritesheetwin_1: -2140642191377428279
+      Arrowspritesheetwin_10: -4380338279188360090
+      Arrowspritesheetwin_11: 5041058988404743701
+      Arrowspritesheetwin_12: -5236066037174094856
+      Arrowspritesheetwin_13: 9207404908046334789
+      Arrowspritesheetwin_14: 220134671263675062
+      Arrowspritesheetwin_15: -5795686002158953578
+      Arrowspritesheetwin_16: -2818297875353904249
+      Arrowspritesheetwin_17: -3192811520510061397
+      Arrowspritesheetwin_2: 7301722996614684588
+      Arrowspritesheetwin_3: -2340076352307352869
+      Arrowspritesheetwin_4: -8157183094073210565
+      Arrowspritesheetwin_5: 2653622406679655701
+      Arrowspritesheetwin_6: -734958743379767142
+      Arrowspritesheetwin_7: -7238056481716435318
+      Arrowspritesheetwin_8: 5575896481200196655
+      Arrowspritesheetwin_9: 5627451486157644970
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
