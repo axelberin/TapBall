@@ -425,6 +425,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: DunkManagers
       objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.788
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.653
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.794857
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.6067968
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -74.716
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
