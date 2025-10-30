@@ -353,6 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ConfigsCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5281491332670631439, guid: 0ae016cdb006fbe47b4e5ca2d0cb2ce9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -525,6 +529,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 850535801924768807, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: anchorOffset.x
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 850535801924768807, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: anchorOffset.y
+      value: -1.65
+      objectReference: {fileID: 0}
     - target: {fileID: 1912363492369366249, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -565,9 +577,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07742299
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99978864
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.020558147
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 2.356
+      objectReference: {fileID: 0}
     - target: {fileID: 5386544777281946175, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
       propertyPath: m_Name
       value: DunkManagers
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.292
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.876
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9878949
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.15512487
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465117833514228976, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -17.848
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -738,6 +798,10 @@ PrefabInstance:
     - target: {fileID: 1362921546160516865, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
       propertyPath: m_Name
       value: DunkCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362921546160516865, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2043872662946045488, guid: 03940a56b87efc04cbb890f901598be5, type: 3}
       propertyPath: m_Pivot.x
