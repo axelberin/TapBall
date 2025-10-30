@@ -2471,6 +2471,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreditsBTN
       objectReference: {fileID: 0}
+    - target: {fileID: 1659485997005106862, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6509072842611338191, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: key
       value: credits

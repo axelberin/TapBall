@@ -12,7 +12,10 @@ public class Arrows : ObstaclesManager
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>() && _animator != null)
+        if (collision.TryGetComponent(out PlayerController player) && _animator != null)
+        {
+            player.GetRigidbody.linearVelocity = Vector3.zero;
             _animator.SetTrigger("Interact");
+        }
     }
 }
