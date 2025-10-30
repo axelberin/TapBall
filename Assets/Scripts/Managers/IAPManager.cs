@@ -94,9 +94,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
         {
             case PRODUCT_NO_ADS:
                 SaveAndLoadManager.SetIntValue(
-                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 15, SaveAndLoadManager.CoinsName);
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 100, SaveAndLoadManager.CoinsName);
                 SaveAndLoadManager.SetIntValue(
-                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 5, SaveAndLoadManager.OrbsName);
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 15, SaveAndLoadManager.OrbsName);
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.NoAdsBougthName, true, true);
                 Debug.Log($"Reward: {id}");
                 break;
