@@ -32,15 +32,6 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
     private void OnEnable()
     {
-        //if (_contentScroll != null && Instance.GetTodayMissions.Count > 0)
-        //{
-        //    for (int i = 0; i < Instance.GetTodayMissions.Count; i++)
-        //    {
-        //        Transform rowTransform = _contentScroll.transform.GetChild(i);
-        //        UpdateUI(rowTransform, i);
-        //    }
-        //}
-
         RefreshAllMissionsUI();
         if (Instance)
             Instance.OnDailyMissionsReset += RefreshAllMissionsUI;
@@ -54,7 +45,8 @@ public class DailyMissionsCanvasController : CanvasElementLocator
 
     private void RefreshAllMissionsUI()
     {
-        if (_contentScroll == null) return;
+        if (_contentScroll == null) 
+            return;
 
         for (int i = 0; i < _contentScroll.transform.childCount; i++)
         {
@@ -79,6 +71,7 @@ public class DailyMissionsCanvasController : CanvasElementLocator
             }
         }
     }
+
     public void UpdateUI(Transform rowTransform, int missionIndex)
     {
         if (missionIndex >= Instance.GetTodayMissions.Count)
