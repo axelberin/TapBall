@@ -4,7 +4,7 @@ public class TapController : MonoBehaviour
 {
     int _tapCount;
     private bool _tapEnabled = true;
-
+    private bool _tapCountEnabled = true;
     private void Start()
     {
         if (GameManager.Instance)
