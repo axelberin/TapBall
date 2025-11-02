@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class MovableObjects : MonoBehaviour, IPauseble
+public class MovableObjects : MonoBehaviour, IPauseble
 {
     [SerializeField] bool _move;
     [SerializeField] float _movementSpeed = 3;
