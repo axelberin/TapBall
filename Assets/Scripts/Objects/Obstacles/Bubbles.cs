@@ -1,9 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 public class Bubbles : ObstaclesManager
 {
+    [SerializeField] private int _touchesToAdd = 1;
+
     private Animator _animator;
     private CircleCollider2D _collider;
+    private TMP_Text _touchesText;
 
     private void Start()
     {
@@ -12,6 +16,12 @@ public class Bubbles : ObstaclesManager
 
         if (_collider == null)
             _collider = GetComponent<CircleCollider2D>();
+
+        if (_touchesText == null)
+            _touchesText = GetComponentInChildren<TMP_Text>();
+
+        if (_touchesText != null)
+            _touchesText.SetText(_touchesToAdd > 0 ? $"+{_touchesToAdd}" : _touchesToAdd.ToString());
     }
 
     private void OnEnable()
