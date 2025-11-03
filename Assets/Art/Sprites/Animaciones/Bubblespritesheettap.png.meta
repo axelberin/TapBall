@@ -186,7 +186,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -223,6 +223,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -230,10 +243,10 @@ TextureImporter:
       name: Bubblespritesheettap_0
       rect:
         serializedVersion: 2
-        x: 45
-        y: 402
-        width: 261
-        height: 261
+        x: 0
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,10 +265,10 @@ TextureImporter:
       name: Bubblespritesheettap_1
       rect:
         serializedVersion: 2
-        x: 385
-        y: 211
-        width: 292
-        height: 468
+        x: 354
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,10 +287,10 @@ TextureImporter:
       name: Bubblespritesheettap_2
       rect:
         serializedVersion: 2
-        x: 739
-        y: 211
-        width: 292
-        height: 465
+        x: 708
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -296,10 +309,10 @@ TextureImporter:
       name: Bubblespritesheettap_3
       rect:
         serializedVersion: 2
-        x: 73
-        y: 281
-        width: 51
-        height: 34
+        x: 0
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,10 +331,10 @@ TextureImporter:
       name: Bubblespritesheettap_4
       rect:
         serializedVersion: 2
-        x: 221
-        y: 263
-        width: 60
-        height: 48
+        x: 354
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -340,10 +353,10 @@ TextureImporter:
       name: Bubblespritesheettap_5
       rect:
         serializedVersion: 2
-        x: 459
-        y: 301
-        width: 19
-        height: 13
+        x: 708
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -358,737 +371,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_6
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 240
-        width: 14
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 788264fa4746d65d0800000000000000
-      internalID: -3067685318849845113
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_7
-      rect:
-        serializedVersion: 2
-        x: 298
-        y: 234
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 12c6a1d1d74c67a90800000000000000
-      internalID: -7316444502978565087
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_8
-      rect:
-        serializedVersion: 2
-        x: 397
-        y: 240
-        width: 14
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ea36eaf3c1754bb90800000000000000
-      internalID: -7227055723183709266
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_9
-      rect:
-        serializedVersion: 2
-        x: 652
-        y: 234
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cb7b7a8b5df3c8ac0800000000000000
-      internalID: -3851633394150033476
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_10
-      rect:
-        serializedVersion: 2
-        x: 751
-        y: 240
-        width: 14
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6c41379933cdf9990800000000000000
-      internalID: -7376935550433684282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_11
-      rect:
-        serializedVersion: 2
-        x: 1006
-        y: 234
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bd82ee3b64ec47f20800000000000000
-      internalID: 3419584820142811355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_12
-      rect:
-        serializedVersion: 2
-        x: 36
-        y: 218
-        width: 18
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d3179f8bd011c2090800000000000000
-      internalID: -8058046882637057731
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_13
-      rect:
-        serializedVersion: 2
-        x: 31
-        y: 32
-        width: 292
-        height: 184
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 905008b045f5ceb20800000000000000
-      internalID: 3165009452709446921
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_14
-      rect:
-        serializedVersion: 2
-        x: 397
-        y: 148
-        width: 28
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 59db1568a2717d000800000000000000
-      internalID: 60542591402360213
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_15
-      rect:
-        serializedVersion: 2
-        x: 575
-        y: 190
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 91909d91d947897e0800000000000000
-      internalID: -1758527436395837159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_16
-      rect:
-        serializedVersion: 2
-        x: 929
-        y: 190
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1412c78886003feb0800000000000000
-      internalID: -4687402338196119231
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_17
-      rect:
-        serializedVersion: 2
-        x: 570
-        y: 152
-        width: 15
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5e9e84bcc52f267c0800000000000000
-      internalID: -4079431832082781723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_18
-      rect:
-        serializedVersion: 2
-        x: 599
-        y: 159
-        width: 30
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6ffa91f6d07cd9bf0800000000000000
-      internalID: -315877538333609994
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_19
-      rect:
-        serializedVersion: 2
-        x: 759
-        y: 165
-        width: 13
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 236ff343aed900eb0800000000000000
-      internalID: -4755627577278728654
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_20
-      rect:
-        serializedVersion: 2
-        x: 924
-        y: 152
-        width: 15
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7f825ab167c5568e0800000000000000
-      internalID: -1700851621922789129
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_21
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 163
-        width: 23
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e44fa0216369307a0800000000000000
-      internalID: -6412116285470346162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_22
-      rect:
-        serializedVersion: 2
-        x: 389
-        y: 131
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1aee4596a5af922d0800000000000000
-      internalID: -3302833585478373727
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_23
-      rect:
-        serializedVersion: 2
-        x: 485
-        y: 128
-        width: 25
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4609f30ba186bbdf0800000000000000
-      internalID: -163422497633496988
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_24
-      rect:
-        serializedVersion: 2
-        x: 518
-        y: 125
-        width: 20
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 79f64f52715e949c0800000000000000
-      internalID: -3942368111202373737
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_25
-      rect:
-        serializedVersion: 2
-        x: 545
-        y: 130
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 78750ff49f65ca5b0800000000000000
-      internalID: -5355810228062365817
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_26
-      rect:
-        serializedVersion: 2
-        x: 839
-        y: 128
-        width: 25
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c70785afdd6cb5730800000000000000
-      internalID: 3989000551656878204
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_27
-      rect:
-        serializedVersion: 2
-        x: 872
-        y: 125
-        width: 20
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 77114976a27a60100800000000000000
-      internalID: 73930244466413943
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_28
-      rect:
-        serializedVersion: 2
-        x: 899
-        y: 130
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b18371be789d35ac0800000000000000
-      internalID: -3867508477193144293
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_29
-      rect:
-        serializedVersion: 2
-        x: 416
-        y: 42
-        width: 73
-        height: 67
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ef0037a53cf6d32c0800000000000000
-      internalID: -4450277971945389826
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_30
-      rect:
-        serializedVersion: 2
-        x: 597
-        y: 106
-        width: 10
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 724fa13e46c9812a0800000000000000
-      internalID: -6766486483003313113
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_31
-      rect:
-        serializedVersion: 2
-        x: 770
-        y: 64
-        width: 50
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 89da85c4182a8a2c0800000000000000
-      internalID: -4420104358048780904
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_32
-      rect:
-        serializedVersion: 2
-        x: 500
-        y: 86
-        width: 7
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1a31c6b054228dea0800000000000000
-      internalID: -5847886436200868959
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_33
-      rect:
-        serializedVersion: 2
-        x: 525
-        y: 83
-        width: 11
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dc39993de4f78f640800000000000000
-      internalID: 5113977353413432269
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_34
-      rect:
-        serializedVersion: 2
-        x: 854
-        y: 86
-        width: 7
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cfb04967075822ba0800000000000000
-      internalID: -6115178625943467012
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_35
-      rect:
-        serializedVersion: 2
-        x: 521
-        y: 32
-        width: 40
-        height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5c648128c05543e80800000000000000
-      internalID: -8199835509324233019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_36
-      rect:
-        serializedVersion: 2
-        x: 577
-        y: 39
-        width: 55
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: aabb3111782740040800000000000000
-      internalID: 4612937842766887850
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_37
-      rect:
-        serializedVersion: 2
-        x: 891
-        y: 38
-        width: 47
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1a1d9d98178ce7990800000000000000
-      internalID: -7386245948871421535
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bubblespritesheettap_38
-      rect:
-        serializedVersion: 2
-        x: 965
-        y: 60
-        width: 15
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a48bc05d11e8c82e0800000000000000
-      internalID: -2122165117158377398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ee3b3eef44de4294e81932494d739fea
     internalID: 0
     vertices: []
     indices: 
@@ -1100,43 +387,10 @@ TextureImporter:
     nameFileIdTable:
       Bubblespritesheettap_0: 1416500481497381021
       Bubblespritesheettap_1: 902645498252321815
-      Bubblespritesheettap_10: -7376935550433684282
-      Bubblespritesheettap_11: 3419584820142811355
-      Bubblespritesheettap_12: -8058046882637057731
-      Bubblespritesheettap_13: 3165009452709446921
-      Bubblespritesheettap_14: 60542591402360213
-      Bubblespritesheettap_15: -1758527436395837159
-      Bubblespritesheettap_16: -4687402338196119231
-      Bubblespritesheettap_17: -4079431832082781723
-      Bubblespritesheettap_18: -315877538333609994
-      Bubblespritesheettap_19: -4755627577278728654
       Bubblespritesheettap_2: -2301710240338297853
-      Bubblespritesheettap_20: -1700851621922789129
-      Bubblespritesheettap_21: -6412116285470346162
-      Bubblespritesheettap_22: -3302833585478373727
-      Bubblespritesheettap_23: -163422497633496988
-      Bubblespritesheettap_24: -3942368111202373737
-      Bubblespritesheettap_25: -5355810228062365817
-      Bubblespritesheettap_26: 3989000551656878204
-      Bubblespritesheettap_27: 73930244466413943
-      Bubblespritesheettap_28: -3867508477193144293
-      Bubblespritesheettap_29: -4450277971945389826
       Bubblespritesheettap_3: 5741255481445490441
-      Bubblespritesheettap_30: -6766486483003313113
-      Bubblespritesheettap_31: -4420104358048780904
-      Bubblespritesheettap_32: -5847886436200868959
-      Bubblespritesheettap_33: 5113977353413432269
-      Bubblespritesheettap_34: -6115178625943467012
-      Bubblespritesheettap_35: -8199835509324233019
-      Bubblespritesheettap_36: 4612937842766887850
-      Bubblespritesheettap_37: -7386245948871421535
-      Bubblespritesheettap_38: -2122165117158377398
       Bubblespritesheettap_4: -7187594449877441252
       Bubblespritesheettap_5: 4841080766608492868
-      Bubblespritesheettap_6: -3067685318849845113
-      Bubblespritesheettap_7: -7316444502978565087
-      Bubblespritesheettap_8: -7227055723183709266
-      Bubblespritesheettap_9: -3851633394150033476
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
