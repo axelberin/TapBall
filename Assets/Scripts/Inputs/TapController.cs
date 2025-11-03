@@ -37,18 +37,18 @@ public class TapController : MonoBehaviour
         {
             case GameManager.GameModes.Dunk:
                 _tapCount++;
-                LevelCanvas.Instance.OnTap(_tapCount);
                 break;
             case GameManager.GameModes.OneTouch:
                 if (_tapCount > 0)
                 {
                     _tapCount--;
-                    LevelCanvas.Instance.OnTap(_tapCount);
                     if (_tapCount == 0)
                         GameManager.Instance.SetGetPlayer.Death();
                 }
                 break;
         }
+
+        LevelCanvas.Instance.OnTap(_tapCount);
     }
 
     void OnTap(Vector3 pos)
@@ -61,6 +61,12 @@ public class TapController : MonoBehaviour
         TapsBehaviourByMode(GameManager.Instance.GetCurrentGameMode);
         if (GameManager.Instance)
             GameManager.Instance.SetGetPlayer.OnTap(Camera.main.ScreenToWorldPoint(pos));
+    }
+
+    public void AddTouchesFromBubbles(int touchesToAdd)
+    {
+        _tapCount += touchesToAdd;
+        LevelCanvas.Instance.OnTap(_tapCount);
     }
 
     public int SetGetTapCount

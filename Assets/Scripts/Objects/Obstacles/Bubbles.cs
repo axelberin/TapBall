@@ -52,6 +52,8 @@ public class Bubbles : ObstaclesManager
         {
             _animator.SetTrigger("Interact");
             _collider.enabled = false;
+            if (GameManager.Instance.SetGetWorldState)
+                GameManager.Instance.SetGetTapController.AddTouchesFromBubbles(_touchesToAdd);
         }
     }
 }
