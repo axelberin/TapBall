@@ -33,6 +33,8 @@ public class TapController : MonoBehaviour
 
     private void TapsBehaviourByMode(GameManager.GameModes gameModes)
     {
+        if (PowerUpManager.Instance.PowerUpTapsEnabled)
+            return;
         switch (gameModes)
         {
             case GameManager.GameModes.Dunk:

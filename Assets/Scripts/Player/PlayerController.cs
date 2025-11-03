@@ -133,6 +133,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void Death()
     {
+        if (PowerUpManager.Instance.PowerUpImmunityEnabled)
+            return;
+
         transform.parent = null;
         _death = true;
 

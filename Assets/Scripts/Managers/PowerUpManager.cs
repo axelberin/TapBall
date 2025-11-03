@@ -7,9 +7,29 @@ public class PowerUpManager : MonoBehaviour
     public Action<PowerUpType> OnPowerUpActivated = delegate { };
     public Action<PowerUpType> OnPowerUpDeactivated = delegate { };
     public static PowerUpManager Instance { get; private set; }
+
+    private bool _powerUpTapsCounterEnabled = false;
+    private bool _powerUpImmunityEnabled = false;
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            SelectPowerUp(PowerUpType.TimeStopPowerUp, 3f);
+
+        }
+        else if(Input.GetKeyDown(KeyCode.O))
+        {
+            SelectPowerUp(PowerUpType.StopTouchCounterPowerUp, 3f);
+        }
+        else if( Input.GetKeyDown(KeyCode.P))
+        {
+            SelectPowerUp(PowerUpType.ImmunityPowerUp, 3f);
+        }
     }
 
     public void SelectPowerUp(PowerUpType powerUp, float timeActive)
@@ -21,10 +41,12 @@ public class PowerUpManager : MonoBehaviour
                 StartCoroutine(StopPowerUp(powerUp, timeActive));
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
-
+                _powerUpTapsCounterEnabled = true;
+                StartCoroutine(StopPowerUp(powerUp, timeActive));
                 break;
             case PowerUpType.ImmunityPowerUp:
-
+                _powerUpImmunityEnabled = true;
+                StartCoroutine(StopPowerUp(powerUp, timeActive));
                 break;
             case PowerUpType.RevivePowerUp:
 
@@ -43,10 +65,10 @@ public class PowerUpManager : MonoBehaviour
                 GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
-
+                _powerUpTapsCounterEnabled = false;
                 break;
             case PowerUpType.ImmunityPowerUp:
-
+                _powerUpImmunityEnabled = false;
                 break;
             case PowerUpType.RevivePowerUp:
 
@@ -55,6 +77,9 @@ public class PowerUpManager : MonoBehaviour
 
         OnPowerUpDeactivated?.Invoke(powerUp);
     }
+
+    public bool PowerUpTapsEnabled => _powerUpTapsCounterEnabled;
+    public bool PowerUpImmunityEnabled => _powerUpImmunityEnabled;
 
     public enum PowerUpType
     {
