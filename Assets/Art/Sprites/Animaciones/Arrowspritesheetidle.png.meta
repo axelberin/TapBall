@@ -123,8 +123,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 1024
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -160,6 +160,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -167,10 +180,10 @@ TextureImporter:
       name: Arrowspritesheetidle_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 438
-        width: 153
-        height: 186
+        x: 0
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +202,10 @@ TextureImporter:
       name: Arrowspritesheetidle_1
       rect:
         serializedVersion: 2
-        x: 125
-        y: 438
-        width: 132
-        height: 186
+        x: 354
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,10 +224,10 @@ TextureImporter:
       name: Arrowspritesheetidle_2
       rect:
         serializedVersion: 2
-        x: 203
-        y: 438
-        width: 131
-        height: 186
+        x: 708
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,10 +246,10 @@ TextureImporter:
       name: Arrowspritesheetidle_3
       rect:
         serializedVersion: 2
-        x: 374
-        y: 438
-        width: 153
-        height: 186
+        x: 0
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,10 +268,10 @@ TextureImporter:
       name: Arrowspritesheetidle_4
       rect:
         serializedVersion: 2
-        x: 479
-        y: 438
-        width: 132
-        height: 186
+        x: 354
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -277,10 +290,10 @@ TextureImporter:
       name: Arrowspritesheetidle_5
       rect:
         serializedVersion: 2
-        x: 557
-        y: 438
-        width: 131
-        height: 186
+        x: 708
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -295,275 +308,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_6
-      rect:
-        serializedVersion: 2
-        x: 728
-        y: 438
-        width: 153
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f9895aea74bead210800000000000000
-      internalID: 1358656930710919327
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_7
-      rect:
-        serializedVersion: 2
-        x: 833
-        y: 438
-        width: 132
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ad1c532081ae026a0800000000000000
-      internalID: -6475918875321581094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_8
-      rect:
-        serializedVersion: 2
-        x: 911
-        y: 438
-        width: 131
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dbc668c6a631b9a40800000000000000
-      internalID: 5375911928005029053
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_9
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 84
-        width: 153
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 794d052648eb20380800000000000000
-      internalID: -9006426828993145705
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_10
-      rect:
-        serializedVersion: 2
-        x: 125
-        y: 84
-        width: 132
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0d269b450da9374b0800000000000000
-      internalID: -5443837304995487024
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_11
-      rect:
-        serializedVersion: 2
-        x: 203
-        y: 84
-        width: 131
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 320df3b17e08a5030800000000000000
-      internalID: 3484238991807467555
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_12
-      rect:
-        serializedVersion: 2
-        x: 374
-        y: 84
-        width: 153
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0c97770a46b7047c0800000000000000
-      internalID: -4089132789533279808
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_13
-      rect:
-        serializedVersion: 2
-        x: 479
-        y: 84
-        width: 132
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6b37a33cb96ed7860800000000000000
-      internalID: 7529427708703044534
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_14
-      rect:
-        serializedVersion: 2
-        x: 557
-        y: 84
-        width: 131
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9ec59c11a40c792c0800000000000000
-      internalID: -4424856684509700887
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_15
-      rect:
-        serializedVersion: 2
-        x: 728
-        y: 84
-        width: 153
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dad1f90ff1c37cd50800000000000000
-      internalID: 6757435873771330989
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_16
-      rect:
-        serializedVersion: 2
-        x: 833
-        y: 84
-        width: 132
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0788df528be2ce970800000000000000
-      internalID: 8785448341539227760
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrowspritesheetidle_17
-      rect:
-        serializedVersion: 2
-        x: 911
-        y: 84
-        width: 131
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e28fb95c2850c9190800000000000000
-      internalID: -7954476782623918034
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6b3448b7323143441aada2c38aa1e060
     internalID: 0
     vertices: []
     indices: 
@@ -575,22 +324,10 @@ TextureImporter:
     nameFileIdTable:
       Arrowspritesheetidle_0: 2998172129044137492
       Arrowspritesheetidle_1: 7111154286874347802
-      Arrowspritesheetidle_10: -5443837304995487024
-      Arrowspritesheetidle_11: 3484238991807467555
-      Arrowspritesheetidle_12: -4089132789533279808
-      Arrowspritesheetidle_13: 7529427708703044534
-      Arrowspritesheetidle_14: -4424856684509700887
-      Arrowspritesheetidle_15: 6757435873771330989
-      Arrowspritesheetidle_16: 8785448341539227760
-      Arrowspritesheetidle_17: -7954476782623918034
       Arrowspritesheetidle_2: -8857475549802490431
       Arrowspritesheetidle_3: 8082042159571101457
       Arrowspritesheetidle_4: 2644722788880028143
       Arrowspritesheetidle_5: -4745014511274033137
-      Arrowspritesheetidle_6: 1358656930710919327
-      Arrowspritesheetidle_7: -6475918875321581094
-      Arrowspritesheetidle_8: 5375911928005029053
-      Arrowspritesheetidle_9: -9006426828993145705
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

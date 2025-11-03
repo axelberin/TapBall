@@ -81,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -138,10 +138,10 @@ TextureImporter:
       name: OrbSkin spritesheet-Idle_0
       rect:
         serializedVersion: 2
-        x: 88
-        y: 438
-        width: 184
-        height: 184
+        x: 0
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,10 +160,10 @@ TextureImporter:
       name: OrbSkin spritesheet-Idle_1
       rect:
         serializedVersion: 2
-        x: 442
-        y: 438
-        width: 184
-        height: 184
+        x: 354
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,10 +182,10 @@ TextureImporter:
       name: OrbSkin spritesheet-Idle_2
       rect:
         serializedVersion: 2
-        x: 88
-        y: 84
-        width: 184
-        height: 184
+        x: 0
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,10 +204,10 @@ TextureImporter:
       name: OrbSkin spritesheet-Idle_3
       rect:
         serializedVersion: 2
-        x: 442
-        y: 84
-        width: 184
-        height: 184
+        x: 354
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a3676e4de17bfdf4baafda6e1c117e83
     internalID: 0
     vertices: []
     indices: 

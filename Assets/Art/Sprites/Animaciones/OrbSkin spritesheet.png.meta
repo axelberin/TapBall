@@ -75,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -132,10 +132,10 @@ TextureImporter:
       name: OrbSkin spritesheet_0
       rect:
         serializedVersion: 2
-        x: 88
-        y: 84
-        width: 184
-        height: 184
+        x: 0
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,10 +154,10 @@ TextureImporter:
       name: OrbSkin spritesheet_1
       rect:
         serializedVersion: 2
-        x: 442
-        y: 84
-        width: 184
-        height: 184
+        x: 354
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,7 +176,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ff750339c6d46b24fac1c5883a61f8cf
     internalID: 0
     vertices: []
     indices: 
