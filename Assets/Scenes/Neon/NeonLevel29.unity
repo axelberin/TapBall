@@ -2373,7 +2373,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: _limitTime
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: _limitTouches
