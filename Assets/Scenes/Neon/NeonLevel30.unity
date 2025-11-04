@@ -709,9 +709,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4238626745215038722, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: anchorOffset.y
+      value: -0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5386544777281946175, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
       propertyPath: m_Name
       value: DunkManagers
+      objectReference: {fileID: 0}
+    - target: {fileID: 7515295792491265651, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: _touchesToAdd
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -723,7 +731,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
       insertIndex: -1
       addedObject: {fileID: 443116667}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6235538929317804413, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
 --- !u!4 &964689968 stripped
 Transform:
@@ -2376,7 +2387,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: _limitTime
-      value: 18
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 492060546322440107, guid: fd8712732864cbd4c91e32fa29314e51, type: 3}
       propertyPath: _limitTouches
