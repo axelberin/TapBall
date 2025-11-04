@@ -27,6 +27,14 @@ public class LevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _nextLevelText;
     private TextMeshProUGUI _currentLevelText;
     private List<TextMeshProUGUI> _achievementTextList = new();
+    private Button _stopTimePowUpButton;
+    private Button _stopTouchCountPowUpButton;
+    private Button _immunityPowUpButton;
+    private Button _revivePowUpButton;
+    private TextMeshProUGUI _stopTimePowUpText;
+    private TextMeshProUGUI _stopTouchCountPowUpText;
+    private TextMeshProUGUI _immunityPowUpText;
+    private TextMeshProUGUI _revivePowUpText;
 
     private void Awake()
     {
@@ -103,6 +111,28 @@ public class LevelCanvas : CanvasElementLocator
         var configsButton = FindAndValidateComponent<Button>(transform, "ConfigsButton");
         configsButton.onClick.AddListener(() =>
             UIManager.Instance.ChangeCanvas("DunkCanvas", "ConfigsCanvas"));
+
+
+        _stopTimePowUpButton = FindAndValidateComponent<Button>(transform, "StopTimePowerButton");
+        _stopTouchCountPowUpButton = FindAndValidateComponent<Button>(transform, "StopTouchCountPowerButton");
+        _immunityPowUpButton = FindAndValidateComponent<Button>(transform, "ImmunityPowerButton");
+        _revivePowUpButton = FindAndValidateComponent<Button>(transform, "RevivePowerButton");
+
+        _stopTimePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTimePowerText");
+        _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTouchCountPowerText");
+        _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "immunityPowerText");
+        _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "revivePowerText");
+
+        _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.TimeStopPowerUp);
+        _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.StopTouchCounterPowerUp);
+        _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
+        _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.RevivePowerUp);
+
+        _stopTimePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.TimeStopPowerUp));
+        _stopTouchCountPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.StopTouchCounterPowerUp));
+        _immunityPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp));
+        _revivePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.RevivePowerUp));
+
 
         _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
 

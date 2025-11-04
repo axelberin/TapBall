@@ -10,28 +10,33 @@ public class PowerUpManager : MonoBehaviour
 
     private bool _powerUpTapsCounterEnabled = false;
     private bool _powerUpImmunityEnabled = false;
+
+    private int _timeStopPowerUpAmount = 0;
+    private int _stopTouchCounterPowerUpAmount = 0;
+    private int _immunityPowerUpAmount = 0;
     private void Awake()
     {
         Instance = this;
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             SelectPowerUp(PowerUpType.TimeStopPowerUp, 3f);
 
         }
-        else if(Input.GetKeyDown(KeyCode.O))
+        else if (Input.GetKeyDown(KeyCode.O))
         {
             SelectPowerUp(PowerUpType.StopTouchCounterPowerUp, 3f);
         }
-        else if( Input.GetKeyDown(KeyCode.P))
+        else if (Input.GetKeyDown(KeyCode.P))
         {
             SelectPowerUp(PowerUpType.ImmunityPowerUp, 3f);
         }
     }
-
+#endif
     public void SelectPowerUp(PowerUpType powerUp, float timeActive)
     {
         switch (powerUp)
@@ -78,9 +83,21 @@ public class PowerUpManager : MonoBehaviour
         OnPowerUpDeactivated?.Invoke(powerUp);
     }
 
+    public void AddPowerUp(PowerUpType powerUp, int amount)
+    {
+        SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+            powerUp.ToString()) + amount, SaveAndLoadManager.PowerUpPrefix + powerUp.ToString());
+    }
+
+    public bool HasPowerUp(PowerUpType powerUp)
+    {
+        return SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + powerUp.ToString()) > 0;
+    }
+
+    #region UTILITY METHODS
     public bool PowerUpTapsEnabled => _powerUpTapsCounterEnabled;
     public bool PowerUpImmunityEnabled => _powerUpImmunityEnabled;
-
+    #endregion
     public enum PowerUpType
     {
         TimeStopPowerUp,
