@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UtilityAddressables;
+using static PowerUpManager;
 
 public class LevelCanvas : CanvasElementLocator
 {
@@ -35,6 +36,8 @@ public class LevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _stopTouchCountPowUpText;
     private TextMeshProUGUI _immunityPowUpText;
     private TextMeshProUGUI _revivePowUpText;
+    private GameObject _revivePowerUpUI;
+    private Button _useOrbsToReviveButton;
 
     private void Awake()
     {
@@ -52,6 +55,7 @@ public class LevelCanvas : CanvasElementLocator
         SetCounterByGameMode(GameManager.Instance.GetCurrentGameMode);
         _winTime = FindAndValidateComponent<TextMeshProUGUI>(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
+        _revivePowerUpUI = FindAndValidateGameObjectComponent(transform, "RevivePowerUpUI");
 
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
@@ -117,21 +121,47 @@ public class LevelCanvas : CanvasElementLocator
         _stopTouchCountPowUpButton = FindAndValidateComponent<Button>(transform, "StopTouchCountPowerButton");
         _immunityPowUpButton = FindAndValidateComponent<Button>(transform, "ImmunityPowerButton");
         _revivePowUpButton = FindAndValidateComponent<Button>(transform, "RevivePowerButton");
+        _useOrbsToReviveButton = FindAndValidateComponent<Button>(transform, "UseOrbReviveButton");
 
         _stopTimePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTimePowerText");
         _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTouchCountPowerText");
         _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "immunityPowerText");
         _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "revivePowerText");
 
-        _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.TimeStopPowerUp);
-        _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.StopTouchCounterPowerUp);
-        _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
-        _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.RevivePowerUp);
+        _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
+            && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
 
-        _stopTimePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.TimeStopPowerUp));
-        _stopTouchCountPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.StopTouchCounterPowerUp));
-        _immunityPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp));
-        _revivePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpManager.PowerUpType.RevivePowerUp));
+        _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp)
+            && GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time;
+
+        _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
+        _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp);
+
+        _stopTimePowUpButton.onClick.AddListener(() =>
+        {
+            UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
+        });
+        _stopTouchCountPowUpButton.onClick.AddListener(() =>
+        {
+            UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
+        });
+        _immunityPowUpButton.onClick.AddListener(() =>
+        {
+            UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.ImmunityPowerUp);
+        });
+        _revivePowUpButton.onClick.AddListener(() =>
+        {
+            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+        });
+
+        _stopTimePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp));
+        _stopTouchCountPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp));
+        _immunityPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp));
+        _revivePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp));
 
 
         _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
@@ -141,6 +171,7 @@ public class LevelCanvas : CanvasElementLocator
         _deathGoal = FindAndValidateGameObjectComponent(transform, "DeathGoalFull");
         _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
         _achievementsGoalPrefab = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab");
+
 
         StartCoroutine(UpdateTextsDelay());
         SetAchivementsByMode();
@@ -186,6 +217,12 @@ public class LevelCanvas : CanvasElementLocator
     private void OnEnable()
     {
         UpdateTexts();
+        PowerUpManager.Instance.OnPowerUpActivated += UpdatePowerUpTexts;
+    }
+
+    private void OnDisable()
+    {
+        PowerUpManager.Instance.OnPowerUpActivated -= UpdatePowerUpTexts;
     }
 
     private void OnDestroy()
@@ -209,6 +246,36 @@ public class LevelCanvas : CanvasElementLocator
         if (_currentLevelText != null)
             _currentLevelText.text =
                 $"{LanguageManager.Instance.GetLocalizedText("level")} {GameManager.Instance.SetGetWorldState.GetLevel}";
+    }
+
+    public void ActivateRevivePowerUI()
+    {
+        if(_revivePowerUpUI != null)
+            _revivePowerUpUI.SetActive(!_revivePowerUpUI.activeSelf);
+    }
+
+    private void UpdatePowerUpTexts(PowerUpType powerUp)
+    {
+        switch (powerUp)
+        {
+            case PowerUpType.TimeStopPowerUp:
+                SetPowerUpTexts(_stopTimePowUpText, powerUp);
+                break;
+            case PowerUpType.StopTouchCounterPowerUp:
+                SetPowerUpTexts(_stopTouchCountPowUpText, powerUp);
+                break;
+            case PowerUpType.ImmunityPowerUp:
+                SetPowerUpTexts(_immunityPowUpText, powerUp);
+                break;
+            case PowerUpType.RevivePowerUp:
+                SetPowerUpTexts(_revivePowUpText, powerUp);
+                break;
+        }
+    }
+
+    private void SetPowerUpTexts(TextMeshProUGUI text, PowerUpType powUpType)
+    {
+        UIManager.Instance.SetText(text, $"x{SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + powUpType.ToString())}");
     }
 
     private void OnResumeClicked()

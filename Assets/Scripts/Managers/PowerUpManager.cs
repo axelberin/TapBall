@@ -11,9 +11,10 @@ public class PowerUpManager : MonoBehaviour
     private bool _powerUpTapsCounterEnabled = false;
     private bool _powerUpImmunityEnabled = false;
 
-    private int _timeStopPowerUpAmount = 0;
-    private int _stopTouchCounterPowerUpAmount = 0;
-    private int _immunityPowerUpAmount = 0;
+    [SerializeField] private float _timeStopTime = 3f;
+    [SerializeField] private float _stopTouchCounterTime = 3f;
+    [SerializeField] private float _immunityTime = 3f;
+
     private void Awake()
     {
         Instance = this;
@@ -24,34 +25,34 @@ public class PowerUpManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SelectPowerUp(PowerUpType.TimeStopPowerUp, 3f);
+            SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
-            SelectPowerUp(PowerUpType.StopTouchCounterPowerUp, 3f);
+            SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
-            SelectPowerUp(PowerUpType.ImmunityPowerUp, 3f);
+            SelectPowerUp(PowerUpType.ImmunityPowerUp);
         }
     }
 #endif
-    public void SelectPowerUp(PowerUpType powerUp, float timeActive)
+    public void SelectPowerUp(PowerUpType powerUp)
     {
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
                 GameManager.Instance.SetGetWorldState.StopCountTimerMode();
-                StartCoroutine(StopPowerUp(powerUp, timeActive));
+                StartCoroutine(StopPowerUp(powerUp, _timeStopTime));
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
                 _powerUpTapsCounterEnabled = true;
-                StartCoroutine(StopPowerUp(powerUp, timeActive));
+                StartCoroutine(StopPowerUp(powerUp, _stopTouchCounterTime));
                 break;
             case PowerUpType.ImmunityPowerUp:
                 _powerUpImmunityEnabled = true;
-                StartCoroutine(StopPowerUp(powerUp, timeActive));
+                StartCoroutine(StopPowerUp(powerUp, _immunityTime));
                 break;
             case PowerUpType.RevivePowerUp:
 
@@ -86,7 +87,7 @@ public class PowerUpManager : MonoBehaviour
     public void AddPowerUp(PowerUpType powerUp, int amount)
     {
         SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-            powerUp.ToString()) + amount, SaveAndLoadManager.PowerUpPrefix + powerUp.ToString());
+            powerUp.ToString()) + amount, SaveAndLoadManager.PowerUpPrefix + powerUp.ToString(), true, true);
     }
 
     public bool HasPowerUp(PowerUpType powerUp)
