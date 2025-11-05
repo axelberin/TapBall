@@ -38,11 +38,13 @@ public class Bubbles : ObstaclesManager
 
     private void OnLose()
     {
+        if (_collider == null || _collider.enabled == true)
+            return;
+
         if (_animator != null)
             _animator.SetTrigger("OnLose");
 
-        if (_collider != null)
-            _collider.enabled = true;
+        _collider.enabled = true;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
