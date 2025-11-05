@@ -174,11 +174,11 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 1.5700538, y: 0.0067632496}
-      - {x: 0.97768104, y: -0.9149602}
-      - {x: -1.576859, y: -0.9261203}
+      - {x: 1.1711763, y: -0.61504257}
+      - {x: -1.4027132, y: -0.62620234}
       - {x: -0.9811731, y: 0.017365707}
-      - {x: -1.5780056, y: 0.92545754}
-      - {x: 0.9852754, y: 0.9146022}
+      - {x: -1.3651607, y: 0.61586493}
+      - {x: 1.1981204, y: 0.5856603}
   m_UseDelaunayMesh: 0
 --- !u!249 &418005382913351572
 AreaEffector2D:
@@ -195,7 +195,7 @@ AreaEffector2D:
     m_Bits: 1
   m_UseGlobalAngle: 0
   m_ForceAngle: 0
-  m_ForceMagnitude: 15
+  m_ForceMagnitude: 10
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 1

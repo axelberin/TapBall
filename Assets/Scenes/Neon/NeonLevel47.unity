@@ -2289,6 +2289,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3458936218877451891, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4238626745215038722, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: anchorOffset.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5386544777281946175, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
       propertyPath: m_Name
       value: DunkManagers
@@ -2305,6 +2313,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 7515295792491265651, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      propertyPath: _touchesToAdd
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2314,7 +2326,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3661548268691188112, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1779019951}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6235538929317804413, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 10200eb948b14fc46af8365a0873d330, type: 3}
 --- !u!4 &1107687036 stripped
 Transform:
