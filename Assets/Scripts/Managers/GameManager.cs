@@ -68,6 +68,9 @@ public class GameManager : MonoBehaviour
 
     public void UnlockMode(int level)
     {
+        if (_currentGameMode != GameModes.Dunk)
+            return;
+
         GameModes mode = GetGameModeTUnlockByLevel(level);
 
         if (mode == GameModes.Null || IsModeUnlocked(mode))
