@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     public IEnumerator RejectRevivalPowerUp()
     {
         yield return new WaitForSeconds(3);
+        Debug.Log("Rejected");
         LevelCanvas.Instance.ActivateAndDeactivateRevivePowerUI();
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
@@ -175,6 +176,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     public IEnumerator AcceptRevivalPowerUp()
     {
         yield return new WaitForSeconds(3);
+        Debug.Log("Reviving");
     }
 
     public void OnResume()

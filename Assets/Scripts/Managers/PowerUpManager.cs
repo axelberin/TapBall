@@ -25,16 +25,28 @@ public class PowerUpManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SelectPowerUp(PowerUpType.TimeStopPowerUp);
+            //SelectPowerUp(PowerUpType.TimeStopPowerUp);
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+               PowerUpType.TimeStopPowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.TimeStopPowerUp, true, true);
 
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
-            SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
+            //SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+              PowerUpType.StopTouchCounterPowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.StopTouchCounterPowerUp, true, true);
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
-            SelectPowerUp(PowerUpType.ImmunityPowerUp);
+            //SelectPowerUp(PowerUpType.ImmunityPowerUp);
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+              PowerUpType.ImmunityPowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.ImmunityPowerUp, true, true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+              PowerUpType.RevivePowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp, true, true);
+
         }
     }
 #endif
