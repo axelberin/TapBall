@@ -36,10 +36,10 @@ public class LevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _stopTouchCountPowUpText;
     private TextMeshProUGUI _immunityPowUpText;
     private TextMeshProUGUI _revivePowUpText;
-    private GameObject _revivePowerUpUI;
-    private Button _useOrbsToReviveButton;
-    private Button _viewVideoToReviveButton;
-    private Button _rejectReviveButton;
+    private GameObject _revivePowerUpUI;    // Hacer PopUp
+    private Image _useRevivePoweUpToReviveImage;
+    private Image _useOrbsToReviveImage;
+    private Image _viewVideoToReviveImage;
 
     private void Awake()
     {
@@ -123,17 +123,19 @@ public class LevelCanvas : CanvasElementLocator
         _stopTouchCountPowUpButton = FindAndValidateComponent<Button>(transform, "StopTouchCountPowerButton");
         _immunityPowUpButton = FindAndValidateComponent<Button>(transform, "ImmunityPowerButton");
 
- #region REVIVE POWER UP UI
+        #region REVIVE POWER UP UI
+        // Este va a aser el power up de arriba en la UI
         _revivePowUpButton = FindAndValidateComponent<Button>(transform, "RevivePowerButton");
-        _useOrbsToReviveButton = FindAndValidateComponent<Button>(transform, "UseOrbReviveButton");
-        _viewVideoToReviveButton = FindAndValidateComponent<Button>(transform, "ViewVideoToReviveButton");
-        _rejectReviveButton = FindAndValidateComponent<Button>(transform, "RejectReviveButton");
-        _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "revivePowerText");
-  #endregion
+        //Estas son las imagenes que estan dentro del botón de Ok del pop up
+        _useRevivePoweUpToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "RevivePowerUpImage");
+        _useOrbsToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "OrbImage");
+        _viewVideoToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "AdsImage");
+        _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "RevivePowerText");
+        #endregion
 
-        _stopTimePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTimePowerText");
-        _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTouchCountPowerText");
-        _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "immunityPowerText");
+        _stopTimePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "StopTimePowerText");
+        _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "StopTouchCountPowerText");
+        _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ImmunityPowerText");
 
         _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
             && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
@@ -142,38 +144,38 @@ public class LevelCanvas : CanvasElementLocator
             && GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time;
         _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
 
- #region REVIVE POWERUP UI INTERACTUABLE BUTTONS
+        #region REVIVE POWERUP UI INTERACTUABLE BUTTONS
         _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp);
-        _useOrbsToReviveButton.interactable = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0;
+        _useOrbsToReviveImage.gameObject.SetActive(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0);
 
-        _revivePowUpButton.onClick.AddListener(() =>
-        {
-            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+        //Lo que hacen estos botones va a tener que pasar en un solo botón, el OK del pop up, y va a variar en base al recurso disponible.
+        //_revivePowUpButton.onClick.AddListener(() =>
+        //{
+        //    PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
 
-            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-               PowerUpType.RevivePowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp, true, true);
+        //    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+        //       PowerUpType.RevivePowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp, true, true);
 
-            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
-        });
-        _useOrbsToReviveButton.onClick.AddListener(() =>
-        {
-            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+        //    UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+        //});
+        //_useOrbsToReviveImage.onClick.AddListener(() =>
+        //{
+        //    PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
 
-            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
-                       - 10, SaveAndLoadManager.OrbsName, true, true);
+        //    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
+        //               - 10, SaveAndLoadManager.OrbsName, true, true);
 
-            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
-        });
-        _viewVideoToReviveButton.onClick.AddListener(() => Debug.Log("Estás viendo un vidio para revivir........."));
-        _rejectReviveButton.onClick.AddListener(() => GameManager.Instance.SetGetPlayer.RejectRevivalPowerUp());
-#endregion
+        //    UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+        //});
+        //_viewVideoToReviveImage.onClick.AddListener(() => Debug.Log("Estás viendo un vidio para revivir........."));
+        #endregion
 
         _stopTimePowUpButton.onClick.AddListener(() =>
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
             SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-                PowerUpType.TimeStopPowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.TimeStopPowerUp, true ,true);
+                PowerUpType.TimeStopPowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.TimeStopPowerUp, true, true);
 
             UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
         });
@@ -195,12 +197,6 @@ public class LevelCanvas : CanvasElementLocator
 
             UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         });
-
-       // _stopTimePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp));
-       // _stopTouchCountPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp));
-       // _immunityPowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp));
-       // _revivePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp));
-
 
         _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
 
@@ -255,12 +251,14 @@ public class LevelCanvas : CanvasElementLocator
     private void OnEnable()
     {
         UpdateTexts();
-        PowerUpManager.Instance.OnPowerUpActivated += UpdatePowerUpTexts;
+        if (PowerUpManager.Instance)
+            PowerUpManager.Instance.OnPowerUpActivated += UpdatePowerUpTexts;
     }
 
     private void OnDisable()
     {
-        PowerUpManager.Instance.OnPowerUpActivated -= UpdatePowerUpTexts;
+        if (PowerUpManager.Instance)
+            PowerUpManager.Instance.OnPowerUpActivated -= UpdatePowerUpTexts;
     }
 
     private void OnDestroy()
@@ -288,11 +286,13 @@ public class LevelCanvas : CanvasElementLocator
 
     public void ActivateAndDeactivateRevivePowerUI()
     {
-        if(_revivePowerUpUI != null)
-            _revivePowerUpUI.SetActive(!_revivePowerUpUI.activeSelf);
+        // Definir lógica del botón de OK en base al recurso disponible.
+        // Activar la imagen del botón de Ok que corresponda según el recurso disponible.
 
-        _viewVideoToReviveButton.interactable = _revivePowerUpUI.activeSelf;
-        _rejectReviveButton.interactable = _revivePowerUpUI.activeSelf;
+        // Para que muestre un anuncio es así.
+        //AdsManager.Instance.ShowInterstitialAd(Pasarle la funcion de AcceptRevive al finalizar el anuncio);
+
+        // Activar pop up.
     }
 
     private void UpdatePowerUpTexts(PowerUpType powerUp)

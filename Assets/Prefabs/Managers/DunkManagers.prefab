@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 1754794324445974698}
   - component: {fileID: 6859707612866465627}
   - component: {fileID: 3185089438556442634}
+  - component: {fileID: 3504243292194061144}
   m_Layer: 0
   m_Name: DunkManagers
   m_TagString: Untagged
@@ -136,6 +137,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b69d568d64bcbd468851f1c4463d6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3504243292194061144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5386544777281946175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d527c271b73d94482e347ee0718529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeStopTime: 3
+  _stopTouchCounterTime: 3
+  _immunityTime: 3
 --- !u!1001 &1479999133324219344
 PrefabInstance:
   m_ObjectHideFlags: 0
