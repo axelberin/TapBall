@@ -38,6 +38,8 @@ public class LevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _revivePowUpText;
     private GameObject _revivePowerUpUI;
     private Button _useOrbsToReviveButton;
+    private Button _viewVideoToReviveButton;
+    private Button _rejectReviveButton;
 
     private void Awake()
     {
@@ -122,6 +124,8 @@ public class LevelCanvas : CanvasElementLocator
         _immunityPowUpButton = FindAndValidateComponent<Button>(transform, "ImmunityPowerButton");
         _revivePowUpButton = FindAndValidateComponent<Button>(transform, "RevivePowerButton");
         _useOrbsToReviveButton = FindAndValidateComponent<Button>(transform, "UseOrbReviveButton");
+        _viewVideoToReviveButton = FindAndValidateComponent<Button>(transform, "ViewVideoToReviveButton");
+        _rejectReviveButton = FindAndValidateComponent<Button>(transform, "RejectReviveButton");
 
         _stopTimePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTimePowerText");
         _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTouchCountPowerText");
@@ -248,7 +252,7 @@ public class LevelCanvas : CanvasElementLocator
                 $"{LanguageManager.Instance.GetLocalizedText("level")} {GameManager.Instance.SetGetWorldState.GetLevel}";
     }
 
-    public void ActivateRevivePowerUI()
+    public void ActivateAndDeactivateRevivePowerUI()
     {
         if(_revivePowerUpUI != null)
             _revivePowerUpUI.SetActive(!_revivePowerUpUI.activeSelf);
