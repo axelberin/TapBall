@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         StartCoroutine(RejectRevivalPowerUp());
     }
 
-    private IEnumerator RejectRevivalPowerUp()
+    public IEnumerator RejectRevivalPowerUp()
     {
         yield return new WaitForSeconds(3);
         LevelCanvas.Instance.ActivateAndDeactivateRevivePowerUI();
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
     }
 
-    private IEnumerator AcceptRevivalPowerUp()
+    public IEnumerator AcceptRevivalPowerUp()
     {
         yield return new WaitForSeconds(3);
     }

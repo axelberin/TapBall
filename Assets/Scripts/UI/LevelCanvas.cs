@@ -122,44 +122,80 @@ public class LevelCanvas : CanvasElementLocator
         _stopTimePowUpButton = FindAndValidateComponent<Button>(transform, "StopTimePowerButton");
         _stopTouchCountPowUpButton = FindAndValidateComponent<Button>(transform, "StopTouchCountPowerButton");
         _immunityPowUpButton = FindAndValidateComponent<Button>(transform, "ImmunityPowerButton");
+
+ #region REVIVE POWER UP UI
         _revivePowUpButton = FindAndValidateComponent<Button>(transform, "RevivePowerButton");
         _useOrbsToReviveButton = FindAndValidateComponent<Button>(transform, "UseOrbReviveButton");
         _viewVideoToReviveButton = FindAndValidateComponent<Button>(transform, "ViewVideoToReviveButton");
         _rejectReviveButton = FindAndValidateComponent<Button>(transform, "RejectReviveButton");
+        _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "revivePowerText");
+  #endregion
 
         _stopTimePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTimePowerText");
         _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "stopTouchCountPowerText");
         _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "immunityPowerText");
-        _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "revivePowerText");
 
         _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
             && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
 
         _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp)
             && GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time;
-
         _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
+
+ #region REVIVE POWERUP UI INTERACTUABLE BUTTONS
         _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp);
+        _useOrbsToReviveButton.interactable = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0;
+        _viewVideoToReviveButton.interactable = _rejectReviveButton.IsActive();
+        _rejectReviveButton.interactable = _rejectReviveButton.IsActive();
+
+        _revivePowUpButton.onClick.AddListener(() =>
+        {
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+               PowerUpType.RevivePowerUp) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp, true, true);
+
+            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+        });
+        _useOrbsToReviveButton.onClick.AddListener(() =>
+        {
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
+                       - 10, SaveAndLoadManager.OrbsName, true, true);
+
+            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+        });
+        _viewVideoToReviveButton.onClick.AddListener(() => Debug.Log("Estás viendo un vidio para revivir........."));
+        _rejectReviveButton.onClick.AddListener(() => GameManager.Instance.SetGetPlayer.RejectRevivalPowerUp());
+#endregion
 
         _stopTimePowUpButton.onClick.AddListener(() =>
         {
-            UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
+
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+                PowerUpType.TimeStopPowerUp) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.TimeStopPowerUp, true ,true);
+
+            UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
         });
         _stopTouchCountPowUpButton.onClick.AddListener(() =>
         {
-            UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
+
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+                PowerUpType.StopTouchCounterPowerUp) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.StopTouchCounterPowerUp, true, true);
+
+            UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
         });
         _immunityPowUpButton.onClick.AddListener(() =>
         {
-            UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.ImmunityPowerUp);
-        });
-        _revivePowUpButton.onClick.AddListener(() =>
-        {
-            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
-            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+                PowerUpType.ImmunityPowerUp) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.ImmunityPowerUp, true, true);
+
+            UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         });
 
         _stopTimePowUpText.gameObject.SetActive(PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp));

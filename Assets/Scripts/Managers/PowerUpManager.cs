@@ -55,7 +55,7 @@ public class PowerUpManager : MonoBehaviour
                 StartCoroutine(StopPowerUp(powerUp, _immunityTime));
                 break;
             case PowerUpType.RevivePowerUp:
-
+                StartCoroutine(GameManager.Instance.SetGetPlayer.AcceptRevivalPowerUp());
                 break;
         }
 
