@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -36,7 +37,7 @@ public class LevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _stopTouchCountPowUpText;
     private TextMeshProUGUI _immunityPowUpText;
     private TextMeshProUGUI _revivePowUpText;
-    private GameObject _revivePowerUpUI;    // Hacer PopUp
+    private PopUp _revivePowerUpUI;
     private Image _useRevivePoweUpToReviveImage;
     private Image _useOrbsToReviveImage;
     private Image _viewVideoToReviveImage;
@@ -57,7 +58,7 @@ public class LevelCanvas : CanvasElementLocator
         SetCounterByGameMode(GameManager.Instance.GetCurrentGameMode);
         _winTime = FindAndValidateComponent<TextMeshProUGUI>(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
-        _revivePowerUpUI = FindAndValidateGameObjectComponent(transform, "RevivePowerUpUI");
+        _revivePowerUpUI = FindAndValidateComponent<PopUp>(transform, "RevivePowerUpUI");
 
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
@@ -137,9 +138,11 @@ public class LevelCanvas : CanvasElementLocator
         _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "StopTouchCountPowerText");
         _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ImmunityPowerText");
 
+        _stopTimePowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time);
         _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
             && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
 
+        _stopTouchCountPowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time);
         _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp)
             && GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time;
         _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
@@ -152,10 +155,9 @@ public class LevelCanvas : CanvasElementLocator
         //_revivePowUpButton.onClick.AddListener(() =>
         //{
         //    PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
-
-        //    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-        //       PowerUpType.RevivePowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp, true, true);
-
+        //
+        //    PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.RevivePowerUp);
+        //
         //    UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
         //});
         //_useOrbsToReviveImage.onClick.AddListener(() =>
@@ -174,8 +176,7 @@ public class LevelCanvas : CanvasElementLocator
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
-            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-                PowerUpType.TimeStopPowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.TimeStopPowerUp, true, true);
+            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.TimeStopPowerUp);
 
             UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
         });
@@ -183,8 +184,7 @@ public class LevelCanvas : CanvasElementLocator
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
 
-            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-                PowerUpType.StopTouchCounterPowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.StopTouchCounterPowerUp, true, true);
+            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
 
             UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
         });
@@ -192,8 +192,7 @@ public class LevelCanvas : CanvasElementLocator
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.ImmunityPowerUp);
 
-            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
-                PowerUpType.ImmunityPowerUp.ToString()) - 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.ImmunityPowerUp, true, true);
+            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.ImmunityPowerUp);
 
             UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         });
@@ -206,6 +205,10 @@ public class LevelCanvas : CanvasElementLocator
         _emptydeathGoal = FindAndValidateGameObjectComponent(transform, "DeathEmpty");
         _achievementsGoalPrefab = FindAndValidateGameObjectComponent(transform, "AchievementGoalPrefab");
 
+        UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+        UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
+        UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
+        UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
 
         StartCoroutine(UpdateTextsDelay());
         SetAchivementsByMode();
@@ -251,6 +254,7 @@ public class LevelCanvas : CanvasElementLocator
     private void OnEnable()
     {
         UpdateTexts();
+        UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         if (PowerUpManager.Instance)
             PowerUpManager.Instance.OnPowerUpActivated += UpdatePowerUpTexts;
     }
@@ -284,18 +288,58 @@ public class LevelCanvas : CanvasElementLocator
                 $"{LanguageManager.Instance.GetLocalizedText("level")} {GameManager.Instance.SetGetWorldState.GetLevel}";
     }
 
-    public void ActivateAndDeactivateRevivePowerUI()
+    public void ActivateRevivePowerUI()
     {
         // Definir lógica del botón de OK en base al recurso disponible.
+        Action AcceptButton = delegate { };
         // Activar la imagen del botón de Ok que corresponda según el recurso disponible.
+        if (PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp))
+        {
+            _useRevivePoweUpToReviveImage.gameObject.SetActive(true);
+            _useOrbsToReviveImage.gameObject.SetActive(false);
+            _viewVideoToReviveImage.gameObject.SetActive(false);
 
+            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.RevivePowerUp);
+            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
+            AcceptButton = () => PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+        }
+        else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp.ToString()) ==
+            0 && SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0)
+        {
+            _useOrbsToReviveImage.gameObject.SetActive(true);
+            _useRevivePoweUpToReviveImage.gameObject.SetActive(false);
+            _viewVideoToReviveImage.gameObject.SetActive(false);
+
+            SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
+                        - 1, SaveAndLoadManager.OrbsName, true, true);
+
+            AcceptButton = () => PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+        }
+        else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp.ToString()) <=
+            0 && SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) <= 0)
+        {
+            _viewVideoToReviveImage.gameObject.SetActive(true);
+            _useRevivePoweUpToReviveImage.gameObject.SetActive(false);
+            _useOrbsToReviveImage.gameObject.SetActive(false);
+            Action CallSelectPowerUp = delegate { };
+            AcceptButton = () => AdsManager.Instance.ShowInterstitialAd(CallSelectPowerUp = () =>
+            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp));
+        }
         // Para que muestre un anuncio es así.
         //AdsManager.Instance.ShowInterstitialAd(Pasarle la funcion de AcceptRevive al finalizar el anuncio);
 
         // Activar pop up.
+        _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton,
+            GameManager.Instance.SetGetPlayer.OnRejectRevivalPowerUp);
+        _revivePowerUpUI.Show();
     }
 
-    private void UpdatePowerUpTexts(PowerUpType powerUp)
+    public void DeactivateRevivePowerUI()
+    {
+        _revivePowerUpUI.Hide();
+    }
+
+    public void UpdatePowerUpTexts(PowerUpType powerUp)
     {
         switch (powerUp)
         {

@@ -28,24 +28,27 @@ public class PowerUpManager : MonoBehaviour
             //SelectPowerUp(PowerUpType.TimeStopPowerUp);
             SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
                PowerUpType.TimeStopPowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.TimeStopPowerUp, true, true);
-
+            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
             //SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
             SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
               PowerUpType.StopTouchCounterPowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.StopTouchCounterPowerUp, true, true);
+            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
             //SelectPowerUp(PowerUpType.ImmunityPowerUp);
             SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
               PowerUpType.ImmunityPowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.ImmunityPowerUp, true, true);
+            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
               PowerUpType.RevivePowerUp.ToString()) + 1, SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp, true, true);
+            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
 
         }
     }
@@ -67,7 +70,7 @@ public class PowerUpManager : MonoBehaviour
                 StartCoroutine(StopPowerUp(powerUp, _immunityTime));
                 break;
             case PowerUpType.RevivePowerUp:
-                StartCoroutine(GameManager.Instance.SetGetPlayer.AcceptRevivalPowerUp());
+                GameManager.Instance.SetGetPlayer.AcceptRevivalPowerUp();
                 break;
         }
 
@@ -105,6 +108,12 @@ public class PowerUpManager : MonoBehaviour
     public bool HasPowerUp(PowerUpType powerUp)
     {
         return SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + powerUp.ToString()) > 0;
+    }
+
+    public void RestPowerUpFromText(PowerUpType powerUp)
+    {
+        SaveAndLoadManager.SetIntValue(Mathf.Max(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+             powerUp.ToString()) - 1, 0), SaveAndLoadManager.PowerUpPrefix + powerUp.ToString(), true, true);
     }
 
     #region UTILITY METHODS

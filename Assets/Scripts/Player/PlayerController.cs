@@ -157,25 +157,28 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             _audioSource.PlayOneShot(_deathClip);
 
         yield return new WaitForSeconds(1);
-        LevelCanvas.Instance.ActivateAndDeactivateRevivePowerUI();
+        LevelCanvas.Instance.ActivateRevivePowerUI();
 
-        StartCoroutine(RejectRevivalPowerUp());
+        StartCoroutine(RejectRevivalPowerUp(5));
     }
 
-    public IEnumerator RejectRevivalPowerUp()
+    private IEnumerator RejectRevivalPowerUp(float time)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(time);
         Debug.Log("Rejected");
-        LevelCanvas.Instance.ActivateAndDeactivateRevivePowerUI();
+        LevelCanvas.Instance.DeactivateRevivePowerUI();
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
         transform.parent = null;
         GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
     }
-
-    public IEnumerator AcceptRevivalPowerUp()
+    public void OnRejectRevivalPowerUp()
     {
-        yield return new WaitForSeconds(3);
+        StartCoroutine(RejectRevivalPowerUp(2));
+    }
+    public void AcceptRevivalPowerUp()
+    {
+        StopCoroutine(RejectRevivalPowerUp(0));
         Debug.Log("Reviving");
     }
 
