@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private AudioSource _audioSource;
     private SpecialSkin _specialSkin;
 
+    private Vector3 _deathPosition;
+
     void Awake()
     {
         if (!_rb)
@@ -141,6 +143,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         _collider.enabled = false;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
+        _deathPosition = transform.position;
 
         transform.position = new Vector3(100, 0);
         GameManager.Instance.SetGetCameraController.StartShake();
@@ -159,14 +162,16 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         yield return new WaitForSeconds(1);
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
-        StartCoroutine(RejectRevivalPowerUp(5));
+        yield return(StartCoroutine(RejectRevivalPowerUp(5)));
+
+        LevelCanvas.Instance.DeactivateRevivePowerUI();
     }
 
     private IEnumerator RejectRevivalPowerUp(float time)
     {
         yield return new WaitForSeconds(time);
+        LevelManager.Instance.OnRejectRevival?.Invoke();
         Debug.Log("Rejected");
-        LevelCanvas.Instance.DeactivateRevivePowerUI();
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
         transform.parent = null;
@@ -178,7 +183,17 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     }
     public void AcceptRevivalPowerUp()
     {
-        StopCoroutine(RejectRevivalPowerUp(0));
+        StopAllCoroutines();
+        PowerUpManager.Instance.SelectPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
+        _death = false;
+        transform.position = _deathPosition;
+        _collider.enabled = true;
+
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+        _rb.linearVelocity = _velocityOnPause;
+        _velocityOnPause = Vector2.zero;
+        GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
+        LevelManager.Instance.OnAcceptRevival?.Invoke();
         Debug.Log("Reviving");
     }
 

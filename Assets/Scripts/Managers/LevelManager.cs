@@ -11,6 +11,9 @@ public class LevelManager : MonoBehaviour
     public Action OnLoseLevel = delegate { };
     public Action OnPreLoseLevel = delegate { };
 
+    public Action OnRejectRevival = delegate { };
+    public Action OnAcceptRevival = delegate { };
+
     private int _deathCount = 0;
     private List<Coins> _coinsObtained = new List<Coins>();
 

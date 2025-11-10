@@ -38,7 +38,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (LevelManager.Instance)
         {
             LevelManager.Instance.OnLoseLevel += OnLose;
-            LevelManager.Instance.OnPreLoseLevel += OnTimerPreLose;
+            LevelManager.Instance.OnPreLoseLevel += StopCountTimerMode;
+            LevelManager.Instance.OnAcceptRevival += ResumeCountTimerMode;
+            LevelManager.Instance.OnRejectRevival += OnTimerPreLose;
         }
 
         _level = ScenesManager.Instance.GetLevelByCurrentScene();
@@ -67,7 +69,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (LevelManager.Instance)
         {
             LevelManager.Instance.OnLoseLevel -= OnLose;
-            LevelManager.Instance.OnPreLoseLevel -= OnTimerPreLose;
+            LevelManager.Instance.OnPreLoseLevel -= StopCountTimerMode;
+            LevelManager.Instance.OnAcceptRevival -= ResumeCountTimerMode;
+            LevelManager.Instance.OnRejectRevival -= OnTimerPreLose;
         }
         OnUpdate = null;
     }

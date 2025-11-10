@@ -221,6 +221,7 @@ public class LevelCanvas : CanvasElementLocator
             LevelManager.Instance.OnWinLevel += OnWin;
             LevelManager.Instance.OnLoseLevel += OnLose;
             LevelManager.Instance.OnPreLoseLevel += OnPreLose;
+            LevelManager.Instance.OnAcceptRevival += OnAfterLose;
         }
     }
 
@@ -272,6 +273,7 @@ public class LevelCanvas : CanvasElementLocator
             LevelManager.Instance.OnWinLevel -= OnWin;
             LevelManager.Instance.OnLoseLevel -= OnLose;
             LevelManager.Instance.OnPreLoseLevel -= OnPreLose;
+            LevelManager.Instance.OnAcceptRevival -= OnAfterLose;
         }
     }
 
@@ -428,6 +430,11 @@ public class LevelCanvas : CanvasElementLocator
     private void OnPreLose()
     {
         _pauseButton.interactable = false;
+    }
+
+    private void OnAfterLose()
+    {
+        _pauseButton.interactable = true;
     }
 
     public void OnTap(int tapCount)
