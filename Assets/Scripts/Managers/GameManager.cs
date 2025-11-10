@@ -82,7 +82,8 @@ public class GameManager : MonoBehaviour
 
     public void OnCompleteWorld(string currentWorldName)
     {
-        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1
+            && _currentGameMode != GameModes.Dunk)
             return;
 
         SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true, true);
