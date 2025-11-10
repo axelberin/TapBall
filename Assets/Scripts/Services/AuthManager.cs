@@ -4,14 +4,24 @@ using System.Collections;
 using Google;
 using System.Threading.Tasks;
 using Firebase.Extensions;
+using AppleAuth;
+using AppleAuth.Enums;
+using AppleAuth.Interfaces;
+using AppleAuth.Native;
+using System.Security.Cryptography;
+using System.Text;
+using System;
 
 public class AuthManager : ManagersManager
 {
     public const string GoogleAPI = "70505230779-dcec4ure6uki7ertg47imreu6o07lhrf.apps.googleusercontent.com";
     private const string kSignedOnceKey = "GOOGLE_SIGNED_ONCE";
+    private const string kAppleSignedOnceKey = "APPLE_SIGNED_ONCE";
 
     FirebaseAuth _auth;
     FirebaseUser _user;
+    private IAppleAuthManager _appleAuthManager;
+    private bool _isAppleInit = false;
     private bool _isGoogleSignInInitialized = false;
 
     protected override void Start()
@@ -33,7 +43,7 @@ public class AuthManager : ManagersManager
         Debug.Log("Simulando login en Editor...");
         _isInitialized = true;
 #elif UNITY_IOS
-        SignInWithApple();
+        SignInWithApple(silentOnly: true);
 #elif UNITY_ANDROID
         SignInWithGoogle(silentOnly:true);
 #endif
@@ -131,22 +141,129 @@ public class AuthManager : ManagersManager
         });
     }
 
-    private void SignInWithApple()
+    public void SignInWithApple(bool silentOnly = false)
     {
-        Debug.Log("Intentando login automático con Apple...");
-        string idToken = "";
-        Credential credential = OAuthProvider.GetCredential("apple.com", idToken, null, null);
-        _auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
-        {
-            if (task.IsCanceled || task.IsFaulted)
+        //#if UNITY_IOS
+        EnsureAppleInitialized();
+        if (_appleAuthManager == null) return;
+
+        string rawNonce = GenerateRandomNonce();
+        string hashedNonce = Sha256(rawNonce);
+
+        bool finished = false;
+        void fail(string tag, string msg) { OnFailSignIn(tag, msg); finished = true; }
+
+        // 1) Quick login silencioso
+        _appleAuthManager.QuickLogin(
+            cred => { StartCoroutine(AppleToFirebase(cred, rawNonce, () => finished = true, fail)); },
+            err =>
             {
-                Debug.LogError("Error login Apple: " + task.Exception);
-                //OnFailSignIn();
-                return;
-            }
-            FirebaseUser user = task.Result;
-            Debug.Log("Login Apple exitoso: " + user.DisplayName);
-        });
+                bool signedOnce = PlayerPrefs.GetInt(kAppleSignedOnceKey, 0) == 1;
+                if (silentOnly && signedOnce)
+                {
+                    fail("AppleSilentNoChooser", "Silent Apple Sign-In failed and chooser disabled");
+                    return;
+                }
+
+                var args = new AppleAuthLoginArgs(
+                    LoginOptions.IncludeEmail | LoginOptions.IncludeFullName,
+                    null,
+                    hashedNonce
+                );
+                _appleAuthManager.LoginWithAppleId(
+                    args,
+                    cred => { StartCoroutine(AppleToFirebase(cred, rawNonce, () => finished = true, fail)); },
+                    loginErr => { fail("AppleLoginError", loginErr.ToString()); }
+                );
+            });
+
+        // Bombeo temporal SOLO durante el login:
+        StartCoroutine(PumpAppleUntil(() => finished));
+        //#else
+        OnFailSignIn("AppleWrongPlatform", "Called SignInWithApple outside iOS");
+        _isInitialized = true;
+        return;
+        //#endif
+    }
+
+    private IEnumerator PumpAppleUntil(Func<bool> done)
+    {
+        const float MAX_SECONDS = 12f;
+        float t = 0f;
+        while (!done() && t < MAX_SECONDS)
+        {
+            _appleAuthManager?.Update();
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
+    private IEnumerator AppleToFirebase(ICredential credential, string rawNonce,
+                                        Action onSuccess,
+                                        Action<string, string> onFail)
+    {
+        if (!(credential is IAppleIDCredential appleCred))
+        {
+            onFail("AppleBadCredential", "Credential is not AppleID");
+            yield break;
+        }
+
+        var tokenBytes = appleCred.IdentityToken;
+        if (tokenBytes == null || tokenBytes.Length == 0)
+        {
+            onFail("AppleNoToken", "No identity token from Apple");
+            yield break;
+        }
+
+        string idToken = Encoding.UTF8.GetString(tokenBytes);
+
+        var firebaseCred = OAuthProvider.GetCredential("apple.com", idToken, rawNonce, null);
+        var t = _auth.SignInWithCredentialAsync(firebaseCred);
+        yield return new WaitUntil(() => t.IsCompleted);
+
+        if (t.IsFaulted || t.IsCanceled)
+        {
+            onFail("AppleFirebaseFail", t.Exception?.Message ?? "SignInWithCredentialAsync failed");
+            yield break;
+        }
+
+        _user = t.Result;
+        PlayerPrefs.SetInt(kAppleSignedOnceKey, 1);
+        PlayerPrefs.Save();
+
+        Debug.Log("Login Apple exitoso (Firebase): " + _user.DisplayName);
+        _isInitialized = true;
+        onSuccess?.Invoke();
+    }
+
+    private void EnsureAppleInitialized()
+    {
+        if (_isAppleInit) return;
+        if (!AppleAuthManager.IsCurrentPlatformSupported)
+            throw new System.Exception("Apple Sign-In not supported on this platform");
+
+        var deserializer = new PayloadDeserializer();
+        _appleAuthManager = new AppleAuthManager(deserializer);
+        _isAppleInit = true;
+    }
+
+    private string GenerateRandomNonce(int length = 32)
+    {
+        const string charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._";
+        var data = new byte[length];
+        using (var rng = RandomNumberGenerator.Create()) rng.GetBytes(data);
+        var chars = new char[length];
+        for (int i = 0; i < length; i++) chars[i] = charset[data[i] % charset.Length];
+        return new string(chars);
+    }
+
+    private string Sha256(string input)
+    {
+        using var sha = SHA256.Create();
+        var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+        var sb = new StringBuilder(bytes.Length * 2);
+        foreach (var b in bytes) sb.Append(b.ToString("x2"));
+        return sb.ToString();
     }
 
     public override IEnumerator InizializeManagers()
@@ -184,8 +301,15 @@ public class AuthManager : ManagersManager
         GameLog.NonFatal(tag, msg, keys);
         GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
         if (LoadingGameManager.Instance)
-            LoadingGameManager.Instance.ShowCantSignInPopUp("conectionfail", "cantconnect",
-                () => _isInitialized = true, () => SignInWithGoogle(silentOnly: false));
+            LoadingGameManager.Instance.ShowCantSignInPopUp(
+        "conectionfail", "cantconnect",
+        () => _isInitialized = true,
+#if UNITY_IOS
+        () => SignInWithApple(silentOnly: false)
+#else
+        () => SignInWithGoogle(silentOnly: false)
+#endif
+    );
         else
             _isInitialized = true;
     }
