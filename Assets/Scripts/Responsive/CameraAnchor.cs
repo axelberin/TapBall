@@ -26,6 +26,11 @@ public class CameraAnchor : MonoBehaviour
         StartCoroutine(UpdateAnchorAsync());
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(UpdateAnchorAsync());
+    }
+
     /// <summary>
     /// Coroutine to update the anchor only once ViewportHandler.Instance is not null.
     /// </summary>

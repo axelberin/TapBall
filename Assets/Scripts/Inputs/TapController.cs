@@ -3,6 +3,7 @@ using UnityEngine;
 public class TapController : MonoBehaviour
 {
     int _tapCount;
+    private bool _tapEnabled = true;
 
     private void Start()
     {
@@ -36,24 +37,22 @@ public class TapController : MonoBehaviour
         {
             case GameManager.GameModes.Dunk:
                 _tapCount++;
-                LevelCanvas.Instance.OnTap(_tapCount);
-                DailyMissionsManager.OnMissionActionPerformed?.Invoke(MissionType.Touches, 1);
                 break;
             case GameManager.GameModes.OneTouch:
                 if (_tapCount > 0)
-                {
                     _tapCount--;
-                    LevelCanvas.Instance.OnTap(_tapCount);
-                    //DailyMissionsManager.OnMissionActionPerformed?.Invoke(MissionType.Touches, _tapCount);
-                    if (_tapCount == 0)
-                        GameManager.Instance.SetGetPlayer.Death();
-                }
+                else
+                    GameManager.Instance.SetGetPlayer.Death();
                 break;
         }
+
+        LevelCanvas.Instance.OnTap(_tapCount);
     }
 
     void OnTap(Vector3 pos)
     {
+        if (!_tapEnabled)
+            return;
         if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance ||
             GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
             return;
@@ -62,9 +61,23 @@ public class TapController : MonoBehaviour
             GameManager.Instance.SetGetPlayer.OnTap(Camera.main.ScreenToWorldPoint(pos));
     }
 
+    public void AddTouchesFromBubbles(int touchesToAdd)
+    {
+        _tapCount += touchesToAdd;
+        LevelCanvas.Instance.OnTap(_tapCount);
+        if (_tapCount < 0)
+            GameManager.Instance.SetGetPlayer.Death();
+    }
+
     public int SetGetTapCount
     {
         set => _tapCount = value;
         get => _tapCount;
+    }
+
+    public bool SetGetTapEnabled
+    {
+        set => _tapEnabled = value;
+        get => _tapEnabled;
     }
 }

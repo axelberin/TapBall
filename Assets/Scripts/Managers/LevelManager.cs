@@ -42,10 +42,13 @@ public class LevelManager : MonoBehaviour
 
         AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.WinSound);
 
+        CheckToGetCoinDailyMission();
         // Procesar según el modo de juego
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Dunk:
+                if (!GetCurrentLevelData().levelCompleted)
+                    DailyMissionsManager.OnMissionActionPerformed(MissionType.Touches, GameManager.Instance.SetGetTapController.SetGetTapCount);
                 DunkOnWin();
                 break;
             case GameModes.Time:
@@ -53,7 +56,8 @@ public class LevelManager : MonoBehaviour
                 TimeOnWin();
                 break;
             case GameModes.OneTouch:
-                DailyMissionsManager.OnMissionActionPerformed(MissionType.TouchesRemaining, GameManager.Instance.SetGetTapController.SetGetTapCount);
+                if (!GetCurrentLevelData().levelCompleted)
+                    DailyMissionsManager.OnMissionActionPerformed(MissionType.TouchesRemaining, GameManager.Instance.SetGetTapController.SetGetTapCount);
                 OneTouchOnWin();
                 break;
             case GameModes.Endless:
@@ -101,6 +105,7 @@ public class LevelManager : MonoBehaviour
 
     private void TimeOnWin()
     {
+        GameManager.Instance.SetGetWorldState.StopCountTimerMode();
         AudioManager.Instance.StopSound(false, true);
         LevelData currentData = GetCurrentLevelData();
 
@@ -176,7 +181,7 @@ public class LevelManager : MonoBehaviour
         OnLoseLevel?.Invoke();
 
         _coinsObtained.ForEach(coin => coin.OnLose());
-        _coinsObtained.Clear();
+        ResetCoins();
 
         _deathCount++;
         if (_deathCount >= 10)
@@ -205,13 +210,19 @@ public class LevelManager : MonoBehaviour
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
     }
 
+    private void CheckToGetCoinDailyMission()
+    {
+        if (_coinsObtained.Count <= 0)
+            return;
+        DailyMissionsManager.OnMissionActionPerformed(MissionType.CoinsCollected, 1);
+    }
+
     public void OnGetCoin(Coins coinName)
     {
         // Solo agregar la moneda si no se había obtenido previamente
         if (!HasGetedCoins)
         {
             _coinsObtained.Add(coinName);
-            DailyMissionsManager.OnMissionActionPerformed(MissionType.CoinsCollected, 1);
         }
     }
 

@@ -65,10 +65,10 @@ public class DailyMissionsManager : ManagersManager
         {
             RegenerateDailyMissions();
         }
-        else if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            string fakeYesterDay = DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
-            SaveAndLoadManager.SetStringValue(fakeYesterDay, SaveAndLoadManager.LastDayUpdateName);
+            SaveAndLoadManager.SetStringValue(
+                DateTime.Today.AddDays(-1).ToString("yyyyMMdd"), SaveAndLoadManager.LastDayUpdateName);
             SaveAndLoadManager.Save();
 
             if (CheckForDayChange())
@@ -388,7 +388,7 @@ public class DailyMissionsManager : ManagersManager
             yield return null;
     }
 
-   public bool GetAllMissionsCompletedStatus()
+    public bool GetAllMissionsCompletedStatus()
     {
         return _todayMissions.Any(m => !m.completed);
     }

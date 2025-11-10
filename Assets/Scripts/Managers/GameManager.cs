@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -69,6 +68,9 @@ public class GameManager : MonoBehaviour
 
     public void UnlockMode(int level)
     {
+        if (_currentGameMode != GameModes.Dunk)
+            return;
+
         GameModes mode = GetGameModeTUnlockByLevel(level);
 
         if (mode == GameModes.Null || IsModeUnlocked(mode))
@@ -80,7 +82,8 @@ public class GameManager : MonoBehaviour
 
     public void OnCompleteWorld(string currentWorldName)
     {
-        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1)
+        if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + currentWorldName) == 1
+            && _currentGameMode != GameModes.Dunk)
             return;
 
         SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + currentWorldName, true, true);

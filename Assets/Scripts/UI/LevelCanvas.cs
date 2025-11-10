@@ -255,8 +255,13 @@ public class LevelCanvas : CanvasElementLocator
 
     public void ShowTimerText(float timer)
     {
-        int seconds = (int)timer;
-        int decimals = (int)((timer - seconds) * 100);
+        float formattedTime = Mathf.Round(timer * 100f) / 100f;
+
+        int seconds = (int)formattedTime;
+        int decimals = Mathf.RoundToInt((formattedTime - seconds) * 100f);
+
+        decimals = Mathf.Clamp(decimals, 0, 99);
+
         UIManager.Instance.SetText(_timerText, seconds);
         UIManager.Instance.SetText(_timerDecimalsText, $".{decimals:00}", true);
     }
