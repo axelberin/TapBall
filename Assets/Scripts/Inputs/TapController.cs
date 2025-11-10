@@ -40,11 +40,9 @@ public class TapController : MonoBehaviour
                 break;
             case GameManager.GameModes.OneTouch:
                 if (_tapCount > 0)
-                {
                     _tapCount--;
-                    if (_tapCount == 0)
-                        GameManager.Instance.SetGetPlayer.Death();
-                }
+                else
+                    GameManager.Instance.SetGetPlayer.Death();
                 break;
         }
 
@@ -67,6 +65,8 @@ public class TapController : MonoBehaviour
     {
         _tapCount += touchesToAdd;
         LevelCanvas.Instance.OnTap(_tapCount);
+        if (_tapCount < 0)
+            GameManager.Instance.SetGetPlayer.Death();
     }
 
     public int SetGetTapCount
