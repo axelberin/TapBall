@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
