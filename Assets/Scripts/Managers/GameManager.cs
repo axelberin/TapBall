@@ -51,7 +51,11 @@ public class GameManager : MonoBehaviour
 
     public void SetCurrentModeByIndex(int index)
     {
-        int last = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 15) + 1;
+        int last = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 5) + 1;
+
+        int limit = 3; //TODO: Modificar cuando se agreguen modos.
+        if (last > limit)
+            last = limit;
 
         if (_currentGameMode == GameModes.Dunk && index < 0)
             SelectGameMode(last);
@@ -71,7 +75,7 @@ public class GameManager : MonoBehaviour
         if (_currentGameMode != GameModes.Dunk)
             return;
 
-        GameModes mode = GetGameModeTUnlockByLevel(level);
+        GameModes mode = GetGameModeUnlockByLevel(level);
 
         if (mode == GameModes.Null || IsModeUnlocked(mode))
             return;
@@ -90,12 +94,12 @@ public class GameManager : MonoBehaviour
         UnlokedSkin = currentWorldName;
     }
 
-    private GameModes GetGameModeTUnlockByLevel(int level)
+    private GameModes GetGameModeUnlockByLevel(int level)
     {
         return level switch
         {
-            15 => GameModes.Time,
-            30 => GameModes.OneTouch,
+            5 => GameModes.Time,
+            10 => GameModes.OneTouch,
             _ => GameModes.Null,
         };
     }
