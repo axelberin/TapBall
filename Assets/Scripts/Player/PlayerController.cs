@@ -162,14 +162,20 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         yield return new WaitForSeconds(1);
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
-        yield return(StartCoroutine(RejectRevivalPowerUp(5)));
+        yield return (StartCoroutine(RejectRevivalPowerUp(3)));
 
         LevelCanvas.Instance.DeactivateRevivePowerUI();
     }
 
     private IEnumerator RejectRevivalPowerUp(float time)
-    {
-        yield return new WaitForSeconds(time);
+    { 
+        while(time > 0)
+        {
+            LevelCanvas.Instance.UpdateTextPowerUpPopUpTimeCounter(time);
+            time -= Time.deltaTime;
+            yield return null;
+        }
+
         LevelManager.Instance.OnRejectRevival?.Invoke();
         Debug.Log("Rejected");
         LevelManager.Instance.OnLose();
