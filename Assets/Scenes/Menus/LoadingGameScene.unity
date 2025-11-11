@@ -321,6 +321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d527c271b73d94482e347ee0718529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeStopTime: 3
+  _stopTouchCounterTime: 3
+  _immunityTime: 3
 --- !u!1001 &5172344164348853611
 PrefabInstance:
   m_ObjectHideFlags: 0
