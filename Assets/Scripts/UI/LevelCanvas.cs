@@ -326,8 +326,7 @@ public class LevelCanvas : CanvasElementLocator
             _viewVideoToReviveImage.gameObject.SetActive(true);
             _useRevivePoweUpToReviveImage.gameObject.SetActive(false);
             _useOrbsToReviveImage.gameObject.SetActive(false);
-            Action CallSelectPowerUp = delegate { };
-            AcceptButton = () => AdsManager.Instance.ShowInterstitialAd(CallSelectPowerUp = () =>
+            AcceptButton = () => AdsManager.Instance.ShowInterstitialAd(() =>
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp));
         }
         // Para que muestre un anuncio es así.
