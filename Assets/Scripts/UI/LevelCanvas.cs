@@ -60,7 +60,7 @@ public class LevelCanvas : CanvasElementLocator
         _winTime = FindAndValidateComponent<TextMeshProUGUI>(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
         _revivePowerUpUI = FindAndValidateComponent<PopUp>(transform, "RevivePowerUpUI");
-       
+
 
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
@@ -133,7 +133,7 @@ public class LevelCanvas : CanvasElementLocator
         _useRevivePoweUpToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "RevivePowerUpImage");
         _useOrbsToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "OrbImage");
         _viewVideoToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "AdsImage");
-        _powerUpPopUpTimeText = FindAndValidateComponent<TextMeshProUGUI>(_revivePowerUpUI.transform, "PowerUpTimeText");
+        _powerUpPopUpTimeText = FindAndValidateComponent<TextMeshProUGUI>(_revivePowerUpUI.transform, "ReviveCounter");
         _revivePowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "RevivePowerText");
         #endregion
 
@@ -341,7 +341,7 @@ public class LevelCanvas : CanvasElementLocator
 
     public void UpdateTextPowerUpPopUpTimeCounter(float time)
     {
-        _powerUpPopUpTimeText.text = time.ToString();
+        _powerUpPopUpTimeText.text = Mathf.CeilToInt(time).ToString();
     }
 
     public void DeactivateRevivePowerUI()

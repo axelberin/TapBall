@@ -146,7 +146,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _timerCounter = 0;
             OnUpdate -= ControlTimerMode;
             _playOnce = false;
-            ResetTimer();
             GameManager.Instance.SetGetPlayer.Death();
         }
     }
@@ -247,7 +246,12 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public int GetLimitTouches => _limitTouches;
     public float GetLimitTime => _limitTime;
     public int GetLimitTapsOneTouch => _limitTapsOneTouch;
-    public float GetRemainingTime => MathF.Round(_timerCounter * 100f) / 100f;
+    public float GetRemainingTime
+    {
+        get { return MathF.Round(_timerCounter * 100f) / 100f; }
+        set { _timerCounter = value; }
+
+    }
     public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
 }

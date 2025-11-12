@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UtilityAddressables;
+using static GameManager;
 
 public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
@@ -163,13 +164,12 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
         yield return (StartCoroutine(RejectRevivalPowerUp(3)));
-
         LevelCanvas.Instance.DeactivateRevivePowerUI();
     }
 
     private IEnumerator RejectRevivalPowerUp(float time)
-    { 
-        while(time > 0)
+    {
+        while (time > 0)
         {
             LevelCanvas.Instance.UpdateTextPowerUpPopUpTimeCounter(time);
             time -= Time.deltaTime;
@@ -183,14 +183,29 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         transform.parent = null;
         GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
     }
+
     public void OnRejectRevivalPowerUp()
     {
         StartCoroutine(RejectRevivalPowerUp(2));
     }
+
     public void AcceptRevivalPowerUp()
     {
         StopAllCoroutines();
         PowerUpManager.Instance.SelectPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
+
+        switch (Instance.GetCurrentGameMode)
+        {
+            case GameModes.Time:
+                if(Instance.SetGetWorldState.GetRemainingTime <= 6)
+                GameManager.Instance.SetGetWorldState.GetRemainingTime = 6;
+                break;
+            case GameModes.OneTouch:
+                if(Instance.SetGetTapController.SetGetTapCount <= 3)
+                GameManager.Instance.SetGetTapController.SetGetTapCount = 3;
+                break;
+        }
+
         _death = false;
         transform.position = _deathPosition;
         _collider.enabled = true;
