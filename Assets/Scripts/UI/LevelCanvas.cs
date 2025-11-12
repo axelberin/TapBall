@@ -180,24 +180,18 @@ public class LevelCanvas : CanvasElementLocator
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.TimeStopPowerUp);
-
-            UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
         });
         _stopTouchCountPowUpButton.onClick.AddListener(() =>
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
-
-            UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
         });
         _immunityPowUpButton.onClick.AddListener(() =>
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.ImmunityPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.ImmunityPowerUp);
-
-            UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         });
 
         _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
@@ -304,9 +298,11 @@ public class LevelCanvas : CanvasElementLocator
             _useOrbsToReviveImage.gameObject.SetActive(false);
             _viewVideoToReviveImage.gameObject.SetActive(false);
 
-            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.RevivePowerUp);
-            UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
-            AcceptButton = () => PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+            AcceptButton = () =>
+            {
+                PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+                PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.RevivePowerUp);
+            };
         }
         else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp.ToString()) ==
             0 && SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0)

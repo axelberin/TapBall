@@ -192,20 +192,24 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     public void AcceptRevivalPowerUp()
     {
         StopAllCoroutines();
-        PowerUpManager.Instance.SelectPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
 
         switch (Instance.GetCurrentGameMode)
         {
             case GameModes.Time:
-                if(Instance.SetGetWorldState.GetRemainingTime <= 6)
-                GameManager.Instance.SetGetWorldState.GetRemainingTime = 6;
+                if (Instance.SetGetWorldState.GetRemainingTime <= 6)
+                {
+                    GameManager.Instance.SetGetWorldState.AddCountToTimer(6);
+                }
                 break;
             case GameModes.OneTouch:
-                if(Instance.SetGetTapController.SetGetTapCount <= 3)
-                GameManager.Instance.SetGetTapController.SetGetTapCount = 3;
+                if (Instance.SetGetTapController.SetGetTapCount <= 3)
+                {
+                    GameManager.Instance.SetGetTapController.AddTouchesFromBubbles(3);
+                }
                 break;
         }
 
+        PowerUpManager.Instance.SelectPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
         _death = false;
         transform.position = _deathPosition;
         _collider.enabled = true;

@@ -114,6 +114,12 @@ public class PopUp : CanvasElementLocator
 
     public void Hide()
     {
+        if (_okButton != null)
+            _okButton.onClick.RemoveAllListeners();
+
+        if (_cancelButton != null)
+            _cancelButton.onClick.RemoveAllListeners();
+
         _animator.SetTrigger("Hide");
     }
 }

@@ -27,24 +27,20 @@ public class PowerUpManager : MonoBehaviour
         {
             //SelectPowerUp(PowerUpType.TimeStopPowerUp);
             AddPowerUp(PowerUpType.TimeStopPowerUp, 1);
-            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.TimeStopPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
             //SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
             AddPowerUp(PowerUpType.StopTouchCounterPowerUp, 1);
-            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.StopTouchCounterPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
             //SelectPowerUp(PowerUpType.ImmunityPowerUp);
             AddPowerUp(PowerUpType.ImmunityPowerUp, 1);
-            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             AddPowerUp(PowerUpType.RevivePowerUp, 1);
-            LevelCanvas.Instance.UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
 
         }
     }
@@ -86,6 +82,9 @@ public class PowerUpManager : MonoBehaviour
                 break;
             case PowerUpType.ImmunityPowerUp:
                 _powerUpImmunityEnabled = false;
+                if (GameManager.Instance.SetGetWorldState.GetRemainingTime >= 0 ||
+                    GameManager.Instance.SetGetTapController.SetGetTapCount <= 0)
+                    GameManager.Instance.SetGetPlayer.Death();
                 break;
             case PowerUpType.RevivePowerUp:
 
@@ -99,6 +98,8 @@ public class PowerUpManager : MonoBehaviour
     {
         SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
             powerUp.ToString()) + amount, SaveAndLoadManager.PowerUpPrefix + powerUp.ToString(), true, true);
+
+        LevelCanvas.Instance.UpdatePowerUpTexts(powerUp);
     }
 
     public bool HasPowerUp(PowerUpType powerUp)
@@ -110,6 +111,7 @@ public class PowerUpManager : MonoBehaviour
     {
         SaveAndLoadManager.SetIntValue(Mathf.Max(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
              powerUp.ToString()) - 1, 0), SaveAndLoadManager.PowerUpPrefix + powerUp.ToString(), true, true);
+        LevelCanvas.Instance.UpdatePowerUpTexts(powerUp);
     }
 
     #region UTILITY METHODS
