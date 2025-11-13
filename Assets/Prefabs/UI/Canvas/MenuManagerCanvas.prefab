@@ -3454,7 +3454,7 @@ GameObject:
   m_Layer: 5
   m_Name: FadeController
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5527,7 +5527,7 @@ GameObject:
   m_Layer: 5
   m_Name: DailyQuestsPanel
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -7043,6 +7043,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 4406066448013557276, guid: 18ffbf3b37c9fbf4caf83d868a5e22f7, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 4406066448013557276, guid: 18ffbf3b37c9fbf4caf83d868a5e22f7, type: 3}
       propertyPath: m_Name
       value: UnlockSkinsPopUp
@@ -9252,6 +9256,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8395129986672873263, guid: b9e9bd7354776ee40bd93adaf75f39b9, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 8395129986672873263, guid: b9e9bd7354776ee40bd93adaf75f39b9, type: 3}
       propertyPath: m_Name
       value: ThanksForBuyPopUp
       objectReference: {fileID: 0}
@@ -10616,7 +10624,7 @@ PrefabInstance:
     - target: {fileID: 7685110581535776134, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -6414461447289410750, guid: 43ce5258c996a604bb3ebd88101778b6, type: 3}
+      objectReference: {fileID: 886133886574969121, guid: d82845a30b2a772449eb4a6e57f1fea4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3841604714072232227, guid: 6084ec7cb1693304cb648acc5420ca06, type: 3}
@@ -10961,6 +10969,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.5095825
       objectReference: {fileID: 0}
+    - target: {fileID: 8395129986672873263, guid: b9e9bd7354776ee40bd93adaf75f39b9, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8395129986672873263, guid: b9e9bd7354776ee40bd93adaf75f39b9, type: 3}
       propertyPath: m_Name
       value: NoAdsPopUp
@@ -14799,6 +14811,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8395129986672873263, guid: b9e9bd7354776ee40bd93adaf75f39b9, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8395129986672873263, guid: b9e9bd7354776ee40bd93adaf75f39b9, type: 3}
       propertyPath: m_Name
       value: UnlockModePopUp
