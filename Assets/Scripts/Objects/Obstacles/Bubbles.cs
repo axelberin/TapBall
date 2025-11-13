@@ -8,6 +8,7 @@ public class Bubbles : ObstaclesManager
     private Animator _animator;
     private CircleCollider2D _collider;
     private TMP_Text _touchesText;
+    private AudioSource _audioSource;
 
     private void Start()
     {
@@ -22,6 +23,9 @@ public class Bubbles : ObstaclesManager
 
         if (_touchesText != null)
             _touchesText.SetText(_touchesToAdd > 0 ? $"+{_touchesToAdd}" : _touchesToAdd.ToString());
+
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -50,10 +54,11 @@ public class Bubbles : ObstaclesManager
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out PlayerController player) && _animator != null
-            && _collider != null)
+            && _collider != null && _audioSource != null)
         {
             _animator.SetTrigger("Interact");
             _collider.enabled = false;
+            _audioSource.Play();
             if (GameManager.Instance.SetGetWorldState)
                 GameManager.Instance.SetGetTapController.AddTouchesFromBubbles(_touchesToAdd);
         }
