@@ -19,6 +19,17 @@ public class PowerUpManager : MonoBehaviour
     {
         Instance = this;
     }
+    //private void Start()
+    //{
+    //    LevelManager.Instance.OnWinLevel += ForceStopAllPowerUp;
+    //    LevelManager.Instance.OnLoseLevel += ForceStopAllPowerUp;
+    //}
+
+    //private void OnDestroy()
+    //{
+    //    LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
+    //    LevelManager.Instance.OnLoseLevel -= ForceStopAllPowerUp;
+    //}
 
 #if UNITY_EDITOR
     private void Update()
@@ -75,6 +86,7 @@ public class PowerUpManager : MonoBehaviour
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
+                if(GameManager.Instance.SetGetPlayer.HasDeath == false)
                 GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
@@ -82,8 +94,10 @@ public class PowerUpManager : MonoBehaviour
                 break;
             case PowerUpType.ImmunityPowerUp:
                 _powerUpImmunityEnabled = false;
-                if (GameManager.Instance.SetGetWorldState.GetRemainingTime >= 0 ||
-                    GameManager.Instance.SetGetTapController.SetGetTapCount <= 0)
+                if ((GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time &&
+                    GameManager.Instance.SetGetWorldState.GetRemainingTime <= 0) ||
+                    (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch &&
+                    GameManager.Instance.SetGetTapController.SetGetTapCount <= 0))
                     GameManager.Instance.SetGetPlayer.Death();
                 break;
             case PowerUpType.RevivePowerUp:
@@ -92,6 +106,14 @@ public class PowerUpManager : MonoBehaviour
         }
 
         OnPowerUpDeactivated?.Invoke(powerUp);
+    }
+
+    private void ForceStopAllPowerUp()
+    {
+        StartCoroutine(StopPowerUp(PowerUpType.TimeStopPowerUp, 0));
+        StartCoroutine(StopPowerUp(PowerUpType.StopTouchCounterPowerUp, 0));
+        //StartCoroutine(StopPowerUp(PowerUpType.ImmunityPowerUp, 0));
+        //StartCoroutine(StopPowerUp(PowerUpType.RevivePowerUp, 0));
     }
 
     public void AddPowerUp(PowerUpType powerUp, int amount)
