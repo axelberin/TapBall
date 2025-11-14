@@ -86,7 +86,8 @@ public class PowerUpManager : MonoBehaviour
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
-                if(GameManager.Instance.SetGetPlayer.HasDeath == false)
+                if(GameManager.Instance.SetGetPlayer.HasDeath == false ||
+                    LevelCanvas.Instance.isWinUiActive == false)
                 GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
@@ -139,6 +140,10 @@ public class PowerUpManager : MonoBehaviour
     #region UTILITY METHODS
     public bool PowerUpTapsEnabled => _powerUpTapsCounterEnabled;
     public bool PowerUpImmunityEnabled => _powerUpImmunityEnabled;
+
+    public float GetStopPowerUpTimeActive => _timeStopTime;
+    public float GetStopTouchCounterPowerUpTimeActive => _stopTouchCounterTime;
+    public float GetImmunityTimeActive => _immunityTime;
     #endregion
     public enum PowerUpType
     {

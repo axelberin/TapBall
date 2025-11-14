@@ -108,7 +108,6 @@ public class LevelManager : MonoBehaviour
 
     private void TimeOnWin()
     {
-        GameManager.Instance.SetGetWorldState.StopCountTimerMode();
         AudioManager.Instance.StopSound(false, true);
         LevelData currentData = GetCurrentLevelData();
 
@@ -133,6 +132,7 @@ public class LevelManager : MonoBehaviour
 
         Debug.Log($"Time Level {level} completed - Coins: {hasCoins}, No Death: {withoutDeath}, Under Time Limit: {underTimeLimit}");
         LevelCanvas.Instance.SetAchievementByTimeMode(remainingTime, !underTimeLimit, !underTimeLimitEver, limitTime);
+        GameManager.Instance.SetGetWorldState.StopCountTimerMode();
     }
 
     private void OneTouchOnWin()

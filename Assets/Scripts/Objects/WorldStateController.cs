@@ -62,7 +62,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
 
         OnUpdate += StartCount;
-        LevelManager.Instance.OnWinLevel += StopCountTimerMode;
     }
 
     private void OnDestroy()
@@ -73,7 +72,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
             LevelManager.Instance.OnPreLoseLevel -= StopCountTimerMode;
             LevelManager.Instance.OnAcceptRevival -= ResumeCountTimerMode;
             LevelManager.Instance.OnRejectRevival -= OnTimerPreLose;
-            LevelManager.Instance.OnWinLevel -= StopCountTimerMode;
         }
         OnUpdate = null;
     }
@@ -165,7 +163,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     {
         OnUpdate += ControlTimerMode;
         if (LevelCanvas.Instance)
-            LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
+            LevelCanvas.Instance.ShowTimerText(GetRemainingTime + 0.02f);
         _playOnce = true;
     }
 

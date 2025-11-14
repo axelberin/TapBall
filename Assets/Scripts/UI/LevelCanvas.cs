@@ -61,6 +61,9 @@ public class LevelCanvas : CanvasElementLocator
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
         _revivePowerUpUI = FindAndValidateComponent<PopUp>(transform, "RevivePowerUpUI");
 
+        var _rockImageAnimator = FindAndValidateGameObjectComponent(transform, "TapsCount").GetComponent<Animator>();
+        var _iceImageAnimator = FindAndValidateGameObjectComponent(transform, "TimeCount").GetComponent<Animator>();
+        var _shieldImageAnimator = FindAndValidateGameObjectComponent(GameManager.Instance.SetGetPlayer.transform, "Circle").GetComponentInChildren<Animator>();
 
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
@@ -180,18 +183,21 @@ public class LevelCanvas : CanvasElementLocator
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.TimeStopPowerUp);
+            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_iceImageAnimator, "Active","Deactive", PowerUpManager.Instance.GetStopPowerUpTimeActive));
         });
         _stopTouchCountPowUpButton.onClick.AddListener(() =>
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
+            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive));
         });
         _immunityPowUpButton.onClick.AddListener(() =>
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.ImmunityPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.ImmunityPowerUp);
+            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_shieldImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetImmunityTimeActive));
         });
 
         _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
@@ -272,6 +278,13 @@ public class LevelCanvas : CanvasElementLocator
             LevelManager.Instance.OnPreLoseLevel -= OnPreLose;
             LevelManager.Instance.OnAcceptRevival -= OnAfterLose;
         }
+    }
+
+    private IEnumerator ActivateAndDeactivatePowerUpeffect(Animator animator,string activationTrigger, string deactivationTrigger, float time)
+    {
+        animator.SetTrigger(activationTrigger);
+        yield return new WaitForSeconds(time);
+        animator.SetTrigger(deactivationTrigger);
     }
 
     private IEnumerator UpdateTextsDelay()
@@ -545,4 +558,6 @@ public class LevelCanvas : CanvasElementLocator
                 break;
         }
     }
+
+    public bool isWinUiActive => _winUI.activeSelf;
 }

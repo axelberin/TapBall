@@ -50,8 +50,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     private void Start()
     {
-        if (GameManager.Instance)
-            GameManager.Instance.SetGetPlayer = this;
+        if (Instance)
+            Instance.SetGetPlayer = this;
 
         if (PauseAndResumeManager.Instance)
         {
@@ -147,9 +147,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _deathPosition = transform.position;
 
         transform.position = new Vector3(100, 0);
-        GameManager.Instance.SetGetCameraController.StartShake();
+        Instance.SetGetCameraController.StartShake();
         LevelManager.Instance.OnPreLoseLevel?.Invoke();
-        GameManager.Instance.SetGetTapController.SetGetTapEnabled = false;
+        Instance.SetGetTapController.SetGetTapEnabled = false;
         StartCoroutine(DelayToLose());
     }
 
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         LevelManager.Instance.OnLose();
         _collider.enabled = true;
         transform.parent = null;
-        GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
+        Instance.SetGetTapController.SetGetTapEnabled = true;
     }
 
     public void OnRejectRevivalPowerUp()
@@ -198,13 +198,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             case GameModes.Time:
                 if (Instance.SetGetWorldState.GetRemainingTime <= 6)
                 {
-                    GameManager.Instance.SetGetWorldState.AddCountToTimer(6);
+                    Instance.SetGetWorldState.AddCountToTimer(6);
                 }
                 break;
             case GameModes.OneTouch:
                 if (Instance.SetGetTapController.SetGetTapCount <= 3)
                 {
-                    GameManager.Instance.SetGetTapController.AddTouchesFromBubbles(3);
+                    Instance.SetGetTapController.AddTouchesFromBubbles(3);
                 }
                 break;
         }
@@ -217,14 +217,14 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.linearVelocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;
-        GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
+        Instance.SetGetTapController.SetGetTapEnabled = true;
         LevelManager.Instance.OnAcceptRevival?.Invoke();
         Debug.Log("Reviving");
     }
 
     public void OnResume()
     {
-        if (GameManager.Instance.SetGetWorldState.GetOnInitialPause)
+        if (Instance.SetGetWorldState.GetOnInitialPause)
             return;
 
         _rb.bodyType = RigidbodyType2D.Dynamic;
@@ -246,7 +246,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     public void OnLose()
     {
         _rb.bodyType = RigidbodyType2D.Static;
-        transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
+        transform.position = Instance.SetGetWorldState.GetInitalPos;
     }
 
     public bool HasDeath => _death;
