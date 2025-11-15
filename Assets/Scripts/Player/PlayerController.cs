@@ -118,14 +118,14 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     {
         _rb.linearVelocity = Vector3.zero;
 
-        Vector3 dir = (transform.position - touchPos).normalized;
+        Vector3 dir = (touchPos - transform.position).normalized;
 
         float dirX;
 
         if (dir.x < 0f)
-            dirX = Mathf.Max(dir.x, -0.2f);
+            dirX = Mathf.Max(dir.x, -0.1f);
         else
-            dirX = Mathf.Min(dir.x, 0.2f);
+            dirX = Mathf.Min(dir.x, 0.1f);
 
         dir = new Vector3(dirX, 0.2f, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);
