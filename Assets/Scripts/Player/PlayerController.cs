@@ -8,6 +8,7 @@ using UtilityAddressables;
 public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
     [SerializeField] float _jumpForce = 3;
+    [SerializeField] float _dashForce = 6f;
 
     private string _deathPrefabName = "Death";
     private bool _death;
@@ -105,6 +106,29 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         AddForce(touchPos);
 
         if (_animator.runtimeAnimatorController != null && Random.Range(0, 10) < 3)
+            _animator.SetTrigger("Flick");
+
+        int randomIndex = Random.Range(0, _tapClips.Count);
+        if (_audioSource && _tapClips[randomIndex])
+            _audioSource.PlayOneShot(_tapClips[randomIndex]);
+
+        _specialSkin?.OnTap();
+    }
+
+    public void OnDash(Vector2 swipeDir)
+    {
+        if (swipeDir.sqrMagnitude < 0.0001f)
+            return;
+
+        swipeDir.Normalize();
+
+        // Frenamos la velocidad actual para que el dash se sienta "seco"
+        _rb.linearVelocity = Vector2.zero;
+
+        // Impulso directo en la dirección del swipe, SIN salto forzado
+        _rb.AddForce(swipeDir * _dashForce, ForceMode2D.Impulse);
+
+        if (_animator.runtimeAnimatorController != null)
             _animator.SetTrigger("Flick");
 
         int randomIndex = Random.Range(0, _tapClips.Count);
