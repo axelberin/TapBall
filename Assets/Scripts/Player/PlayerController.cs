@@ -186,9 +186,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void OnResume()
     {
-        if (GameManager.Instance.SetGetWorldState.GetOnInitialPause)
-            return;
-
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.linearVelocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;

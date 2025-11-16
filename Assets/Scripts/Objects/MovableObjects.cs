@@ -88,9 +88,6 @@ public class MovableObjects : MonoBehaviour, IPauseble
 
     public virtual void OnResume()
     {
-        if (GameManager.Instance.SetGetWorldState.GetOnInitialPause)
-            return;
-
         PlayMovement();
     }
 

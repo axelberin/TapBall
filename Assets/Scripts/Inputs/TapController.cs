@@ -73,9 +73,11 @@ public class TapController : MonoBehaviour
         if (!_tapEnabled)
             return;
 
-        if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance ||
-            GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
+        if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance)
             return;
+
+        if (GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
+            GameManager.Instance.SetGetWorldState.StartGame();
 
         // Diferencia en pantalla (en píxeles)
         Vector2 delta = endPos - startPos;
