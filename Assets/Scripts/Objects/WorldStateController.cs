@@ -103,15 +103,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.GetComponent<PlayerController>() && !_onPause)
-        {
-            if (LevelCanvas.Instance)
-                LevelCanvas.Instance.OnExitWinBase();
-        }
-    }
-
     private void ControlTimerMode()
     {
         if (_onPause)
@@ -153,9 +144,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
         _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
         _movableObjectsInLevel.ForEach(obj => obj.PlayMovement());
-
-        if (LevelCanvas.Instance)
-            LevelCanvas.Instance.OnExitWinBase();
 
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
             OnUpdate += ControlTimerMode;
