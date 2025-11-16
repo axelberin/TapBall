@@ -33,17 +33,8 @@ public class TutorialManager : CanvasElementLocator
         if (_tapTutorialImage == null)
             _tapTutorialImage = FindAndValidateComponent<Image>(transform, "TutorialImage");
 
-        var tutorialText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TutorialText");
-        UIManager.Instance.SetText(tutorialText, LanguageManager.Instance.GetLocalizedText("tutorial1"));
-
         var nextTutorialButton = FindAndValidateComponent<Button>(transform, "NextTutorialBTN");
         nextTutorialButton.onClick.AddListener(() => FinishTutorial());
-    }
-
-    public void FlipTutorial()
-    {
-        _tapTutorialImage.rectTransform.localScale = new Vector3(_tapTutorialImage.rectTransform.localScale.x * -1,
-            _tapTutorialImage.rectTransform.localScale.y, _tapTutorialImage.rectTransform.localScale.z);
     }
 
     private void FinishTutorial()
