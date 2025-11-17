@@ -140,6 +140,23 @@ public class WorldStateController : MonoBehaviour, IPauseble
         _playOnce = false;
     }
 
+    public void ResumeCountTimerMode()
+    {
+        OnUpdate += ControlTimerMode;
+        if (LevelCanvas.Instance)
+            LevelCanvas.Instance.ShowTimerText(GetRemainingTime + 0.02f);
+        _playOnce = true;
+    }
+
+    public void AddCountToTimer(float timeToAdd)
+    {
+        GetRemainingTime = timeToAdd;
+        if (LevelCanvas.Instance)
+            LevelCanvas.Instance.ShowTimerText(timeToAdd);
+        if (GetRemainingTime <= 0)
+            GameManager.Instance.SetGetPlayer.Death();
+    }
+
     public void StartGame()
     {
         if (_onPause)
@@ -182,6 +199,5 @@ public class WorldStateController : MonoBehaviour, IPauseble
         set { _timerCounter = value; }
 
     }
-    public bool GetOnInitialPause => _timeToStart > 0 && _timeToStart < 3;
     public Vector3 GetInitalPos => _playerInitialPos;
 }
