@@ -16,6 +16,21 @@ public class TapController : MonoBehaviour
         {
             _tapCount = GameManager.Instance.SetGetWorldState.GetLimitTapsOneTouch;
         }
+
+        if (LevelManager.Instance)
+            LevelManager.Instance.OnWinLevel += () => _tapEnabled = false;
+    }
+
+    private void OnEnable()
+    {
+        if (LevelManager.Instance)
+            LevelManager.Instance.OnWinLevel += () => _tapEnabled = false;
+    }
+
+    private void OnDisable()
+    {
+        if (LevelManager.Instance)
+            LevelManager.Instance.OnWinLevel -= () => _tapEnabled = false;
     }
 
     void Update()
