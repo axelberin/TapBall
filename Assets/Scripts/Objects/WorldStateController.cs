@@ -39,6 +39,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
             LevelManager.Instance.OnPreLoseLevel += StopCountTimerMode;
             LevelManager.Instance.OnAcceptRevival += ResumeCountTimerMode;
             LevelManager.Instance.OnRejectRevival += OnTimerPreLose;
+
         }
 
         _level = ScenesManager.Instance.GetLevelByCurrentScene();
@@ -144,7 +145,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     {
         OnUpdate += ControlTimerMode;
         if (LevelCanvas.Instance)
-            LevelCanvas.Instance.ShowTimerText(GetRemainingTime + 0.02f);
+            LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
         _playOnce = true;
     }
 

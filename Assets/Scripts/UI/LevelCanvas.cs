@@ -42,6 +42,7 @@ public class LevelCanvas : CanvasElementLocator
     private Image _viewVideoToReviveImage;
     private TextMeshProUGUI _powerUpPopUpTimeText;
 
+
     private void Awake()
     {
         if (!Instance)
@@ -61,7 +62,6 @@ public class LevelCanvas : CanvasElementLocator
 
         var _rockImageAnimator = FindAndValidateGameObjectComponent(transform, "TapsCount").GetComponent<Animator>();
         var _iceImageAnimator = FindAndValidateGameObjectComponent(transform, "TimeCount").GetComponent<Animator>();
-        var _shieldImageAnimator = FindAndValidateGameObjectComponent(GameManager.Instance.SetGetPlayer.transform, "Circle").GetComponentInChildren<Animator>();
 
         var fadeAnimator = FindAndValidateGameObjectComponent(transform, "Fade").GetComponent<Animator>();
 
@@ -181,21 +181,21 @@ public class LevelCanvas : CanvasElementLocator
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.TimeStopPowerUp);
-            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_iceImageAnimator, "Active","Deactive", PowerUpManager.Instance.GetStopPowerUpTimeActive));
+            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTimePowUpButton, _iceImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopPowerUpTimeActive));
         });
         _stopTouchCountPowUpButton.onClick.AddListener(() =>
         {
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
-            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive));
+            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTouchCountPowUpButton, _rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive));
         });
         _immunityPowUpButton.onClick.AddListener(() =>
         {
+
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.ImmunityPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.ImmunityPowerUp);
-            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_shieldImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetImmunityTimeActive));
         });
 
         _currentLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CurrentLevelText");
@@ -278,12 +278,22 @@ public class LevelCanvas : CanvasElementLocator
         }
     }
 
-    private IEnumerator ActivateAndDeactivatePowerUpeffect(Animator animator,string activationTrigger, string deactivationTrigger, float time)
+    private IEnumerator ActivateAndDeactivatePowerUpeffect(Button button, Animator animator, string activationTrigger, string deactivationTrigger, float time)
     {
+        button.interactable = false;
         animator.SetTrigger(activationTrigger);
         yield return new WaitForSeconds(time);
         animator.SetTrigger(deactivationTrigger);
+        button.interactable = true;
     }
+
+    public void DeactivateInteractablePowerUpButtons(bool active)
+    {
+        _stopTimePowUpButton.interactable = active;
+        _stopTouchCountPowUpButton.interactable = active;
+        _revivePowUpButton.interactable = active;
+    }
+
 
     private IEnumerator UpdateTextsDelay()
     {
@@ -300,9 +310,9 @@ public class LevelCanvas : CanvasElementLocator
 
     public void ActivateRevivePowerUI()
     {
-        // Definir lógica del botón de OK en base al recurso disponible.
+        var _reviveImageAnimator = FindAndValidateGameObjectComponent(transform, "RevivePowerButton").GetComponent<Animator>();
+        GetSetImmunityButton(false);
         Action AcceptButton = delegate { };
-        // Activar la imagen del botón de Ok que corresponda según el recurso disponible.
         if (PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp))
         {
             _useRevivePoweUpToReviveImage.gameObject.SetActive(true);
@@ -311,6 +321,7 @@ public class LevelCanvas : CanvasElementLocator
 
             AcceptButton = () =>
             {
+                _reviveImageAnimator.SetTrigger("Active");
                 PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
                 PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.RevivePowerUp);
             };
@@ -325,7 +336,11 @@ public class LevelCanvas : CanvasElementLocator
             SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
                         - 1, SaveAndLoadManager.OrbsName, true, true);
 
-            AcceptButton = () => PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+            AcceptButton = () =>
+            {
+                _reviveImageAnimator.SetTrigger("Active");
+                PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+            };
         }
         else if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix + PowerUpType.RevivePowerUp.ToString()) <=
             0 && SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) <= 0)
@@ -334,12 +349,12 @@ public class LevelCanvas : CanvasElementLocator
             _useRevivePoweUpToReviveImage.gameObject.SetActive(false);
             _useOrbsToReviveImage.gameObject.SetActive(false);
             AcceptButton = () => AdsManager.Instance.ShowInterstitialAd(() =>
-            PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp));
+            {
+                _reviveImageAnimator.SetTrigger("Active");
+                PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
+            });
         }
-        // Para que muestre un anuncio es así.
-        //AdsManager.Instance.ShowInterstitialAd(Pasarle la funcion de AcceptRevive al finalizar el anuncio);
 
-        // Activar pop up.
         _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton,
             GameManager.Instance.SetGetPlayer.OnRejectRevivalPowerUp);
         _revivePowerUpUI.Show();
@@ -545,6 +560,8 @@ public class LevelCanvas : CanvasElementLocator
                 break;
         }
     }
-
-    public bool isWinUiActive => _winUI.activeSelf;
+    public void GetSetImmunityButton(bool set)
+    {
+        _immunityPowUpButton.interactable = set;
+    }
 }

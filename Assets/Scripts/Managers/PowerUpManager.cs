@@ -19,17 +19,16 @@ public class PowerUpManager : MonoBehaviour
     {
         Instance = this;
     }
-    //private void Start()
-    //{
-    //    LevelManager.Instance.OnWinLevel += ForceStopAllPowerUp;
-    //    LevelManager.Instance.OnLoseLevel += ForceStopAllPowerUp;
-    //}
 
-    //private void OnDestroy()
-    //{
-    //    LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
-    //    LevelManager.Instance.OnLoseLevel -= ForceStopAllPowerUp;
-    //}
+    private void OnEnable()
+    {
+        LevelManager.Instance.OnWinLevel += ForceStopAllPowerUp;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
+    }
 
 #if UNITY_EDITOR
     private void Update()
@@ -69,6 +68,8 @@ public class PowerUpManager : MonoBehaviour
                 StartCoroutine(StopPowerUp(powerUp, _stopTouchCounterTime));
                 break;
             case PowerUpType.ImmunityPowerUp:
+                LevelCanvas.Instance.GetSetImmunityButton(false);
+                GameManager.Instance.SetGetPlayer.OnImmunityActivated(powerUp);
                 _powerUpImmunityEnabled = true;
                 StartCoroutine(StopPowerUp(powerUp, _immunityTime));
                 break;
@@ -86,9 +87,8 @@ public class PowerUpManager : MonoBehaviour
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
-                if(GameManager.Instance.SetGetPlayer.HasDeath == false ||
-                    LevelCanvas.Instance.isWinUiActive == false)
-                GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
+                if (GameManager.Instance.SetGetPlayer.HasDeath == false)
+                    GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
                 _powerUpTapsCounterEnabled = false;
@@ -100,6 +100,7 @@ public class PowerUpManager : MonoBehaviour
                     (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch &&
                     GameManager.Instance.SetGetTapController.SetGetTapCount <= 0))
                     GameManager.Instance.SetGetPlayer.Death();
+                LevelCanvas.Instance.GetSetImmunityButton(true);
                 break;
             case PowerUpType.RevivePowerUp:
 
@@ -111,10 +112,7 @@ public class PowerUpManager : MonoBehaviour
 
     private void ForceStopAllPowerUp()
     {
-        StartCoroutine(StopPowerUp(PowerUpType.TimeStopPowerUp, 0));
-        StartCoroutine(StopPowerUp(PowerUpType.StopTouchCounterPowerUp, 0));
-        //StartCoroutine(StopPowerUp(PowerUpType.ImmunityPowerUp, 0));
-        //StartCoroutine(StopPowerUp(PowerUpType.RevivePowerUp, 0));
+        StopAllCoroutines();
     }
 
     public void AddPowerUp(PowerUpType powerUp, int amount)
@@ -144,6 +142,9 @@ public class PowerUpManager : MonoBehaviour
     public float GetStopPowerUpTimeActive => _timeStopTime;
     public float GetStopTouchCounterPowerUpTimeActive => _stopTouchCounterTime;
     public float GetImmunityTimeActive => _immunityTime;
+
+    public bool GetImmunityBoolActive => _powerUpImmunityEnabled = true;
+
     #endregion
     public enum PowerUpType
     {
