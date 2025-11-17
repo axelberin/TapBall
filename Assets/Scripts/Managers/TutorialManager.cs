@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,17 +34,23 @@ public class TutorialManager : CanvasElementLocator
         if (_tapTutorialImage == null)
             _tapTutorialImage = FindAndValidateComponent<Image>(transform, "TutorialImage");
 
-        var tutorialText = FindAndValidateComponent<TextMeshProUGUI>(transform, "TutorialText");
-        UIManager.Instance.SetText(tutorialText, LanguageManager.Instance.GetLocalizedText("tutorial1"));
-
         var nextTutorialButton = FindAndValidateComponent<Button>(transform, "NextTutorialBTN");
         nextTutorialButton.onClick.AddListener(() => FinishTutorial());
+
+        StartCoroutine(DelayToAnim());
     }
 
-    public void FlipTutorial()
+    private IEnumerator DelayToAnim()
     {
-        _tapTutorialImage.rectTransform.localScale = new Vector3(_tapTutorialImage.rectTransform.localScale.x * -1,
-            _tapTutorialImage.rectTransform.localScale.y, _tapTutorialImage.rectTransform.localScale.z);
+        if (_animator == null)
+            yield break;
+
+        yield return new WaitForSeconds(0.3f);
+
+        if (ScenesManager.Instance.GetLevelByCurrentScene() == 1)
+            _animator.SetTrigger("TapTutorial");
+        else if (ScenesManager.Instance.GetLevelByCurrentScene() == 2)
+            _animator.SetTrigger("SlideTutorial");
     }
 
     private void FinishTutorial()

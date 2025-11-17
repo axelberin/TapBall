@@ -9,6 +9,7 @@ using static GameManager;
 public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
     [SerializeField] float _jumpForce = 3;
+    [SerializeField] float _dashForce = 6f;
 
     private string _deathPrefabName = "Death";
     private bool _death;
@@ -117,18 +118,41 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _specialSkin?.OnTap();
     }
 
+    public void OnDash(Vector2 swipeDir)
+    {
+        if (swipeDir.sqrMagnitude < 0.0001f)
+            return;
+
+        swipeDir.Normalize();
+
+        // Frenamos la velocidad actual para que el dash se sienta "seco"
+        _rb.linearVelocity = Vector2.zero;
+
+        // Impulso directo en la direcci�n del swipe, SIN salto forzado
+        _rb.AddForce(swipeDir * _dashForce, ForceMode2D.Impulse);
+
+        if (_animator.runtimeAnimatorController != null)
+            _animator.SetTrigger("Flick");
+
+        int randomIndex = Random.Range(0, _tapClips.Count);
+        if (_audioSource && _tapClips[randomIndex])
+            _audioSource.PlayOneShot(_tapClips[randomIndex]);
+
+        _specialSkin?.OnTap();
+    }
+
     private void AddForce(Vector3 touchPos)
     {
         _rb.linearVelocity = Vector3.zero;
 
-        Vector3 dir = (transform.position - touchPos).normalized;
+        Vector3 dir = (touchPos - transform.position).normalized;
 
         float dirX;
 
         if (dir.x < 0f)
-            dirX = Mathf.Max(dir.x, -0.2f);
+            dirX = Mathf.Max(dir.x, -0.1f);
         else
-            dirX = Mathf.Min(dir.x, 0.2f);
+            dirX = Mathf.Min(dir.x, 0.1f);
 
         dir = new Vector3(dirX, 0.2f, dir.z);
         _rb.AddForce(dir * _jumpForce, ForceMode2D.Impulse);
@@ -224,9 +248,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void OnResume()
     {
-        if (Instance.SetGetWorldState.GetOnInitialPause)
-            return;
-
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.linearVelocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;

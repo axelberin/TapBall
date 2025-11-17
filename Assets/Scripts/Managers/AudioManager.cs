@@ -18,7 +18,6 @@ public class AudioManager : ManagersManager, IPauseble
         EquipSound,
         RejectionSound,
         AchivmentSound,
-        CountDownSound,
         TimeAlertSound,
     };
 
@@ -172,8 +171,6 @@ public class AudioManager : ManagersManager, IPauseble
             clip => _soundClipsByEnum.Add(AudioClipType.RejectionSound, clip));
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.AchivmentSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.AchivmentSound, clip));
-        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.CountDownSound.ToString(),
-            clip => _soundClipsByEnum.Add(AudioClipType.CountDownSound, clip));
         AddressablesUtility.LoadAsset<AudioClip>(MusicClipType.MenuMusic.ToString()
             , clip => _musicClipsByEnum.Add(MusicClipType.MenuMusic, clip));
         AddressablesUtility.LoadAsset<AudioClip>(MusicClipType.DunkMusic.ToString(),

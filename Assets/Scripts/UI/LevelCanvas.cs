@@ -14,7 +14,6 @@ public class LevelCanvas : CanvasElementLocator
     private TextMeshProUGUI _countText;
     private TextMeshProUGUI _timerText;
     private TextMeshProUGUI _timerDecimalsText;
-    private TextMeshProUGUI _winTime;
     private GameObject _winUI;
     private GameObject _hasCoinGoal;
     private GameObject _emptyhasCoinGoal;
@@ -57,7 +56,6 @@ public class LevelCanvas : CanvasElementLocator
         PauseAndResumeManager.Instance.AddResumeAction(AudioManager.Instance.OnResume);
 
         SetCounterByGameMode(GameManager.Instance.GetCurrentGameMode);
-        _winTime = FindAndValidateComponent<TextMeshProUGUI>(transform, "WinTime");
         _winUI = FindAndValidateGameObjectComponent(transform, "WinUI");
         _revivePowerUpUI = FindAndValidateComponent<PopUp>(transform, "RevivePowerUpUI");
 
@@ -411,7 +409,6 @@ public class LevelCanvas : CanvasElementLocator
             UIManager.Instance.SetText(_nextLevelText, LanguageManager.Instance.GetLocalizedText("nextLevel"));
         }
 
-        UIManager.Instance.ActivateUI(_winTime.gameObject, false);
         UIManager.Instance.ActivateUI(_winUI, true);
         _pauseButton.interactable = false;
 
@@ -469,16 +466,6 @@ public class LevelCanvas : CanvasElementLocator
 
         UIManager.Instance.SetText(_timerText, seconds);
         UIManager.Instance.SetText(_timerDecimalsText, $".{decimals:00}", true);
-    }
-
-    public void OnExitWinBase()
-    {
-        UIManager.Instance.ActivateUI(_winTime.gameObject, false);
-    }
-
-    public void OnCountTime(float time)
-    {
-        UIManager.Instance.SetText(_winTime, (int)time);
     }
 
     public void SetAchievementByDunkMode(int touchesInLevel, bool isOverLimit, bool isOverLimitEver, int limitOfMode)
