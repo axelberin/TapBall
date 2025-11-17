@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,21 @@ public class TutorialManager : CanvasElementLocator
 
         var nextTutorialButton = FindAndValidateComponent<Button>(transform, "NextTutorialBTN");
         nextTutorialButton.onClick.AddListener(() => FinishTutorial());
+
+        StartCoroutine(DelayToAnim());
+    }
+
+    private IEnumerator DelayToAnim()
+    {
+        if (_animator == null)
+            yield break;
+
+        yield return new WaitForSeconds(0.3f);
+
+        if (ScenesManager.Instance.GetLevelByCurrentScene() == 1)
+            _animator.SetTrigger("TapTutorial");
+        else if (ScenesManager.Instance.GetLevelByCurrentScene() == 2)
+            _animator.SetTrigger("SlideTutorial");
     }
 
     private void FinishTutorial()
