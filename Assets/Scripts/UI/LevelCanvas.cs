@@ -259,12 +259,25 @@ public class LevelCanvas : CanvasElementLocator
         UpdatePowerUpTexts(PowerUpType.ImmunityPowerUp);
         if (PowerUpManager.Instance)
             PowerUpManager.Instance.OnPowerUpActivated += UpdatePowerUpTexts;
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnAcceptRevival += () => DeactivateInteractablePowerUpButtons(true);
+            LevelManager.Instance.OnRejectRevival += () => SetImmunityButton(true);
+            LevelManager.Instance.OnRejectRevival += () => DeactivateInteractablePowerUpButtons(true);
+        }
     }
 
     private void OnDisable()
     {
         if (PowerUpManager.Instance)
             PowerUpManager.Instance.OnPowerUpActivated -= UpdatePowerUpTexts;
+
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnAcceptRevival -= () => DeactivateInteractablePowerUpButtons(true);
+            LevelManager.Instance.OnRejectRevival -= () => SetImmunityButton(true);
+            LevelManager.Instance.OnRejectRevival -= () => DeactivateInteractablePowerUpButtons(true);
+        }
     }
 
     private void OnDestroy()
@@ -311,7 +324,7 @@ public class LevelCanvas : CanvasElementLocator
     public void ActivateRevivePowerUI()
     {
         var _reviveImageAnimator = FindAndValidateGameObjectComponent(transform, "RevivePowerButton").GetComponent<Animator>();
-        GetSetImmunityButton(false);
+        SetImmunityButton(false);
         Action AcceptButton = delegate { };
         if (PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp))
         {
@@ -560,7 +573,7 @@ public class LevelCanvas : CanvasElementLocator
                 break;
         }
     }
-    public void GetSetImmunityButton(bool set)
+    public void SetImmunityButton(bool set)
     {
         _immunityPowUpButton.interactable = set;
     }

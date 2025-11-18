@@ -6,6 +6,7 @@ public class PowerUpManager : MonoBehaviour
 {
     public Action<PowerUpType> OnPowerUpActivated = delegate { };
     public Action<PowerUpType> OnPowerUpDeactivated = delegate { };
+    public Action OnUpdate = delegate { };
     public static PowerUpManager Instance { get; private set; }
 
     private bool _powerUpTapsCounterEnabled = false;
@@ -14,6 +15,7 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField] private float _timeStopTime = 3f;
     [SerializeField] private float _stopTouchCounterTime = 3f;
     [SerializeField] private float _immunityTime = 3f;
+
 
     private void Awake()
     {
@@ -30,9 +32,10 @@ public class PowerUpManager : MonoBehaviour
         LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
     }
 
-#if UNITY_EDITOR
     private void Update()
     {
+        OnUpdate?.Invoke();
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))
         {
             //SelectPowerUp(PowerUpType.TimeStopPowerUp);
@@ -53,8 +56,8 @@ public class PowerUpManager : MonoBehaviour
             AddPowerUp(PowerUpType.RevivePowerUp, 1);
 
         }
-    }
 #endif
+    }
     public void SelectPowerUp(PowerUpType powerUp)
     {
         switch (powerUp)
@@ -68,7 +71,7 @@ public class PowerUpManager : MonoBehaviour
                 StartCoroutine(StopPowerUp(powerUp, _stopTouchCounterTime));
                 break;
             case PowerUpType.ImmunityPowerUp:
-                LevelCanvas.Instance.GetSetImmunityButton(false);
+                LevelCanvas.Instance.SetImmunityButton(false);
                 GameManager.Instance.SetGetPlayer.OnImmunityActivated(powerUp);
                 _powerUpImmunityEnabled = true;
                 StartCoroutine(StopPowerUp(powerUp, _immunityTime));
@@ -100,7 +103,7 @@ public class PowerUpManager : MonoBehaviour
                     (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch &&
                     GameManager.Instance.SetGetTapController.SetGetTapCount <= 0))
                     GameManager.Instance.SetGetPlayer.Death();
-                LevelCanvas.Instance.GetSetImmunityButton(true);
+                LevelCanvas.Instance.SetImmunityButton(true);
                 break;
             case PowerUpType.RevivePowerUp:
 

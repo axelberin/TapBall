@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
 
-        if(_immunityAnimator == null)
+        if (_immunityAnimator == null)
             _immunityAnimator = GetComponentInChildren<Animator>();
 
         AddressablesUtility.LoadAsset<AudioClip>("Tap01Sound", clip => _tapClips.Add(clip));
@@ -76,7 +76,16 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (!string.IsNullOrEmpty(key))
             Addressables.LoadAssetAsync<GameObject>(key).Completed += OnPrefabLoaded;
 
+    }
 
+    private void OnEnable()
+    {
+        PowerUpManager.Instance.OnPowerUpActivated += OnImmunityActivated;
+    }
+
+    private void OnDisable()
+    {
+        PowerUpManager.Instance.OnPowerUpActivated -= OnImmunityActivated;
     }
 
     private void OnDestroy()
@@ -89,11 +98,11 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     }
 
     public void OnImmunityActivated(PowerUpManager.PowerUpType powerUp)
-   {
+    {
         if (powerUp != PowerUpManager.PowerUpType.ImmunityPowerUp)
-            return; 
-       _immunityAnimator.SetTrigger("Activate");
-   }
+            return;
+        _immunityAnimator.SetTrigger("Activate");
+    }
 
     public void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle)
     {
@@ -180,13 +189,14 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _death = true;
 
         _collider.enabled = false;
-        Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
         _deathPosition = transform.position;
+        Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
 
         transform.position = new Vector3(100, 0);
         Instance.SetGetCameraController.StartShake();
         LevelManager.Instance.OnPreLoseLevel?.Invoke();
         Instance.SetGetTapController.SetGetTapEnabled = false;
+
         StartCoroutine(DelayToLose());
     }
 
@@ -196,7 +206,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         AudioManager.Instance.StopSound(false, true);
         if (_audioSource && _deathClip)
             _audioSource.PlayOneShot(_deathClip);
-        LevelCanvas.Instance.GetSetImmunityButton(false);
+
+        LevelCanvas.Instance.SetImmunityButton(false);
         LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(false);
 
         yield return new WaitForSeconds(1);
@@ -221,14 +232,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _collider.enabled = true;
         transform.parent = null;
         Instance.SetGetTapController.SetGetTapEnabled = true;
-        LevelCanvas.Instance.GetSetImmunityButton(true);
-        LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(true);
+        
     }
 
     public void OnRejectRevivalPowerUp()
     {
         StartCoroutine(RejectRevivalPowerUp(2));
-        
+
     }
 
     public void AcceptRevivalPowerUp()
@@ -262,7 +272,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         Instance.SetGetTapController.SetGetTapEnabled = true;
         LevelManager.Instance.OnAcceptRevival?.Invoke();
         Debug.Log("Reviving");
-        LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(true);
     }
 
     public void OnResume()
