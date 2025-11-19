@@ -229,9 +229,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         LevelManager.Instance.OnRejectRevival?.Invoke();
         Debug.Log("Rejected");
         LevelManager.Instance.OnLose();
-        _collider.enabled = true;
-        transform.parent = null;
-        Instance.SetGetTapController.SetGetTapEnabled = true;
+        //LLamar al PhysicsRejectRevival del PlayerController
         
     }
 
@@ -241,27 +239,17 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     }
 
-    public void AcceptRevivalPowerUp()
+    public void PlayerPhysicsRejectRevival()
+    {
+        _collider.enabled = true;
+        transform.parent = null;
+        Instance.SetGetTapController.SetGetTapEnabled = true;
+
+    }
+
+    public void PlayerPhysicsRevival()
     {
         StopAllCoroutines();
-
-        switch (Instance.GetCurrentGameMode)
-        {
-            case GameModes.Time:
-                if (Instance.SetGetWorldState.GetRemainingTime <= 3)
-                {
-                    Instance.SetGetWorldState.AddCountToTimer(3);
-                }
-                break;
-            case GameModes.OneTouch:
-                if (Instance.SetGetTapController.SetGetTapCount <= 3)
-                {
-                    Instance.SetGetTapController.AddTouchesFromBubbles(3);
-                }
-                break;
-        }
-
-        PowerUpManager.Instance.SelectPowerUp(PowerUpManager.PowerUpType.ImmunityPowerUp);
         _death = false;
         transform.position = _deathPosition;
         _collider.enabled = true;
@@ -271,7 +259,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _velocityOnPause = Vector2.zero;
         Instance.SetGetTapController.SetGetTapEnabled = true;
         LevelManager.Instance.OnAcceptRevival?.Invoke();
-        Debug.Log("Reviving");
     }
 
     public void OnResume()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static GameManager;
 
 public class PowerUpManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField] private float _stopTouchCounterTime = 3f;
     [SerializeField] private float _immunityTime = 3f;
 
+    private float _timeStopTimer = 0f;
+    private float _stopTouchCounterTimer = 0f;
+    private float _immunityTimer = 0f;
 
     private void Awake()
     {
@@ -64,29 +68,85 @@ public class PowerUpManager : MonoBehaviour
         {
             case PowerUpType.TimeStopPowerUp:
                 GameManager.Instance.SetGetWorldState.StopCountTimerMode();
-                StartCoroutine(StopPowerUp(powerUp, _timeStopTime));
+                _timeStopTimer = _timeStopTime;
+                OnUpdate += TimeStopCounter;
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
                 _powerUpTapsCounterEnabled = true;
-                StartCoroutine(StopPowerUp(powerUp, _stopTouchCounterTime));
+                _stopTouchCounterTimer = _stopTouchCounterTime;
+                OnUpdate += StopTouchCounter;
                 break;
             case PowerUpType.ImmunityPowerUp:
                 LevelCanvas.Instance.SetImmunityButton(false);
                 GameManager.Instance.SetGetPlayer.OnImmunityActivated(powerUp);
                 _powerUpImmunityEnabled = true;
-                StartCoroutine(StopPowerUp(powerUp, _immunityTime));
+                _immunityTimer = _immunityTime;
+                OnUpdate += ImmunityCounter;
                 break;
             case PowerUpType.RevivePowerUp:
-                GameManager.Instance.SetGetPlayer.AcceptRevivalPowerUp();
+                AcceptRevivalPowerUp();
                 break;
         }
 
         OnPowerUpActivated?.Invoke(powerUp);
     }
 
-    public IEnumerator StopPowerUp(PowerUpType powerUp, float timeToStop)
+    private void TimeStopCounter()
     {
-        yield return new WaitForSecondsRealtime(timeToStop);
+        _timeStopTimer -= Time.deltaTime;
+
+        if (_timeStopTimer <= 0f)
+        {
+            OnUpdate -= TimeStopCounter;
+            StopPowerUp(PowerUpType.TimeStopPowerUp);
+        }
+    }
+
+    private void StopTouchCounter()
+    {
+        _stopTouchCounterTimer -= Time.deltaTime;
+
+        if (_stopTouchCounterTimer <= 0f)
+        {
+            OnUpdate -= StopTouchCounter;
+            StopPowerUp(PowerUpType.StopTouchCounterPowerUp);
+        }
+    }
+
+    private void ImmunityCounter()
+    {
+        _immunityTimer -= Time.deltaTime;
+
+        if (_immunityTimer <= 0f)
+        {
+            OnUpdate -= ImmunityCounter;
+            StopPowerUp(PowerUpType.ImmunityPowerUp);
+        }
+    }
+    public void AcceptRevivalPowerUp()
+    {
+        switch (GameManager.Instance.GetCurrentGameMode)
+        {
+            case GameModes.Time:
+                if ((GameManager.Instance.SetGetWorldState.GetRemainingTime <= 3))
+                {
+                    GameManager.Instance.SetGetWorldState.AddCountToTimer(3);
+                }
+                break;
+            case GameModes.OneTouch:
+                if (GameManager.Instance.SetGetTapController.SetGetTapCount <= 3)
+                {
+                    GameManager.Instance.SetGetTapController.AddTouchesFromBubbles(3);
+                }
+                break;
+        }
+
+        SelectPowerUp(PowerUpType.ImmunityPowerUp);
+        GameManager.Instance.SetGetPlayer.PlayerPhysicsRevival();
+        Debug.Log("Reviving");
+    }
+    public void StopPowerUp(PowerUpType powerUp)
+    {
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
@@ -115,7 +175,14 @@ public class PowerUpManager : MonoBehaviour
 
     private void ForceStopAllPowerUp()
     {
-        StopAllCoroutines();
+        OnUpdate = delegate { };
+
+        _powerUpTapsCounterEnabled = false;
+        _powerUpImmunityEnabled = false;
+
+        _timeStopTimer = 0f;
+        _stopTouchCounterTimer = 0f;
+        _immunityTimer = 0f;
     }
 
     public void AddPowerUp(PowerUpType powerUp, int amount)
