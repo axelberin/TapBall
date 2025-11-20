@@ -368,8 +368,7 @@ public class LevelCanvas : CanvasElementLocator
             });
         }
 
-        _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton,
-            GameManager.Instance.SetGetPlayer.OnRejectRevivalPowerUp);
+        _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton,null);
         _revivePowerUpUI.Show();
     }
 

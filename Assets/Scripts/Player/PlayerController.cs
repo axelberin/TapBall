@@ -189,8 +189,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _death = true;
 
         _collider.enabled = false;
-        _deathPosition = transform.position;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
+        _deathPosition = transform.position;
 
         transform.position = new Vector3(100, 0);
         Instance.SetGetCameraController.StartShake();
@@ -213,30 +213,10 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         yield return new WaitForSeconds(1);
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
-        yield return (StartCoroutine(RejectRevivalPowerUp(3)));
+        PowerUpManager.Instance.RejectRevivalPowerUp(3);
+
+        yield return new WaitForSeconds(3);
         LevelCanvas.Instance.DeactivateRevivePowerUI();
-    }
-
-    private IEnumerator RejectRevivalPowerUp(float time)
-    {
-        while (time > 0)
-        {
-            LevelCanvas.Instance.UpdateTextPowerUpPopUpTimeCounter(time);
-            time -= Time.deltaTime;
-            yield return null;
-        }
-
-        LevelManager.Instance.OnRejectRevival?.Invoke();
-        Debug.Log("Rejected");
-        LevelManager.Instance.OnLose();
-        //LLamar al PhysicsRejectRevival del PlayerController
-        
-    }
-
-    public void OnRejectRevivalPowerUp()
-    {
-        StartCoroutine(RejectRevivalPowerUp(2));
-
     }
 
     public void PlayerPhysicsRejectRevival()

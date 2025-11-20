@@ -20,7 +20,7 @@ public class PowerUpManager : MonoBehaviour
     private float _timeStopTimer = 0f;
     private float _stopTouchCounterTimer = 0f;
     private float _immunityTimer = 0f;
-
+    private float _reviveTimer = 0f;
     private void Awake()
     {
         Instance = this;
@@ -29,11 +29,13 @@ public class PowerUpManager : MonoBehaviour
     private void OnEnable()
     {
         LevelManager.Instance.OnWinLevel += ForceStopAllPowerUp;
+        LevelManager.Instance.OnPreLoseLevel += ForceStopAllPowerUp;
     }
 
     private void OnDisable()
     {
         LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
+        LevelManager.Instance.OnPreLoseLevel -= ForceStopAllPowerUp;
     }
 
     private void Update()
@@ -78,9 +80,8 @@ public class PowerUpManager : MonoBehaviour
                 break;
             case PowerUpType.ImmunityPowerUp:
                 LevelCanvas.Instance.SetImmunityButton(false);
-                GameManager.Instance.SetGetPlayer.OnImmunityActivated(powerUp);
-                _powerUpImmunityEnabled = true;
                 _immunityTimer = _immunityTime;
+                _powerUpImmunityEnabled = true;
                 OnUpdate += ImmunityCounter;
                 break;
             case PowerUpType.RevivePowerUp:
@@ -125,6 +126,9 @@ public class PowerUpManager : MonoBehaviour
     }
     public void AcceptRevivalPowerUp()
     {
+        OnUpdate -= RejectRevivalCounter;
+        _reviveTimer = 0f;
+
         switch (GameManager.Instance.GetCurrentGameMode)
         {
             case GameModes.Time:
@@ -145,12 +149,34 @@ public class PowerUpManager : MonoBehaviour
         GameManager.Instance.SetGetPlayer.PlayerPhysicsRevival();
         Debug.Log("Reviving");
     }
+    public void RejectRevivalPowerUp(float time)
+    {
+        _reviveTimer = time;
+        OnUpdate += RejectRevivalCounter;
+    }
+
+    private void RejectRevivalCounter()
+    {
+        if (_reviveTimer <= 0f) return;
+        _reviveTimer -= Time.deltaTime;
+        LevelCanvas.Instance.UpdateTextPowerUpPopUpTimeCounter(_reviveTimer);
+
+        if(_reviveTimer <= 0)
+        {
+            OnUpdate -= RejectRevivalCounter;
+
+            LevelManager.Instance.OnRejectRevival?.Invoke();
+            Debug.Log("Rejected");
+            LevelManager.Instance.OnLose();
+            GameManager.Instance.SetGetPlayer.PlayerPhysicsRejectRevival();
+        }
+    }
+
     public void StopPowerUp(PowerUpType powerUp)
     {
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
-                if (GameManager.Instance.SetGetPlayer.HasDeath == false)
                     GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
@@ -158,9 +184,9 @@ public class PowerUpManager : MonoBehaviour
                 break;
             case PowerUpType.ImmunityPowerUp:
                 _powerUpImmunityEnabled = false;
-                if ((GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time &&
+                if ((GameManager.Instance.GetCurrentGameMode == GameModes.Time &&
                     GameManager.Instance.SetGetWorldState.GetRemainingTime <= 0) ||
-                    (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.OneTouch &&
+                    (GameManager.Instance.GetCurrentGameMode == GameModes.OneTouch &&
                     GameManager.Instance.SetGetTapController.SetGetTapCount <= 0))
                     GameManager.Instance.SetGetPlayer.Death();
                 LevelCanvas.Instance.SetImmunityButton(true);
@@ -183,6 +209,7 @@ public class PowerUpManager : MonoBehaviour
         _timeStopTimer = 0f;
         _stopTouchCounterTimer = 0f;
         _immunityTimer = 0f;
+        _reviveTimer = 0f;
     }
 
     public void AddPowerUp(PowerUpType powerUp, int amount)
@@ -212,9 +239,6 @@ public class PowerUpManager : MonoBehaviour
     public float GetStopPowerUpTimeActive => _timeStopTime;
     public float GetStopTouchCounterPowerUpTimeActive => _stopTouchCounterTime;
     public float GetImmunityTimeActive => _immunityTime;
-
-    public bool GetImmunityBoolActive => _powerUpImmunityEnabled = true;
-
     #endregion
     public enum PowerUpType
     {
