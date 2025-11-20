@@ -42,7 +42,7 @@ public class NotificationManager : MonoBehaviour
             Text = "Tenés desafíos esperando y recompensas por conseguir.",
             SmallIcon = "icon_0",
             LargeIcon = "icon_1",
-            FireTime = DateTime.Now.AddHours(24)
+            FireTime = DateTime.Now.AddHours(1)
         };
 
         AndroidNotificationCenter.SendNotification(notification, ChannelId);
