@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Notifications.Android;
 using UnityEngine;
 
@@ -8,31 +9,32 @@ public class NotificationManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(AskForPermissionRequest());
+
         var channel = new AndroidNotificationChannel()
         {
             Id = ChannelId,
             Name = "General",
-            Importance = Importance.High,
-            Description = "Notificaciones de Multiverse Tap Ball"
+            Description = "Notificaciones de Multiverse Tap Ball",
+            Importance = Importance.Default,
         };
 
         AndroidNotificationCenter.RegisterNotificationChannel(channel);
     }
 
-    private void OnApplicationPause(bool pause)
+    private IEnumerator AskForPermissionRequest()
     {
-        if (pause)
-        {
-            ScheduleComebackNotification();
-        }
+        var request = new PermissionRequest();
+        while (request.Status == PermissionStatus.RequestPending)
+            yield return null;
     }
 
     private void OnApplicationQuit()
     {
-        ScheduleComebackNotification();
+        ScheduleComebackNotification(DateTime.Now.AddHours(1));
     }
 
-    private void ScheduleComebackNotification()
+    private void ScheduleComebackNotification(DateTime dateTime)
     {
         AndroidNotificationCenter.CancelAllNotifications();
 
@@ -42,7 +44,7 @@ public class NotificationManager : MonoBehaviour
             Text = "Tenés desafíos esperando y recompensas por conseguir.",
             SmallIcon = "icon_0",
             LargeIcon = "icon_1",
-            FireTime = DateTime.Now.AddHours(1)
+            FireTime = dateTime
         };
 
         AndroidNotificationCenter.SendNotification(notification, ChannelId);
