@@ -69,8 +69,8 @@ public class NotificationManager : MonoBehaviour
         {
             Title = tittle,
             Text = description,
-            SmallIcon = $"smallIcon_{smallIconNum}",
-            LargeIcon = $"largeIcon_{largeIconNum}",
+            SmallIcon = $"smallicon_{smallIconNum}",
+            LargeIcon = $"largeicon_{largeIconNum}",
             FireTime = dateTime
         };
 
