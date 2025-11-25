@@ -15,7 +15,7 @@ public class NotificationManager : MonoBehaviour
         {
             Id = ChannelId,
             Name = "General",
-            Description = "Notificaciones de Multiverse Tap Ball",
+            Description = "Notifications_Multiverse",
             Importance = Importance.Default,
         };
 
@@ -29,9 +29,15 @@ public class NotificationManager : MonoBehaviour
             yield return null;
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationFocus(bool focus)
     {
-        ScheduleComebackNotification(DateTime.Now.AddHours(1));
+        if (focus == false)
+            ScheduleComebackNotification(DateTime.Now.AddMinutes(1));
+    }
+
+    private void OnDisable()
+    {
+        ScheduleComebackNotification(DateTime.Now.AddMinutes(1));
     }
 
     private void ScheduleComebackNotification(DateTime dateTime)
