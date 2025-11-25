@@ -32,27 +32,53 @@ public class NotificationManager : MonoBehaviour
     private void OnApplicationFocus(bool focus)
     {
         if (focus == false)
-            ScheduleComebackNotification(DateTime.Now.AddMinutes(1));
+            SetNotificationsOnClose();
     }
 
     private void OnDisable()
     {
-        ScheduleComebackNotification(DateTime.Now.AddMinutes(1));
+        SetNotificationsOnClose();
     }
 
-    private void ScheduleComebackNotification(DateTime dateTime)
+    private void SetNotificationsOnClose()
     {
-        AndroidNotificationCenter.CancelAllNotifications();
+        int r = UnityEngine.Random.Range(0, 2);
 
+        string title = LanguageManager.Instance.GetLocalizedText($"notification_tittle_comeback_{r + 1}");
+        string desc = LanguageManager.Instance.GetLocalizedText($"notification_description_comeback_{r + 1}");
+
+        int smallIcon = 0;
+        int largeIcon = r;
+
+        if (title == null || desc == null)
+        {
+            title = LanguageManager.Instance.GetLocalizedText("notification_tittle_comeback_1");
+            desc = LanguageManager.Instance.GetLocalizedText("notification_description_comeback_1");
+            largeIcon = 0;
+        }
+
+        ClearAllNotifications();
+        ScheduleComebackNotification(title, desc, smallIcon, largeIcon, DateTime.Now.AddHours(2));
+        ScheduleComebackNotification(title, desc, smallIcon, largeIcon, DateTime.Now.AddHours(4));
+        ScheduleComebackNotification(title, desc, smallIcon, largeIcon, DateTime.Now.AddHours(8));
+    }
+
+    private void ScheduleComebackNotification(string tittle, string description, int smallIconNum, int largeIconNum, DateTime dateTime)
+    {
         var notification = new AndroidNotification
         {
-            Title = "¡Volvé al Multiverso!",
-            Text = "Tenés desafíos esperando y recompensas por conseguir.",
-            SmallIcon = "icon_0",
-            LargeIcon = "icon_1",
+            Title = tittle,
+            Text = description,
+            SmallIcon = $"smallIcon_{smallIconNum}",
+            LargeIcon = $"largeIcon_{largeIconNum}",
             FireTime = dateTime
         };
 
         AndroidNotificationCenter.SendNotification(notification, ChannelId);
+    }
+
+    private void ClearAllNotifications()
+    {
+        AndroidNotificationCenter.CancelAllNotifications();
     }
 }

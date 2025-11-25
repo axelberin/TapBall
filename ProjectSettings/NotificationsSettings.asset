@@ -43,8 +43,17 @@
         },
         "DrawableResources": [
             {
-                "Id": "icon_0",
+                "Id": "smallIcon_0",
                 "Type": 0,
+                "Asset": {
+                    "fileID": 2800000,
+                    "guid": "f7e80b02703b3854cb60eecd809ba8c1",
+                    "type": 3
+                }
+            },
+            {
+                "Id": "largeIcon_0",
+                "Type": 1,
                 "Asset": {
                     "fileID": 2800000,
                     "guid": "453a4727f962d9740b50a1ce2b905ef5",
@@ -52,11 +61,11 @@
                 }
             },
             {
-                "Id": "icon_1",
+                "Id": "largeIcon_1",
                 "Type": 1,
                 "Asset": {
                     "fileID": 2800000,
-                    "guid": "453a4727f962d9740b50a1ce2b905ef5",
+                    "guid": "e332ed59a3dd2b84bb8847cccc0f863a",
                     "type": 3
                 }
             }
