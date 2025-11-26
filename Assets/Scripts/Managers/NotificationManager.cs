@@ -61,6 +61,12 @@ public class NotificationManager : MonoBehaviour
         ScheduleComebackNotification(title, desc, smallIcon, largeIcon, DateTime.Now.AddHours(2));
         ScheduleComebackNotification(title, desc, smallIcon, largeIcon, DateTime.Now.AddHours(4));
         ScheduleComebackNotification(title, desc, smallIcon, largeIcon, DateTime.Now.AddHours(8));
+
+        ScheduleNotificationAtTime("notification_tittle_daily_1", "notification_description_daily_1",
+            0, 0, 11, 0);
+        if (!DailyMissionsManager.Instance.AreAllTodayMissionsComplete)
+            ScheduleNotificationAtTime("notification_tittle_daily_2", "notification_description_daily_2",
+                0, 0, 20, 0);
     }
 
     private void ScheduleComebackNotification(string tittle, string description, int smallIconNum, int largeIconNum, DateTime dateTime)
@@ -76,6 +82,34 @@ public class NotificationManager : MonoBehaviour
 
         AndroidNotificationCenter.SendNotification(notification, ChannelId);
     }
+
+    private void ScheduleNotificationAtTime(
+    string titleKey,
+    string descKey,
+    int smallIconNum,
+    int largeIconNum,
+    int hour,
+    int minute)
+    {
+        string title = LanguageManager.Instance.GetLocalizedText(titleKey);
+        string desc = LanguageManager.Instance.GetLocalizedText(descKey);
+
+        if (title == null || desc == null)
+        {
+            Debug.LogWarning($"Notification keys not found: {titleKey} / {descKey}");
+            return;
+        }
+
+        DateTime now = DateTime.Now;
+        DateTime fireTime = new(now.Year, now.Month, now.Day, hour, minute, 0);
+
+        // Si ya pasó ese horario hoy, se programa para mañana
+        if (fireTime <= now)
+            fireTime = fireTime.AddDays(1);
+
+        ScheduleComebackNotification(title, desc, smallIconNum, largeIconNum, fireTime);
+    }
+
 
     private void ClearAllNotifications()
     {
