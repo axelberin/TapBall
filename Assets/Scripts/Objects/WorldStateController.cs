@@ -135,6 +135,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public void StopCountTimerMode()
     {
         OnUpdate -= ControlTimerMode;
+        AudioManager.Instance.PauseSpecificSfx(AudioManager.AudioClipType.TimeAlertSound);
         if (LevelCanvas.Instance)
             LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
 
@@ -144,6 +145,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public void ResumeCountTimerMode()
     {
         OnUpdate += ControlTimerMode;
+        AudioManager.Instance.UnPauseSpecificSfx(AudioManager.AudioClipType.TimeAlertSound);
         if (LevelCanvas.Instance)
             LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
         _playOnce = true;

@@ -188,7 +188,7 @@ public class LevelCanvas : CanvasElementLocator
             PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
 
             PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
-            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTouchCountPowUpButton, _rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive));
+            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTouchCountPowUpButton, _rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive - 0.5f));
         });
         _immunityPowUpButton.onClick.AddListener(() =>
         {
@@ -324,7 +324,8 @@ public class LevelCanvas : CanvasElementLocator
     public void ActivateRevivePowerUI()
     {
         var _reviveImageAnimator = FindAndValidateGameObjectComponent(transform, "RevivePowerButton").GetComponent<Animator>();
-        SetImmunityButton(false);
+        _immunityPowUpButton.interactable = false;
+        PowerUpManager.Instance.GetSetIsShowingReviveUI = true;
         Action AcceptButton = delegate { };
         if (PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp))
         {
@@ -368,7 +369,7 @@ public class LevelCanvas : CanvasElementLocator
             });
         }
 
-        _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton,null);
+        _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton, null);
         _revivePowerUpUI.Show();
     }
 

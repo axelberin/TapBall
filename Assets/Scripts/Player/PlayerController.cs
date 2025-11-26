@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     private string _deathPrefabName = "Death";
     private bool _death;
+    private bool _isDying;
     private Vector2 _velocityOnPause;
 
     private List<AudioClip> _tapClips = new();
@@ -182,9 +183,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void Death()
     {
-        if (PowerUpManager.Instance.PowerUpImmunityEnabled)
+        if (_isDying || PowerUpManager.Instance.PowerUpImmunityEnabled)
             return;
-
+        _isDying = true;
         transform.parent = null;
         _death = true;
 
@@ -231,6 +232,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     {
         StopAllCoroutines();
         _death = false;
+        _isDying = false;
         transform.position = _deathPosition;
         _collider.enabled = true;
 
