@@ -42,6 +42,9 @@ public class NotificationManager : MonoBehaviour
 
     private void SetNotificationsOnClose()
     {
+        if (LanguageManager.Instance == null)
+            return;
+
         int r = UnityEngine.Random.Range(0, 2);
 
         string title = LanguageManager.Instance.GetLocalizedText($"notification_tittle_comeback_{r + 1}");
@@ -64,7 +67,7 @@ public class NotificationManager : MonoBehaviour
 
         ScheduleNotificationAtTime("notification_tittle_daily_1", "notification_description_daily_1",
             0, 0, 11, 0);
-        if (!DailyMissionsManager.Instance.AreAllTodayMissionsComplete)
+        if (DailyMissionsManager.Instance && !DailyMissionsManager.Instance.AreAllTodayMissionsComplete)
             ScheduleNotificationAtTime("notification_tittle_daily_2", "notification_description_daily_2",
                 0, 0, 20, 0);
     }
