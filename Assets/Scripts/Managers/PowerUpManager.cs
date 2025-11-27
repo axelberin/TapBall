@@ -165,7 +165,7 @@ public class PowerUpManager : MonoBehaviour
         _reviveTimer -= Time.deltaTime;
         LevelCanvas.Instance.UpdateTextPowerUpPopUpTimeCounter(_reviveTimer);
 
-        if(_reviveTimer <= 0)
+        if (_reviveTimer <= 0)
         {
             OnUpdate -= RejectRevivalCounter;
 
@@ -181,7 +181,7 @@ public class PowerUpManager : MonoBehaviour
         switch (powerUp)
         {
             case PowerUpType.TimeStopPowerUp:
-                    GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
+                GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
                 _powerUpTapsCounterEnabled = false;
@@ -193,9 +193,14 @@ public class PowerUpManager : MonoBehaviour
                     (GameManager.Instance.GetCurrentGameMode == GameModes.OneTouch &&
                     GameManager.Instance.SetGetTapController.SetGetTapCount <= 0))
                     GameManager.Instance.SetGetPlayer.Death();
-                if (!_isShowingReviveUI)
-                    return;
-                LevelCanvas.Instance.SetImmunityButton(true);
+                if (_isShowingReviveUI == false)
+                {
+                    LevelCanvas.Instance.SetImmunityButton(true);
+                }
+                else
+                {
+                    LevelCanvas.Instance.SetImmunityButton(false);
+                }
                 break;
             case PowerUpType.RevivePowerUp:
 
