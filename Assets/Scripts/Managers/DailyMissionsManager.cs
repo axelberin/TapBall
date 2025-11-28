@@ -399,6 +399,8 @@ public class DailyMissionsManager : ManagersManager
     }
 
     public List<MissionData> GetTodayMissions => _todayMissions;
+
+    public bool AreAllTodayMissionsComplete => _todayMissions.Count == 0;
 }
 #region ENUMS
 public enum MissionType
