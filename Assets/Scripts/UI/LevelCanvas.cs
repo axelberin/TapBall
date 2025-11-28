@@ -154,26 +154,6 @@ public class LevelCanvas : CanvasElementLocator
         #region REVIVE POWERUP UI INTERACTUABLE BUTTONS
         _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp);
         _useOrbsToReviveImage.gameObject.SetActive(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0);
-
-        //Lo que hacen estos botones va a tener que pasar en un solo botón, el OK del pop up, y va a variar en base al recurso disponible.
-        //_revivePowUpButton.onClick.AddListener(() =>
-        //{
-        //    PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
-        //
-        //    PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.RevivePowerUp);
-        //
-        //    UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
-        //});
-        //_useOrbsToReviveImage.onClick.AddListener(() =>
-        //{
-        //    PowerUpManager.Instance.SelectPowerUp(PowerUpType.RevivePowerUp);
-
-        //    SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
-        //               - 10, SaveAndLoadManager.OrbsName, true, true);
-
-        //    UpdatePowerUpTexts(PowerUpType.RevivePowerUp);
-        //});
-        //_viewVideoToReviveImage.onClick.AddListener(() => Debug.Log("Estás viendo un vidio para revivir........."));
         #endregion
 
         _stopTimePowUpButton.onClick.AddListener(() =>
@@ -325,7 +305,6 @@ public class LevelCanvas : CanvasElementLocator
     {
         var _reviveImageAnimator = FindAndValidateGameObjectComponent(transform, "RevivePowerButton").GetComponent<Animator>();
         _immunityPowUpButton.interactable = false;
-        PowerUpManager.Instance.GetSetIsShowingReviveUI = true;
         Action AcceptButton = delegate { };
         if (PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp))
         {
@@ -575,6 +554,8 @@ public class LevelCanvas : CanvasElementLocator
     }
     public void SetImmunityButton(bool set)
     {
-        _immunityPowUpButton.interactable = set;
+        if (_achievementsGoalPrefab == null)
+            return;
+            _immunityPowUpButton.interactable = set;
     }
 }

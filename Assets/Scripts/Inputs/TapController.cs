@@ -130,7 +130,7 @@ public class TapController : MonoBehaviour
             _tapCount = 0;
 
         LevelCanvas.Instance.OnTap(_tapCount);
-        if (_tapCount <= 0)
+        if (_tapCount == 0)
             GameManager.Instance.SetGetPlayer.Death();
     }
 

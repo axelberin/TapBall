@@ -212,6 +212,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(false);
 
         yield return new WaitForSeconds(1);
+        PowerUpManager.Instance.GetSetIsShowingReviveUI = true;
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
         PowerUpManager.Instance.RejectRevivalPowerUp(3);
@@ -223,6 +224,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     public void PlayerPhysicsRejectRevival()
     {
         _collider.enabled = true;
+        _isDying = false;
         transform.parent = null;
         Instance.SetGetTapController.SetGetTapEnabled = true;
 

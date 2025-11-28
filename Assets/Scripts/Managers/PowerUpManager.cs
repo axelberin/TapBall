@@ -187,20 +187,13 @@ public class PowerUpManager : MonoBehaviour
                 _powerUpTapsCounterEnabled = false;
                 break;
             case PowerUpType.ImmunityPowerUp:
+                LevelCanvas.Instance.SetImmunityButton(!_isShowingReviveUI);
                 _powerUpImmunityEnabled = false;
                 if ((GameManager.Instance.GetCurrentGameMode == GameModes.Time &&
                     GameManager.Instance.SetGetWorldState.GetRemainingTime <= 0) ||
                     (GameManager.Instance.GetCurrentGameMode == GameModes.OneTouch &&
                     GameManager.Instance.SetGetTapController.SetGetTapCount <= 0))
                     GameManager.Instance.SetGetPlayer.Death();
-                if (_isShowingReviveUI == false)
-                {
-                    LevelCanvas.Instance.SetImmunityButton(true);
-                }
-                else
-                {
-                    LevelCanvas.Instance.SetImmunityButton(false);
-                }
                 break;
             case PowerUpType.RevivePowerUp:
 
