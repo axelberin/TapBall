@@ -12,5 +12,11 @@ public class UISkins : ScriptableObject
     public Sprite backgroundSprite;
     public RuntimeAnimatorController backgroundAnimator;
 
+    public bool isDateLocked;
+    [Range(1, 31)] public int startDay;
+    [Range(1, 31)] public int endDay;
+    [Range(1, 12)] public int unlockMonth;
+    public int unlockYear;
+
     public int GetPrice => unlockeable ? 0 : groupPrice.Price + skinAddPrice;
 }

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -74,6 +75,7 @@ public class StoreObject : CanvasElementLocator
 
     private void Start()
     {
+        TryUnlockByDate();
         StoreManager.Instance.UpdateSkinsState += UpdateSkinState;
     }
 
@@ -120,5 +122,33 @@ public class StoreObject : CanvasElementLocator
         _equipButton.gameObject.SetActive(true);
         _equipButton.interactable = interactable;
         UIManager.Instance.SetText(_equipText, LanguageManager.Instance.GetLocalizedText(buttonText));
+    }
+
+    private void TryUnlockByDate()
+    {
+        if (_skinSC == null || !_skinSC.isDateLocked ||
+            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName) == 1)
+            return;
+
+        DateTime now = DateTime.Now;
+
+        if (now.Month != _skinSC.unlockMonth || _skinSC.unlockYear != 0 && now.Year != _skinSC.unlockYear)
+            return;
+
+        // Normalizamos por si alguien en el editor pone startDay > endDay
+        int startDay = Mathf.Min(_skinSC.startDay, _skinSC.endDay);
+        int endDay = Mathf.Max(_skinSC.startDay, _skinSC.endDay);
+
+        if (now.Day >= startDay && now.Day <= endDay)
+        {
+            SaveAndLoadManager.SetIntValue(
+                1,
+                SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName,
+                true,
+                true
+            );
+
+            // UIManager.Instance.ShowPopup("¡Has desbloqueado una skin navideña!");
+        }
     }
 }
