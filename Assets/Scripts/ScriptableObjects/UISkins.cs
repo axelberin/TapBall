@@ -7,7 +7,7 @@ public class UISkins : ScriptableObject
     public Sprite sprite;
     public SkinPriceByGroup groupPrice;
     public int skinAddPrice;
-    public Vector2 spriteSize;
+    public Vector2 spriteSize = new(250, 250);
     public bool unlockeable;
     public Sprite backgroundSprite;
     public RuntimeAnimatorController backgroundAnimator;
