@@ -11,6 +11,8 @@ public class PopUp : CanvasElementLocator
     private Button _okButton;
     private Button _cancelButton;
     private GameObject _elements;
+    private Image _iconImage;
+    private Animator _iconAnimator;
 
     void Awake()
     {
@@ -39,8 +41,7 @@ public class PopUp : CanvasElementLocator
             Hide();
         });
 
-        _elements = FindAndValidateGameObjectComponent(transform, "PopUpElements");
-        _elements.SetActive(false);
+        StrongHide();
     }
 
     public void SetElements(string tittleText = null, string description = null, Action okAction = null, Action cancelAction = null)
@@ -73,23 +74,78 @@ public class PopUp : CanvasElementLocator
         Show();
     }
 
-    public void InitializeWithIcon(string tittleText, GameObject icon, string description = null, Action okAction = null, Action cancelAction = null)
+    public void InitializeWithIcon(string tittleText, GameObject icon, string description = null, Action okAction = null,
+        Action cancelAction = null, string triggerToPlay = null)
     {
         Initialize(tittleText, description, okAction, cancelAction);
 
-        //var image = FindAndValidateComponent<Image>(transform, "Image");
-        //image.sprite = icon.GetComponent<Image>().sprite;
+        _iconImage = FindAndValidateComponent<Image>(transform, "SkinToWin");
+        _iconAnimator = _iconImage.GetComponent<Animator>();
 
-        //if (icon.TryGetComponent(out Animator animator))
-        //{
-        //    if (image.GetComponent<Animator>() == null)
-        //        image.gameObject.AddComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
-        //    else
-        //        image.GetComponent<Animator>().runtimeAnimatorController = animator.runtimeAnimatorController;
-
-        //    animator.SetTrigger("Idle");
-        //}
+        ApplyIconFromObject(icon, triggerToPlay);
     }
+
+    private void ApplyIconFromObject(GameObject sourceObject, string triggerToPlay = null)
+    {
+        if (_iconImage == null || sourceObject == null)
+        {
+            Debug.LogWarning("[PopUp] ApplyIconFromObject llamado sin _iconImage o sourceObject.");
+            return;
+        }
+
+        // 1) Buscamos sprite genérico: SpriteRenderer o Image
+        Sprite sprite = null;
+        Color color = Color.white;
+
+        var sourceSpriteRenderer = sourceObject.GetComponentInChildren<SpriteRenderer>();
+        var sourceImage = sourceObject.GetComponentInChildren<Image>();
+
+        if (sourceSpriteRenderer != null)
+        {
+            sprite = sourceSpriteRenderer.sprite;
+            color = sourceSpriteRenderer.color;
+        }
+        else if (sourceImage != null)
+        {
+            sprite = sourceImage.sprite;
+            color = sourceImage.color;
+        }
+
+        if (sprite == null)
+        {
+            _iconImage.gameObject.SetActive(false);
+            return;
+        }
+
+        // 2) Seteamos sprite en la imagen del popup
+        _iconImage.gameObject.SetActive(true);
+        _iconImage.sprite = sprite;
+        _iconImage.color = color;
+
+
+        // 3) Animator (si el objeto tiene)
+        var sourceAnimator = sourceObject.GetComponentInChildren<Animator>();
+
+        if (sourceAnimator != null)
+        {
+            if (_iconAnimator == null)
+                _iconAnimator = _iconImage.GetComponent<Animator>() ?? _iconImage.gameObject.AddComponent<Animator>();
+
+            _iconAnimator.runtimeAnimatorController = sourceAnimator.runtimeAnimatorController;
+            _iconAnimator.enabled = true;
+
+            if (string.IsNullOrEmpty(triggerToPlay))
+            {
+                _iconAnimator.ResetTrigger(triggerToPlay);
+                _iconAnimator.SetTrigger(triggerToPlay);
+            }
+        }
+        else if (_iconAnimator != null)
+        {
+            _iconAnimator.enabled = false;
+        }
+    }
+
 
     private void SetTittle(string tittleText)
     {
@@ -115,5 +171,12 @@ public class PopUp : CanvasElementLocator
     public void Hide()
     {
         _animator.SetTrigger("Hide");
+    }
+
+    public void StrongHide()
+    {
+        if (_elements == null)
+            _elements = FindAndValidateGameObjectComponent(transform, "PopUpElements");
+        _elements.SetActive(false);
     }
 }

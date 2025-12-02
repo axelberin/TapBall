@@ -30,6 +30,13 @@ public class StoreObject : CanvasElementLocator
         _image.sprite = _skinSC.sprite;
         _image.rectTransform.sizeDelta = _skinSC.spriteSize;
 
+        var skinAnimator = _image.GetComponent<Animator>();
+        if (skinAnimator != null)
+        {
+            skinAnimator.enabled = true;
+            skinAnimator.Play("IdleAnim");
+        }
+
         var priceText = FindAndValidateComponent<TextMeshProUGUI>(transform, "PriceText");
         if (UIManager.Instance != null)
             UIManager.Instance.SetText(priceText, _skinSC.GetPrice);
@@ -148,7 +155,7 @@ public class StoreObject : CanvasElementLocator
                 true
             );
 
-            // UIManager.Instance.ShowPopup("¡Has desbloqueado una skin navideña!");
+            MenuManagerCanvas.Instance.OnUnlockSkin(_skinSC.skinName);
         }
     }
 }
