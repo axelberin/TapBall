@@ -21,7 +21,7 @@ MonoBehaviour:
   backgroundSprite: {fileID: -3951569648773038444, guid: 85f4cbf8e3179da47acd86b66b585156, type: 3}
   backgroundAnimator: {fileID: 0}
   isDateLocked: 0
-  startDay: 0
-  endDay: 0
-  unlockMonth: 0
+  startDay: 1
+  endDay: 1
+  unlockMonth: 1
   unlockYear: 0
