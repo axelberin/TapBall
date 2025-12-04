@@ -18,7 +18,7 @@ public class Arrows : ObstaclesManager
     {
         if (collision.TryGetComponent(out PlayerController player) && _animator != null)
         {
-            player.GetRigidbody.linearVelocity = Vector3.zero;
+            player.SetRigidbodylinearVelocity = Vector3.zero;
             _animator.SetTrigger("Interact");
             _audioSource.Play();
         }

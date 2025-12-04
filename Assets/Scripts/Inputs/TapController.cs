@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class TapController : MonoBehaviour, IPauseble
 {
@@ -109,7 +108,7 @@ public class TapController : MonoBehaviour, IPauseble
         if (!GameManager.Instance.SetGetPlayer || !LevelCanvas.Instance)
             return;
 
-        if (GameManager.Instance.SetGetPlayer.GetRigidbody.bodyType != RigidbodyType2D.Dynamic)
+        if (!GameManager.Instance.SetGetPlayer.IsRigidbodyDynamic)
             GameManager.Instance.SetGetWorldState.StartGame();
 
         _auxSwipeStartPos = startPos;

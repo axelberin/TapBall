@@ -52,7 +52,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_playerInitialPos == Vector3.zero)
             _playerInitialPos = _playerController.transform.position;
 
-        _playerController.GetRigidbody.bodyType = RigidbodyType2D.Static;
+        _playerController.SetRbType = RigidbodyType2D.Static;
 
         _movableObjectsInLevel = FindObjectsByType<MovableObjects>(FindObjectsSortMode.None).ToList();
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
@@ -142,7 +142,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (_onPause)
             return;
 
-        _playerController.GetRigidbody.bodyType = RigidbodyType2D.Dynamic;
+        _playerController.SetRbType = RigidbodyType2D.Dynamic;
         _movableObjectsInLevel.ForEach(obj => obj.PlayMovement());
 
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
