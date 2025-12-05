@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6121e6aa18634747a51658c245ea8d2, type: 3}
+  m_Name: RudolphBallSkin
+  m_EditorClassIdentifier: 
+  skinName: RudolphBallSkin
+  sprite: {fileID: -5637320614124810329, guid: 56d7e35c9ce5e4347a2ab682dbea5c03, type: 3}
+  groupPrice: {fileID: 0}
+  skinAddPrice: 0
+  spriteSize: {x: 250, y: 250}
+  unlockeable: 1
+  backgroundSprite: {fileID: 5640216369018461259, guid: 7f2e9cea51128ee4bbb2a8ba66e1c7c8, type: 3}
+  backgroundAnimator: {fileID: 0}
+  isDateLocked: 1
+  startDay: 23
+  endDay: 26
+  unlockMonth: 12
+  unlockYear: 0

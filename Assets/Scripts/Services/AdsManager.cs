@@ -43,12 +43,11 @@ public class AdsManager : MonoBehaviour
         com.unity3d.mediation.LevelPlayAdFormat[] formats = new[] {
         com.unity3d.mediation.LevelPlayAdFormat.INTERSTITIAL,
         com.unity3d.mediation.LevelPlayAdFormat.REWARDED
-    };
+        };
 
         LevelPlay.OnInitSuccess += config =>
         {
             Debug.Log("LevelPlay inicializado correctamente");
-            // tu creación de anuncios...
         };
 
         LevelPlay.OnInitFailed += error =>

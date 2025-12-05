@@ -16,7 +16,12 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: b5dbf1205e51b834a8cbe6b51c665dca, type: 3}
   groupPrice: {fileID: 11400000, guid: 922b395f50fb8a649929c19547c11c96, type: 2}
   skinAddPrice: 0
-  spriteSize: {x: 200, y: 200}
+  spriteSize: {x: 250, y: 250}
   unlockeable: 0
   backgroundSprite: {fileID: -3951569648773038444, guid: 85f4cbf8e3179da47acd86b66b585156, type: 3}
   backgroundAnimator: {fileID: 0}
+  isDateLocked: 0
+  startDay: 1
+  endDay: 1
+  unlockMonth: 1
+  unlockYear: 0

@@ -3,10 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UtilityAddressables;
-using static GameManager;
 
 public class MenuManagerCanvas : CanvasElementLocator
 {
+    public static MenuManagerCanvas Instance;
+
     private GameObject _menuPanel;
     private GameObject _levelsPanel;
     private GameObject _dailyMissionsPanel;
@@ -27,12 +28,20 @@ public class MenuManagerCanvas : CanvasElementLocator
     // Mundo actual - temporal hasta que implementes el sistema completo
     private string _currentWorld = "Neon";
 
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
+    }
+
     void Start()
     {
         if (!SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CurrentModeName))
             SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.CurrentModeName, true, true);
 
-        Instance.SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName));
+        GameManager.Instance.SelectGameMode(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CurrentModeName));
 
         _menuPanel = FindAndValidateGameObjectComponent(transform, "MenuPanel");
         _levelsPanel = FindAndValidateGameObjectComponent(transform, "LevelsPanel");
@@ -127,14 +136,14 @@ public class MenuManagerCanvas : CanvasElementLocator
         _modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
         var nextModeBtn = FindAndValidateComponent<Button>(transform, "NextModeBTN");
-        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 5) > 0;
+        nextModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameManager.GameModes.Dunk, "Neon") / 5) > 0;
 
         nextModeBtn.onClick.AddListener(() =>
         {
-            Instance.SetCurrentModeByIndex(1);
+            GameManager.Instance.SetCurrentModeByIndex(1);
             UpdateModeTexts(_modeText, nextLevelText);
 
-            AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+            AddressablesUtility.LoadAsset<GameObject>($"{GameManager.Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
             {
                 _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
                 OnLevelSelectorClicked(false);
@@ -142,13 +151,13 @@ public class MenuManagerCanvas : CanvasElementLocator
         });
 
         var previousModeBtn = FindAndValidateComponent<Button>(transform, "PreviousModeBTN");
-        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameModes.Dunk, "Neon") / 5) > 0;
+        previousModeBtn.interactable = (SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameManager.GameModes.Dunk, "Neon") / 5) > 0;
         previousModeBtn.onClick.AddListener(() =>
         {
-            Instance.SetCurrentModeByIndex(-1);
+            GameManager.Instance.SetCurrentModeByIndex(-1);
             UpdateModeTexts(_modeText, nextLevelText);
 
-            AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+            AddressablesUtility.LoadAsset<GameObject>($"{GameManager.Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
             {
                 _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
                 OnLevelSelectorClicked(false);
@@ -168,10 +177,10 @@ public class MenuManagerCanvas : CanvasElementLocator
         UpdateNotificationsOnNoAds();
 
         _unlockSkinsPopUp = FindAndValidateComponent<PopUp>(transform, "UnlockSkinsPopUp");
-        if (!string.IsNullOrEmpty(UnlokedSkin))
-            OnUnlockSkin();
+        if (!string.IsNullOrEmpty(GameManager.UnlokedSkin))
+            OnUnlockWorldSkin(SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI");
         else
-            _unlockSkinsPopUp.gameObject.SetActive(false);
+            _unlockSkinsPopUp.StrongHide();
 
         CheckForUnlokedModes();
 
@@ -179,8 +188,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         _thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
         _dailyMissionsPanel.SetActive(false);
         fadeController.SetActive(true);
-        _thanksForBuyPopUp.gameObject.SetActive(true);
-        noAdsPopUp.gameObject.SetActive(true);
+        _thanksForBuyPopUp.StrongHide();
+        noAdsPopUp.StrongHide();
         _menuPanel.SetActive(true);
         _levelsPanel.SetActive(false);
 
@@ -191,7 +200,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         LevelManager.Instance.ResetCoins();
         AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.MenuMusic);
 
-        AddressablesUtility.LoadAsset<GameObject>($"{Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
+        AddressablesUtility.LoadAsset<GameObject>($"{GameManager.Instance.GetCurrentGameMode}AchievementLevelSelector", achievementImageAddressable =>
         {
             _achievementImageInLevelsSelector = achievementImageAddressable.GetComponent<Image>();
             OnLevelSelectorClicked(true);
@@ -203,7 +212,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         UpdateTexts();
         if (_modeText != null)
             UIManager.Instance.SetText(_modeText,
-                LanguageManager.Instance.GetLocalizedText(Instance.GetCurrentGameMode.ToString()));
+                LanguageManager.Instance.GetLocalizedText(GameManager.Instance.GetCurrentGameMode.ToString()));
 
         if (IAPManager.Instance)
         {
@@ -278,15 +287,15 @@ public class MenuManagerCanvas : CanvasElementLocator
             if (i == 1)
                 button.interactable = true;
             else
-                button.interactable = SaveAndLoadManager.GetLevelCompleted(Instance.GetCurrentGameMode, _currentWorld, i - 1);
+                button.interactable = SaveAndLoadManager.GetLevelCompleted(GameManager.Instance.GetCurrentGameMode, _currentWorld, i - 1);
             #endregion
 
             #region HAS COINS
             var hasCoinImage = FindAndValidateComponent<Image>(button.transform, $"DunkHasCoin");
             // Usar nuevo sistema para verificar monedas
             hasCoinImage.gameObject.SetActive(
-                SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
-                SaveAndLoadManager.GetLevelCoinObtained(Instance.GetCurrentGameMode, _currentWorld, i));
+                SaveAndLoadManager.HasLevelData(GameManager.Instance.GetCurrentGameMode, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelCoinObtained(GameManager.Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
             #region HAS ACHIEVEMENT
@@ -296,16 +305,16 @@ public class MenuManagerCanvas : CanvasElementLocator
 
             // Usar nuevo sistema para verificar objetivo completado
             achievementImage.gameObject.SetActive(
-                SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
-                SaveAndLoadManager.GetLevelObjectiveComplete(Instance.GetCurrentGameMode, _currentWorld, i));
+                SaveAndLoadManager.HasLevelData(GameManager.Instance.GetCurrentGameMode, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelObjectiveComplete(GameManager.Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
             #region WITHOUT DEATH
             var noDeathImage = FindAndValidateComponent<Image>(button.transform, $"DunkWithoutDeath");
             // Usar nuevo sistema para verificar sin muerte
             noDeathImage.gameObject.SetActive(
-                SaveAndLoadManager.HasLevelData(Instance.GetCurrentGameMode, _currentWorld, i) &&
-                SaveAndLoadManager.GetLevelWithoutDeath(Instance.GetCurrentGameMode, _currentWorld, i));
+                SaveAndLoadManager.HasLevelData(GameManager.Instance.GetCurrentGameMode, _currentWorld, i) &&
+                SaveAndLoadManager.GetLevelWithoutDeath(GameManager.Instance.GetCurrentGameMode, _currentWorld, i));
             #endregion
 
             #region LEVEL TEXT
@@ -323,17 +332,17 @@ public class MenuManagerCanvas : CanvasElementLocator
         {
             UIManager.Instance.ClearCnavasesList();
             ScenesManager.Instance.LoadSceneAsync(
-                $"{_currentWorld}Level{SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(Instance.GetCurrentGameMode, _currentWorld, 49) + 1}", fadeAnimator);
+                $"{_currentWorld}Level{SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameManager.Instance.GetCurrentGameMode, _currentWorld, 49) + 1}", fadeAnimator);
         });
     }
     #endregion
 
-    private void OnUnlockSkin()
+    private void OnUnlockWorldSkin(string skinNamePrefab)
     {
-        string unlockedSkinName = UnlokedSkin;
+        string unlockedSkinName = GameManager.UnlokedSkin;
 
         AddressablesUtility.LoadAsset<GameObject>(
-            SaveAndLoadManager.GetStringValue(SaveAndLoadManager.CurrentWorldName) + "SkinUI", iGo =>
+            skinNamePrefab, iGo =>
             {
                 _unlockSkinsPopUp.InitializeWithIcon("unlockskin", iGo, "wantequipskin",
                 () =>
@@ -342,7 +351,22 @@ public class MenuManagerCanvas : CanvasElementLocator
                     StoreManager.Instance.UpdateSkinsState?.Invoke();
                 });
                 _unlockSkinsPopUp.Show();
-                UnlokedSkin = null;
+                GameManager.UnlokedSkin = null;
+            });
+    }
+
+    public void OnUnlockSkin(string skinNamePrefab)
+    {
+        AddressablesUtility.LoadAsset<GameObject>(
+            skinNamePrefab, iGo =>
+            {
+                _unlockSkinsPopUp.InitializeWithIcon("unlockskin", iGo, "wantequipskin",
+                () =>
+                {
+                    SaveAndLoadManager.SetStringValue(skinNamePrefab, SaveAndLoadManager.CurrentBallSkinName, true, true);
+                    StoreManager.Instance.UpdateSkinsState?.Invoke();
+                });
+                _unlockSkinsPopUp.Show();
             });
     }
 
@@ -350,9 +374,9 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         _unlockModePopUp = FindAndValidateComponent<PopUp>(transform, "UnlockModePopUp");
 
-        foreach (GameModes mode in Enum.GetValues(typeof(GameModes)))
+        foreach (GameManager.GameModes mode in Enum.GetValues(typeof(GameManager.GameModes)))
         {
-            if (!Instance.IsModeUnlocked(mode) || mode == GameModes.Dunk || mode == GameModes.Null)
+            if (!GameManager.Instance.IsModeUnlocked(mode) || mode == GameManager.GameModes.Dunk || mode == GameManager.GameModes.Null)
                 continue;
 
             _unlockModePopUp.Initialize($"unlock{mode}Tittle");
@@ -387,10 +411,10 @@ public class MenuManagerCanvas : CanvasElementLocator
     {
         if (modeText != null)
             UIManager.Instance.SetText(modeText,
-                LanguageManager.Instance.GetLocalizedText(Instance.GetCurrentGameMode.ToString()));
+                LanguageManager.Instance.GetLocalizedText(GameManager.Instance.GetCurrentGameMode.ToString()));
         if (nextLevelText != null)
             UIManager.Instance.SetText(nextLevelText,
-                SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(Instance.GetCurrentGameMode, _currentWorld, 49) + 1);
+                SaveAndLoadManager.GetHighestLevelReachedByGameModeAndWorld(GameManager.Instance.GetCurrentGameMode, _currentWorld, 49) + 1);
     }
 
     public void UpdateNotificationsOnNoAds()

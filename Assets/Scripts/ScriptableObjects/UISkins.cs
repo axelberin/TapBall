@@ -7,10 +7,16 @@ public class UISkins : ScriptableObject
     public Sprite sprite;
     public SkinPriceByGroup groupPrice;
     public int skinAddPrice;
-    public Vector2 spriteSize;
+    public Vector2 spriteSize = new(250, 250);
     public bool unlockeable;
     public Sprite backgroundSprite;
     public RuntimeAnimatorController backgroundAnimator;
+
+    public bool isDateLocked;
+    [Range(1, 31)] public int startDay;
+    [Range(1, 31)] public int endDay;
+    [Range(1, 12)] public int unlockMonth;
+    public int unlockYear;
 
     public int GetPrice => unlockeable ? 0 : groupPrice.Price + skinAddPrice;
 }

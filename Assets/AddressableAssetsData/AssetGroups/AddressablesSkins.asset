@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: AddressablesSkins
   m_GUID: 4aa76824fc694314997a5297127ccc87
   m_SerializeEntries:
+  - m_GUID: 0164155e64fb0344d9bafef06112173c
+    m_Address: GrinchBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0285a701df1a893499022db0b6ca8168
+    m_Address: RudolphBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 064b6e3439b06504aa1a95d5fbfe6985
     m_Address: DeathMagmaBallSkin
     m_ReadOnly: 0
@@ -155,6 +165,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f7471c1850bba74083d35d057e8685f
+    m_Address: DeathGrinchBallSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91954c335f75b214295d4c0f6004bf84
+    m_Address: DeathSantaBallSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93bd2e07210816148a69a5afd0975523
     m_Address: DogBallSkin
     m_ReadOnly: 0
@@ -177,6 +197,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a62263530017f6749bdee7389f23322e
     m_Address: BasketBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a62c69b4d89b41b42bf1b8a7464372ba
+    m_Address: DeathGrinchBallSkin
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -215,6 +240,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3dbca1e339ddf745930045338c5fdcc
+    m_Address: SantaBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da08a46c7f27bfc47920ade4eb2230b2
     m_Address: GrizzlyBallSkin
     m_ReadOnly: 0
@@ -222,6 +252,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc00da2f3d5064742a8b5c2ace7a695b
     m_Address: DeathBallBasicGreenSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd78b366238e94840a5c0ad1a408d04b
+    m_Address: DeathSantaBallSkin
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -257,6 +292,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ecdb0f459f538a84d8c4b0856fe2f9b3
     m_Address: DeathGrizzlyBallSkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f64226e24d922b949899e63fc6de7dba
+    m_Address: DeathRudolphBallSkinParticles
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f67de542b2b087b43b4ca7d7239346d5
+    m_Address: DeathRudolphBallSkin
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

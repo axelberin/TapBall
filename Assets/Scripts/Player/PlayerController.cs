@@ -247,8 +247,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void OnResume()
     {
-        _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.linearVelocity = _velocityOnPause;
+        _rb.bodyType = RigidbodyType2D.Dynamic;
         _velocityOnPause = Vector2.zero;
     }
 
@@ -270,5 +270,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     }
 
     public bool HasDeath => _death;
-    public Rigidbody2D GetRigidbody => _rb;
+    public RigidbodyType2D SetRbType
+    {
+        set => _rb.bodyType = value;
+    }
+    public bool IsRigidbodyDynamic => _rb.bodyType == RigidbodyType2D.Dynamic;
+    public Vector2 SetRigidbodylinearVelocity
+    {
+        set => _rb.linearVelocity = value;
+    }
 }
