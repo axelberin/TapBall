@@ -46,7 +46,11 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             _audioSource = GetComponent<AudioSource>();
 
         if (_immunityAnimator == null)
-            _immunityAnimator = GetComponentInChildren<Animator>();
+        {
+            Transform circleTransform = transform.Find("Circle");
+            if (circleTransform != null)
+                _immunityAnimator = circleTransform.GetComponent<Animator>();
+        }
 
         AddressablesUtility.LoadAsset<AudioClip>("Tap01Sound", clip => _tapClips.Add(clip));
         AddressablesUtility.LoadAsset<AudioClip>("Tap02Sound", clip => _tapClips.Add(clip));

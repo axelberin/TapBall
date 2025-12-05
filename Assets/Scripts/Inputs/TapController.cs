@@ -84,6 +84,8 @@ public class TapController : MonoBehaviour, IPauseble
 
     private void TapsBehaviourByMode(GameManager.GameModes gameModes, bool isSwipe)
     {
+        if (PowerUpManager.Instance.PowerUpTapsEnabled == true)
+            return;
         switch (gameModes)
         {
             case GameManager.GameModes.Dunk:

@@ -554,7 +554,7 @@ public class LevelCanvas : CanvasElementLocator
     }
     public void SetImmunityButton(bool set)
     {
-        if (_achievementsGoalPrefab == null)
+        if (_immunityPowUpButton == null)
             return;
             _immunityPowUpButton.interactable = set;
     }

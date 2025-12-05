@@ -29,14 +29,20 @@ public class PowerUpManager : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelManager.Instance.OnWinLevel += ForceStopAllPowerUp;
-        LevelManager.Instance.OnPreLoseLevel += ForceStopAllPowerUp;
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnWinLevel += ForceStopAllPowerUp;
+            LevelManager.Instance.OnPreLoseLevel += ForceStopAllPowerUp;
+        }
     }
 
     private void OnDisable()
     {
-        LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
-        LevelManager.Instance.OnPreLoseLevel -= ForceStopAllPowerUp;
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnWinLevel -= ForceStopAllPowerUp;
+            LevelManager.Instance.OnPreLoseLevel -= ForceStopAllPowerUp;
+        }
     }
 
     private void Update()
