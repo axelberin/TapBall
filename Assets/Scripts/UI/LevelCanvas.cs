@@ -140,14 +140,14 @@ public class LevelCanvas : CanvasElementLocator
         _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "StopTouchCountPowerText");
         _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ImmunityPowerText");
 
-        if (_stopTimePowUpButton != null && _stopTimePowUpButton.gameObject.activeInHierarchy)
+        if (_stopTimePowUpButton != null)
         {
             _stopTimePowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time);
             _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
                 && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
         }
 
-        if (_stopTouchCountPowUpButton != null && _stopTouchCountPowUpButton.gameObject.activeInHierarchy)
+        if (_stopTouchCountPowUpButton != null)
         {
             _stopTouchCountPowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time);
             _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp)
@@ -155,21 +155,24 @@ public class LevelCanvas : CanvasElementLocator
             _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
         }
 
+        if (_stopTimePowUpButton.gameObject.activeInHierarchy)
+            _stopTimePowUpButton.onClick.AddListener(() =>
+            {
+                PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
 
-        _stopTimePowUpButton.onClick.AddListener(() =>
-        {
-            PowerUpManager.Instance.SelectPowerUp(PowerUpType.TimeStopPowerUp);
+                PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.TimeStopPowerUp);
+                StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTimePowUpButton, _iceImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopPowerUpTimeActive));
+            });
 
-            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.TimeStopPowerUp);
-            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTimePowUpButton, _iceImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopPowerUpTimeActive));
-        });
-        _stopTouchCountPowUpButton.onClick.AddListener(() =>
-        {
-            PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
+        if (_stopTouchCountPowUpButton.gameObject.activeInHierarchy)
+            _stopTouchCountPowUpButton.onClick.AddListener(() =>
+            {
+                PowerUpManager.Instance.SelectPowerUp(PowerUpType.StopTouchCounterPowerUp);
 
-            PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
-            StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTouchCountPowUpButton, _rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive - 0.5f));
-        });
+                PowerUpManager.Instance.RestPowerUpFromText(PowerUpType.StopTouchCounterPowerUp);
+                StartCoroutine(ActivateAndDeactivatePowerUpeffect(_stopTouchCountPowUpButton, _rockImageAnimator, "Active", "Deactive", PowerUpManager.Instance.GetStopTouchCounterPowerUpTimeActive - 0.5f));
+            });
+
         _immunityPowUpButton.onClick.AddListener(() =>
         {
 
@@ -349,7 +352,7 @@ public class LevelCanvas : CanvasElementLocator
             });
         }
 
-        _revivePowerUpUI.Initialize("conectionfail", "cantconnect", AcceptButton, null);
+        _revivePowerUpUI.Initialize("conectionfail", null, AcceptButton, null);
         _revivePowerUpUI.Show();
     }
 
