@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UtilityAddressables;
+using static GameManager;
 
 public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 {
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     private string _deathPrefabName = "Death";
     private bool _death;
+    private bool _isDying;
     private Vector2 _velocityOnPause;
 
     private List<AudioClip> _tapClips = new();
@@ -23,6 +25,9 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     private AudioSource _audioSource;
     private SpecialSkin _specialSkin;
 
+    private Vector3 _deathPosition;
+
+    private Animator _immunityAnimator;
     void Awake()
     {
         if (!_rb)
@@ -40,6 +45,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
 
+        if (_immunityAnimator == null)
+        {
+            Transform circleTransform = transform.Find("Circle");
+            if (circleTransform != null)
+                _immunityAnimator = circleTransform.GetComponent<Animator>();
+        }
+
         AddressablesUtility.LoadAsset<AudioClip>("Tap01Sound", clip => _tapClips.Add(clip));
         AddressablesUtility.LoadAsset<AudioClip>("Tap02Sound", clip => _tapClips.Add(clip));
         AddressablesUtility.LoadAsset<AudioClip>("Tap03Sound", clip => _tapClips.Add(clip));
@@ -48,8 +60,8 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     private void Start()
     {
-        if (GameManager.Instance)
-            GameManager.Instance.SetGetPlayer = this;
+        if (Instance)
+            Instance.SetGetPlayer = this;
 
         if (PauseAndResumeManager.Instance)
         {
@@ -68,6 +80,17 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         if (!string.IsNullOrEmpty(key))
             Addressables.LoadAssetAsync<GameObject>(key).Completed += OnPrefabLoaded;
+
+    }
+
+    private void OnEnable()
+    {
+        PowerUpManager.Instance.OnPowerUpActivated += OnImmunityActivated;
+    }
+
+    private void OnDisable()
+    {
+        PowerUpManager.Instance.OnPowerUpActivated -= OnImmunityActivated;
     }
 
     private void OnDestroy()
@@ -77,6 +100,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             LevelManager.Instance.OnWinLevel -= OnWin;
             LevelManager.Instance.OnLoseLevel -= OnLose;
         }
+    }
+
+    public void OnImmunityActivated(PowerUpManager.PowerUpType powerUp)
+    {
+        if (powerUp != PowerUpManager.PowerUpType.ImmunityPowerUp)
+            return;
+        _immunityAnimator.SetTrigger("Activate");
     }
 
     public void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle)
@@ -125,7 +155,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         // Frenamos la velocidad actual para que el dash se sienta "seco"
         _rb.linearVelocity = Vector2.zero;
 
-        // Impulso directo en la dirección del swipe, SIN salto forzado
+        // Impulso directo en la direcciï¿½n del swipe, SIN salto forzado
         _rb.AddForce(swipeDir * _dashForce, ForceMode2D.Impulse);
 
         if (_animator.runtimeAnimatorController != null)
@@ -157,16 +187,21 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
     public void Death()
     {
+        if (_isDying || PowerUpManager.Instance.PowerUpImmunityEnabled)
+            return;
+        _isDying = true;
         transform.parent = null;
         _death = true;
 
         _collider.enabled = false;
         Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
+        _deathPosition = transform.position;
 
         transform.position = new Vector3(100, 0);
-        GameManager.Instance.SetGetCameraController.StartShake();
+        Instance.SetGetCameraController.StartShake();
         LevelManager.Instance.OnPreLoseLevel?.Invoke();
-        GameManager.Instance.SetGetTapController.SetGetTapEnabled = false;
+        Instance.SetGetTapController.SetGetTapEnabled = false;
+
         StartCoroutine(DelayToLose());
     }
 
@@ -177,11 +212,41 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         if (_audioSource && _deathClip)
             _audioSource.PlayOneShot(_deathClip);
 
+        LevelCanvas.Instance.SetImmunityButton(false);
+        LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(false);
+
         yield return new WaitForSeconds(1);
-        LevelManager.Instance.OnLose();
+        PowerUpManager.Instance.GetSetIsShowingReviveUI = true;
+        LevelCanvas.Instance.ActivateRevivePowerUI();
+
+        PowerUpManager.Instance.RejectRevivalPowerUp(3);
+
+        yield return new WaitForSeconds(3);
+        LevelCanvas.Instance.DeactivateRevivePowerUI();
+    }
+
+    public void PlayerPhysicsRejectRevival()
+    {
         _collider.enabled = true;
+        _isDying = false;
         transform.parent = null;
-        GameManager.Instance.SetGetTapController.SetGetTapEnabled = true;
+        Instance.SetGetTapController.SetGetTapEnabled = true;
+    }
+
+    public void PlayerPhysicsRevival()
+    {
+        StopAllCoroutines();
+        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
+        _death = false;
+        _isDying = false;
+        transform.position = _deathPosition;
+        _collider.enabled = true;
+
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+        _rb.linearVelocity = _velocityOnPause;
+        _velocityOnPause = Vector2.zero;
+        Instance.SetGetTapController.SetGetTapEnabled = true;
+        LevelManager.Instance.OnAcceptRevival?.Invoke();
     }
 
     public void OnResume()
@@ -205,7 +270,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
     public void OnLose()
     {
         _rb.bodyType = RigidbodyType2D.Static;
-        transform.position = GameManager.Instance.SetGetWorldState.GetInitalPos;
+        transform.position = Instance.SetGetWorldState.GetInitalPos;
     }
 
     public bool HasDeath => _death;

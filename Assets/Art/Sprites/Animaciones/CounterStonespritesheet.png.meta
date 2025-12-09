@@ -87,7 +87,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -144,10 +144,10 @@ TextureImporter:
       name: CounterStonespritesheet_0
       rect:
         serializedVersion: 2
-        x: 124
-        y: 464
-        width: 89
-        height: 30
+        x: 0
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +166,10 @@ TextureImporter:
       name: CounterStonespritesheet_1
       rect:
         serializedVersion: 2
-        x: 478
-        y: 464
-        width: 97
-        height: 65
+        x: 354
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,10 +188,10 @@ TextureImporter:
       name: CounterStonespritesheet_2
       rect:
         serializedVersion: 2
-        x: 822
-        y: 464
-        width: 107
-        height: 70
+        x: 708
+        y: 354
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +210,10 @@ TextureImporter:
       name: CounterStonespritesheet_3
       rect:
         serializedVersion: 2
-        x: 112
-        y: 110
-        width: 129
-        height: 91
+        x: 0
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +232,10 @@ TextureImporter:
       name: CounterStonespritesheet_4
       rect:
         serializedVersion: 2
-        x: 466
-        y: 110
-        width: 129
-        height: 114
+        x: 354
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +254,10 @@ TextureImporter:
       name: CounterStonespritesheet_5
       rect:
         serializedVersion: 2
-        x: 820
-        y: 110
-        width: 129
-        height: 124
+        x: 708
+        y: 0
+        width: 354
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a06ddc83f01ca4e48b9dcadda89b9ee2
     internalID: 0
     vertices: []
     indices: 

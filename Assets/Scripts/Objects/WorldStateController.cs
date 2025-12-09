@@ -36,7 +36,10 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (LevelManager.Instance)
         {
             LevelManager.Instance.OnLoseLevel += OnLose;
-            LevelManager.Instance.OnPreLoseLevel += OnTimerPreLose;
+            LevelManager.Instance.OnPreLoseLevel += StopCountTimerMode;
+            LevelManager.Instance.OnAcceptRevival += ResumeCountTimerMode;
+            LevelManager.Instance.OnRejectRevival += OnTimerPreLose;
+
         }
 
         _level = ScenesManager.Instance.GetLevelByCurrentScene();
@@ -63,7 +66,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (LevelManager.Instance)
         {
             LevelManager.Instance.OnLoseLevel -= OnLose;
-            LevelManager.Instance.OnPreLoseLevel -= OnTimerPreLose;
+            LevelManager.Instance.OnPreLoseLevel -= StopCountTimerMode;
+            LevelManager.Instance.OnAcceptRevival -= ResumeCountTimerMode;
+            LevelManager.Instance.OnRejectRevival -= OnTimerPreLose;
         }
         OnUpdate = null;
     }
@@ -123,7 +128,6 @@ public class WorldStateController : MonoBehaviour, IPauseble
             _timerCounter = 0;
             OnUpdate -= ControlTimerMode;
             _playOnce = false;
-            ResetTimer();
             GameManager.Instance.SetGetPlayer.Death();
         }
     }
@@ -131,10 +135,29 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public void StopCountTimerMode()
     {
         OnUpdate -= ControlTimerMode;
+        AudioManager.Instance.PauseSpecificSfx(AudioManager.AudioClipType.TimeAlertSound);
         if (LevelCanvas.Instance)
             LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
 
         _playOnce = false;
+    }
+
+    public void ResumeCountTimerMode()
+    {
+        OnUpdate += ControlTimerMode;
+        AudioManager.Instance.UnPauseSpecificSfx(AudioManager.AudioClipType.TimeAlertSound);
+        if (LevelCanvas.Instance)
+            LevelCanvas.Instance.ShowTimerText(GetRemainingTime);
+        _playOnce = true;
+    }
+
+    public void AddCountToTimer(float timeToAdd)
+    {
+        GetRemainingTime = timeToAdd;
+        if (LevelCanvas.Instance)
+            LevelCanvas.Instance.ShowTimerText(timeToAdd);
+        if (GetRemainingTime <= 0)
+            GameManager.Instance.SetGetPlayer.Death();
     }
 
     public void StartGame()
@@ -173,6 +196,11 @@ public class WorldStateController : MonoBehaviour, IPauseble
     public int GetLimitTouches => _limitTouches;
     public float GetLimitTime => _limitTime;
     public int GetLimitTapsOneTouch => _limitTapsOneTouch;
-    public float GetRemainingTime => MathF.Round(_timerCounter * 100f) / 100f;
+    public float GetRemainingTime
+    {
+        get { return MathF.Round(_timerCounter * 100f) / 100f; }
+        set { _timerCounter = value; }
+
+    }
     public Vector3 GetInitalPos => _playerInitialPos;
 }
