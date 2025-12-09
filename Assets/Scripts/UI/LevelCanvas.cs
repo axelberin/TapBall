@@ -31,7 +31,6 @@ public class LevelCanvas : CanvasElementLocator
     private Button _stopTimePowUpButton;
     private Button _stopTouchCountPowUpButton;
     private Button _immunityPowUpButton;
-    private Button _revivePowUpButton;
     private TextMeshProUGUI _stopTimePowUpText;
     private TextMeshProUGUI _stopTouchCountPowUpText;
     private TextMeshProUGUI _immunityPowUpText;
@@ -129,7 +128,6 @@ public class LevelCanvas : CanvasElementLocator
 
         #region REVIVE POWER UP UI
         // Este va a aser el power up de arriba en la UI
-        _revivePowUpButton = FindAndValidateComponent<Button>(transform, "RevivePowerButton");
         //Estas son las imagenes que estan dentro del botón de Ok del pop up
         _useRevivePoweUpToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "RevivePowerUpImage");
         _useOrbsToReviveImage = FindAndValidateComponent<Image>(_revivePowerUpUI.transform, "OrbImage");
@@ -142,19 +140,21 @@ public class LevelCanvas : CanvasElementLocator
         _stopTouchCountPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "StopTouchCountPowerText");
         _immunityPowUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ImmunityPowerText");
 
-        _stopTimePowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time);
-        _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
-            && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
+        if (_stopTimePowUpButton != null && _stopTimePowUpButton.gameObject.activeInHierarchy)
+        {
+            _stopTimePowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time);
+            _stopTimePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.TimeStopPowerUp)
+                && GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time;
+        }
 
-        _stopTouchCountPowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time);
-        _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp)
-            && GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time;
-        _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
+        if (_stopTouchCountPowUpButton != null && _stopTouchCountPowUpButton.gameObject.activeInHierarchy)
+        {
+            _stopTouchCountPowUpButton.gameObject.SetActive(GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time);
+            _stopTouchCountPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.StopTouchCounterPowerUp)
+                && GameManager.Instance.GetCurrentGameMode != GameManager.GameModes.Time;
+            _immunityPowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.ImmunityPowerUp);
+        }
 
-        #region REVIVE POWERUP UI INTERACTUABLE BUTTONS
-        _revivePowUpButton.interactable = PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp);
-        _useOrbsToReviveImage.gameObject.SetActive(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) > 0);
-        #endregion
 
         _stopTimePowUpButton.onClick.AddListener(() =>
         {
@@ -286,8 +286,6 @@ public class LevelCanvas : CanvasElementLocator
             _stopTimePowUpButton.interactable = active;
         if (_stopTouchCountPowUpButton != null && _stopTouchCountPowUpButton.gameObject.activeInHierarchy)
             _stopTouchCountPowUpButton.interactable = active;
-        if (_revivePowUpButton != null)
-            _revivePowUpButton.interactable = active;
     }
 
 
@@ -306,7 +304,7 @@ public class LevelCanvas : CanvasElementLocator
 
     public void ActivateRevivePowerUI()
     {
-        var _reviveImageAnimator = FindAndValidateGameObjectComponent(transform, "RevivePowerButton").GetComponent<Animator>();
+        var _reviveImageAnimator = FindAndValidateGameObjectComponent(transform, "RevivePowerUpImage").GetComponent<Animator>();
         _immunityPowUpButton.interactable = false;
         Action AcceptButton = delegate { };
         if (PowerUpManager.Instance.HasPowerUp(PowerUpType.RevivePowerUp))

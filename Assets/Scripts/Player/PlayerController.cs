@@ -231,12 +231,12 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _isDying = false;
         transform.parent = null;
         Instance.SetGetTapController.SetGetTapEnabled = true;
-
     }
 
     public void PlayerPhysicsRevival()
     {
         StopAllCoroutines();
+        AudioManager.Instance.PlayMusicByType(AudioManager.MusicClipType.DunkMusic);
         _death = false;
         _isDying = false;
         transform.position = _deathPosition;
