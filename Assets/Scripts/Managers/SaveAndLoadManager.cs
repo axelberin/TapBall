@@ -18,7 +18,7 @@ public static class SaveAndLoadManager
     public static string CurrentModeName = "CurrentMode";
     public static string IsPlayingFirstTimeName = "IsPlayingFirstTimeName";
     public static string LastDayUpdateName = "LastDayUpdate";
-    public static string ObtainedGameMode= "ObtainedGameMode_";
+    public static string ObtainedGameMode = "ObtainedGameMode_";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";
@@ -31,6 +31,9 @@ public static class SaveAndLoadManager
     private static string MissionPrefix = "Mission_";
     private static string ProgressSuffix = "_Progress";
     private static string DateSuffix = "_Date";
+
+    //Power Ups
+    public static string PowerUpPrefix = "PowerUp_";
 
     private static bool isLoadingFromCloud = false;
 
@@ -283,7 +286,7 @@ public static class SaveAndLoadManager
     #endregion
 
     #region Missions Data region
-    public static void SetDailyMissionProgressByMissionID(string missionID, float progress,string day, bool withSave = false, bool cloudSave = false)
+    public static void SetDailyMissionProgressByMissionID(string missionID, float progress, string day, bool withSave = false, bool cloudSave = false)
     {
         SetFloatValue(progress, GetMissionProgressKey(missionID), withSave, cloudSave);
         SetStringValue(day, GetMissionDateKey(missionID), withSave, cloudSave);
@@ -347,7 +350,7 @@ public static class SaveAndLoadManager
             return;
 
         PlayerPrefs.DeleteKey(parameterName);
-        if (withSave) 
+        if (withSave)
             Save();
         if (saveCloud)
             SaveCloud();

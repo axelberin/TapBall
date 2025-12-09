@@ -281,6 +281,27 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             Debug.LogError("Error serializando datos locales: " + e.Message);
         }
 
+        //Serializar los powerups
+        var powerupDict = new Dictionary<string, object>();
+        var powerupNames = new string[]
+        {
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp.ToString()}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp.ToString()}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp.ToString()}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp.ToString()}"
+        };
+
+        foreach (string powerUpName in powerupNames)
+        {
+            string powerUpKey = SaveAndLoadManager.PowerUpPrefix + powerUpName;
+            if (SaveAndLoadManager.ContainsKey(powerUpKey))
+            {
+                powerupDict[powerUpName] = SaveAndLoadManager.GetIntValue(powerUpKey);
+            }
+        }
+
+        gameData["obtainedPowerUps"] = powerupDict;
+
         return gameData;
     }
 
@@ -405,6 +426,21 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                     }
                 }
             }
+
+            //Aplicar datos de powerup obtenidos
+            if(cloudGameData.ContainsKey("obtainedPowerUps"))
+            {
+                var powerUpDict = cloudGameData["obtainedPowerUps"] as Dictionary<string, object>;
+                if(powerUpDict != null)
+                {
+                    foreach (var powerUp in powerUpDict)
+                    {
+                        string powerUpKey = SaveAndLoadManager.PowerUpPrefix + powerUp.Key;
+                        int powerUpAmount = Convert.ToInt32(powerUp.Value);
+                        SaveAndLoadManager.SetIntValue(powerUpAmount, powerUpKey);
+                    }
+                }
+            } 
 
             // Guardar todos los cambios localmente
             SaveAndLoadManager.Save();

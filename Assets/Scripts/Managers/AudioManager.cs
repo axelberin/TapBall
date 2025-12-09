@@ -139,6 +139,18 @@ public class AudioManager : ManagersManager, IPauseble
             _musicAudioSource.Stop();
     }
 
+    public void PauseSpecificSfx(AudioClipType clipType)
+    {
+        if(_auxSoundsAudioSource != null && _auxSoundsAudioSource.clip == _soundClipsByEnum[clipType])
+            _auxSoundsAudioSource.Pause();
+    }
+
+    public void UnPauseSpecificSfx(AudioClipType clipType)
+    {
+        if (_auxSoundsAudioSource != null && _auxSoundsAudioSource.clip == _soundClipsByEnum[clipType])
+            _auxSoundsAudioSource.UnPause();
+    }
+
     public void OnResume()
     {
         if (_soundsAudioSource != null)
