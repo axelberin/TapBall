@@ -282,9 +282,12 @@ public class LevelCanvas : CanvasElementLocator
 
     public void DeactivateInteractablePowerUpButtons(bool active)
     {
-        _stopTimePowUpButton.interactable = active;
-        _stopTouchCountPowUpButton.interactable = active;
-        _revivePowUpButton.interactable = active;
+        if (_stopTimePowUpButton != null && _stopTimePowUpButton.gameObject.activeInHierarchy)
+            _stopTimePowUpButton.interactable = active;
+        if (_stopTouchCountPowUpButton != null && _stopTouchCountPowUpButton.gameObject.activeInHierarchy)
+            _stopTouchCountPowUpButton.interactable = active;
+        if (_revivePowUpButton != null)
+            _revivePowUpButton.interactable = active;
     }
 
 
@@ -556,6 +559,6 @@ public class LevelCanvas : CanvasElementLocator
     {
         if (_immunityPowUpButton == null)
             return;
-            _immunityPowUpButton.interactable = set;
+        _immunityPowUpButton.interactable = set;
     }
 }
