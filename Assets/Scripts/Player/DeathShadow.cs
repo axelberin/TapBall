@@ -28,5 +28,7 @@ public class DeathShadow : MonoBehaviour
                    if (prefabCargado != null)
                        Instantiate(prefabCargado, transform.position, transform.rotation);
                });
+
+        GameManager.Instance.SetGetDeathController.ControlDeathShadows(this);
     }
 }

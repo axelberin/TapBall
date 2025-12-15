@@ -194,8 +194,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _death = true;
 
         _collider.enabled = false;
-       
-        Instance.SetGetDeathController.DeleteLastDeathShadowAfterMax(Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation).WaitForCompletion());
+        Addressables.InstantiateAsync(_deathPrefabName, transform.position, transform.rotation);
         _deathPosition = transform.position;
 
         transform.position = new Vector3(100, 0);

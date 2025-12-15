@@ -22,14 +22,19 @@ public class DeathController : MonoBehaviour
                 _animator = go.GetComponent<Animator>();
             });
     }
+    public void ControlDeathShadows(DeathShadow deathShadow)
+    {
+        DeleteLastDeathShadowAfterMax(deathShadow.gameObject);
+    }
 
-    public void DeleteLastDeathShadowAfterMax(GameObject deathInstance)
+    private void DeleteLastDeathShadowAfterMax(GameObject deathInstance)
     {
         _deathsIntances.Enqueue(deathInstance);
 
-        if (_deathsIntances.Count >= _maxDeaths)
+        if (_deathsIntances.Count > _maxDeaths)
         {
-            _deathsIntances.Dequeue();
+            GameObject oldestDeath = _deathsIntances.Dequeue();
+            Destroy(oldestDeath);
         }
     }
 
