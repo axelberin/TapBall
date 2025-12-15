@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UtilityAddressables;
 
@@ -6,6 +8,8 @@ public class DeathController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
 
+    private Queue<GameObject> _deathsIntances = new();
+    private int _maxDeaths = 10;
     private void Start()
     {
         if (GameManager.Instance)
@@ -17,6 +21,16 @@ public class DeathController : MonoBehaviour
                 _spriteRenderer = go.GetComponent<SpriteRenderer>();
                 _animator = go.GetComponent<Animator>();
             });
+    }
+
+    public void DeleteLastDeathShadowAfterMax(GameObject deathInstance)
+    {
+        _deathsIntances.Enqueue(deathInstance);
+
+        if (_deathsIntances.Count >= _maxDeaths)
+        {
+            _deathsIntances.Dequeue();
+        }
     }
 
     public SpriteRenderer SpriteRenderer => _spriteRenderer;
