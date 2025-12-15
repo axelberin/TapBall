@@ -33,7 +33,8 @@ public class DeathController : MonoBehaviour
         }
     }
 
-    public SpriteRenderer SpriteRenderer => _spriteRenderer;
+    public Sprite GetSprite => _spriteRenderer.sprite;
+    public Color GetSpriteColor => _spriteRenderer.color;
 
-    public Animator Animator => _animator;
+    public RuntimeAnimatorController GetRuntimeAnimatorController => _animator.runtimeAnimatorController;
 }
