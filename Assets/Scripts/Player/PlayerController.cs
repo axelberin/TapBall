@@ -200,7 +200,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         transform.position = new Vector3(100, 0);
         Instance.SetGetCameraController.StartShake();
         LevelManager.Instance.OnPreLoseLevel?.Invoke();
-        Instance.SetGetTapController.SetGetTapEnabled = false;
 
         StartCoroutine(DelayToLose());
     }
@@ -216,6 +215,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(false);
 
         yield return new WaitForSeconds(1);
+
         PowerUpManager.Instance.GetSetIsShowingReviveUI = true;
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
@@ -230,7 +230,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _collider.enabled = true;
         _isDying = false;
         transform.parent = null;
-        Instance.SetGetTapController.SetGetTapEnabled = true;
     }
 
     public void PlayerPhysicsRevival()
@@ -245,7 +244,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.linearVelocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;
-        Instance.SetGetTapController.SetGetTapEnabled = true;
         LevelManager.Instance.OnAcceptRevival?.Invoke();
     }
 
