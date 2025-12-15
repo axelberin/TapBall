@@ -352,7 +352,8 @@ public class LevelCanvas : CanvasElementLocator
             });
         }
 
-        _revivePowerUpUI.Initialize("revivePopUp", null, AcceptButton, null);
+
+        _revivePowerUpUI.Initialize("revivePopUp", null, AcceptButton, PowerUpManager.Instance.ForceRejectRevival);
         _revivePowerUpUI.Show();
     }
 

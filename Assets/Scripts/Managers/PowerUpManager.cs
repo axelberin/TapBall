@@ -174,12 +174,21 @@ public class PowerUpManager : MonoBehaviour
         if (_reviveTimer <= 0)
         {
             OnUpdate -= RejectRevivalCounter;
-
+            LevelCanvas.Instance.DeactivateRevivePowerUI();
             LevelManager.Instance.OnRejectRevival?.Invoke();
             Debug.Log("Rejected");
             LevelManager.Instance.OnLose();
             GameManager.Instance.SetGetPlayer.PlayerPhysicsRejectRevival();
         }
+    }
+
+    public void ForceRejectRevival()
+    {
+        OnUpdate -= RejectRevivalCounter;
+        LevelManager.Instance.OnRejectRevival?.Invoke();
+        Debug.Log("Rejected");
+        LevelManager.Instance.OnLose();
+        GameManager.Instance.SetGetPlayer.PlayerPhysicsRejectRevival();
     }
 
     public void StopPowerUp(PowerUpType powerUp)
