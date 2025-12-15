@@ -15,9 +15,9 @@ public class DeathShadow : MonoBehaviour
 
         _spriteRenderer.sprite = GameManager.Instance.SetGetDeathController.GetSprite;
         _spriteRenderer.color = GameManager.Instance.SetGetDeathController.GetSpriteColor;
-        if (GameManager.Instance.SetGetDeathController.GetRuntimeAnimatorController != null)
+        if (GameManager.Instance.SetGetDeathController.Animator != null)
         {
-            _animator.runtimeAnimatorController = GameManager.Instance.SetGetDeathController.GetRuntimeAnimatorController;
+            _animator.runtimeAnimatorController = GameManager.Instance.SetGetDeathController.Animator.runtimeAnimatorController;
             _animator.SetTrigger("Death");
         }
 
