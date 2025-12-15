@@ -9,7 +9,7 @@ public class DeathController : MonoBehaviour
     private Animator _animator;
 
     private Queue<GameObject> _deathsIntances = new();
-    private int _maxDeaths = 10;
+    [SerializeField] private int _maxDeaths = 10;
     private void Start()
     {
         if (GameManager.Instance)
