@@ -28,8 +28,9 @@ public class TapController : MonoBehaviour, IPauseble
         {
             LevelManager.Instance.OnWinLevel += () => _tapEnabled = false;
             LevelManager.Instance.OnPreLoseLevel += () => _tapEnabled = false;
-            LevelManager.Instance.OnAcceptRevival += OnAcceptRevival;
-            LevelManager.Instance.OnRejectRevival += () => _tapEnabled = true;
+            LevelManager.Instance.OnLoseLevel += () => _tapEnabled = true;
+            LevelManager.Instance.OnAcceptRevival += OnAcceptOrRejectRevival;
+            LevelManager.Instance.OnRejectRevival += OnAcceptOrRejectRevival;
         }
 
         if (PauseAndResumeManager.Instance)
@@ -45,8 +46,9 @@ public class TapController : MonoBehaviour, IPauseble
         {
             LevelManager.Instance.OnWinLevel -= () => _tapEnabled = false;
             LevelManager.Instance.OnPreLoseLevel -= () => _tapEnabled = false;
-            LevelManager.Instance.OnAcceptRevival -= OnAcceptRevival;
-            LevelManager.Instance.OnRejectRevival -= () => _tapEnabled = true;
+            LevelManager.Instance.OnLoseLevel -= () => _tapEnabled = true;
+            LevelManager.Instance.OnAcceptRevival -= OnAcceptOrRejectRevival;
+            LevelManager.Instance.OnRejectRevival -= OnAcceptOrRejectRevival;
         }
 
         if (PauseAndResumeManager.Instance)
@@ -102,7 +104,7 @@ public class TapController : MonoBehaviour, IPauseble
         }
 #endif
     }
-    private void OnAcceptRevival()
+    private void OnAcceptOrRejectRevival()
     {
         _tapEnabled = true;
         _blockNextRelease = true; 
