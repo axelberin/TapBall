@@ -221,8 +221,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         PowerUpManager.Instance.RejectRevivalPowerUp(3);
 
-        yield return new WaitForSeconds(3);
-        LevelCanvas.Instance.DeactivateRevivePowerUI();
+       
     }
 
     public void PlayerPhysicsRejectRevival()
