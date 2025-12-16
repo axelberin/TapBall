@@ -25,7 +25,7 @@ public class Spikes : ObstaclesManager, IPauseble
             AddressablesUtility.LoadAsset<AudioClip>("SpikeDownSound", clip => _inSpikeClip = clip);
             AddressablesUtility.LoadAsset<AudioClip>("SpikeUpSound", clip => _upSpikeClip = clip);
             AddressablesUtility.LoadAsset<AudioClip>("SpikeFullUpSound", clip => _fullUpSpikeClip = clip);
-            _animator.speed = _animatorSpeed;
+
         }
     }
 
@@ -33,6 +33,9 @@ public class Spikes : ObstaclesManager, IPauseble
     {
         if (_animator == null)
             return;
+        StopAllCoroutines();
+
+        _animator.speed = _animatorSpeed;
         StartCoroutine(StartAnim(_animationDelay +
                     (_animator.runtimeAnimatorController.animationClips[0].length / _animatorSpeed)));
 
@@ -42,6 +45,7 @@ public class Spikes : ObstaclesManager, IPauseble
     {
         if (_animator == null)
             return;
+        _animator.speed = 0;
         StopCoroutine(StartAnim(_animationDelay +
                    (_animator.runtimeAnimatorController.animationClips[0].length / _animatorSpeed)));
     }
