@@ -10,7 +10,7 @@ public class DailyRewardManager : MonoBehaviour
     [SerializeField] private List<DailyReward> allRewards = new List<DailyReward>();
     private List<DailyReward> _todayRewards = new List<DailyReward>();
 
-    private int _rewardsToGrant;
+    [SerializeField] private int _rewardsToGrant;
 
     public DailyRewardManager Instance { get; private set; }
 
@@ -23,13 +23,62 @@ public class DailyRewardManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SelectRandomRewards(GetCurrentStreakDay());
+            foreach (var reward in _todayRewards)
+            {
+                Debug.Log($"Reward: {reward.name}");
+                Debug.Log($"Type: {reward.Type}");
+                Debug.Log($"Amount: {reward.amount}");
+                Debug.Log($"Quality: {reward.quality}");
+            }
+        }
+#endif
+    }
+
+    private int GetCurrentStreakDay()
+    {
+        string lastClaim = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName);
+
+        string today = System.DateTime.Now.ToString("yyyyMMdd");
+
+        if (string.IsNullOrEmpty(lastClaim))
+        {
+            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.DailyRewardStreakName);
+            SaveAndLoadManager.SetStringValue(today, SaveAndLoadManager.DailyRewardLastClaimDayName);
+            SaveAndLoadManager.Save();
+            return 1; //Si el último día de claimeo es null, lo setea como el primer día de la racha
+        }
+
+        System.DateTime lastDate = System.DateTime.ParseExact(lastClaim, "yyyyMMdd", null); //Parsea el día exacto 
+        int daysDiff = (System.DateTime.Today - lastDate).Days;//Calcula cuántos días pasaron del último claim
+
+        int streak = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);//Consigo la racha
+
+        if (daysDiff == 1)
+            streak++;
+        else if (daysDiff > 1)
+            streak = 1;
+
+        if (streak > 7)
+            streak = 1;
+        //Hago los cálculos dependiendo de si tiene racha contínua o no
+        SaveAndLoadManager.SetIntValue(streak, SaveAndLoadManager.DailyRewardStreakName);
+        SaveAndLoadManager.SetStringValue(today, SaveAndLoadManager.DailyRewardLastClaimDayName);
+        SaveAndLoadManager.Save();
+
+        return streak; //Seteo los values, los guardo y los retorno
+    }
+
     private List<DailyReward> SelectRandomRewards(int count)
     {
         _todayRewards.Clear();
 
-        var rewardsPool = allRewards;
-
-        _todayRewards = rewardsPool
+        _todayRewards = allRewards
             .OrderBy(x => Random.value)
             .Take(count)
             .ToList();
