@@ -13,12 +13,16 @@ public class MovableObjects : MonoBehaviour, IPauseble
     float _initialMoveSpeed;
     float _initialRotationSpeed;
     Vector3 _initialPosition;
+    private Rigidbody2D _rb;
 
     private void Awake()
     {
         _initialMoveSpeed = _movementSpeed;
         _initialRotationSpeed = _rotateSpeed;
         _initialPosition = transform.position;
+
+        if (_rb == null)
+            _rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -50,21 +54,23 @@ public class MovableObjects : MonoBehaviour, IPauseble
 
     void WaypointsPatrol()
     {
-        Vector3 dir = _waypoints[_waypointsIndex].position - transform.position;
+        Vector2 current = _rb.position;
+        Vector2 target = _waypoints[_waypointsIndex].position;
+        Vector2 dir = target - current;
+
         if (dir.magnitude < 0.1f)
         {
-            _waypointsIndex++;
-            if (_waypointsIndex > _waypoints.Length - 1)
-            {
-                _waypointsIndex = 0;
-            }
+            _waypointsIndex = (_waypointsIndex + 1) % _waypoints.Length;
+            return;
         }
-        transform.position += dir.normalized * (_movementSpeed * Time.deltaTime);
+
+        Vector2 next = current + dir.normalized * (_movementSpeed * Time.fixedDeltaTime);
+        _rb.MovePosition(next);
     }
 
     protected virtual void Rotate()
     {
-        transform.eulerAngles += new Vector3(0, 0, _rotateSpeed * Time.deltaTime);
+        transform.eulerAngles += new Vector3(0, 0, _rotateSpeed * Time.fixedDeltaTime);
     }
 
     public void PlayMovement()

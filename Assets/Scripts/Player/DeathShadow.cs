@@ -13,8 +13,8 @@ public class DeathShadow : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
 
-        _spriteRenderer.sprite = GameManager.Instance.SetGetDeathController.SpriteRenderer.sprite;
-        _spriteRenderer.color = GameManager.Instance.SetGetDeathController.SpriteRenderer.color;
+        _spriteRenderer.sprite = GameManager.Instance.SetGetDeathController.GetSprite;
+        _spriteRenderer.color = GameManager.Instance.SetGetDeathController.GetSpriteColor;
         if (GameManager.Instance.SetGetDeathController.Animator != null)
         {
             _animator.runtimeAnimatorController = GameManager.Instance.SetGetDeathController.Animator.runtimeAnimatorController;
@@ -28,5 +28,7 @@ public class DeathShadow : MonoBehaviour
                    if (prefabCargado != null)
                        Instantiate(prefabCargado, transform.position, transform.rotation);
                });
+
+        GameManager.Instance.SetGetDeathController.ControlDeathShadows(this);
     }
 }
