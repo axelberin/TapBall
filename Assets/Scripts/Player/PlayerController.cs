@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             _animator.SetTrigger("Flick");
 
         int randomIndex = Random.Range(0, _tapClips.Count);
-        if (_audioSource && _tapClips[randomIndex])
+        if (_audioSource != null && _tapClips.Count > 0 && _tapClips[randomIndex] != null)
             _audioSource.PlayOneShot(_tapClips[randomIndex]);
 
         _specialSkin?.OnTap();
@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
 
         PowerUpManager.Instance.RejectRevivalPowerUp(3);
 
-       
+
     }
 
     public void PlayerPhysicsRejectRevival()
