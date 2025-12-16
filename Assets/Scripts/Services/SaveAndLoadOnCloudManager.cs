@@ -61,7 +61,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             if (task.IsCompletedSuccessfully)
                 Debug.Log("Datos de juego guardados en Firestore exitosamente");
             else
-                Debug.LogError("Error al guardar datos de juego en Firestore: " + task.Exception);
+                Debug.LogError("Error al guardar datos de juego en Firestore: " + task.Exception?.Message);
         });
     }
 
@@ -88,7 +88,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         catch (Exception e)
         {
-            Debug.LogError("Ruta inválida a Firestore: " + e);
+            Debug.LogError("Ruta inválida a Firestore: " + e.Message);
             OnLoadDataFailed("InvalidPath", "Firebase Path not found",
                 ("exep", e?.Message));
             return;
@@ -98,7 +98,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         {
             if (task.IsFaulted || task.IsCanceled)
             {
-                Debug.LogError("Error al obtener datos: " + task.Exception);
+                Debug.LogError("Error al obtener datos: " + task.Exception.Message);
                 OnLoadDataFailed("GetSnapshotAsyncFail", "GetSnapshotAsyncFail task Fail",
                 ("exception", task.Exception?.Message),
                 ("inner", task.Exception?.InnerException?.Message));
@@ -274,33 +274,33 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             }
             gameData["DailyMissionsData"] = missionsList;
 
+            //Serializar los powerups
+            var powerupDict = new Dictionary<string, object>();
+            var powerupNames = new string[]
+            {
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp.ToString()}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp.ToString()}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp.ToString()}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp.ToString()}"
+            };
+
+            foreach (string powerUpName in powerupNames)
+            {
+                string powerUpKey = SaveAndLoadManager.PowerUpPrefix + powerUpName;
+                if (SaveAndLoadManager.ContainsKey(powerUpKey))
+                {
+                    powerupDict[powerUpName] = SaveAndLoadManager.GetIntValue(powerUpKey);
+                }
+            }
+
+            gameData["obtainedPowerUps"] = powerupDict;
+
             Debug.Log("Datos locales serializados exitosamente para la nube");
         }
         catch (Exception e)
         {
             Debug.LogError("Error serializando datos locales: " + e.Message);
         }
-
-        //Serializar los powerups
-        var powerupDict = new Dictionary<string, object>();
-        var powerupNames = new string[]
-        {
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp.ToString()}",
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp.ToString()}",
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp.ToString()}",
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp.ToString()}"
-        };
-
-        foreach (string powerUpName in powerupNames)
-        {
-            string powerUpKey = SaveAndLoadManager.PowerUpPrefix + powerUpName;
-            if (SaveAndLoadManager.ContainsKey(powerUpKey))
-            {
-                powerupDict[powerUpName] = SaveAndLoadManager.GetIntValue(powerUpKey);
-            }
-        }
-
-        gameData["obtainedPowerUps"] = powerupDict;
 
         return gameData;
     }
@@ -428,10 +428,10 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             }
 
             //Aplicar datos de powerup obtenidos
-            if(cloudGameData.ContainsKey("obtainedPowerUps"))
+            if (cloudGameData.ContainsKey("obtainedPowerUps"))
             {
                 var powerUpDict = cloudGameData["obtainedPowerUps"] as Dictionary<string, object>;
-                if(powerUpDict != null)
+                if (powerUpDict != null)
                 {
                     foreach (var powerUp in powerUpDict)
                     {
@@ -440,7 +440,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                         SaveAndLoadManager.SetIntValue(powerUpAmount, powerUpKey);
                     }
                 }
-            } 
+            }
 
             // Guardar todos los cambios localmente
             SaveAndLoadManager.Save();

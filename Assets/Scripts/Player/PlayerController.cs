@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
             _animator.SetTrigger("Flick");
 
         int randomIndex = Random.Range(0, _tapClips.Count);
-        if (_audioSource && _tapClips[randomIndex])
+        if (_audioSource != null && _tapClips.Count > 0 && _tapClips[randomIndex] != null)
             _audioSource.PlayOneShot(_tapClips[randomIndex]);
 
         _specialSkin?.OnTap();
@@ -200,7 +200,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         transform.position = new Vector3(100, 0);
         Instance.SetGetCameraController.StartShake();
         LevelManager.Instance.OnPreLoseLevel?.Invoke();
-        Instance.SetGetTapController.SetGetTapEnabled = false;
 
         StartCoroutine(DelayToLose());
     }
@@ -216,13 +215,13 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         LevelCanvas.Instance.DeactivateInteractablePowerUpButtons(false);
 
         yield return new WaitForSeconds(1);
+
         PowerUpManager.Instance.GetSetIsShowingReviveUI = true;
         LevelCanvas.Instance.ActivateRevivePowerUI();
 
         PowerUpManager.Instance.RejectRevivalPowerUp(3);
 
-        yield return new WaitForSeconds(3);
-        LevelCanvas.Instance.DeactivateRevivePowerUI();
+
     }
 
     public void PlayerPhysicsRejectRevival()
@@ -230,7 +229,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _collider.enabled = true;
         _isDying = false;
         transform.parent = null;
-        Instance.SetGetTapController.SetGetTapEnabled = true;
     }
 
     public void PlayerPhysicsRevival()
@@ -245,7 +243,6 @@ public class PlayerController : MonoBehaviour, IPauseble, ISkinLoader
         _rb.bodyType = RigidbodyType2D.Dynamic;
         _rb.linearVelocity = _velocityOnPause;
         _velocityOnPause = Vector2.zero;
-        Instance.SetGetTapController.SetGetTapEnabled = true;
         LevelManager.Instance.OnAcceptRevival?.Invoke();
     }
 

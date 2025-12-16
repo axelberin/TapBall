@@ -10,6 +10,7 @@ public class TapController : MonoBehaviour, IPauseble
     private bool _tapEnabled = true;
     private bool _firstTimeAfterPause = false;
 
+    private bool _blockNextRelease = false;
     private void Start()
     {
         if (GameManager.Instance)
@@ -24,7 +25,13 @@ public class TapController : MonoBehaviour, IPauseble
     private void OnEnable()
     {
         if (LevelManager.Instance)
+        {
             LevelManager.Instance.OnWinLevel += () => _tapEnabled = false;
+            LevelManager.Instance.OnPreLoseLevel += () => _tapEnabled = false;
+            LevelManager.Instance.OnLoseLevel += () => _tapEnabled = true;
+            LevelManager.Instance.OnAcceptRevival += OnAcceptOrRejectRevival;
+            LevelManager.Instance.OnRejectRevival += OnAcceptOrRejectRevival;
+        }
 
         if (PauseAndResumeManager.Instance)
         {
@@ -36,7 +43,13 @@ public class TapController : MonoBehaviour, IPauseble
     private void OnDisable()
     {
         if (LevelManager.Instance)
+        {
             LevelManager.Instance.OnWinLevel -= () => _tapEnabled = false;
+            LevelManager.Instance.OnPreLoseLevel -= () => _tapEnabled = false;
+            LevelManager.Instance.OnLoseLevel -= () => _tapEnabled = true;
+            LevelManager.Instance.OnAcceptRevival -= OnAcceptOrRejectRevival;
+            LevelManager.Instance.OnRejectRevival -= OnAcceptOrRejectRevival;
+        }
 
         if (PauseAndResumeManager.Instance)
         {
@@ -63,6 +76,11 @@ public class TapController : MonoBehaviour, IPauseble
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            if (_blockNextRelease)
+            {
+                _blockNextRelease = false;
+                return;
+            }
             HandleInput(_swipeStartPos, Input.mousePosition);
         }
 #elif UNITY_ANDROID
@@ -76,12 +94,21 @@ public class TapController : MonoBehaviour, IPauseble
             }
             else if (touch.phase == TouchPhase.Ended)
             {
+                 if (_blockNextRelease)
+                 {
+                     _blockNextRelease = false;
+                     return;
+                 }
                 HandleInput(_swipeStartPos, touch.position);
             }
         }
 #endif
     }
-
+    private void OnAcceptOrRejectRevival()
+    {
+        _tapEnabled = true;
+        _blockNextRelease = true; 
+    }
     private void TapsBehaviourByMode(GameManager.GameModes gameModes, bool isSwipe)
     {
         if (PowerUpManager.Instance.PowerUpTapsEnabled == true)
@@ -166,9 +193,4 @@ public class TapController : MonoBehaviour, IPauseble
         get => _tapCount;
     }
 
-    public bool SetGetTapEnabled
-    {
-        set => _tapEnabled = value;
-        get => _tapEnabled;
-    }
 }
