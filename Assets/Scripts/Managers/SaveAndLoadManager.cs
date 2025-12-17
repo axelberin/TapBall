@@ -21,6 +21,7 @@ public static class SaveAndLoadManager
     public static string ObtainedGameMode = "ObtainedGameMode_";
     public static string DailyRewardStreakName = "DailyReward_Streak";
     public static string DailyRewardLastClaimDayName = "DailyReward_LastClaimDay";
+    public const string DailyRewardClaimedTodayName = "DailyRewardClaimedToday";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";

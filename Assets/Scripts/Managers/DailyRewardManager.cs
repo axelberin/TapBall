@@ -7,12 +7,16 @@ using static PowerUpManager;
 public class DailyRewardManager : MonoBehaviour
 {
 
-    [SerializeField] private List<DailyReward> allRewards = new List<DailyReward>();
-    private List<DailyReward> _todayRewards = new List<DailyReward>();
+    [SerializeField] private List<DailyReward> allRewards = new();
+    private List<DailyRewardData> _todayRewards = new();
 
     [SerializeField] private int _rewardsToGrant;
 
     public DailyRewardManager Instance { get; private set; }
+
+#if UNITY_EDITOR
+    [SerializeField] private int debugDayOffset = 0;
+#endif
 
     private void Awake()
     {
@@ -23,27 +27,34 @@ public class DailyRewardManager : MonoBehaviour
 
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
-#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.N))
+            SaveAndLoadManager.SetStringValue(System.DateTime.Today.AddDays(1).ToString("yyyyMMdd"),
+                SaveAndLoadManager.DailyRewardLastClaimDayName);
+
+        if (Input.GetKeyDown(KeyCode.B))
+            SaveAndLoadManager.SetStringValue(System.DateTime.Today.AddDays(-1).ToString("yyyyMMdd"),
+                SaveAndLoadManager.DailyRewardLastClaimDayName);
+
         if (Input.GetKeyDown(KeyCode.V))
         {
             SelectRandomRewards(GetCurrentStreakDay());
             foreach (var reward in _todayRewards)
             {
-                Debug.Log($"Reward: {reward.name}");
                 Debug.Log($"Type: {reward.Type}");
                 Debug.Log($"Amount: {reward.amount}");
                 Debug.Log($"Quality: {reward.quality}");
+                Debug.Log($"PowerUp: {reward.chosenPowerUp}");
             }
         }
-#endif
     }
+#endif
 
     private int GetCurrentStreakDay()
     {
         string lastClaim = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName);
-
         string today = System.DateTime.Now.ToString("yyyyMMdd");
 
         if (string.IsNullOrEmpty(lastClaim))
@@ -74,13 +85,32 @@ public class DailyRewardManager : MonoBehaviour
         return streak; //Seteo los values, los guardo y los retorno
     }
 
-    private List<DailyReward> SelectRandomRewards(int count)
+    private int GetMinQualityByStreak(int streakDay)
+    {
+        return streakDay switch
+        {
+            1 or 2 => 0,   // común
+            3 or 4 => 1,   // raro
+            5 or 6 => 2,   // épico
+            7 => 3,   // legendario
+            _ => 0
+        };
+    }
+
+    private List<DailyRewardData> SelectRandomRewards(int streakCount)
     {
         _todayRewards.Clear();
 
         _todayRewards = allRewards
             .OrderBy(x => Random.value)
-            .Take(count)
+            .Take(streakCount)
+            .Select(reward => new DailyRewardData
+            {
+                Type = reward.Type,
+                amount = reward.amount,
+                quality = Random.Range(GetMinQualityByStreak(streakCount), 4),
+                chosenPowerUp = reward.chosenPowerUp
+            })
             .ToList();
 
         foreach (var reward in _todayRewards)
@@ -120,6 +150,31 @@ public class DailyRewardManager : MonoBehaviour
         return PowerUpType.TimeStopPowerUp; //fallback 
     }
 
+    private bool CanClaimedToday()
+    {
+        string lastClaim = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName);
+
+        if (string.IsNullOrEmpty(lastClaim))
+            return true;
+
+        if (lastClaim != System.DateTime.Now.ToString("yyyyMMdd"))
+            return true;
+
+        return SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardClaimedTodayName) == 0;
+    }
+
+    private void ClaimDailyRewards()
+    {
+        if (!CanClaimedToday())
+            return;
+
+        SelectRandomRewards(GetCurrentStreakDay());
+
+        SaveAndLoadManager.SetIntValue(1,SaveAndLoadManager.DailyRewardClaimedTodayName);
+
+        SaveAndLoadManager.Save();
+    }
+
     public enum DailyRewardType
     {
         PowerUp,
@@ -127,6 +182,16 @@ public class DailyRewardManager : MonoBehaviour
         Orbs,
         Skin
     }
+
+}
+
+[System.Serializable]
+public class DailyRewardData
+{
+    public DailyRewardManager.DailyRewardType Type;
+    public int amount;
+    public int quality;
+    public PowerUpType chosenPowerUp;
 }
 
 
