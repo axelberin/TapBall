@@ -18,6 +18,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
     private PlayerController _playerController;
     private List<MovableObjects> _movableObjectsInLevel = new();
+    private List<Spikes> _movableSpikesInLevel = new();
 
     private void Awake()
     {
@@ -59,6 +60,9 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
         _movableObjectsInLevel = FindObjectsByType<MovableObjects>(FindObjectsSortMode.None).ToList();
         _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
+
+        _movableSpikesInLevel = FindObjectsByType<Spikes>(FindObjectsSortMode.None).ToList();
+        _movableSpikesInLevel.ForEach(obj => obj.StopUpAndDownSpikeSequence());
     }
 
     private void OnDestroy()
@@ -103,6 +107,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
         if (collision.GetComponent<PlayerController>() && !_onPause)
         {
             _movableObjectsInLevel.ForEach(obj => obj.StopMovement());
+            _movableSpikesInLevel.ForEach(obj => obj.StopUpAndDownSpikeSequence());
             LevelManager.Instance.OnWin();
             OnUpdate = null;
         }
@@ -167,6 +172,7 @@ public class WorldStateController : MonoBehaviour, IPauseble
 
         _playerController.SetRbType = RigidbodyType2D.Dynamic;
         _movableObjectsInLevel.ForEach(obj => obj.PlayMovement());
+        _movableSpikesInLevel.ForEach(obj => obj.StartUpAndDownSpikeSequence());
 
         if (GameManager.Instance.GetCurrentGameMode == GameManager.GameModes.Time)
             OnUpdate += ControlTimerMode;
