@@ -35,6 +35,10 @@ public static class SaveAndLoadManager
     private static string ProgressSuffix = "_Progress";
     private static string DateSuffix = "_Date";
 
+    //Rewards diarios
+    private static string RewardPrefix = "Reward_";
+    private static string ClaimedSuffix = "_Claimed";
+
     //Power Ups
     public static string PowerUpPrefix = "PowerUp_";
 
@@ -321,6 +325,15 @@ public static class SaveAndLoadManager
 
     private static string GetMissionProgressKey(string missionID) => MissionPrefix + missionID + ProgressSuffix;
     private static string GetMissionDateKey(string missionID) => MissionPrefix + missionID + DateSuffix;
+    #endregion
+
+    #region REWARDS
+    private static string GetRewardClaimedKey(string rewardID) => RewardPrefix + rewardID + ClaimedSuffix;
+    public static void SetRewardClaimedKey(string rewardID, bool claimed, bool withSave = false, bool cloudSave = false)
+    {
+        SetBoolValue(claimed, GetRewardClaimedKey(rewardID), withSave, cloudSave);
+    }
+    public static bool IsRewardClaimed(string rewardID) => GetBoolValue(GetRewardClaimedKey(rewardID));
     #endregion
 
     #region Save/Load/Cloud Methods

@@ -11,7 +11,8 @@ public class DailyReward : ScriptableObject
     public DailyRewardType Type;
     public int amount;
 
-    [Range(0,4)]
+    //(0: Common, día 1 y 2), (1: Good, día 3 y 4), (2: Epic, día 5 y 6), (3: Legendary, día 7)
+    [Range(0,3)]
     public int quality;
 
     [System.NonSerialized]
