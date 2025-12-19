@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c84258fd0e6a740ba79ea750aaefc6, type: 3}
   m_Name: Reward_Coins_Common
   m_EditorClassIdentifier: 
+  rewardID: Reward_Coins_Common
   Type: 1
   amount: 2
   quality: 0
+  rewardImage: {fileID: 0}

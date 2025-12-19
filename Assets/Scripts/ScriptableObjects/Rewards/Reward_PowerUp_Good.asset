@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c84258fd0e6a740ba79ea750aaefc6, type: 3}
   m_Name: Reward_PowerUp_Good
   m_EditorClassIdentifier: 
+  rewardID: Reward_PowerUp_Good
   Type: 0
   amount: 2
   quality: 1
+  rewardImage: {fileID: 0}
