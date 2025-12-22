@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using static PowerUpManager;
 
 
@@ -8,7 +9,7 @@ public class DailyRewardManager : MonoBehaviour
 {
 
     [SerializeField] private List<DailyReward> allRewards = new();
-    private DailyRewardData _todayRewards;
+    private DailyRewardData _todayReward;
 
     [SerializeField] private int _rewardsToGrant;
 
@@ -53,7 +54,7 @@ public class DailyRewardManager : MonoBehaviour
     #region TESTING
     private void TestReward()
     {
-        DailyRewardData reward = SelectRandomRewards(GetCurrentStreakDay());
+        DailyRewardData reward = SelectRandomRewardForDay(GetCurrentStreakDay());
 
         Debug.Log($"RACHA: {GetCurrentStreakDay()}");
         Debug.Log(
@@ -92,10 +93,6 @@ public class DailyRewardManager : MonoBehaviour
         if (streak > 7)
         {
             streak = 1;
-            for (int i = 1; i <= 7; i++)
-            {
-                SaveAndLoadManager.SetRewardClaimedKey($"DailyReward_Day_{GetCurrentStreakDay()}", false);
-            }
         }
         //Hago los cálculos dependiendo de si tiene racha contínua o no
         SaveAndLoadManager.SetIntValue(streak, SaveAndLoadManager.DailyRewardStreakName);
@@ -117,23 +114,27 @@ public class DailyRewardManager : MonoBehaviour
         };
     }
 
-    private DailyRewardData SelectRandomRewards(int streakCount)
+    public DailyRewardData SelectRandomRewardForDay(int streakCount)
     {
-        _todayRewards = allRewards
+        _todayReward = allRewards
             .OrderBy(x => Random.value)
             .Select(reward => new DailyRewardData
             {
+                id = reward.rewardID,
                 Type = reward.Type,
                 amount = reward.amount,
                 quality = GetMinQualityByStreak(streakCount),
-                chosenPowerUp = reward.chosenPowerUp
+                chosenPowerUp = reward.chosenPowerUp,
+                rewardImage = reward.rewardImage
             })
             .FirstOrDefault();
 
-        if (_todayRewards.Type == DailyRewardType.PowerUp)
-            _todayRewards.chosenPowerUp = SelectRandomPowerUpByProbability();
+        if (_todayReward.Type == DailyRewardType.PowerUp)
+            _todayReward.chosenPowerUp = SelectRandomPowerUpByProbability();
 
-        return _todayRewards;
+        SaveAndLoadManager.SetDailyRewardData(_todayReward.id, System.DateTime.Today.ToString("yyyyMMdd"), false, true, true);
+
+        return _todayReward;
 
     }
 
@@ -181,16 +182,24 @@ public class DailyRewardManager : MonoBehaviour
         if (!CanClaimToday())
             return;
 
-        string rewardID = $"DailyReward_Day_{GetCurrentStreakDay()}";
+        DailyRewardData rewardData = SelectRandomRewardForDay(GetCurrentStreakDay());
 
-        if (SaveAndLoadManager.IsRewardClaimed(rewardID))
-            return; // ya fue reclamado ese día
+        string rewardID = rewardData.id;
+        string today = System.DateTime.Today.ToString("yyyyMMdd");
 
-        DailyRewardData reward = SelectRandomRewards(GetCurrentStreakDay());
-        GrantRewards(reward);
+        // Es el reward de hoy y ya fue reclamado?
+        if (SaveAndLoadManager.IsDailyRewardFromToday(rewardID, today) && 
+            SaveAndLoadManager.IsDailyRewardClaimed(rewardID))
+            return;
 
-        SaveAndLoadManager.SetRewardClaimedKey(rewardID, true, true);
-        SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.DailyRewardClaimedTodayName, true);
+        // Guardar reward del día (si todavía no estaba)
+        SaveAndLoadManager.SetDailyRewardData(rewardID,today,false,true,true);
+
+        // Dar reward
+        GrantRewards(rewardData);
+
+        // Marcar como reclamado
+        SaveAndLoadManager.SetDailyRewardData( rewardID,today,true,true,true);
     }
 
     private void GrantRewards(DailyRewardData reward)
@@ -225,6 +234,7 @@ public class DailyRewardManager : MonoBehaviour
     }
 
     #region UTILITY
+    public DailyRewardData GetTodayReward => _todayReward;
     #endregion
 
 }
@@ -232,10 +242,12 @@ public class DailyRewardManager : MonoBehaviour
 [System.Serializable]
 public class DailyRewardData
 {
+    public string id;
     public DailyRewardManager.DailyRewardType Type;
     public int amount;
     public int quality;
     public PowerUpType chosenPowerUp;
+    public Image rewardImage;
 }
 
 

@@ -208,6 +208,15 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             gameData["LastDayUpdate"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.LastDayUpdateName) ?
                                         SaveAndLoadManager.GetStringValue(SaveAndLoadManager.LastDayUpdateName) : "";
 
+            gameData["RewardStreak"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DailyRewardStreakName) ?
+                                        SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardStreakName) : "";
+
+            gameData["RewardLastClaim"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DailyRewardLastClaimDayName) ?
+                                            SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName) : "";
+
+            gameData["RewardClaimedToday"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DailyRewardClaimedTodayName) ?
+                                            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardClaimedTodayName) : 0;
+
             // Serializar datos de niveles
             var levelDataDict = new Dictionary<string, object>();
             var availableWorlds = SaveAndLoadManager.GetAvailableWorlds();
@@ -294,6 +303,17 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             }
 
             gameData["obtainedPowerUps"] = powerupDict;
+
+            //Serializar datos de daily rewards
+            var dailyRewardData = new Dictionary<string, object>();
+
+            var todayRewardID = DailyRewardManager.Instance.GetTodayReward;
+
+            dailyRewardData["rewardID"] = todayRewardID;
+            dailyRewardData["date"] = DateTime.Today.ToString("yyyyMMdd");
+            dailyRewardData["claimed"] = SaveAndLoadManager.IsDailyRewardClaimed(todayRewardID.id);
+
+            gameData["DailyRewardData"] = dailyRewardData;
 
             Debug.Log("Datos locales serializados exitosamente para la nube");
         }
@@ -440,6 +460,19 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                         SaveAndLoadManager.SetIntValue(powerUpAmount, powerUpKey);
                     }
                 }
+            }
+
+            //Aplicar datos de daily rewards
+            if (cloudGameData.ContainsKey("DailyRewardData"))
+            {
+                var rewardData = cloudGameData["DailyRewardData"] as Dictionary<string, object>;
+                if (rewardData == null) return;
+
+                SaveAndLoadManager.SetDailyRewardData(
+                    rewardData["rewardID"].ToString(),
+                    rewardData["date"].ToString(),
+                    Convert.ToBoolean(rewardData["claimed"])
+                );
             }
 
             // Guardar todos los cambios localmente

@@ -11,6 +11,7 @@ public class MenuManagerCanvas : CanvasElementLocator
     private GameObject _menuPanel;
     private GameObject _levelsPanel;
     private GameObject _dailyMissionsPanel;
+    private GameObject _dailyRewardsPanel;
     private GameObject _downPanel;
 
     private TextMeshProUGUI _coinsText;
@@ -47,6 +48,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         _levelsPanel = FindAndValidateGameObjectComponent(transform, "LevelsPanel");
         _dailyMissionsPanel = FindAndValidateGameObjectComponent(transform, "DailyQuestsPanel");
         _downPanel = FindAndValidateGameObjectComponent(transform, "DownPanel");
+        _dailyRewardsPanel = FindAndValidateGameObjectComponent(transform, "DailyRewardsPanel");
 
         var levelsSelectorButton = FindAndValidateComponent<Button>(transform, "LevelsSelectorButton");
         levelsSelectorButton.onClick.AddListener(() =>
@@ -70,6 +72,13 @@ public class MenuManagerCanvas : CanvasElementLocator
             _dailyMissionsPanel.SetActive(false);
             UIManager.Instance.SetText(_missionsButtonsTextNotification,
                 DailyMissionsManager.Instance.GetAlMissionsCompletedCount().ToString(), true);
+            _downPanel.SetActive(true);
+        });
+
+        var dailyRewardBTN = FindAndValidateComponent<Button>(transform, "DialyRewardBTN");
+        dailyQuestBTN.onClick.AddListener(() =>
+        {
+            _dailyRewardsPanel.SetActive(true);
             _downPanel.SetActive(true);
         });
 

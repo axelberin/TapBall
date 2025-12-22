@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static DailyRewardManager;
@@ -28,6 +29,7 @@ public class DailyRewardsController : CanvasElementLocator
             return;
 
         var currentDay = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);
+        var dailyReward = Instance.GetTodayReward;
 
         for (int i = 0; i < _rewardSlotPrefab.Count; i++)
         {
@@ -35,11 +37,18 @@ public class DailyRewardsController : CanvasElementLocator
             GameObject slot = _rewardSlotPrefab[i];
 
             var claimRewardButton = FindAndValidateComponent<Button>(slot.transform, "DailyRewardButton");
+            var rewardImage = FindAndValidateComponent<Image>(slot.transform, "DailyRewardImg");
+            var amountText = FindAndValidateComponent<TextMeshProUGUI>(slot.transform, "DailyRewardText");
+
+            rewardImage.sprite = dailyReward.rewardImage.sprite;
+            UIManager.Instance.SetText(amountText, dailyReward.amount);
 
             claimRewardButton.onClick.RemoveAllListeners();
             if (day < currentDay || (day == currentDay && !Instance.CanClaimToday()))
             {
                 claimRewardButton.interactable = false;
+                rewardImage.gameObject.SetActive(false);
+                amountText.gameObject.SetActive(false);
                 continue;
             }
 
@@ -48,6 +57,8 @@ public class DailyRewardsController : CanvasElementLocator
                 claimRewardButton.interactable = true;
                 claimRewardButton.onClick.AddListener(() =>
                 {
+                    rewardImage.gameObject.SetActive(true);
+                    amountText.gameObject.SetActive(true);
                     Instance.ClaimDailyRewards();
                     ShowRewardByDayInUI();
                 });

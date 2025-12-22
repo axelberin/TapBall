@@ -36,8 +36,8 @@ public static class SaveAndLoadManager
     private static string DateSuffix = "_Date";
 
     //Rewards diarios
-    private static string RewardPrefix = "Reward_";
-    private static string ClaimedSuffix = "_Claimed";
+    private const string DailyRewardPrefix = "DailyReward_";
+    private const string ClaimedSuffix = "_Claimed";
 
     //Power Ups
     public static string PowerUpPrefix = "PowerUp_";
@@ -328,12 +328,21 @@ public static class SaveAndLoadManager
     #endregion
 
     #region REWARDS
-    private static string GetRewardClaimedKey(string rewardID) => RewardPrefix + rewardID + ClaimedSuffix;
-    public static void SetRewardClaimedKey(string rewardID, bool claimed, bool withSave = false, bool cloudSave = false)
+    private static string GetDailyRewardClaimedKey(string rewardID) => DailyRewardPrefix + rewardID + ClaimedSuffix;
+    private static string GetDailyRewardDateKey(string rewardID) => DailyRewardPrefix + rewardID + DateSuffix;
+    public static void SetDailyRewardData(string rewardID, string date, bool claimed, bool save = false, bool cloud = false)
     {
-        SetBoolValue(claimed, GetRewardClaimedKey(rewardID), withSave, cloudSave);
+        SetBoolValue(claimed, GetDailyRewardClaimedKey(rewardID), false, false);
+        SetStringValue(date, GetDailyRewardDateKey(rewardID), save, cloud);
     }
-    public static bool IsRewardClaimed(string rewardID) => GetBoolValue(GetRewardClaimedKey(rewardID));
+    public static bool IsDailyRewardClaimed(string rewardID)
+    {
+        return GetBoolValue(GetDailyRewardClaimedKey(rewardID));
+    }
+    public static bool IsDailyRewardFromToday(string rewardID, string today)
+    {
+        return GetStringValue(GetDailyRewardDateKey(rewardID)) == today;
+    }
     #endregion
 
     #region Save/Load/Cloud Methods
