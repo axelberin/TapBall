@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using static PowerUpManager;
 
 
@@ -197,7 +196,7 @@ public class DailyRewardManager : MonoBehaviour
 
         // Dar reward
         GrantRewards(rewardData);
-
+        Debug.Log($"Reward Claimed,id:{ rewardData.id},type {rewardData.Type}, amount {rewardData.amount}");
         // Marcar como reclamado
         SaveAndLoadManager.SetDailyRewardData( rewardID,today,true,true,true);
     }
@@ -247,7 +246,7 @@ public class DailyRewardData
     public int amount;
     public int quality;
     public PowerUpType chosenPowerUp;
-    public Image rewardImage;
+    public Sprite rewardImage;
 }
 
 

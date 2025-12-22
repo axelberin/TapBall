@@ -31,17 +31,17 @@ public class DailyRewardsController : CanvasElementLocator
         var currentDay = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);
         var dailyReward = Instance.GetTodayReward;
 
+    
         for (int i = 0; i < _rewardSlotPrefab.Count; i++)
         {
             int day = i + 1;
             GameObject slot = _rewardSlotPrefab[i];
 
-            var claimRewardButton = FindAndValidateComponent<Button>(slot.transform, "DailyRewardButton");
+            var claimRewardButton = FindAndValidateComponent<Button>(slot.transform, "ClaimDailyRewardButton");
             var rewardImage = FindAndValidateComponent<Image>(slot.transform, "DailyRewardImg");
             var amountText = FindAndValidateComponent<TextMeshProUGUI>(slot.transform, "DailyRewardText");
 
-            rewardImage.sprite = dailyReward.rewardImage.sprite;
-            UIManager.Instance.SetText(amountText, dailyReward.amount);
+            
 
             claimRewardButton.onClick.RemoveAllListeners();
             if (day < currentDay || (day == currentDay && !Instance.CanClaimToday()))
@@ -60,6 +60,8 @@ public class DailyRewardsController : CanvasElementLocator
                     rewardImage.gameObject.SetActive(true);
                     amountText.gameObject.SetActive(true);
                     Instance.ClaimDailyRewards();
+                    rewardImage.sprite = dailyReward.rewardImage;
+                    UIManager.Instance.SetText(amountText, dailyReward.amount);
                     ShowRewardByDayInUI();
                 });
             }

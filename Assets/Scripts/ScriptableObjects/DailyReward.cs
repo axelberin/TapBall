@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using static DailyRewardManager;
 using static PowerUpManager;
 
@@ -18,5 +17,5 @@ public class DailyReward : ScriptableObject
     [System.NonSerialized]
     public PowerUpType chosenPowerUp;
 
-    public Image rewardImage;
+    public Sprite rewardImage;
 }

@@ -75,13 +75,19 @@ public class MenuManagerCanvas : CanvasElementLocator
             _downPanel.SetActive(true);
         });
 
-        var dailyRewardBTN = FindAndValidateComponent<Button>(transform, "DialyRewardBTN");
-        dailyQuestBTN.onClick.AddListener(() =>
+        var dailyRewardBTN = FindAndValidateComponent<Button>(transform, "DailyRewardBTN");
+        dailyRewardBTN.onClick.AddListener(() =>
         {
             _dailyRewardsPanel.SetActive(true);
             _downPanel.SetActive(true);
         });
 
+        var dailyBackRewardBTN = FindAndValidateComponent<Button>(transform, "DailyRewardsBackButton");
+        dailyBackRewardBTN.onClick.AddListener(() =>
+        {
+            _dailyRewardsPanel.SetActive(false);
+            _downPanel.SetActive(false);
+        });
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
         _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
         UpdateTexts();
@@ -196,6 +202,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         var fadeController = FindAndValidateGameObjectComponent(transform, "FadeController");
         _thanksForBuyPopUp = FindAndValidateComponent<PopUp>(transform, "ThanksForBuyPopUp");
         _dailyMissionsPanel.SetActive(false);
+        _dailyRewardsPanel.SetActive(false);
         fadeController.SetActive(true);
         _thanksForBuyPopUp.StrongHide();
         noAdsPopUp.StrongHide();
