@@ -79,14 +79,14 @@ public class MenuManagerCanvas : CanvasElementLocator
         dailyRewardBTN.onClick.AddListener(() =>
         {
             _dailyRewardsPanel.SetActive(true);
-            _downPanel.SetActive(true);
+            _downPanel.SetActive(false);
         });
 
         var dailyBackRewardBTN = FindAndValidateComponent<Button>(transform, "DailyRewardsBackButton");
         dailyBackRewardBTN.onClick.AddListener(() =>
         {
             _dailyRewardsPanel.SetActive(false);
-            _downPanel.SetActive(false);
+            _downPanel.SetActive(true);
         });
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
         _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
