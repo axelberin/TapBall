@@ -71,11 +71,14 @@ public class NotificationManager : MonoBehaviour
             ScheduleNotificationAtTime("notification_tittle_daily_2", "notification_description_daily_2",
                 0, 0, 20, 0);
 
-        ScheduleComebackNotification("notification_tittle_christmas_1", "notification_description_christmas_1",
-            0,2, new(DateTime.Now.Year, 12, 23, 11, 0, 0)); //Rudolph
-        ScheduleComebackNotification("notification_tittle_christmas_1", "notification_description_christmas_1",
+        ScheduleComebackNotification(LanguageManager.Instance.GetLocalizedText("notification_tittle_christmas_1"),
+            LanguageManager.Instance.GetLocalizedText("notification_description_christmas_1"),
+            0, 2, new(DateTime.Now.Year, 12, 23, 11, 0, 0)); //Rudolph
+        ScheduleComebackNotification(LanguageManager.Instance.GetLocalizedText("notification_tittle_christmas_1"), 
+            LanguageManager.Instance.GetLocalizedText("notification_description_christmas_1"),
             0, 3, new(DateTime.Now.Year, 12, 24, 11, 0, 0)); //Santa
-        ScheduleComebackNotification("notification_tittle_christmas_1", "notification_description_christmas_1",
+        ScheduleComebackNotification(LanguageManager.Instance.GetLocalizedText("notification_tittle_christmas_1"), 
+            LanguageManager.Instance.GetLocalizedText("notification_description_christmas_1"),
             0, 4, new(DateTime.Now.Year, 12, 26, 11, 0, 0)); //Grinch
     }
 
