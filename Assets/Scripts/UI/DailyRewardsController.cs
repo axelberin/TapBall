@@ -9,7 +9,7 @@ public class DailyRewardsController : CanvasElementLocator
     private GameObject _rewardsContent;
     private List<GameObject> _rewardSlotPrefab = new();
 
-    private void Start()
+    private void OnEnable()
     {
         _rewardsContent = FindAndValidateGameObjectComponent(transform, "RewardsContent");
 
@@ -25,10 +25,6 @@ public class DailyRewardsController : CanvasElementLocator
 
     private void ShowRewardByDayInUI()
     {
-        if (_rewardsContent == null)
-            return;
-
-        var currentDay = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);
         var dailyReward = Instance.GetTodayReward;
 
         if (dailyReward == null)
@@ -39,39 +35,34 @@ public class DailyRewardsController : CanvasElementLocator
             int day = i + 1;
             GameObject slot = _rewardSlotPrefab[i];
 
-            var claimRewardButton = FindAndValidateComponent<Button>(slot.transform, "ClaimDailyRewardButton");
+            var claimButton = FindAndValidateComponent<Button>(slot.transform, "ClaimDailyRewardButton");
             var rewardImage = FindAndValidateComponent<Image>(slot.transform, "DailyRewardImg");
             var amountText = FindAndValidateComponent<TextMeshProUGUI>(slot.transform, "DailyRewardText");
 
-            
+            claimButton.onClick.RemoveAllListeners();
 
-            claimRewardButton.onClick.RemoveAllListeners();
-            if (day < currentDay || (day == currentDay && !Instance.CanClaimToday()))
+            if (day == SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName))
             {
-                claimRewardButton.interactable = false;
-                rewardImage.gameObject.SetActive(false);
-                amountText.gameObject.SetActive(false);
-                continue;
-            }
+                rewardImage.sprite = dailyReward.rewardImage;
+                rewardImage.gameObject.SetActive(true);
 
-            if (day == currentDay && Instance.CanClaimToday())
-            {
-                claimRewardButton.interactable = true;
-                claimRewardButton.onClick.AddListener(() =>
+                amountText.text = dailyReward.amount.ToString();
+                amountText.gameObject.SetActive(true);
+
+                claimButton.interactable = Instance.CanClaimToday();
+                claimButton.onClick.AddListener(() =>
                 {
-                    rewardImage.sprite = dailyReward.rewardImage;
-                    UIManager.Instance.SetText(amountText, dailyReward.amount);
-                    rewardImage.gameObject.SetActive(true);
-                    amountText.gameObject.SetActive(true);
+                    Debug.Log("Apretaste el reclamo de los rewards");
                     Instance.ClaimDailyRewards();
                     ShowRewardByDayInUI();
                 });
             }
             else
             {
-                claimRewardButton.interactable = false;
+                claimButton.interactable = false;
+                rewardImage.gameObject.SetActive(false);
+                amountText.gameObject.SetActive(false);
             }
-
         }
     }
 }

@@ -24,7 +24,12 @@ public class DailyRewardManager : MonoBehaviour
     }
     private void Start()
     {
-        _todayReward = SelectRandomRewardForDay(GetCurrentStreakDay());
+        _todayReward = LoadTodayReward();
+
+        if (_todayReward == null)
+        {
+            _todayReward = SelectRandomRewardForDay(GetCurrentStreakDay());
+        }
     }
 
 #if UNITY_EDITOR
@@ -64,52 +69,57 @@ public class DailyRewardManager : MonoBehaviour
     }
     private void ForceDayChange(string simulatedDay)
     {
-        SaveAndLoadManager.SetStringValue(
-            simulatedDay,
-            SaveAndLoadManager.DailyRewardLastClaimDayName
-        );
+        SaveAndLoadManager.SetStringValue(simulatedDay, SaveAndLoadManager.DailyRewardLastClaimDayName);
 
         _todayReward = SelectRandomRewardForDay(GetCurrentStreakDay());
     }
 
     #endregion
 #endif
+    private DailyRewardData LoadTodayReward()
+    {
+        foreach (var reward in allRewards)
+        {
+            if (SaveAndLoadManager.IsDailyRewardFromToday(reward.rewardID, System.DateTime.Today.ToString("yyyyMMdd")))
+            {
+                return new DailyRewardData
+                {
+                    id = reward.rewardID,
+                    Type = reward.Type,
+                    amount = reward.amount,
+                    quality = GetMinQualityByStreak(
+                        SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName)
+                    ),
+                    chosenPowerUp = reward.chosenPowerUp,
+                    rewardImage = reward.rewardImage
+                };
+            }
+        }
 
+        return null;
+    }
     public int GetCurrentStreakDay()
     {
         string lastClaim = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName);
-        string today = System.DateTime.Now.ToString("yyyyMMdd");
 
         if (string.IsNullOrEmpty(lastClaim))
-        {
-            SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.DailyRewardStreakName);
-            SaveAndLoadManager.SetStringValue(today, SaveAndLoadManager.DailyRewardLastClaimDayName);
-            SaveAndLoadManager.Save();
-            return 1; //Si el último día de claimeo es null, lo setea como el primer día de la racha
-        }
+            return 1;
 
-        System.DateTime lastDate = System.DateTime.ParseExact(lastClaim, "yyyyMMdd", null); //Parsea el día exacto 
-        int daysDiff = (System.DateTime.Today - lastDate).Days;//Calcula cuántos días pasaron del último claim
+        System.DateTime lastDate =
+            System.DateTime.ParseExact(lastClaim, "yyyyMMdd", null);
 
-        int streak = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);//Consigo la racha
+        int daysDiff = (System.DateTime.Today - lastDate).Days;
+
+        int streak = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);
+
+        if (daysDiff == 0)
+            return Mathf.Clamp(streak, 1, 7);
 
         if (daysDiff == 1)
-            streak++;
-        else if (daysDiff > 1)
-            streak = 1;
+            return Mathf.Clamp(streak + 1, 1, 7);
 
-        if (streak > 7)
-        {
-            streak = 1;
-        }
-        //Hago los cálculos dependiendo de si tiene racha contínua o no
-        SaveAndLoadManager.SetIntValue(streak, SaveAndLoadManager.DailyRewardStreakName);
-        SaveAndLoadManager.SetStringValue(today, SaveAndLoadManager.DailyRewardLastClaimDayName);
-        SaveAndLoadManager.Save();
-
-        return streak; //Seteo los values, los guardo y los retorno
+        return 1;
     }
-
     private int GetMinQualityByStreak(int streakDay)
     {
         return streakDay switch
@@ -196,7 +206,9 @@ public class DailyRewardManager : MonoBehaviour
         // Dar reward
         GrantRewards(_todayReward);
         Debug.Log($"Reward Claimed,id:{rewardID},type {_todayReward.Type}, amount {_todayReward.amount}");
-        // Marcar como reclamado
+        //Marcar como reclamado
+        SaveAndLoadManager.SetIntValue(GetCurrentStreakDay(), SaveAndLoadManager.DailyRewardStreakName, true, true);
+        SaveAndLoadManager.SetStringValue(System.DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.DailyRewardLastClaimDayName, true, true);
         SaveAndLoadManager.SetDailyRewardData(rewardID, today, true, true, true);
     }
 
@@ -217,7 +229,8 @@ public class DailyRewardManager : MonoBehaviour
                 Debug.Log($"Skin reward");
                 break;
             case DailyRewardType.PowerUp:
-                PowerUpManager.Instance.AddPowerUp(_todayReward.chosenPowerUp, _todayReward.amount);
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.PowerUpPrefix +
+                    reward.chosenPowerUp.ToString()) + reward.amount, SaveAndLoadManager.PowerUpPrefix + reward.chosenPowerUp.ToString(), true, true);
                 break;
 
 
