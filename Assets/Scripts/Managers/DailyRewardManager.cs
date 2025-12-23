@@ -14,10 +14,6 @@ public class DailyRewardManager : MonoBehaviour
 
     public static DailyRewardManager Instance { get; private set; }
 
-#if UNITY_EDITOR
-    [SerializeField] private int debugDayOffset = 0;
-#endif
-
     private void Awake()
     {
         if (!Instance)
@@ -26,43 +22,56 @@ public class DailyRewardManager : MonoBehaviour
             Destroy(this);
 
     }
+    private void Start()
+    {
+        _todayReward = SelectRandomRewardForDay(GetCurrentStreakDay());
+    }
 
 #if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))//Continuar racha
         {
-            SaveAndLoadManager.SetStringValue(
-                System.DateTime.Today.AddDays(-1).ToString("yyyyMMdd"),
-                SaveAndLoadManager.DailyRewardLastClaimDayName
-            );
-
+            ForceDayChange(System.DateTime.Today.AddDays(-1).ToString("yyyyMMdd"));
             TestReward();
         }
         if (Input.GetKeyDown(KeyCode.B)) //Romper racha
         {
-            SaveAndLoadManager.SetStringValue(
-                System.DateTime.Today.AddDays(-5).ToString("yyyyMMdd"),
-                SaveAndLoadManager.DailyRewardLastClaimDayName
-            );
-
+            ForceDayChange(System.DateTime.Today.AddDays(-5).ToString("yyyyMMdd"));
             TestReward();
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ClaimDailyRewards();
         }
     }
 
     #region TESTING
     private void TestReward()
     {
-        DailyRewardData reward = SelectRandomRewardForDay(GetCurrentStreakDay());
-
+        if (_todayReward == null)
+        {
+            Debug.LogWarning("No hay reward generado todavía");
+            return;
+        }
         Debug.Log($"RACHA: {GetCurrentStreakDay()}");
         Debug.Log(
-            $"Reward -> Type: {reward.Type}, " +
-            $"Amount: {reward.amount}, " +
-            $"Quality: {reward.quality}, " +
-            $"PowerUp: {reward.chosenPowerUp}"
+            $"Reward -> Type: {_todayReward.Type}, " +
+            $"Amount: {_todayReward.amount}, " +
+            $"Quality: {_todayReward.quality}, " +
+            $"PowerUp: {_todayReward.chosenPowerUp}"
         );
     }
+    private void ForceDayChange(string simulatedDay)
+    {
+        SaveAndLoadManager.SetStringValue(
+            simulatedDay,
+            SaveAndLoadManager.DailyRewardLastClaimDayName
+        );
+
+        _todayReward = SelectRandomRewardForDay(GetCurrentStreakDay());
+    }
+
     #endregion
 #endif
 
@@ -165,15 +174,10 @@ public class DailyRewardManager : MonoBehaviour
 
     public bool CanClaimToday()
     {
-        string lastClaim = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName);
+        if (_todayReward == null)
+            return false;
 
-        if (string.IsNullOrEmpty(lastClaim))
-            return true;
-
-        if (lastClaim != System.DateTime.Now.ToString("yyyyMMdd"))
-            return true;
-
-        return SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardClaimedTodayName) == 0;
+        return !SaveAndLoadManager.IsDailyRewardClaimed(_todayReward.id);
     }
 
     public void ClaimDailyRewards()
@@ -181,24 +185,19 @@ public class DailyRewardManager : MonoBehaviour
         if (!CanClaimToday())
             return;
 
-        DailyRewardData rewardData = SelectRandomRewardForDay(GetCurrentStreakDay());
-
-        string rewardID = rewardData.id;
+        string rewardID = _todayReward.id;
         string today = System.DateTime.Today.ToString("yyyyMMdd");
 
         // Es el reward de hoy y ya fue reclamado?
-        if (SaveAndLoadManager.IsDailyRewardFromToday(rewardID, today) && 
+        if (SaveAndLoadManager.IsDailyRewardFromToday(rewardID, today) &&
             SaveAndLoadManager.IsDailyRewardClaimed(rewardID))
             return;
 
-        // Guardar reward del día (si todavía no estaba)
-        SaveAndLoadManager.SetDailyRewardData(rewardID,today,false,true,true);
-
         // Dar reward
-        GrantRewards(rewardData);
-        Debug.Log($"Reward Claimed,id:{ rewardData.id},type {rewardData.Type}, amount {rewardData.amount}");
+        GrantRewards(_todayReward);
+        Debug.Log($"Reward Claimed,id:{rewardID},type {_todayReward.Type}, amount {_todayReward.amount}");
         // Marcar como reclamado
-        SaveAndLoadManager.SetDailyRewardData( rewardID,today,true,true,true);
+        SaveAndLoadManager.SetDailyRewardData(rewardID, today, true, true, true);
     }
 
     private void GrantRewards(DailyRewardData reward)
@@ -207,20 +206,21 @@ public class DailyRewardManager : MonoBehaviour
         switch (reward.Type)
         {
             case DailyRewardType.Coins:
-                SaveAndLoadManager.SetIntValue(reward.amount, SaveAndLoadManager.CoinsName);
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName)
+                    + reward.amount, SaveAndLoadManager.CoinsName);
                 break;
-
             case DailyRewardType.Orbs:
-                SaveAndLoadManager.SetIntValue(reward.amount, SaveAndLoadManager.OrbsName);
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName)
+                    + reward.amount, SaveAndLoadManager.OrbsName);
                 break;
-
-            case DailyRewardType.PowerUp:
-                PowerUpManager.Instance.AddPowerUp(reward.chosenPowerUp, reward.amount);
-                break;
-
             case DailyRewardType.Skin:
-                Debug.Log("Skin granted from reward");
+                Debug.Log($"Skin reward");
                 break;
+            case DailyRewardType.PowerUp:
+                PowerUpManager.Instance.AddPowerUp(_todayReward.chosenPowerUp, _todayReward.amount);
+                break;
+
+
         }
     }
 
