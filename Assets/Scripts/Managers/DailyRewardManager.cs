@@ -13,7 +13,7 @@ public class DailyRewardManager : MonoBehaviour
     [SerializeField] private int _rewardsToGrant;
 
     public static DailyRewardManager Instance { get; private set; }
-
+    public System.Action OnDailyRewardUpdated;
     private void Awake()
     {
         if (!Instance)
@@ -151,7 +151,7 @@ public class DailyRewardManager : MonoBehaviour
             _todayReward.chosenPowerUp = SelectRandomPowerUpByProbability();
 
         SaveAndLoadManager.SetDailyRewardData(_todayReward.id, System.DateTime.Today.ToString("yyyyMMdd"), false, true, true);
-
+        OnDailyRewardUpdated?.Invoke();
         return _todayReward;
 
     }
@@ -210,6 +210,7 @@ public class DailyRewardManager : MonoBehaviour
         SaveAndLoadManager.SetIntValue(GetCurrentStreakDay(), SaveAndLoadManager.DailyRewardStreakName, true, true);
         SaveAndLoadManager.SetStringValue(System.DateTime.Today.ToString("yyyyMMdd"), SaveAndLoadManager.DailyRewardLastClaimDayName, true, true);
         SaveAndLoadManager.SetDailyRewardData(rewardID, today, true, true, true);
+        OnDailyRewardUpdated?.Invoke();
     }
 
     private void GrantRewards(DailyRewardData reward)
@@ -247,11 +248,12 @@ public class DailyRewardManager : MonoBehaviour
 
     #region UTILITY
     public DailyRewardData GetTodayReward => _todayReward;
+    public int GetStreakDay => GetCurrentStreakDay();
     #endregion
 
 }
 
-[System.Serializable]
+[System.Serializable]   
 public class DailyRewardData
 {
     public string id;
