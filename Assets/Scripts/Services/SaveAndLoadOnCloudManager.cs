@@ -214,9 +214,6 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             gameData["RewardLastClaim"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DailyRewardLastClaimDayName) ?
                                             SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName) : "";
 
-            gameData["RewardClaimedToday"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.DailyRewardClaimedTodayName) ?
-                                            SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardClaimedTodayName) : 0;
-
             // Serializar datos de niveles
             var levelDataDict = new Dictionary<string, object>();
             var availableWorlds = SaveAndLoadManager.GetAvailableWorlds();
@@ -306,12 +303,14 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
             //Serializar datos de daily rewards
             var dailyRewardData = new Dictionary<string, object>();
+            var todayReward = DailyRewardManager.Instance.GetTodayReward;
 
-            var todayRewardID = DailyRewardManager.Instance.GetTodayReward;
 
-            dailyRewardData["rewardID"] = todayRewardID;
-            dailyRewardData["date"] = DateTime.Today.ToString("yyyyMMdd");
-            dailyRewardData["claimed"] = SaveAndLoadManager.IsDailyRewardClaimed(todayRewardID.id);
+            dailyRewardData["rewardID"] = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardTodayID);
+            dailyRewardData["date"] = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardTodayDate);
+            dailyRewardData["claimed"] = SaveAndLoadManager.GetBoolValue(SaveAndLoadManager.DailyRewardTodayClaimed);
+            dailyRewardData["streak"] = SaveAndLoadManager.GetIntValue(SaveAndLoadManager.DailyRewardStreakName);
+            dailyRewardData["lastClaim"] = SaveAndLoadManager.GetStringValue(SaveAndLoadManager.DailyRewardLastClaimDayName);
 
             gameData["DailyRewardData"] = dailyRewardData;
 
@@ -468,11 +467,16 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 var rewardData = cloudGameData["DailyRewardData"] as Dictionary<string, object>;
                 if (rewardData == null) return;
 
-                SaveAndLoadManager.SetDailyRewardData(
-                    rewardData["rewardID"].ToString(),
-                    rewardData["date"].ToString(),
-                    Convert.ToBoolean(rewardData["claimed"])
-                );
+                SaveAndLoadManager.SetStringValue(rewardData["rewardID"].ToString(),
+                    SaveAndLoadManager.DailyRewardTodayID);
+                SaveAndLoadManager.SetStringValue(rewardData["date"].ToString(),
+                    SaveAndLoadManager.DailyRewardTodayDate);
+                SaveAndLoadManager.SetBoolValue(Convert.ToBoolean(rewardData["claimed"]),
+                    SaveAndLoadManager.DailyRewardTodayClaimed);
+                SaveAndLoadManager.SetIntValue(Convert.ToInt32(rewardData["streak"])
+                    , SaveAndLoadManager.DailyRewardStreakName);
+                SaveAndLoadManager.SetStringValue(rewardData["lastClaim"].ToString(),
+                    SaveAndLoadManager.DailyRewardLastClaimDayName);
             }
 
             // Guardar todos los cambios localmente

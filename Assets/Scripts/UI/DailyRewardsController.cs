@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,17 +65,13 @@ public class DailyRewardsController : CanvasElementLocator
 
                 if (canClaim)
                 {
-                    claimButton.onClick.AddListener(OnClaimPressed);
+                    claimButton.onClick.AddListener(() =>
+                    {
+                        Debug.Log("Apretaste el reclamo de los rewards");
+                        Instance.ClaimDailyRewards();
+                    });
                 }
             }
         }
-    }
-
-    private void OnClaimPressed()
-    {
-        Debug.Log("Apretaste el reclamo de los rewards");
-
-        Instance.ClaimDailyRewards();
-        RefreshUI();
     }
 }

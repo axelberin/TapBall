@@ -20,9 +20,11 @@ public static class SaveAndLoadManager
     public static string IsPlayingFirstTimeName = "IsPlayingFirstTimeName";
     public static string LastDayUpdateName = "LastDayUpdate";
     public static string ObtainedGameMode = "ObtainedGameMode_";
+    public static string DailyRewardTodayID = "DailyReward_Today_ID";
+    public static string DailyRewardTodayDate = "DailyReward_Today_Date";
+    public static string DailyRewardTodayClaimed = "DailyReward_Today_Claimed";
     public static string DailyRewardStreakName = "DailyReward_Streak";
     public static string DailyRewardLastClaimDayName = "DailyReward_LastClaimDay";
-    public const string DailyRewardClaimedTodayName = "DailyRewardClaimedToday";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";
@@ -36,9 +38,9 @@ public static class SaveAndLoadManager
     private static string ProgressSuffix = "_Progress";
     private static string DateSuffix = "_Date";
 
-    //Rewards diarios
-    private const string DailyRewardPrefix = "DailyReward_";
-    private const string ClaimedSuffix = "_Claimed";
+   ////Rewards diarios
+   //private const string DailyRewardPrefix = "DailyReward_";
+   //private const string ClaimedSuffix = "_Claimed";
 
     //Power Ups
     public static string PowerUpPrefix = "PowerUp_";
@@ -329,21 +331,26 @@ public static class SaveAndLoadManager
     #endregion
 
     #region REWARDS
-    private static string GetDailyRewardClaimedKey(string rewardID) => DailyRewardPrefix + rewardID + ClaimedSuffix;
-    private static string GetDailyRewardDateKey(string rewardID) => DailyRewardPrefix + rewardID + DateSuffix;
-    public static void SetDailyRewardData(string rewardID, string date, bool claimed, bool save = false, bool cloud = false)
-    {
-        SetBoolValue(claimed, GetDailyRewardClaimedKey(rewardID), false, false);
-        SetStringValue(date, GetDailyRewardDateKey(rewardID), save, cloud);
-    }
-    public static bool IsDailyRewardClaimed(string rewardID)
-    {
-        return GetBoolValue(GetDailyRewardClaimedKey(rewardID));
-    }
     public static bool IsDailyRewardFromToday(string rewardID, string today)
     {
-        return GetStringValue(GetDailyRewardDateKey(rewardID)) == today;
+        return GetStringValue(DailyRewardTodayDate) == today &&
+               GetStringValue(DailyRewardTodayID) == rewardID;
     }
+    // private static string GetDailyRewardClaimedKey(string rewardID) => DailyRewardPrefix + rewardID + ClaimedSuffix;
+    // private static string GetDailyRewardDateKey(string rewardID) => DailyRewardPrefix + rewardID + DateSuffix;
+    // public static void SetDailyRewardData(string rewardID, string date, bool claimed, bool save = false, bool cloud = false)
+    // {
+    //     SetBoolValue(claimed, GetDailyRewardClaimedKey(rewardID), false, false);
+    //     SetStringValue(date, GetDailyRewardDateKey(rewardID), save, cloud);
+    // }
+    // public static bool IsDailyRewardClaimed(string rewardID)
+    // {
+    //     return GetBoolValue(GetDailyRewardClaimedKey(rewardID));
+    // }
+    // public static bool IsDailyRewardFromToday(string rewardID, string today)
+    // {
+    //     return GetStringValue(GetDailyRewardDateKey(rewardID)) == today;
+    // }
     #endregion
 
     #region Save/Load/Cloud Methods
