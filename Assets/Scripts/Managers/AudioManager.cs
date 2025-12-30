@@ -19,8 +19,7 @@ public class AudioManager : ManagersManager, IPauseble
         RejectionSound,
         AchivmentSound,
         TimeAlertSound,
-        TimeStopPWStartSound,
-        TimeStopPWStopSound,
+        TimeStopPWSound,
         TouchCountPWStartSound,
         TouchCountPWStopSound,
         ImmunityPWSound,
@@ -195,10 +194,8 @@ public class AudioManager : ManagersManager, IPauseble
             clip => _musicClipsByEnum.Add(MusicClipType.DunkMusic, clip));
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeAlertSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.TimeAlertSound, clip));
-        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeStopPWStartSound.ToString(),
-            clip => _soundClipsByEnum.Add(AudioClipType.TimeStopPWStartSound, clip));
-        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeStopPWStopSound.ToString(),
-            clip => _soundClipsByEnum.Add(AudioClipType.TimeStopPWStopSound, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeStopPWSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.TimeStopPWSound, clip));
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TouchCountPWStartSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.TouchCountPWStartSound, clip));
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TouchCountPWStopSound.ToString(),

@@ -79,7 +79,7 @@ public class PowerUpManager : MonoBehaviour
                 GameManager.Instance.SetGetWorldState.StopCountTimerMode();
                 _timeStopTimer = _timeStopTime;
                 OnUpdate += TimeStopCounter;
-                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeStopPWStartSound);
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeStopPWSound);
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
                 _powerUpTapsCounterEnabled = true;
@@ -201,7 +201,7 @@ public class PowerUpManager : MonoBehaviour
         {
             case PowerUpType.TimeStopPowerUp:
                 GameManager.Instance.SetGetWorldState.ResumeCountTimerMode();
-                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeStopPWStopSound);
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.TimeStopPWSound);
                 break;
             case PowerUpType.StopTouchCounterPowerUp:
                 _powerUpTapsCounterEnabled = false;

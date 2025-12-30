@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18e5c39573107f8448475d7928b50b4b
+    m_Address: TouchCountPWStopSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 222b16a72512a7a40994315d5efbaa96
     m_Address: CountDownSound
     m_ReadOnly: 0
@@ -50,6 +55,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40825dbb1f2928f4db63b373ef358193
+    m_Address: ImmunityPWSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44836e8322e8cc54da44373a97fceefe
+    m_Address: RevivePWSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 475ecb3fa8046cd4ab83462082e68f57
     m_Address: PlayLevelSound
     m_ReadOnly: 0
@@ -62,6 +77,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 56966264d46734545bf49e0a749877f4
     m_Address: JapaneseFont
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 607b8779f05eb1b4a992abce22e4ec53
+    m_Address: TouchCountPWStartSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -102,6 +122,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c32cdf8de5b28bc40a04172a07074271
     m_Address: DunkMusic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb2ffbff02377f44a8d3b37bcf2bf62d
+    m_Address: TimeStopPWSound
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
