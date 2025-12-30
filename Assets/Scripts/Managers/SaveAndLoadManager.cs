@@ -330,29 +330,6 @@ public static class SaveAndLoadManager
     private static string GetMissionDateKey(string missionID) => MissionPrefix + missionID + DateSuffix;
     #endregion
 
-    #region REWARDS
-    public static bool IsDailyRewardFromToday(string rewardID, string today)
-    {
-        return GetStringValue(DailyRewardTodayDate) == today &&
-               GetStringValue(DailyRewardTodayID) == rewardID;
-    }
-    // private static string GetDailyRewardClaimedKey(string rewardID) => DailyRewardPrefix + rewardID + ClaimedSuffix;
-    // private static string GetDailyRewardDateKey(string rewardID) => DailyRewardPrefix + rewardID + DateSuffix;
-    // public static void SetDailyRewardData(string rewardID, string date, bool claimed, bool save = false, bool cloud = false)
-    // {
-    //     SetBoolValue(claimed, GetDailyRewardClaimedKey(rewardID), false, false);
-    //     SetStringValue(date, GetDailyRewardDateKey(rewardID), save, cloud);
-    // }
-    // public static bool IsDailyRewardClaimed(string rewardID)
-    // {
-    //     return GetBoolValue(GetDailyRewardClaimedKey(rewardID));
-    // }
-    // public static bool IsDailyRewardFromToday(string rewardID, string today)
-    // {
-    //     return GetStringValue(GetDailyRewardDateKey(rewardID)) == today;
-    // }
-    #endregion
-
     #region Save/Load/Cloud Methods
     public static void Save()
     {
