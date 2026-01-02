@@ -8,6 +8,10 @@ public class StoreCanvas : CanvasElementLocator
 
     private TextMeshProUGUI _coinsText;
     private TextMeshProUGUI _orbsText;
+    private TextMeshProUGUI _icePowerUpText;
+    private TextMeshProUGUI _noTouchowerUpText;
+    private TextMeshProUGUI _immunityPowerUpText;
+    private TextMeshProUGUI _revivePowerUpText;
     private PopUp _reviewPopUp;
     private Button _ballsFlapButton;
     private Image _ballsFlapOnImage;
@@ -30,7 +34,10 @@ public class StoreCanvas : CanvasElementLocator
     {
         _coinsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "CoinsText");
         _orbsText = FindAndValidateComponent<TextMeshProUGUI>(transform, "OrbsText");
-        UpdateCoinsAndOrbsTexts();
+        _icePowerUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "SnowPowerUpText");
+        _noTouchowerUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "StonePowerupText");
+        _immunityPowerUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ShieldPowerUpText");
+        _revivePowerUpText = FindAndValidateComponent<TextMeshProUGUI>(transform, "RevivalPowerupText");
 
         var closeButton = FindAndValidateComponent<Button>(transform, "StoreCloseButton");
 
@@ -50,6 +57,7 @@ public class StoreCanvas : CanvasElementLocator
         _offersFlapOnImage = FindAndValidateComponent<Image>(_offersFlapButton.transform, "FlapOn");
         _offersFlapOffImage = FindAndValidateComponent<Image>(_offersFlapButton.transform, "FlapOff");
 
+        UpdateTexts();
         OnSelectBallsFlap();
         _reviewPopUp = FindAndValidateComponent<PopUp>(transform, "ReviewPopUp");
         _reviewPopUp.gameObject.SetActive(true);
@@ -59,23 +67,30 @@ public class StoreCanvas : CanvasElementLocator
 
     private void OnEnable()
     {
-        UpdateCoinsAndOrbsTexts();
+        if (_coinsText || _orbsText)
+            UpdateTexts();
         if (IAPManager.Instance)
-            IAPManager.Instance.OnCompletePurchase += UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase += UpdateTexts;
     }
 
     private void OnDisable()
     {
         if (IAPManager.Instance)
-            IAPManager.Instance.OnCompletePurchase -= UpdateCoinsAndOrbsTexts;
+            IAPManager.Instance.OnCompletePurchase -= UpdateTexts;
     }
 
-    public void UpdateCoinsAndOrbsTexts()
+    public void UpdateTexts()
     {
-        if (_coinsText != null)
-            UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
-        if (_orbsText != null)
-            UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
+        UIManager.Instance.SetText(_coinsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName));
+        UIManager.Instance.SetText(_orbsText, SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName));
+        UIManager.Instance.SetText(_icePowerUpText, SaveAndLoadManager.GetIntValue(
+            SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp));
+        UIManager.Instance.SetText(_noTouchowerUpText, SaveAndLoadManager.GetIntValue
+            (SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp));
+        UIManager.Instance.SetText(_immunityPowerUpText, SaveAndLoadManager.GetIntValue(
+            SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp));
+        UIManager.Instance.SetText(_revivePowerUpText, SaveAndLoadManager.GetIntValue(
+            SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp));
     }
 
     public void ShowReview()

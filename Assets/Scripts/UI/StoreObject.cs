@@ -57,7 +57,7 @@ public class StoreObject : CanvasElementLocator
             {
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PurchaseSound);
                 StoreManager.Instance.Buy(_skinSC.GetPrice);
-                StoreCanvas.Instance.UpdateCoinsAndOrbsTexts();
+                StoreCanvas.Instance.UpdateTexts();
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.ObtainedBallSkins + _skinSC.skinName);
                 SaveAndLoadManager.SetStringValue(_skinSC.skinName, SaveAndLoadManager.CurrentBallSkinName, true, true);
 
