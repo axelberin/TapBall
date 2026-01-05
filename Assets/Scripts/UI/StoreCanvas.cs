@@ -134,6 +134,31 @@ public class StoreCanvas : CanvasElementLocator
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
         });
 
+        var fiftyGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "FiftyGoldPriceText");
+        fiftyGoldPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_GOLD);
+        var oneHundredGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OneHundredGoldPriceText");
+        oneHundredGoldPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.ONE_HUNDRED_GOLD);
+        var tenOrbsPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "TenOrbsPriceText");
+        tenOrbsPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.TEN_ORBS);
+        var fiftyOrbsPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "FiftyOrbsPriceText");
+        fiftyOrbsPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_ORBS);
+        var oneHundredOrbsPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OneHundredOrbsPriceText");
+        oneHundredOrbsPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.ONE_HUNDRED_ORBS);
+        var orbitalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OrbitalPackPriceText");
+        orbitalPackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.ORBITAL_PACK);
+        var galacticPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "GalacticPackPriceText");
+        galacticPackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.GALACTIC_PACK);
+        var multiversalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "MultiversalPackPriceText");
+        multiversalPackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.MULTIVERSAL_PACK);
+        var icePackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "IcePackPriceText");
+        icePackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.ICE_PACK);
+        var stonePackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "StonePackPriceText");
+        stonePackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.STONE_PACK);
+        var protectionPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "ProtectionPackPriceText");
+        protectionPackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.PROTECTION_PACK);
+        var eternalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "EternalPackPriceText");
+        eternalPackPriceText.text = IAPManager.Instance.GetProductPriceById(IAPManager.INMORTAL_PACK);
+
         UpdateTexts();
         OnSelectBallsFlap();
         _reviewPopUp = FindAndValidateComponent<PopUp>(transform, "ReviewPopUp");
