@@ -134,30 +134,32 @@ public class StoreCanvas : CanvasElementLocator
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
         });
 
+#if !UNITY_EDITOR
         var fiftyGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "FiftyGoldPriceText");
-        fiftyGoldPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_GOLD);
+        UIManager.Instance.SetText(fiftyGoldPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_GOLD));
         var oneHundredGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OneHundredGoldPriceText");
-        oneHundredGoldPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.ONE_HUNDRED_GOLD);
+        UIManager.Instance.SetText(oneHundredGoldPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.ONE_HUNDRED_GOLD));
         var tenOrbsPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "TenOrbsPriceText");
-        tenOrbsPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.TEN_ORBS);
+        UIManager.Instance.SetText(tenOrbsPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.TEN_ORBS));
         var fiftyOrbsPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "FiftyOrbsPriceText");
-        fiftyOrbsPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_ORBS);
+        UIManager.Instance.SetText(fiftyOrbsPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_ORBS));
         var oneHundredOrbsPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OneHundredOrbsPriceText");
-        oneHundredOrbsPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.ONE_HUNDRED_ORBS);
+        UIManager.Instance.SetText(oneHundredOrbsPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.ONE_HUNDRED_ORBS));
         var orbitalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OrbitalPackPriceText");
-        orbitalPackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.ORBITAL_PACK);
+        UIManager.Instance.SetText(orbitalPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.ORBITAL_PACK));
         var galacticPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "GalacticPackPriceText");
-        galacticPackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.GALACTIC_PACK);
+        UIManager.Instance.SetText(galacticPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.GALACTIC_PACK));
         var multiversalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "MultiversalPackPriceText");
-        multiversalPackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.MULTIVERSAL_PACK);
+        UIManager.Instance.SetText(multiversalPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.MULTIVERSAL_PACK));
         var icePackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "IcePackPriceText");
-        icePackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.ICE_PACK);
+        UIManager.Instance.SetText(icePackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.ICE_PACK));
         var stonePackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "StonePackPriceText");
-        stonePackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.STONE_PACK);
+        UIManager.Instance.SetText(stonePackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.STONE_PACK));
         var protectionPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "ProtectionPackPriceText");
-        protectionPackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.PROTECTION_PACK);
+        UIManager.Instance.SetText(protectionPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.PROTECTION_PACK));
         var eternalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "EternalPackPriceText");
-        eternalPackPriceText.text = "US" + IAPManager.Instance.GetProductPriceById(IAPManager.INMORTAL_PACK);
+        UIManager.Instance.SetText(eternalPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.INMORTAL_PACK));
+#endif
 
         UpdateTexts();
         OnSelectBallsFlap();
