@@ -19,6 +19,11 @@ public class AudioManager : ManagersManager, IPauseble
         RejectionSound,
         AchivmentSound,
         TimeAlertSound,
+        TimeStopPWSound,
+        TouchCountPWStartSound,
+        TouchCountPWStopSound,
+        ImmunityPWSound,
+        RevivePWSound,
     };
 
     public enum MusicClipType
@@ -189,6 +194,16 @@ public class AudioManager : ManagersManager, IPauseble
             clip => _musicClipsByEnum.Add(MusicClipType.DunkMusic, clip));
         AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeAlertSound.ToString(),
             clip => _soundClipsByEnum.Add(AudioClipType.TimeAlertSound, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TimeStopPWSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.TimeStopPWSound, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TouchCountPWStartSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.TouchCountPWStartSound, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.TouchCountPWStopSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.TouchCountPWStopSound, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.ImmunityPWSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.ImmunityPWSound, clip));
+        AddressablesUtility.LoadAsset<AudioClip>(AudioClipType.RevivePWSound.ToString(),
+            clip => _soundClipsByEnum.Add(AudioClipType.RevivePWSound, clip));
 
         yield return new WaitForSeconds(0.5f);
 
