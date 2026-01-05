@@ -12,6 +12,18 @@ public class IAPManager : MonoBehaviour, IStoreListener
     private static IExtensionProvider m_StoreExtensionProvider;
 
     public const string PRODUCT_NO_ADS = "no_ads_product";
+    public const string FIFTY_GOLD = "fifty_gold";
+    public const string ONE_HUNDRED_GOLD = "one_hundred_gold";
+    public const string TEN_ORBS = "ten_orbs";
+    public const string FIFTY_ORBS = "fifty_orbs";
+    public const string ONE_HUNDRED_ORBS = "one_hundred_orbs";
+    public const string ORBITAL_PACK = "orbital_pack";
+    public const string GALACTIC_PACK = "galactic_pack";
+    public const string MULTIVERSAL_PACK = "multiversal_pack";
+    public const string ICE_PACK = "ice_pack";
+    public const string STONE_PACK = "stone_pack";
+    public const string PROTECTION_PACK = "protection_pack";
+    public const string INMORTAL_PACK = "inmortal_pack";
 
     void Awake()
     {
@@ -28,6 +40,18 @@ public class IAPManager : MonoBehaviour, IStoreListener
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
             builder.AddProduct(PRODUCT_NO_ADS, ProductType.NonConsumable);
+            builder.AddProduct(FIFTY_GOLD, ProductType.Consumable);
+            builder.AddProduct(ONE_HUNDRED_GOLD, ProductType.Consumable);
+            builder.AddProduct(TEN_ORBS, ProductType.Consumable);
+            builder.AddProduct(FIFTY_ORBS, ProductType.Consumable);
+            builder.AddProduct(ONE_HUNDRED_ORBS, ProductType.Consumable);
+            builder.AddProduct(ORBITAL_PACK, ProductType.Consumable);
+            builder.AddProduct(GALACTIC_PACK, ProductType.Consumable);
+            builder.AddProduct(MULTIVERSAL_PACK, ProductType.Consumable);
+            builder.AddProduct(ICE_PACK, ProductType.Consumable);
+            builder.AddProduct(STONE_PACK, ProductType.Consumable);
+            builder.AddProduct(PROTECTION_PACK, ProductType.Consumable);
+            builder.AddProduct(INMORTAL_PACK, ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
         }
@@ -65,6 +89,11 @@ public class IAPManager : MonoBehaviour, IStoreListener
         return m_StoreController.products.WithID(id);
     }
 
+    public string GetProductPriceById(string id)
+    {
+        return GetProductByID(id).metadata.localizedPriceString;
+    }
+
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
         m_StoreController = controller;
@@ -92,12 +121,57 @@ public class IAPManager : MonoBehaviour, IStoreListener
         switch (id)
         {
             case PRODUCT_NO_ADS:
-                SaveAndLoadManager.SetIntValue(
-                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 100, SaveAndLoadManager.CoinsName);
-                SaveAndLoadManager.SetIntValue(
-                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + 15, SaveAndLoadManager.OrbsName);
+                AddCoinsOnProduct(100);
+                AddOrbsOnProduct(15);
                 SaveAndLoadManager.SetIntValue(1, SaveAndLoadManager.NoAdsBougthName, true, true);
                 Debug.Log($"Reward: {id}");
+                break;
+            case FIFTY_GOLD:
+                AddCoinsOnProduct(50);
+                break;
+            case ONE_HUNDRED_GOLD:
+                AddCoinsOnProduct(100);
+                break;
+            case TEN_ORBS:
+                AddOrbsOnProduct(10);
+                break;
+            case FIFTY_ORBS:
+                AddOrbsOnProduct(50);
+                break;
+            case ONE_HUNDRED_ORBS:
+                AddOrbsOnProduct(100);
+                break;
+            case ORBITAL_PACK:
+                AddCoinsOnProduct(50);
+                AddOrbsOnProduct(25);
+                break;
+            case GALACTIC_PACK:
+                AddCoinsOnProduct(250);
+                AddOrbsOnProduct(100);
+                break;
+            case MULTIVERSAL_PACK:
+                AddCoinsOnProduct(500);
+                AddOrbsOnProduct(250);
+                break;
+            case ICE_PACK:
+                AddCoinsOnProduct(25);
+                AddOrbsOnProduct(15);
+                AddPowerUpOnProduct(15, PowerUpManager.PowerUpType.TimeStopPowerUp);
+                break;
+            case STONE_PACK:
+                AddCoinsOnProduct(25);
+                AddOrbsOnProduct(15);
+                AddPowerUpOnProduct(15, PowerUpManager.PowerUpType.StopTouchCounterPowerUp);
+                break;
+            case PROTECTION_PACK:
+                AddCoinsOnProduct(25);
+                AddOrbsOnProduct(15);
+                AddPowerUpOnProduct(15, PowerUpManager.PowerUpType.ImmunityPowerUp);
+                break;
+            case INMORTAL_PACK:
+                AddCoinsOnProduct(25);
+                AddOrbsOnProduct(15);
+                AddPowerUpOnProduct(15, PowerUpManager.PowerUpType.RevivePowerUp);
                 break;
             default:
                 Debug.LogError($"Product not found: {id}");
@@ -105,6 +179,25 @@ public class IAPManager : MonoBehaviour, IStoreListener
         }
 
         OnCompletePurchase?.Invoke();
+    }
+
+    private void AddCoinsOnProduct(int amount)
+    {
+        SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + amount, SaveAndLoadManager.CoinsName);
+    }
+
+    private void AddOrbsOnProduct(int amount)
+    {
+        SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) + amount, SaveAndLoadManager.OrbsName);
+    }
+
+    private void AddPowerUpOnProduct(int amount, PowerUpManager.PowerUpType powerUpType)
+    {
+        string powerUpName = SaveAndLoadManager.PowerUpPrefix + powerUpType;
+        SaveAndLoadManager.SetIntValue(
+                    SaveAndLoadManager.GetIntValue(powerUpName) + amount, powerUpName);
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)

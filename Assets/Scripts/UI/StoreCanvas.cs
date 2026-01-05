@@ -57,6 +57,83 @@ public class StoreCanvas : CanvasElementLocator
         _offersFlapOnImage = FindAndValidateComponent<Image>(_offersFlapButton.transform, "FlapOn");
         _offersFlapOffImage = FindAndValidateComponent<Image>(_offersFlapButton.transform, "FlapOff");
 
+        var buyTenGoldButton = FindAndValidateComponent<Button>(_offersScroll.transform, "CoinsSlotOffert1");
+        buyTenGoldButton.onClick.AddListener(() =>
+        {
+            if (SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) >= 1)
+            {
+                SaveAndLoadManager.SetIntValue(
+                        SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) + 10, SaveAndLoadManager.CoinsName);
+                SaveAndLoadManager.SetIntValue(
+                        SaveAndLoadManager.GetIntValue(SaveAndLoadManager.OrbsName) - 1, SaveAndLoadManager.OrbsName);
+
+                UpdateTexts();
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PurchaseSound);
+            }
+            else
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
+        });
+
+        var buyIcePowerUpButton = FindAndValidateComponent<Button>(_offersScroll.transform, "IceSlot");
+        buyIcePowerUpButton.onClick.AddListener(() =>
+        {
+            if (StoreManager.Instance.CanBuy(10, false))
+            {
+                StoreManager.Instance.Buy(10);
+                string powerUpName = SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp;
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(powerUpName) + 1, powerUpName);
+                UpdateTexts();
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PurchaseSound);
+            }
+            else
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
+        });
+
+        var buyStonePowerUpButton = FindAndValidateComponent<Button>(_offersScroll.transform, "StoneSlot");
+        buyStonePowerUpButton.onClick.AddListener(() =>
+        {
+            if (StoreManager.Instance.CanBuy(15, false))
+            {
+                StoreManager.Instance.Buy(15);
+                string powerUpName = SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp;
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(powerUpName) + 1, powerUpName);
+                UpdateTexts();
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PurchaseSound);
+            }
+            else
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
+        });
+
+        var buyImmunityPowerUpButton = FindAndValidateComponent<Button>(_offersScroll.transform, "InmmunitySlot");
+        buyImmunityPowerUpButton.onClick.AddListener(() =>
+        {
+            if (StoreManager.Instance.CanBuy(30, false))
+            {
+                StoreManager.Instance.Buy(30);
+                string powerUpName = SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp;
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(powerUpName) + 1, powerUpName);
+                UpdateTexts();
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PurchaseSound);
+            }
+            else
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
+        });
+
+        var buyRevivePowerUpButton = FindAndValidateComponent<Button>(_offersScroll.transform, "ReviveSlot");
+        buyRevivePowerUpButton.onClick.AddListener(() =>
+        {
+            if (StoreManager.Instance.CanBuy(50, false))
+            {
+                StoreManager.Instance.Buy(50);
+                string powerUpName = SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp;
+                SaveAndLoadManager.SetIntValue(SaveAndLoadManager.GetIntValue(powerUpName) + 1, powerUpName);
+                UpdateTexts();
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.PurchaseSound);
+            }
+            else
+                AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
+        });
+
         UpdateTexts();
         OnSelectBallsFlap();
         _reviewPopUp = FindAndValidateComponent<PopUp>(transform, "ReviewPopUp");

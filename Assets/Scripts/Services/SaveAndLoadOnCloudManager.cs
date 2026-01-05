@@ -278,15 +278,15 @@ public class SaveAndLoadOnCloudManager : ManagersManager
             var powerupDict = new Dictionary<string, object>();
             var powerupNames = new string[]
             {
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp.ToString()}",
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp.ToString()}",
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp.ToString()}",
-           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp.ToString()}"
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.TimeStopPowerUp}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.StopTouchCounterPowerUp}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.ImmunityPowerUp}",
+           $"{SaveAndLoadManager.PowerUpPrefix + PowerUpManager.PowerUpType.RevivePowerUp}"
             };
 
             foreach (string powerUpName in powerupNames)
             {
-                string powerUpKey = SaveAndLoadManager.PowerUpPrefix + powerUpName;
+                string powerUpKey = powerUpName;
                 if (SaveAndLoadManager.ContainsKey(powerUpKey))
                 {
                     powerupDict[powerUpName] = SaveAndLoadManager.GetIntValue(powerUpKey);
@@ -434,11 +434,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 if (powerUpDict != null)
                 {
                     foreach (var powerUp in powerUpDict)
-                    {
-                        string powerUpKey = SaveAndLoadManager.PowerUpPrefix + powerUp.Key;
-                        int powerUpAmount = Convert.ToInt32(powerUp.Value);
-                        SaveAndLoadManager.SetIntValue(powerUpAmount, powerUpKey);
-                    }
+                        SaveAndLoadManager.SetIntValue(Convert.ToInt32(powerUp.Value), powerUp.Key);
                 }
             }
 
