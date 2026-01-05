@@ -134,7 +134,6 @@ public class StoreCanvas : CanvasElementLocator
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
         });
 
-#if !UNITY_EDITOR
         var fiftyGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "FiftyGoldPriceText");
         UIManager.Instance.SetText(fiftyGoldPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_GOLD));
         var oneHundredGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OneHundredGoldPriceText");
@@ -159,7 +158,6 @@ public class StoreCanvas : CanvasElementLocator
         UIManager.Instance.SetText(protectionPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.PROTECTION_PACK));
         var eternalPackPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "EternalPackPriceText");
         UIManager.Instance.SetText(eternalPackPriceText, "US$" + IAPManager.Instance.GetProductPriceById(IAPManager.INMORTAL_PACK));
-#endif
 
         UpdateTexts();
         OnSelectBallsFlap();

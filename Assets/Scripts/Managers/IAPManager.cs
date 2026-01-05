@@ -86,12 +86,23 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public Product GetProductByID(string id)
     {
-        return m_StoreController.products.WithID(id);
+        if (!IsInitialized())
+        {
+            Debug.LogWarning($"[IAP] GetProductByID({id}) llamado antes de inicializar.");
+            return null;
+        }
+
+        var product = m_StoreController.products.WithID(id);
+        if (product == null)
+            Debug.LogError($"[IAP] Producto no encontrado en el controller: {id}");
+
+        return product;
     }
 
     public string GetProductPriceById(string id)
     {
-        return GetProductByID(id).metadata.localizedPriceString;
+        var product = GetProductByID(id);
+        return product != null && product.metadata != null ? product.metadata.localizedPriceString : "-";
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
