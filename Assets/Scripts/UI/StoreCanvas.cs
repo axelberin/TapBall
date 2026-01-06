@@ -134,6 +134,31 @@ public class StoreCanvas : CanvasElementLocator
                 AudioManager.Instance.PlaySoundByType(AudioManager.AudioClipType.RejectionSound);
         });
 
+        FindAndValidateComponent<Button>(_offersScroll.transform, "CoinsSlotOffert2").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.FIFTY_GOLD));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "CoinsSlotOffert3").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.ONE_HUNDRED_GOLD));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "OrbSlotOffert1").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.TEN_ORBS));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "OrbSlotOffert2").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.FIFTY_ORBS));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "OrbSlotOffert3").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.ONE_HUNDRED_ORBS));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "OrbitalPack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.ORBITAL_PACK));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "GalacticPack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.GALACTIC_PACK));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "MultiversePack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.MULTIVERSAL_PACK));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "FreezePack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.ICE_PACK));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "StonePack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.STONE_PACK));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "ProtectionPack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.PROTECTION_PACK));
+        FindAndValidateComponent<Button>(_offersScroll.transform, "EternalPack").
+            onClick.AddListener(() => IAPManager.Instance.BuyProductID(IAPManager.INMORTAL_PACK));
+
         var fiftyGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "FiftyGoldPriceText");
         UIManager.Instance.SetText(fiftyGoldPriceText, "US " + IAPManager.Instance.GetProductPriceById(IAPManager.FIFTY_GOLD));
         var oneHundredGoldPriceText = FindAndValidateComponent<TextMeshProUGUI>(_offersScroll.transform, "OneHundredGoldPriceText");

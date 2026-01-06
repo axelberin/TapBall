@@ -127,7 +127,8 @@ public class MenuManagerCanvas : CanvasElementLocator
         var noAdsBtn = FindAndValidateComponent<Button>(transform, "NoAdsBtn");
         noAdsBtn.onClick.AddListener(() =>
         {
-            noAdsPopUp.Initialize("noadstittle", "noadsdescription");
+            noAdsPopUp.Initialize("noadstittle", "noadsdescription",
+                () => IAPManager.Instance.BuyProductID(IAPManager.PRODUCT_NO_ADS));
             noAdsPopUp.Show();
         });
 
