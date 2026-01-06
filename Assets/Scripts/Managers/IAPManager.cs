@@ -75,11 +75,15 @@ public class IAPManager : MonoBehaviour, IStoreListener
             }
             else
             {
+                GameLog.NonFatal("Fail product on bought", $"{productId} doesn't found");
+                GameLog.LogEvent("Fail product on bought", ("tag", productId), ("message", "doesn't found product"));
                 Debug.Log("BuyProductID: FAIL. Product not found or not available.");
             }
         }
         else
         {
+            GameLog.NonFatal("IAP not initialized on bought", $"{productId} can't buy");
+            GameLog.LogEvent("IAP not initialized on bought", ("tag", productId), ("message", "can't buy"));
             Debug.Log("BuyProductID FAIL. Not initialized.");
         }
     }
@@ -88,13 +92,19 @@ public class IAPManager : MonoBehaviour, IStoreListener
     {
         if (!IsInitialized())
         {
+            GameLog.NonFatal("IAP not initialized", $"{id} can't buy");
+            GameLog.LogEvent("IAP not initialized", ("tag", id), ("message", "can't buy"));
             Debug.LogWarning($"[IAP] GetProductByID({id}) llamado antes de inicializar.");
             return null;
         }
 
         var product = m_StoreController.products.WithID(id);
         if (product == null)
+        {
+            GameLog.NonFatal("Fail product", $"{id} doesn't found");
+            GameLog.LogEvent("Fail product", ("tag", id), ("message", "doesn't found product"));
             Debug.LogError($"[IAP] Producto no encontrado en el controller: {id}");
+        }
 
         return product;
     }
@@ -114,6 +124,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public void OnInitializeFailed(InitializationFailureReason error)
     {
+        GameLog.NonFatal("IAP not initialized", $"{error}");
+        GameLog.LogEvent("IAP not initialized", ("tag", error), ("message", error));
         Debug.Log($"IAP Initialization Failed: {error}");
     }
 
