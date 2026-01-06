@@ -128,10 +128,10 @@ public class MenuManagerCanvas : CanvasElementLocator
         noAdsBtn.onClick.AddListener(() =>
         {
             noAdsPopUp.Initialize("noadstittle", "noadsdescription");
-            UIManager.Instance.SetText(noAdsPriceText, "US " + IAPManager.Instance.GetProductPriceById(
-                IAPManager.PRODUCT_NO_ADS));
             noAdsPopUp.Show();
         });
+
+        UIManager.Instance.SetText(noAdsPriceText, "US " + IAPManager.Instance.GetProductPriceById(IAPManager.PRODUCT_NO_ADS));
 
         _modeText = FindAndValidateComponent<TextMeshProUGUI>(transform, "ModeTittleText");
         var nextLevelText = FindAndValidateComponent<TextMeshProUGUI>(transform, "NextLevelNumberText");
