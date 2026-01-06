@@ -128,7 +128,7 @@ public class MenuManagerCanvas : CanvasElementLocator
         noAdsBtn.onClick.AddListener(() =>
         {
             noAdsPopUp.Initialize("noadstittle", "noadsdescription");
-            UIManager.Instance.SetText(noAdsPriceText, "US$ " + IAPManager.Instance.GetProductPriceById(
+            UIManager.Instance.SetText(noAdsPriceText, "US " + IAPManager.Instance.GetProductPriceById(
                 IAPManager.PRODUCT_NO_ADS));
             noAdsPopUp.Show();
         });
