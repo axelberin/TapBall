@@ -1,13 +1,16 @@
 using UnityEngine;
 using Firebase.Auth;
 using System.Collections;
-using Google;
 using System.Threading.Tasks;
 using Firebase.Extensions;
+#if UNITY_ANDROID
+using Google;
+#elif UNITY_IOS
 using AppleAuth;
 using AppleAuth.Enums;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
+#endif
 using System.Security.Cryptography;
 using System.Text;
 using System;
@@ -20,9 +23,12 @@ public class AuthManager : ManagersManager
 
     FirebaseAuth _auth;
     FirebaseUser _user;
+#if UNITY_IOS
     private IAppleAuthManager _appleAuthManager;
     private bool _isAppleInit = false;
+#elif UNITY_ANDROID
     private bool _isGoogleSignInInitialized = false;
+#endif
 
     protected override void Start()
     {
@@ -46,6 +52,8 @@ public class AuthManager : ManagersManager
         SignInWithApple(silentOnly: true);
 #elif UNITY_ANDROID
         SignInWithGoogle(silentOnly:true);
+#else
+        _isInitialized = true;
 #endif
     }
 
@@ -65,6 +73,7 @@ public class AuthManager : ManagersManager
         }
     }
 
+#if UNITY_ANDROID
     // si silentOnly = true, NO abrir el chooser; ideal para el arranque
     public void SignInWithGoogle(bool silentOnly = false)
     {
@@ -141,6 +150,14 @@ public class AuthManager : ManagersManager
         });
     }
 
+    public void SignOutGoogle()
+    {
+        GoogleSignIn.DefaultInstance.SignOut(); // esto borra caché de Google
+        _auth.SignOut(); // también Firebase
+        PlayerPrefs.DeleteKey(kSignedOnceKey);
+    }
+
+#elif UNITY_IOS
     public void SignInWithApple(bool silentOnly = false)
     {
         //#if UNITY_IOS
@@ -247,6 +264,7 @@ public class AuthManager : ManagersManager
         _isAppleInit = true;
     }
 
+#endif
     private string GenerateRandomNonce(int length = 32)
     {
         const string charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._";
@@ -287,13 +305,6 @@ public class AuthManager : ManagersManager
 
             yield return null;
         }
-    }
-
-    public void SignOutGoogle()
-    {
-        GoogleSignIn.DefaultInstance.SignOut(); // esto borra caché de Google
-        _auth.SignOut(); // también Firebase
-        PlayerPrefs.DeleteKey(kSignedOnceKey);
     }
 
     private void OnFailSignIn(string tag, string msg, params (string key, object val)[] keys)
