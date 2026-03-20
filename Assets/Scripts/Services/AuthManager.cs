@@ -97,11 +97,11 @@ public class AuthManager : ManagersManager
                 return;
             }
 
-            // 2) Si falló el silent:
+            // 2) Si fallï¿½ el silent:
             //    - Si es la PRIMERA VEZ (no hay bandera), abrimos chooser.
             //    - Si NO es la primera vez y nos llamaron en arranque (silentOnly=true),
-            //      NO abrimos chooser automático -> dejamos que el juego inicie y
-            //      que el usuario pulse un botón "Reintentar".
+            //      NO abrimos chooser automï¿½tico -> dejamos que el juego inicie y
+            //      que el usuario pulse un botï¿½n "Reintentar".
             bool signedOnce = PlayerPrefs.GetInt(kSignedOnceKey, 0) == 1;
             if (silentOnly && signedOnce)
                 OnFailSignIn("SilentNoChooser", "Silent GoogleSignIn failed and chooser disabled");
@@ -142,7 +142,7 @@ public class AuthManager : ManagersManager
             }
 
             _user = authTask.Result;
-            PlayerPrefs.SetInt(kSignedOnceKey, 1); // marcamos que ya eligió cuenta
+            PlayerPrefs.SetInt(kSignedOnceKey, 1); // marcamos que ya eligiï¿½ cuenta
             PlayerPrefs.Save();
 
             Debug.Log("Login exitoso en Firebase: " + _user.DisplayName);
@@ -152,8 +152,8 @@ public class AuthManager : ManagersManager
 
     public void SignOutGoogle()
     {
-        GoogleSignIn.DefaultInstance.SignOut(); // esto borra caché de Google
-        _auth.SignOut(); // también Firebase
+        GoogleSignIn.DefaultInstance.SignOut(); // esto borra cachï¿½ de Google
+        _auth.SignOut(); // tambiï¿½n Firebase
         PlayerPrefs.DeleteKey(kSignedOnceKey);
     }
 
@@ -286,7 +286,7 @@ public class AuthManager : ManagersManager
 
     public override IEnumerator InizializeManagers()
     {
-        // Timeout del watchdog (podés ajustarlo)
+        // Timeout del watchdog (podï¿½s ajustarlo)
         const float AUTH_TIMEOUT_SECONDS = 12f;
         float elapsed = 0f;
         bool watchdogShown = false;
@@ -308,20 +308,13 @@ public class AuthManager : ManagersManager
     }
 
     private void OnFailSignIn(string tag, string msg, params (string key, object val)[] keys)
-    {
-        GameLog.NonFatal(tag, msg, keys);
-        GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
-        if (LoadingGameManager.Instance)
-            LoadingGameManager.Instance.ShowCantSignInPopUp(
-        "conectionfail", "cantconnect",
-        () => _isInitialized = true,
-#if UNITY_IOS
-        () => SignInWithApple(silentOnly: false)
-#else
-        () => SignInWithGoogle(silentOnly: false)
-#endif
-    );
-        else
-            _isInitialized = true;
-    }
+{
+    GameLog.NonFatal(tag, msg, keys);
+    GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
+
+    Debug.LogWarning($"Auth failed, continuing in local mode. Tag: {tag}, Msg: {msg}");
+
+    // No bloquear el inicio del juego
+    _isInitialized = true;
+}
 }

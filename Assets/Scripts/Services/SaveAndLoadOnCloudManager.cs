@@ -69,14 +69,14 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     {
         if (string.IsNullOrEmpty(userId))
         {
-            Debug.LogError("userId vacío no se puede leer Firestore");
+            Debug.LogError("userId vacï¿½o no se puede leer Firestore");
             OnLoadDataFailed("UserIDNull", "User ID is Null on load");
             return;
         }
 
         if (!EnsureFirestoreReady())
         {
-            Debug.LogError("Firestore DefaultInstance aún no está listo");
+            Debug.LogError("Firestore DefaultInstance aï¿½n no estï¿½ listo");
             OnLoadDataFailed("FirestoreNull", "DefaultInstance is null");
             return;
         }
@@ -88,7 +88,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         }
         catch (Exception e)
         {
-            Debug.LogError("Ruta inválida a Firestore: " + e.Message);
+            Debug.LogError("Ruta invï¿½lida a Firestore: " + e.Message);
             OnLoadDataFailed("InvalidPath", "Firebase Path not found",
                 ("exep", e?.Message));
             return;
@@ -171,7 +171,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
 
         try
         {
-            // Datos básicos del juego
+            // Datos bï¿½sicos del juego
             gameData["coins"] = SaveAndLoadManager.ContainsKey(SaveAndLoadManager.CoinsName) ?
                                SaveAndLoadManager.GetIntValue(SaveAndLoadManager.CoinsName) : 0;
 
@@ -309,7 +309,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     {
         try
         {
-            // Aplicar datos básicos
+            // Aplicar datos bï¿½sicos
             if (cloudGameData.ContainsKey("coins"))
                 SaveAndLoadManager.SetIntValue(Convert.ToInt32(cloudGameData["coins"]), SaveAndLoadManager.CoinsName);
 
@@ -403,7 +403,7 @@ public class SaveAndLoadOnCloudManager : ManagersManager
                 }
             }
 
-            //Aplicar datos de misión obtenidos
+            //Aplicar datos de misiï¿½n obtenidos
             if (cloudGameData.ContainsKey("DailyMissionsData"))
             {
                 var missionsList = cloudGameData["DailyMissionsData"] as List<Dictionary<string, object>>;
@@ -450,15 +450,16 @@ public class SaveAndLoadOnCloudManager : ManagersManager
     }
 
     private void OnLoadDataFailed(string tag, string msg, params (string key, object val)[] keys)
-    {
-        GameLog.NonFatal(tag, msg, keys);
-        GameLog.LogEvent("auth_failed", ("tag", tag), ("message", msg));
-        if (LoadingGameManager.Instance)
-            LoadingGameManager.Instance.ShowCantSignInPopUp(
-                "conectionfail", "cantloadcloud", () => _isInitialized = true, ScenesManager.Instance.RestartScene);
-        else
-            _isInitialized = true;
-    }
+{
+    GameLog.NonFatal(tag, msg, keys);
+    GameLog.LogEvent("cloud_load_failed", ("tag", tag), ("message", msg));
+
+    Debug.LogWarning($"Cloud load failed, using local data. Tag: {tag}, Msg: {msg}");
+
+    // Seguir con datos locales sin mostrar error
+    _isInitialized = true;
+}
+
 
     public override IEnumerator InizializeManagers()
     {
@@ -472,11 +473,12 @@ public class SaveAndLoadOnCloudManager : ManagersManager
         if (auth.CurrentUser == null)
         {
             Debug.LogWarning("Auth no listo en tiempo: continuando sin nube");
-            OnLoadDataFailed("AuthNull", "auth.CurrentUser = Null");      // el OK del pop-up pone _isInitialized = true
+            _isInitialized = true;
+            //OnLoadDataFailed("AuthNull", "auth.CurrentUser = Null");      // el OK del pop-up pone _isInitialized = true
             yield break;
         }
 
-        _userId = auth.CurrentUser.UserId; // ahora sí existe
+        _userId = auth.CurrentUser.UserId; // ahora sï¿½ existe
         LoadGameData(_userId);
 
         const float LOAD_TIMEOUT = 12f;
