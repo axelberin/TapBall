@@ -1,5 +1,6 @@
-using UnityEngine;
 using System;
+using System.Security.Claims;
+using UnityEngine;
 using static GameManager;
 
 public static class SaveAndLoadManager
@@ -19,6 +20,11 @@ public static class SaveAndLoadManager
     public static string IsPlayingFirstTimeName = "IsPlayingFirstTimeName";
     public static string LastDayUpdateName = "LastDayUpdate";
     public static string ObtainedGameMode = "ObtainedGameMode_";
+    public static string DailyRewardTodayID = "DailyReward_Today_ID";
+    public static string DailyRewardTodayDate = "DailyReward_Today_Date";
+    public static string DailyRewardTodayClaimed = "DailyReward_Today_Claimed";
+    public static string DailyRewardStreakName = "DailyReward_Streak";
+    public static string DailyRewardLastClaimDayName = "DailyReward_LastClaimDay";
 
     // Nueva estructura: Modo_Mundo_Nivel_TipoDato
     private static string LevelDataPrefix = "LevelData_";
@@ -31,6 +37,10 @@ public static class SaveAndLoadManager
     private static string MissionPrefix = "Mission_";
     private static string ProgressSuffix = "_Progress";
     private static string DateSuffix = "_Date";
+
+   ////Rewards diarios
+   //private const string DailyRewardPrefix = "DailyReward_";
+   //private const string ClaimedSuffix = "_Claimed";
 
     //Power Ups
     public static string PowerUpPrefix = "PowerUp_";

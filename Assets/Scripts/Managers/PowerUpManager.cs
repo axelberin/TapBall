@@ -280,6 +280,7 @@ public class PowerUpManager : MonoBehaviour
         TimeStopPowerUp,
         StopTouchCounterPowerUp,
         ImmunityPowerUp,
-        RevivePowerUp
+        RevivePowerUp,
+        None
     }
 }
